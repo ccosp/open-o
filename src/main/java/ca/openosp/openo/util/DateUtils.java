@@ -36,12 +36,12 @@ import java.util.Locale;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 
 /**
- * @deprecated 2013-12-09 use org.oscarehr.util.DateUtils instead
+ * @deprecated 2013-12-09 use ca.openosp.openo.ehrutil.DateUtils instead
  */
 public final class DateUtils {
 

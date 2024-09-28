@@ -24,11 +24,11 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="java.util.*, java.sql.*, java.net.*" %>
 <%@ include file="../../../../admin/dbconnection.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingInr" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingInr" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingInrDao" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -38,9 +38,9 @@
 
 <jsp:useBean id="SxmlMisc" class="ca.openosp.openo.SxmlMisc" scope="session"/>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.ClinicLocationDao" %>
-<%@page import="org.oscarehr.common.model.ClinicLocation" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicLocationDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicLocation" %>
 <%
     ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean(ClinicLocationDao.class);
 %>

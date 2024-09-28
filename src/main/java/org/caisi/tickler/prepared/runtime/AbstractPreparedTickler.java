@@ -27,7 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.caisi.tickler.prepared.PreparedTickler;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public abstract class AbstractPreparedTickler implements PreparedTickler {
 

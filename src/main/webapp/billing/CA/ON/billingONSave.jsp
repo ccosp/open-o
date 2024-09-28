@@ -27,10 +27,16 @@
 <%@ page errorPage="/errorpage.jsp" import="java.util.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*,org.oscarehr.common.model.*,org.oscarehr.common.dao.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.appt.ApptStatusData" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingSavePrep" %>
+<%@ page import="ca.openosp.openo.common.model.BillingONExt" %>
+<%@ page import="ca.openosp.openo.common.model.BillingONCHeader1" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingONExtDao" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 <%
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
     UserPropertyDAO userPropertyDAO = (UserPropertyDAO) ctx.getBean(UserPropertyDAO.class);

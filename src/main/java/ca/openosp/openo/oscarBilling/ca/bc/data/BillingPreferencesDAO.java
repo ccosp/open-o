@@ -29,7 +29,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.common.dao.AbstractDaoImpl;
+import ca.openosp.openo.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 /**

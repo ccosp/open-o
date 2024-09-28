@@ -20,11 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.dao.OscarLogDao;
-import org.oscarehr.hospitalReportManager.HRMUtil;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarLogDao;
+import ca.openosp.openo.hospitalReportManager.HRMUtil;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.util.DateUtils;
 import ca.openosp.openo.util.StringUtils;
 

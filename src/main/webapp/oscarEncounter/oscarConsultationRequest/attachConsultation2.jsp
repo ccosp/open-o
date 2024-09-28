@@ -24,7 +24,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     String user_no = (String) session.getAttribute("user");
     String userfirstname = (String) session.getAttribute("userfirstname");
@@ -40,17 +40,17 @@
 <%@ page import="oscar.oscarLab.ca.on.*" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentDao" %>
-<%@page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao" %>
-<%@page import="org.oscarehr.hospitalReportManager.model.HRMDocument" %>
-<%@page import="org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentDao" %>
+<%@page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToDemographicDao" %>
+<%@page import="ca.openosp.openo.hospitalReportManager.model.HRMDocument" %>
+<%@page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentToDemographic" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.oscarehr.common.model.EFormData" %>
+<%@ page import="ca.openosp.openo.common.model.EFormData" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>

@@ -4,7 +4,7 @@ const ReprintComponent = {
         dismiss: '&',
         resolve: '<',
     },
-    templateUrl: '../web/record/rx/reprint/reprint.template.jsp',
+    templateUrl: '../ehrweb/record/rx/reprint/reprint.template.jsp',
     controller: ['$stateParams', '$state', '$uibModal', '$log', 'rxService', function ($stateParams, $state, $uibModal, $log, rxService) {
 
         reprintComp = this;

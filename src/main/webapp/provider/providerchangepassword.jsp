@@ -23,9 +23,9 @@
     Ontario, Canada
 
 --%>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Security" %>
-<%@ page import="org.oscarehr.common.dao.SecurityDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Security" %>
+<%@ page import="ca.openosp.openo.common.dao.SecurityDao" %>
 <%
     if (session.getValue("user") == null)
         response.sendRedirect("../logout.jsp");

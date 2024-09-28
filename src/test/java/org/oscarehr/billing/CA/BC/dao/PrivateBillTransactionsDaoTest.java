@@ -29,10 +29,10 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.billing.CA.BC.model.BillingPrivateTransactions;
+import ca.openosp.openo.billing.CA.BC.model.BillingPrivateTransactions;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.entities.PrivateBillTransaction;
 import ca.openosp.openo.oscarBilling.ca.bc.data.PrivateBillTransactionsDAO;

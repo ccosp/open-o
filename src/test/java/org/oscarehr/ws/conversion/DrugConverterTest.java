@@ -28,12 +28,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.model.Drug;
-import org.oscarehr.managers.DrugLookUpManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.ws.rest.conversion.DrugConverter;
-import org.oscarehr.ws.rest.conversion.DrugConverterImpl;
-import org.oscarehr.ws.rest.to.model.DrugSearchTo1;
-import org.oscarehr.ws.rest.to.model.DrugTo1;
+import ca.openosp.openo.managers.DrugLookUpManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ws.rest.conversion.DrugConverterImpl;
+import ca.openosp.openo.ws.rest.to.model.DrugSearchTo1;
+import ca.openosp.openo.ws.rest.to.model.DrugTo1;
 
 import java.util.ArrayList;
 import java.util.Date;

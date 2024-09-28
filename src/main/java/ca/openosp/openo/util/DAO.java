@@ -31,7 +31,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 
 public class DAO {

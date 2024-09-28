@@ -4,7 +4,7 @@ const FullSearchComponent = {
         dismiss: '&',
         resolve: '<',
     },
-    templateUrl: '../web/record/rx/fullsearch/fullsearch.template.jsp',
+    templateUrl: '../ehrweb/record/rx/fullsearch/fullsearch.template.jsp',
     controller: ['$stateParams', '$state', '$uibModal', '$log', 'rxService', function ($stateParams, $state, $uibModal, $log, rxService) {
 
         var fullSearchComp = this;

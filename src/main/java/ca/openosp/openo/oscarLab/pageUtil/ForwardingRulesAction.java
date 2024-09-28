@@ -43,14 +43,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.IncomingLabRulesDao;
-import org.oscarehr.common.model.IncomingLabRules;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.IncomingLabRulesDao;
+import ca.openosp.openo.common.model.IncomingLabRules;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.ForwardingRules;
@@ -60,7 +61,7 @@ import ca.openosp.openo.oscarLab.ForwardingRules;
  */
 public class ForwardingRulesAction extends Action {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     private IncomingLabRulesDao dao = SpringUtils.getBean(IncomingLabRulesDao.class);
 
 

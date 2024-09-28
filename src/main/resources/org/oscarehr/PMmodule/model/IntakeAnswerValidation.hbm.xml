@@ -17,7 +17,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="IntakeAnswerValidation" table="intake_answer_validation">
+	<class name="ca.openosp.openo.PMmodule.model.IntakeAnswerValidation" table="intake_answer_validation">
 		<meta attribute="sync-DAO">false</meta>
 
 		<id name="id" type="integer" column="intake_answer_validation_id">

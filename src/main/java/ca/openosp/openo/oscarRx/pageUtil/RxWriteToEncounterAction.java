@@ -29,14 +29,14 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.PMmodule.service.ProgramManager;
-import org.oscarehr.casemgmt.model.CaseManagementNote;
-import org.oscarehr.casemgmt.service.CaseManagementManager;
-import org.oscarehr.common.dao.CaseManagementTmpSaveDao;
-import org.oscarehr.common.model.CaseManagementTmpSave;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.service.ProgramManager;
+import ca.openosp.openo.casemgmt.model.CaseManagementNote;
+import ca.openosp.openo.casemgmt.service.CaseManagementManager;
+import ca.openosp.openo.common.dao.CaseManagementTmpSaveDao;
+import ca.openosp.openo.common.model.CaseManagementTmpSave;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarEncounter.data.EctProgram;
 

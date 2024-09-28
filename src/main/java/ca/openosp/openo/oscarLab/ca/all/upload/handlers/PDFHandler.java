@@ -25,6 +25,7 @@
 
 package ca.openosp.openo.oscarLab.ca.all.upload.handlers;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import com.itextpdf.text.pdf.PdfReader;
 
 import java.io.FileInputStream;
@@ -34,14 +35,14 @@ import java.io.InputStream;
 
 import ca.openosp.openo.util.UtilDateUtilities;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.ProviderInboxRoutingDao;
-import org.oscarehr.common.dao.QueueDocumentLinkDao;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ProviderInboxRoutingDao;
+import ca.openosp.openo.common.dao.QueueDocumentLinkDao;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
-import org.oscarehr.documentManager.EDoc;
-import org.oscarehr.documentManager.EDocUtil;
+import documentManager.EDoc;
+import documentManager.EDocUtil;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 
@@ -49,7 +50,7 @@ import ca.openosp.openo.log.LogConst;
  * @author mweston4
  */
 public class PDFHandler implements MessageHandler {
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     @Override
     public String parse(LoggedInInfo loggedInInfo, String serviceName, String fileName, int fileId, String ipAddr) {

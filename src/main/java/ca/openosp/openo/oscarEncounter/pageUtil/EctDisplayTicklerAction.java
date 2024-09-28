@@ -27,12 +27,13 @@
 package ca.openosp.openo.oscarEncounter.pageUtil;
 
 
+import ca.openosp.openo.common.IsPropertiesOn;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.util.DateUtils;
 import ca.openosp.openo.util.StringUtils;
 
@@ -56,7 +57,7 @@ public class EctDisplayTicklerAction extends EctDisplayAction {
             //Set lefthand module heading and link
             String winName = "ViewTickler" + bean.demographicNo;
             String pathview, pathedit;
-            if (org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+            if (IsPropertiesOn.isTicklerPlusEnable()) {
                 pathview = request.getContextPath() + "/Tickler.do?filter.demographic_webName=" + encode(bean) + "&filter.demographicNo=" + bean.demographicNo + "&filter.assignee=";
                 pathedit = request.getContextPath() + "/Tickler.do?method=edit&tickler.demographic_webName=" + encode(bean) + "&tickler.demographicNo=" + bean.demographicNo;
             } else {
@@ -109,7 +110,7 @@ public class EctDisplayTicklerAction extends EctDisplayAction {
                 // item.setValue(String.valueOf(t.getTickler_no()));
                 winName = StringUtils.maxLenString(t.getMessage(), MAX_LEN_TITLE, MAX_LEN_TITLE, "");
                 hash = Math.abs(winName.hashCode());
-                if (org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+                if (IsPropertiesOn.isTicklerPlusEnable()) {
                     url = "popupPage(500,900,'" + hash + "','" + request.getContextPath() + "/Tickler.do?method=view&id=" + t.getId() + "'); return false;";
                 } else {
                     url = "popupPage(500,900,'" + hash + "','" + request.getContextPath() + "/tickler/ticklerEdit.jsp?tickler_no=" + t.getId() + "&parentAjaxId=" + cmd + "'); return false;";

@@ -40,11 +40,11 @@
 %>
 
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarLab.ca.all.pageUtil.SendOruR01UIBean" %>
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.Gender" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.Gender" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <html>
 <head>

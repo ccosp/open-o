@@ -36,11 +36,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler;

@@ -29,6 +29,7 @@
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="ca.openosp.openo.common.model.Facility" %>
 
 <script>
     function facility_change(facility_id) {

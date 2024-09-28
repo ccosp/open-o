@@ -1,5 +1,5 @@
-<%@page import="org.oscarehr.util.WebUtils"%>
-<%@page import="org.oscarehr.util.WebUtils"%>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils"%>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils"%>
 <%@page import="org.apache.commons.lang.StringEscapeUtils"%>
 
 <%@ include file="/taglibs.jsp"%>

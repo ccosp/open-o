@@ -122,11 +122,11 @@
 
 %>
 <%@ page import="java.util.*, oscar.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -152,12 +152,12 @@
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
-<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProgramProviderDAO" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>

@@ -39,17 +39,17 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.common.dao.AppointmentArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@page import="org.oscarehr.common.model.MyGroup" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.dao.ScheduleDateDao" %>
-<%@page import="org.oscarehr.common.model.ScheduleDate" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.common.dao.AppointmentArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.dao.MyGroupDao" %>
+<%@page import="ca.openosp.openo.common.model.MyGroup" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.ScheduleDateDao" %>
+<%@page import="ca.openosp.openo.common.model.ScheduleDate" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
@@ -64,7 +64,7 @@
     boolean bEdit = request.getParameter("appointment_no") != null ? true : false;
 %>
 <%@ page
-        import="java.util.*, java.sql.*,java.net.*, oscar.*, oscar.util.*, org.oscarehr.common.OtherIdManager"
+        import="java.util.*, java.sql.*,java.net.*, oscar.*, oscar.util.*, ca.openosp.openo.common.OtherIdManager"
         errorPage="/errorpage.jsp" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>

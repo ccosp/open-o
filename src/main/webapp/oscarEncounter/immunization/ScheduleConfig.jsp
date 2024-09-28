@@ -40,12 +40,13 @@
 %>
 
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="oscar.oscarEncounter.immunization.data.*, oscar.util.*, oscar.oscarDemographic.data.*" %>
 <%@ page import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmConfigData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -66,7 +67,7 @@
         String age = "";
         if (demoNo != null) {
             DemographicData dData = new DemographicData();
-            org.oscarehr.common.model.Demographic demographic = dData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demoNo);
+            Demographic demographic = dData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demoNo);
             last_name = demographic.getLastName();
             first_name = demographic.getFirstName();
             sex = demographic.getSex();

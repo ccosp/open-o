@@ -27,7 +27,7 @@ package ca.openosp.openo.oscarBilling.ca.bc.data;
 
 import java.text.NumberFormat;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 

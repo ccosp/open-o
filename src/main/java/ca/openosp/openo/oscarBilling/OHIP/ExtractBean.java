@@ -35,13 +35,13 @@ import java.util.Date;
 
 import ca.openosp.openo.SxmlMisc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.dao.BillingDetailDao;
-import org.oscarehr.billing.CA.model.BillingDetail;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.dao.BillingDetailDao;
+import ca.openosp.openo.billing.CA.model.BillingDetail;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.util.ConversionUtils;

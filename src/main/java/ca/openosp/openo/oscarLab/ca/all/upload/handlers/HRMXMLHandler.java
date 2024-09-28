@@ -22,9 +22,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import ca.openosp.openo.Misc;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
@@ -35,7 +36,7 @@ import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
  */
 public class HRMXMLHandler implements MessageHandler {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     public HRMXMLHandler() {
         logger.info("NEW HRM XML UPLOAD HANDLER instance just instantiated. ");

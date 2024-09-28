@@ -21,7 +21,7 @@
 <%@ page
         import="java.util.*, java.sql.*, java.net.*, oscar.*, oscar.oscarDB.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<%@ page import="org.oscarehr.util.DateRange" %>
+<%@ page import="ca.openosp.openo.ehrutil.DateRange" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>

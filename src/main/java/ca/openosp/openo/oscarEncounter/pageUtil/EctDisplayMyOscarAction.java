@@ -32,15 +32,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.common.service.myoscar.MeasurementsManager;
-import org.oscarehr.managers.DemographicManager;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.common.service.myoscar.MeasurementsManager;
+import ca.openosp.openo.managers.DemographicManager;
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctDisplayMyOscarAction extends EctDisplayAction {
 

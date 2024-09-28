@@ -24,16 +24,16 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <% long startTime = System.currentTimeMillis(); %>
 <%@ page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*,java.net.*" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
-<%@ page import="org.oscarehr.common.dao.FlowSheetCustomizationDao,org.oscarehr.common.model.FlowSheetCustomization" %>
-<%@ page import="org.oscarehr.common.dao.FlowSheetDrugDao,org.oscarehr.common.model.FlowSheetDrug" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao,ca.openosp.openo.common.model.FlowSheetCustomization" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowSheetDrugDao,ca.openosp.openo.common.model.FlowSheetDrug" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementInfo" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>

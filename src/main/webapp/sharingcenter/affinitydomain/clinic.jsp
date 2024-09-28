@@ -41,9 +41,9 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.model.ClinicInfoDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.dao.ClinicInfoDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.ClinicInfoDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.ClinicInfoDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Iterator" %>
 <%

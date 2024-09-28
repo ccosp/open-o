@@ -31,11 +31,11 @@ import java.util.Comparator;
 import java.util.Date;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.LabReportInformationDao;
-import org.oscarehr.common.model.LabReportInformation;
-import org.oscarehr.util.DateUtils;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.LabReportInformationDao;
+import ca.openosp.openo.common.model.LabReportInformation;
+import ca.openosp.openo.ehrutil.DateUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.bc.PathNet.PathnetResultsData;
 import ca.openosp.openo.oscarLab.ca.on.CML.CMLLabTest;

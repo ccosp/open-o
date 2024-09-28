@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.io.Serializable" %>
 <%@page import="org.w3c.dom.Document" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult" %>
@@ -47,9 +47,9 @@
 <%@ page
         import="java.util.*,oscar.oscarLab.ca.on.*,oscar.oscarDemographic.data.*" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabTestValues" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

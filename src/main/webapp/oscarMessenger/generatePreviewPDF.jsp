@@ -36,10 +36,10 @@
 
 <%@ page import=" java.util.*, org.w3c.dom.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
          errorPage="../appointment/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.EChartDao" %>
-<%@ page import="org.oscarehr.common.model.EChart" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.EChartDao" %>
+<%@ page import="ca.openosp.openo.common.model.EChart" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     EChartDao eChartDao = SpringUtils.getBean(EChartDao.class);
 %>
@@ -64,6 +64,7 @@
 
 <%@ page import="oscar.util.*" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 
 <%
@@ -72,7 +73,7 @@
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 
     DemographicData demoData = new DemographicData();
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, demographic_no);
+    Demographic demo = demoData.getDemographic(loggedInInfo, demographic_no);
     String demoName = "";
     if (demo != null) {
         demoName = demo.getLastName() + ", " + demo.getFirstName();
@@ -365,7 +366,7 @@
                                             Rxbean.setProviderNo((String) request.getSession().getAttribute("user"));
                                             Rxbean.setDemographicNo(Integer.parseInt(demographic_no));
 
-                                        %> <% currentURI = "../oscarRx/PrintDrugProfile.jsp?demographic_no=" + demographic_no; %>
+                                        %> <% currentURI = "../ehroscarRx/PrintDrugProfile.jsp?demographic_no=" + demographic_no; %>
 
                                         <html:checkbox property="uriArray" value="<%=currentURI%>"
                                                        style="display:none"/> <html:multibox property="indexArray"

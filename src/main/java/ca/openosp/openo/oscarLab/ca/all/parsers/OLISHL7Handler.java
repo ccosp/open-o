@@ -36,12 +36,12 @@ import ca.openosp.openo.Misc;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.bouncycastle.util.encoders.Base64;
-import org.oscarehr.olis.dao.OLISRequestNomenclatureDao;
-import org.oscarehr.olis.dao.OLISResultNomenclatureDao;
-import org.oscarehr.olis.model.OLISRequestNomenclature;
-import org.oscarehr.olis.model.OLISResultNomenclature;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.olis.dao.OLISRequestNomenclatureDao;
+import ca.openosp.openo.olis.dao.OLISResultNomenclatureDao;
+import ca.openosp.openo.olis.model.OLISRequestNomenclature;
+import ca.openosp.openo.olis.model.OLISResultNomenclature;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.UtilDateUtilities;
 import ca.uhn.hl7v2.HL7Exception;
@@ -61,7 +61,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
  */
 public class OLISHL7Handler implements MessageHandler {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     protected boolean isFinal = true;
     protected boolean isCorrected = false;
     protected Message msg = null;

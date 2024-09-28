@@ -26,7 +26,7 @@
 
 <%@page import="org.apache.commons.codec.binary.Base64" %>
 <%@page import="org.w3c.dom.Node" %>
-<%@page import="org.oscarehr.util.XmlUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.XmlUtils" %>
 <%@page import="org.w3c.dom.Document" %>
 <%@page import="org.oscarehr.myoscar_server.ws.Message2DataTransfer" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -44,17 +44,17 @@
     }
 %>
 
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.MessageManager" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.AccountManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils,java.net.URLEncoder" %>
-<%@page import="org.oscarehr.phr.web.MyOscarMessagesHelper" %>
+<%@page import="ca.openosp.openo.phr.web.MyOscarMessagesHelper" %>
 <%@page import="oscar.oscarDemographic.data.*, java.util.Enumeration" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities,java.util.*" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils,ca.openosp.openo.common.model.Demographic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Demographic;
@@ -36,7 +36,7 @@ import org.oscarehr.common.model.IntegratorConsent;
 import org.oscarehr.common.model.IntegratorConsent.ConsentStatus;
 import org.oscarehr.common.model.IntegratorConsent.SignatureStatus;
 import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class IntegratorConsentDaoTest extends DaoTestFixtures {
 

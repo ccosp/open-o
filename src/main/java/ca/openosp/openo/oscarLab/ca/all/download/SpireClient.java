@@ -31,7 +31,7 @@ import java.util.TimerTask;
 
 import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;

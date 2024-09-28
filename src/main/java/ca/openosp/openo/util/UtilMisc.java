@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 import ca.openosp.openo.Misc;
 import org.apache.commons.codec.binary.Base64;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class UtilMisc {
     /**

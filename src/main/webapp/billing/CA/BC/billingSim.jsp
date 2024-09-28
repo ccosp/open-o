@@ -40,9 +40,9 @@
 
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.util.*, java.net.*" errorPage="../../../errorpage.jsp" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 

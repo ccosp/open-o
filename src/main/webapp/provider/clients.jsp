@@ -30,16 +30,16 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.common.dao.ServiceRequestTokenDao" %>
-<%@ page import="org.oscarehr.common.dao.ServiceAccessTokenDao" %>
-<%@ page import="org.oscarehr.common.dao.ServiceClientDao" %>
-<%@ page import="org.oscarehr.common.model.ServiceClient" %>
-<%@ page import="org.oscarehr.common.model.ServiceRequestToken" %>
-<%@ page import="org.oscarehr.common.model.ServiceAccessToken" %>
+<%@ page import="ca.openosp.openo.common.dao.ServiceRequestTokenDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ServiceAccessTokenDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ServiceClientDao" %>
+<%@ page import="ca.openosp.openo.common.model.ServiceClient" %>
+<%@ page import="ca.openosp.openo.common.model.ServiceRequestToken" %>
+<%@ page import="ca.openosp.openo.common.model.ServiceAccessToken" %>
 <%
     SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

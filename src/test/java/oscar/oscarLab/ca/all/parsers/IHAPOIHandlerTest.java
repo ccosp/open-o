@@ -45,6 +45,7 @@ import java.util.zip.ZipFile;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.oscarLab.ca.all.parsers.IHAPOIHandler;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
@@ -65,7 +66,7 @@ import ca.openosp.openo.oscarLab.ca.all.parsers.MEDITECHHandler.ORDER_STATUS;
 
 @RunWith(Parameterized.class)
 public class IHAPOIHandlerTest {
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private static IHAPOIHandler handler;
     private static ZipFile zipFile;
     private static Document hl7XML;

@@ -4,8 +4,8 @@ package ca.openosp.openo.oscarDemographic.pageUtil;
 import cds.LaboratoryResultsDocument;
 import cdsDt.DateTimeFullOrPartial;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.util.StringUtils;
 
 import java.text.ParseException;

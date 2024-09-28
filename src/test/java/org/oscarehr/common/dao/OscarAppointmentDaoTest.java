@@ -35,12 +35,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Appointment;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class OscarAppointmentDaoTest extends DaoTestFixtures {
 

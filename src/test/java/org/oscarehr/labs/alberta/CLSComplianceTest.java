@@ -25,6 +25,7 @@ package org.oscarehr.labs.alberta;
 
 import static org.junit.Assert.*;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
@@ -32,7 +33,7 @@ import ca.openosp.openo.oscarLab.ca.all.parsers.CLSHandler;
 
 public class CLSComplianceTest {
 
-    private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger logger = MiscUtils.getLogger();
 
     private static final String LAB02 = "MSH|^~\\&|OPEN ENGINE|CLS|Egate|POSP|20101203122425||ORU^R01|Q199816389T198313506|P|2.3\r" +
             "PID|1|798274114^^^AB|2250008675^^^88000||MillMCK CB FSI||19701027|F||||83||\r" +

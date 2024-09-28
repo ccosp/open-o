@@ -22,11 +22,11 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ include file="/taglibs.jsp" %>
 
 <%@ include file="/common/messages.jsp" %>
-<%@ page import="org.oscarehr.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.common.model.Facility" %>
 <div class="tabs" id="tabs">
     <table cellpadding="3" cellspacing="0" border="0">
         <tr>

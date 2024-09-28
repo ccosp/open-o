@@ -56,9 +56,9 @@
 </script>
 <!-- don't close in 1 statement, will break IE7 -->
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 %>

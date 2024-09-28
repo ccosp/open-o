@@ -29,9 +29,9 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.common.printing.FontSettings;
+import ca.openosp.openo.common.printing.PdfWriterFactory;
 
 import ca.openosp.openo.OscarProperties;
 

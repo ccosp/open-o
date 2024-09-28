@@ -10,15 +10,15 @@
 
 		<!-- caisi core -->
 		<form-bean name="systemMessageForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="system_message" type="org.oscarehr.common.model.SystemMessage" />
+			<form-property name="system_message" type="ca.openosp.openo.common.model.SystemMessage" />
 		</form-bean>
 		<form-bean name="facilityMessageForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="facility_message" type="org.oscarehr.common.model.FacilityMessage" />
+			<form-property name="facility_message" type="ca.openosp.openo.common.model.FacilityMessage" />
 		</form-bean>
 		<form-bean name="roleForm" type="org.apache.struts.validator.DynaValidatorForm"></form-bean>
 		<form-bean name="inputForm" type="org.apache.struts.validator.LazyValidatorForm"></form-bean>
 		<form-bean name="issueAdminForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="issueAdmin" type="org.oscarehr.casemgmt.model.Issue" />
+			<form-property name="issueAdmin" type="ca.openosp.openo.casemgmt.model.Issue" />
 		</form-bean>
 		<form-bean name="lookupListForm" type="com.quatro.web.lookup.LookupListForm" />
 		<form-bean name="lookupTableListForm" type="org.apache.struts.validator.DynaValidatorForm">
@@ -31,17 +31,17 @@
 		<form-bean name="lookupCodeEditForm" type="com.quatro.web.lookup.LookupCodeEditForm">
 		</form-bean>
 		<form-bean name="clinicForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="clinic" type="org.oscarehr.common.model.Clinic" />
+			<form-property name="clinic" type="ca.openosp.openo.common.model.Clinic" />
 		</form-bean>
-		<form-bean name="olisPreferences" type="org.oscarehr.olis.model.OLISSystemPreferences"/>
+		<form-bean name="olisPreferences" type="ca.openosp.openo.olis.model.OLISSystemPreferences"/>
 
 		<form-bean name="siteForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="site" type="org.oscarehr.common.model.Site" />
+			<form-property name="site" type="ca.openosp.openo.common.model.Site" />
 		</form-bean>
 		<form-bean name="billingreferralForm" type="org.apache.struts.validator.DynaValidatorForm">
 			<form-property name="search" type="java.lang.String" />
 			<form-property name="SearchBy" type="java.lang.String" />
-			<form-property name="referral" type="org.oscarehr.common.model.ProfessionalSpecialist" />
+			<form-property name="referral" type="ca.openosp.openo.common.model.ProfessionalSpecialist" />
 		</form-bean>
 
 		<form-bean name="DxresearchReportForm" type="org.apache.struts.validator.DynaValidatorForm">
@@ -50,8 +50,8 @@
 			<!--    <form-property name="codesearch" type="java.lang.String" />  -->
 		</form-bean>
 
-		<form-bean name="addDocumentType" type="org.oscarehr.documentManager.data.AddDocumentTypeForm" />
-		<form-bean name="changeDocStatus" type="org.oscarehr.documentManager.data.ChangeDocStatusForm" />
+		<form-bean name="addDocumentType" type="documentManager.data.AddDocumentTypeForm" />
+		<form-bean name="changeDocStatus" type="documentManager.data.ChangeDocStatusForm" />
 		<!-- login form bean -->
 		<form-bean name="loginForm" type="ca.openosp.openo.login.LoginForm" />
 		<form-bean name="msgSendMessageForm" type="ca.openosp.openo.oscarMessenger.pageUtil.MsgSendMessageForm" />
@@ -155,7 +155,7 @@
 		<form-bean name="GstControlForm" type="ca.openosp.openo.oscarBilling.ca.on.administration.GstControlForm" />
 		<form-bean name="batchBillingFrm" type="org.apache.struts.action.DynaActionForm">
 			<form-property name="providers" type="java.util.List" />
-			<form-property name="provider" type="org.oscarehr.common.model.Provider" />
+			<form-property name="provider" type="ca.openosp.openo.common.model.Provider" />
 			<form-property name="serviceCode" type="java.lang.String" />
 			<form-property name="serviceDate" type="java.lang.String" />
 			<form-property name="DxCode" type="java.lang.String" />
@@ -176,7 +176,7 @@
 		<form-bean name="dxResearchLoadQuickListItemsForm" type="ca.openosp.openo.oscarDxResearch.pageUtil.dxResearchLoadQuickListItemsForm" />
 		<form-bean name="dxResearchUpdateQuickListForm" type="ca.openosp.openo.oscarDxResearch.pageUtil.dxResearchUpdateQuickListForm" />
 		<form-bean name="dxAssociationsForm" type="ca.openosp.openo.oscarDxResearch.bean.dxAssociationBean" />
-		<form-bean name="StudentImportForm" type="org.oscarehr.learning.web.StudentImportBean" />
+		<form-bean name="StudentImportForm" type="ca.openosp.openo.learning.web.StudentImportBean" />
 		<form-bean name="cidForm" type="oscar.billing.popup.CidForm" />
 		<form-bean name="BillingForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingForm" />
 		<form-bean name="BillingCreateBillingForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingCreateBillingForm" />
@@ -218,10 +218,10 @@
 		<form-bean name="receivePaymentActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm" />
 		<form-bean name="billingPreferencesActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingPreferencesActionForm" />
 		<form-bean name="supServiceCodeAssocActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocActionForm" />
-		<form-bean name="eDocsAddEditDocument" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
-		<form-bean name="documentUploadForm" type="org.oscarehr.documentManager.data.DocumentUploadForm" />
-		<form-bean name="addLinkDoc" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
-		<form-bean name="addEditHtmlDoc" type="org.oscarehr.documentManager.data.AddEditDocumentForm" />
+		<form-bean name="eDocsAddEditDocument" type="documentManager.data.AddEditDocumentForm" />
+		<form-bean name="documentUploadForm" type="documentManager.data.DocumentUploadForm" />
+		<form-bean name="addLinkDoc" type="documentManager.data.AddEditDocumentForm" />
+		<form-bean name="addEditHtmlDoc" type="documentManager.data.AddEditDocumentForm" />
 		<form-bean name="ManagePatientLettersForm" type="ca.openosp.openo.oscarReport.pageUtil.ManagePatientLettersForm" />
 		<form-bean name="CihiExportForm" type="org.apache.struts.validator.DynaValidatorForm">
 			<form-property name="patientSet" type="java.lang.String" />
@@ -241,11 +241,11 @@
 			<form-property name="installDate" type="java.lang.String" />
 		</form-bean>
 		<form-bean name="ticklerForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="tickler" type="org.oscarehr.common.model.Tickler" />
-			<form-property name="filter" type="org.oscarehr.common.model.CustomFilter" />
+			<form-property name="tickler" type="ca.openosp.openo.common.model.Tickler" />
+			<form-property name="filter" type="ca.openosp.openo.common.model.CustomFilter" />
 		</form-bean>
 		<form-bean name="customFilterForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="filter" type="org.oscarehr.common.model.CustomFilter" />
+			<form-property name="filter" type="ca.openosp.openo.common.model.CustomFilter" />
 		</form-bean>
 		<form-bean name="unreadTicklerForm" type="org.apache.struts.validator.LazyValidatorForm" />
 		<form-bean name="editProviderFaxForm" type="org.apache.struts.action.DynaActionForm">
@@ -276,50 +276,50 @@
 		</form-bean>
 		
 		<form-bean name="setTicklerPreferencesForm" type="org.apache.struts.action.DynaActionForm">
-			<form-property name="taskAssigneeSelection" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="taskAssigneeMRP" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="taskAssigneeProvider" type="org.oscarehr.common.model.UserProperty" />
+			<form-property name="taskAssigneeSelection" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="taskAssigneeMRP" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="taskAssigneeProvider" type="ca.openosp.openo.common.model.UserProperty" />
 		</form-bean>
 		
 		<form-bean name="setProviderNoteStaleDateForm" type="org.apache.struts.action.DynaActionForm">
-			<form-property name="dateProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="singleViewProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="dateProperty2" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="rxPageSizeProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="rxDefaultQuantityProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="rxProfileViewProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="rxUseRx3Property" type="org.oscarehr.common.model.UserProperty" />
-            <form-property name="useMyMedsProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="existingDefaultDocQueueProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="newDefaultDocQueueProperty" type="org.oscarehr.common.model.UserProperty" />
-            <form-property name="rxShowPatientDOBProperty" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="cppSingleLineProperty" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="eDocBrowserInMasterFileProperty" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="eDocBrowserInDocumentReportProperty" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="encounterWindowWidth" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="encounterWindowHeight" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="encounterWindowMaximize" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="quickChartSize" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="patientNameLength" type="org.oscarehr.common.model.UserProperty"/>
-            <form-property name="displayDocumentAsProperty" type="org.oscarehr.common.model.UserProperty"/>
-			<form-property name="labAckCommentProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="labRecallDelegate" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="labRecallMsgSubject" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="labRecallTicklerAssignee" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="labRecallTicklerPriority" type="org.oscarehr.common.model.UserProperty" />			
-			<form-property name="cobaltProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="hideOldEchartLinkInApptProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="bornPromptsProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="appointmentCardName" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="appointmentCardPhone" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="appointmentCardFax" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="dashboardShareProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="preventionSSOWarningProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="preventionISPAWarningProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="preventionNonISPAWarningProperty" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="clinicalConnectDisableCloseWindow" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="clinicalConnectDisableLogoutWarning" type="org.oscarehr.common.model.UserProperty" />
-			<form-property name="labMacroJSON" type="org.oscarehr.common.model.UserProperty" />
+			<form-property name="dateProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="singleViewProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="dateProperty2" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="rxPageSizeProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="rxDefaultQuantityProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="rxProfileViewProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="rxUseRx3Property" type="ca.openosp.openo.common.model.UserProperty" />
+            <form-property name="useMyMedsProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="existingDefaultDocQueueProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="newDefaultDocQueueProperty" type="ca.openosp.openo.common.model.UserProperty" />
+            <form-property name="rxShowPatientDOBProperty" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="cppSingleLineProperty" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="eDocBrowserInMasterFileProperty" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="eDocBrowserInDocumentReportProperty" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="encounterWindowWidth" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="encounterWindowHeight" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="encounterWindowMaximize" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="quickChartSize" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="patientNameLength" type="ca.openosp.openo.common.model.UserProperty"/>
+            <form-property name="displayDocumentAsProperty" type="ca.openosp.openo.common.model.UserProperty"/>
+			<form-property name="labAckCommentProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="labRecallDelegate" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="labRecallMsgSubject" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="labRecallTicklerAssignee" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="labRecallTicklerPriority" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="cobaltProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="hideOldEchartLinkInApptProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="bornPromptsProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="appointmentCardName" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="appointmentCardPhone" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="appointmentCardFax" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="dashboardShareProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="preventionSSOWarningProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="preventionISPAWarningProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="preventionNonISPAWarningProperty" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="clinicalConnectDisableCloseWindow" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="clinicalConnectDisableLogoutWarning" type="ca.openosp.openo.common.model.UserProperty" />
+			<form-property name="labMacroJSON" type="ca.openosp.openo.common.model.UserProperty" />
 		</form-bean>
 		<form-bean name="setMyOscarIdForm" type="org.apache.struts.action.DynaActionForm">
 			<form-property name="myOscarLoginId" type="java.lang.String" />
@@ -335,24 +335,24 @@
 
 		<form-bean name="StreetHealthIntakeReportForm" type="org.apache.struts.validator.LazyValidatorForm" />
 		<form-bean name="healthSafetyForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="healthsafety" type="org.oscarehr.PMmodule.model.HealthSafety" />
+			<form-property name="healthsafety" type="ca.openosp.openo.PMmodule.model.HealthSafety" />
 		</form-bean>
-		<form-bean name="programManagerViewForm" type="org.oscarehr.PMmodule.web.formbean.ProgramManagerViewFormBean" />
+		<form-bean name="programManagerViewForm" type="ca.openosp.openo.PMmodule.web.formbean.ProgramManagerViewFormBean" />
 		<form-bean name="programManagerForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="view" type="org.oscarehr.PMmodule.web.formbean.ProgramManagerViewFormBean" />
-			<form-property name="access" type="org.oscarehr.PMmodule.model.ProgramAccess" />
-			<form-property name="admission" type="org.oscarehr.common.model.Admission" />
+			<form-property name="view" type="ca.openosp.openo.PMmodule.web.formbean.ProgramManagerViewFormBean" />
+			<form-property name="access" type="ca.openosp.openo.PMmodule.model.ProgramAccess" />
+			<form-property name="admission" type="ca.openosp.openo.common.model.Admission" />
 			<form-property name="bedCheckTimes" type="org.oscarehr.common.model.BedCheckTime[]" />
 			<form-property name="addTime" type="java.lang.String" />
 			<form-property name="removeId" type="java.lang.String" />
-			<form-property name="function" type="org.oscarehr.PMmodule.model.ProgramFunctionalUser" />
-			<form-property name="restriction" type="org.oscarehr.PMmodule.model.ProgramClientRestriction" />
-			<form-property name="program" type="org.oscarehr.PMmodule.model.Program" />
-			<form-property name="programFirstSignature" type="org.oscarehr.PMmodule.model.ProgramSignature" />
-			<form-property name="provider" type="org.oscarehr.PMmodule.model.ProgramProvider" />
-			<form-property name="team" type="org.oscarehr.PMmodule.model.ProgramTeam" />
-			<form-property name="queue" type="org.oscarehr.PMmodule.model.ProgramQueue" />
-			<form-property name="client_status" type="org.oscarehr.PMmodule.model.ProgramClientStatus" />
+			<form-property name="function" type="ca.openosp.openo.PMmodule.model.ProgramFunctionalUser" />
+			<form-property name="restriction" type="ca.openosp.openo.PMmodule.model.ProgramClientRestriction" />
+			<form-property name="program" type="ca.openosp.openo.PMmodule.model.Program" />
+			<form-property name="programFirstSignature" type="ca.openosp.openo.PMmodule.model.ProgramSignature" />
+			<form-property name="provider" type="ca.openosp.openo.PMmodule.model.ProgramProvider" />
+			<form-property name="team" type="ca.openosp.openo.PMmodule.model.ProgramTeam" />
+			<form-property name="queue" type="ca.openosp.openo.PMmodule.model.ProgramQueue" />
+			<form-property name="client_status" type="ca.openosp.openo.PMmodule.model.ProgramClientStatus" />
 			<form-property name="searchStatus" type="java.lang.String"></form-property>
 			<form-property name="searchType" type="java.lang.String"></form-property>
 			<form-property name="searchFacilityId" type="java.lang.String"></form-property>	
@@ -366,7 +366,7 @@
 			<form-property name="programId" type="java.lang.Integer" />
 		</form-bean>
 		<form-bean name="agencyManagerForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="agency" type="org.oscarehr.PMmodule.model.Agency" />
+			<form-property name="agency" type="ca.openosp.openo.PMmodule.model.Agency" />
 			<form-property name="numRooms" type="java.lang.Integer" />
 			<form-property name="numBeds" type="java.lang.Integer" />
 			<form-property name="rooms" type="org.oscarehr.common.model.Room[]" />
@@ -375,80 +375,80 @@
 			<form-property name="bedTypes" type="org.oscarehr.common.model.BedType[]" />
 			<form-property name="programs" type="org.oscarehr.PMmodule.model.Program[]" />
 		</form-bean>
-		<form-bean name="bedManagerForm" type="org.oscarehr.PMmodule.web.admin.BedManagerForm" />
-		<form-bean name="facilityManagerForm" type="org.oscarehr.PMmodule.web.admin.FacilityManagerForm" />
+		<form-bean name="bedManagerForm" type="ca.openosp.openo.PMmodule.web.admin.BedManagerForm" />
+		<form-bean name="facilityManagerForm" type="ca.openosp.openo.PMmodule.web.admin.FacilityManagerForm" />
 		<form-bean name="oscarFacilityManagerForm" type="ca.openosp.openo.facility.FacilityManagerForm" />
 		<form-bean name="clientSearchForm2" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="criteria" type="org.oscarehr.PMmodule.web.formbean.ClientSearchFormBean" />
+			<form-property name="criteria" type="ca.openosp.openo.PMmodule.web.formbean.ClientSearchFormBean" />
 		</form-bean>
 		<form-bean name="clientManagerForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="view" type="org.oscarehr.PMmodule.web.formbean.ClientManagerFormBean" />
-			<form-property name="admission" type="org.oscarehr.common.model.Admission" />
-			<form-property name="bedDemographic" type="org.oscarehr.common.model.BedDemographic" />
-			<form-property name="client" type="org.oscarehr.common.model.Demographic" />
-			<form-property name="erconsent" type="org.oscarehr.PMmodule.web.formbean.ErConsentFormBean" />
-			<form-property name="form" type="org.oscarehr.common.model.CaisiFormInstance" />
-			<form-property name="program" type="org.oscarehr.PMmodule.model.Program" />
-			<form-property name="referral" type="org.oscarehr.PMmodule.model.ClientReferral" />
+			<form-property name="view" type="ca.openosp.openo.PMmodule.web.formbean.ClientManagerFormBean" />
+			<form-property name="admission" type="ca.openosp.openo.common.model.Admission" />
+			<form-property name="bedDemographic" type="ca.openosp.openo.common.model.BedDemographic" />
+			<form-property name="client" type="ca.openosp.openo.common.model.Demographic" />
+			<form-property name="erconsent" type="ca.openosp.openo.PMmodule.web.formbean.ErConsentFormBean" />
+			<form-property name="form" type="ca.openosp.openo.common.model.CaisiFormInstance" />
+			<form-property name="program" type="ca.openosp.openo.PMmodule.model.Program" />
+			<form-property name="referral" type="ca.openosp.openo.PMmodule.model.ClientReferral" />
 			<form-property name="unreservedBeds" type="org.oscarehr.common.model.Bed[]" />
 			<form-property name="bedDemographicStatuses" type="org.oscarehr.common.model.BedDemographicStatus[]" />
-			<form-property name="agency" type="org.oscarehr.PMmodule.model.Agency" />
-			<form-property name="provider" type="org.oscarehr.common.model.Provider" />
+			<form-property name="agency" type="ca.openosp.openo.PMmodule.model.Agency" />
+			<form-property name="provider" type="ca.openosp.openo.common.model.Provider" />
 			<form-property name="programWithIntakeId" type="java.lang.String" />
-			<form-property name="serviceRestriction" type="org.oscarehr.PMmodule.model.ProgramClientRestriction" />
+			<form-property name="serviceRestriction" type="ca.openosp.openo.PMmodule.model.ProgramClientRestriction" />
 			<form-property name="serviceRestrictionLength" type="java.lang.Integer" />
 		</form-bean>
 		<form-bean name="staffManagerForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="provider" type="org.oscarehr.common.model.Provider" />
-			<form-property name="program_provider" type="org.oscarehr.PMmodule.model.ProgramProvider" />
-			<form-property name="view" type="org.oscarehr.PMmodule.web.formbean.StaffManagerViewFormBean" />
+			<form-property name="provider" type="ca.openosp.openo.common.model.Provider" />
+			<form-property name="program_provider" type="ca.openosp.openo.PMmodule.model.ProgramProvider" />
+			<form-property name="view" type="ca.openosp.openo.PMmodule.web.formbean.StaffManagerViewFormBean" />
 			<form-property name="facilityId" type="java.lang.String" />
 			<form-property name="programId" type="java.lang.String" />
 		</form-bean>
 		<form-bean name="preIntakeForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="form" type="org.oscarehr.PMmodule.web.formbean.PreIntakeForm" />
+			<form-property name="form" type="ca.openosp.openo.PMmodule.web.formbean.PreIntakeForm" />
 		</form-bean>
 		<form-bean name="activityReportForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="form" type="org.oscarehr.PMmodule.web.formbean.ActivityReportFormBean" />
+			<form-property name="form" type="ca.openosp.openo.PMmodule.web.formbean.ActivityReportFormBean" />
 		</form-bean>
 		<form-bean name="clientListsReportForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="form" type="org.oscarehr.PMmodule.web.formbean.ClientListsReportFormBean" />
+			<form-property name="form" type="ca.openosp.openo.PMmodule.web.formbean.ClientListsReportFormBean" />
 		</form-bean>
 
 		<!--
         <form-bean name="customReportForm" type="org.apache.struts.validator.DynaValidatorForm">
-            <form-property name="form" type="org.oscarehr.PMmodule.web.formbean.CustomReportFormBean" />
+            <form-property name="form" type="org.oscarehr.PMmodule.ehrweb.formbean.CustomReportFormBean" />
         </form-bean>
 -->
 		<form-bean name="surveyExecuteForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="view" type="org.oscarehr.survey.web.formbean.SurveyExecuteFormBean" />
-			<form-property name="data" type="org.oscarehr.survey.web.formbean.SurveyExecuteDataBean" />
+			<form-property name="view" type="ca.openosp.openo.survey.web.formbean.SurveyExecuteFormBean" />
+			<form-property name="data" type="ca.openosp.openo.survey.web.formbean.SurveyExecuteDataBean" />
 		</form-bean>
 		<form-bean name="defaultRoleAccessForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="form" type="org.oscarehr.PMmodule.model.DefaultRoleAccess" />
+			<form-property name="form" type="ca.openosp.openo.PMmodule.model.DefaultRoleAccess" />
 		</form-bean>
 		<form-bean name="surveyForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="survey" type="org.oscarehr.common.model.Survey" />
+			<form-property name="survey" type="ca.openosp.openo.common.model.Survey" />
 			<form-property name="model" type="org.oscarehr.surveymodel.SurveyDocument" />
-			<form-property name="web" type="org.oscarehr.survey.web.formbean.SurveyManagerFormBean" />
+			<form-property name="web" type="ca.openosp.openo.survey.web.formbean.SurveyManagerFormBean" />
 			<form-property name="pageModel" type="org.oscarehr.surveymodel.Page" />
 			<form-property name="questionModel" type="org.oscarehr.surveymodel.Question" />
 			<form-property name="sectionModel" type="java.util.Map" />
 		</form-bean>
 		<form-bean name="surveyTestForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="view" type="org.oscarehr.survey.web.formbean.SurveyExecuteFormBean" />
-			<form-property name="data" type="org.oscarehr.survey.web.formbean.SurveyExecuteDataBean" />
+			<form-property name="view" type="ca.openosp.openo.survey.web.formbean.SurveyExecuteFormBean" />
+			<form-property name="data" type="ca.openosp.openo.survey.web.formbean.SurveyExecuteDataBean" />
 		</form-bean>
-		<form-bean name="caseManagementViewForm" type="org.oscarehr.casemgmt.web.formbeans.CaseManagementViewFormBean" />
-		<form-bean name="caseManagementEntryForm" type="org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean" />
+		<form-bean name="caseManagementViewForm" type="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementViewFormBean" />
+		<form-bean name="caseManagementEntryForm" type="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" />
 		<form-bean name="clientImageForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="clientImage" type="org.oscarehr.casemgmt.web.formbeans.ClientImageFormBean" />
+			<form-property name="clientImage" type="ca.openosp.openo.casemgmt.web.formbeans.ClientImageFormBean" />
 		</form-bean>
-		<form-bean name="onCallQuestionnaireForm" type="org.oscarehr.casemgmt.web.formbeans.OnCallQuestionnaireFormBean" />
+		<form-bean name="onCallQuestionnaireForm" type="ca.openosp.openo.casemgmt.web.formbeans.OnCallQuestionnaireFormBean" />
 
 		<!-- Generic Intake -->
-		<form-bean name="genericIntakeSearchForm" type="org.oscarehr.PMmodule.web.formbean.GenericIntakeSearchFormBean" />
-		<form-bean name="genericIntakeEditForm" type="org.oscarehr.PMmodule.web.formbean.GenericIntakeEditFormBean" />
+		<form-bean name="genericIntakeSearchForm" type="ca.openosp.openo.PMmodule.web.formbean.GenericIntakeSearchFormBean" />
+		<form-bean name="genericIntakeEditForm" type="ca.openosp.openo.PMmodule.web.formbean.GenericIntakeEditFormBean" />
 		<!-- Generic Intake -->
 
 
@@ -456,7 +456,7 @@
 		<form-bean name="rxCopyForm" type="org.apache.struts.validator.LazyValidatorForm" />
 
 		<form-bean name="mergeClientForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="criteria" type="org.oscarehr.PMmodule.web.formbean.ClientSearchFormBean" />
+			<form-property name="criteria" type="ca.openosp.openo.PMmodule.web.formbean.ClientSearchFormBean" />
 		</form-bean>
 
 		<form-bean name="duplicateClientCheckForm" type="org.apache.struts.validator.DynaValidatorForm">
@@ -511,46 +511,46 @@
 		</form-bean>
 
 		<form-bean name="ocularProcForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="proc" type="org.oscarehr.eyeform.model.EyeformOcularProcedure" />
+			<form-property name="proc" type="ca.openosp.openo.eyeform.model.EyeformOcularProcedure" />
 		</form-bean>
 
 		<form-bean name="specsHistoryForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="specs" type="org.oscarehr.eyeform.model.EyeformSpecsHistory" />
+			<form-property name="specs" type="ca.openosp.openo.eyeform.model.EyeformSpecsHistory" />
 		</form-bean>
 
 		<form-bean name="macroForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="macro" type="org.oscarehr.eyeform.model.Macro" />
+			<form-property name="macro" type="ca.openosp.openo.eyeform.model.Macro" />
 		</form-bean>
 
 		<form-bean name="procedureBookForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="data" type="org.oscarehr.eyeform.model.EyeformProcedureBook" />
+			<form-property name="data" type="ca.openosp.openo.eyeform.model.EyeformProcedureBook" />
 		</form-bean>
 
 		<form-bean name="testBookForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="data" type="org.oscarehr.eyeform.model.EyeformTestBook" />
+			<form-property name="data" type="ca.openosp.openo.eyeform.model.EyeformTestBook" />
 		</form-bean>
 
 		<form-bean name="eyeForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="followup" type="org.oscarehr.eyeform.model.EyeformFollowUp" />
-			<form-property name="cp" type="org.oscarehr.eyeform.model.EyeformConsultationReport" />
+			<form-property name="followup" type="ca.openosp.openo.eyeform.model.EyeformFollowUp" />
+			<form-property name="cp" type="ca.openosp.openo.eyeform.model.EyeformConsultationReport" />
 		</form-bean>
                 <form-bean name="PatientEndYearStatementForm" type="ca.openosp.openo.oscarBilling.ca.on.pageUtil.PatientEndYearStatementForm" />
 
 		<form-bean name="eyeformPlanForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="followup" type="org.oscarehr.eyeform.model.EyeformFollowUp" />
-			<form-property name="test" type="org.oscarehr.eyeform.model.EyeformTestBook" />
-			<form-property name="proc" type="org.oscarehr.eyeform.model.EyeformProcedureBook" />
+			<form-property name="followup" type="ca.openosp.openo.eyeform.model.EyeformFollowUp" />
+			<form-property name="test" type="ca.openosp.openo.eyeform.model.EyeformTestBook" />
+			<form-property name="proc" type="ca.openosp.openo.eyeform.model.EyeformProcedureBook" />
 		</form-bean>
 
 		<form-bean name="AppointmentTypeForm" type="ca.openosp.openo.appt.web.AppointmentTypeForm" />
 
 		<form-bean name="consultationReportForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="cr" type="org.oscarehr.eyeform.web.ConsultationReportFormBean" />
+			<form-property name="cr" type="ca.openosp.openo.eyeform.web.ConsultationReportFormBean" />
 		</form-bean>
 
 		<form-bean name="contactForm" type="org.apache.struts.validator.DynaValidatorForm">
-			<form-property name="contact" type="org.oscarehr.common.model.Contact" />
-			<form-property name="pcontact" type="org.oscarehr.common.model.ProfessionalContact" />
+			<form-property name="contact" type="ca.openosp.openo.common.model.Contact" />
+			<form-property name="pcontact" type="ca.openosp.openo.common.model.ProfessionalContact" />
 		</form-bean>
 
 		<form-bean name="CSSStylesForm" type="org.apache.struts.validator.DynaValidatorForm">
@@ -568,7 +568,7 @@
                     <form-property name="inactiveText" type="java.lang.String[]"></form-property>
                 </form-bean>
 		<form-bean name="episodeForm" type="org.apache.struts.action.DynaActionForm">
-			<form-property name="episode" type="org.oscarehr.common.model.Episode"/>
+			<form-property name="episode" type="ca.openosp.openo.common.model.Episode"/>
 		</form-bean>
 
                 <form-bean name="groupPreference" type="org.apache.struts.action.DynaActionForm"/>
@@ -583,25 +583,25 @@
 
 		<form-bean name="quickBillingBC" type="ca.openosp.openo.oscarBilling.ca.bc.quickbilling.QuickBillingBCFormBean" ></form-bean>
 		
-		<form-bean name="mcedtResourceForm" type="org.oscarehr.integration.mcedt.ResourceForm" />
+		<form-bean name="mcedtResourceForm" type="ca.openosp.openo.integration.mcedt.ResourceForm" />
 		
-		<form-bean name="mcedtUploadForm" type="org.oscarehr.integration.mcedt.UploadForm" />
+		<form-bean name="mcedtUploadForm" type="ca.openosp.openo.integration.mcedt.UploadForm" />
 		
-		<form-bean name="mcedtUploadAddForm" type="org.oscarehr.integration.mcedt.UploadAddForm" />
+		<form-bean name="mcedtUploadAddForm" type="ca.openosp.openo.integration.mcedt.UploadAddForm" />
 		
-		<form-bean name="mcedtInfoForm" type="org.oscarehr.integration.mcedt.InfoForm" />
+		<form-bean name="mcedtInfoForm" type="ca.openosp.openo.integration.mcedt.InfoForm" />
 		
-		<form-bean name="mcedtUpdateForm" type="org.oscarehr.integration.mcedt.UpdateForm" />
+		<form-bean name="mcedtUpdateForm" type="ca.openosp.openo.integration.mcedt.UpdateForm" />
 		
-		<form-bean name="mcedtDownloadForm" type="org.oscarehr.integration.mcedt.mailbox.DownloadForm" />
+		<form-bean name="mcedtDownloadForm" type="ca.openosp.openo.integration.mcedt.mailbox.DownloadForm" />
 		
-		<form-bean name="kaiedtUploadForm" type="org.oscarehr.integration.mcedt.mailbox.UploadForm" />
+		<form-bean name="kaiedtUploadForm" type="ca.openosp.openo.integration.mcedt.mailbox.UploadForm" />
 		
-		<form-bean name="kaiedtAutoUploadForm" type="org.oscarehr.integration.mcedt.mailbox.UploadForm" />
+		<form-bean name="kaiedtAutoUploadForm" type="ca.openosp.openo.integration.mcedt.mailbox.UploadForm" />
 		
-		<form-bean name="mcedtDownloadForm" type="org.oscarehr.integration.mcedt.mailbox.DownloadForm" />
+		<form-bean name="mcedtDownloadForm" type="ca.openosp.openo.integration.mcedt.mailbox.DownloadForm" />
 
-        <form-bean name="ValidateSwipeCard" type="org.oscarehr.integration.mchcv.ValidateSwipeCard" />
+        <form-bean name="ValidateSwipeCard" type="ca.openosp.openo.integration.mchcv.ValidateSwipeCard" />
         <form-bean name="bpmh" type="ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhFormBean" />
 
 		<form-bean name="FaxActionForm" type="org.apache.struts.action.DynaActionForm" dynamic="true">
@@ -640,63 +640,63 @@
 			<forward name="logoutsso" path="/ssoLogin.do?method=ssoLogout" />
 		</action>
 	
-		<action path="/lookupListManagerAction" type="org.oscarehr.admin.lookUpLists.LookupListManagerAction" 
+		<action path="/lookupListManagerAction" type="ca.openosp.openo.admin.lookUpLists.LookupListManagerAction"
 			scope="request" validate="false" parameter="method">
 			<forward name="success" path="/admin/lookUpLists/" />
 		</action>
 		
-		<action path="/admin/oncallClinic" scope="request" parameter="method" type="org.oscarehr.admin.reports.SaveOnCallClinicAction"></action>
+		<action path="/admin/oncallClinic" scope="request" parameter="method" type="ca.openosp.openo.admin.reports.SaveOnCallClinicAction"></action>
 	
 		<!-- OMD Dashboard Proof of Concept -->
-		<action input="/web/dashboard/admin/DashboardManager.jsp" name="FrmForm" path="/web/dashboard/admin/DashboardManager" 
-			parameter="method" type="org.oscarehr.dashboard.admin.ManageDashboardAction" scope="request" >
+		<action input="/web/dashboard/admin/DashboardManager.jsp" name="FrmForm" path="/web/dashboard/admin/DashboardManager"
+				parameter="method" type="ca.openosp.openo.dashboard.admin.ManageDashboardAction" scope="request" >
 			<forward name="success" path="/web/dashboard/admin/DashboardManager.jsp" />
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 			<forward name="ajax" path="/web/dashboard/admin/DashboardManager.do" />
 		</action>
 		
-		<action name="FrmForm" path="/web/dashboard/display/DashboardDisplay" 
-			parameter="method" type="org.oscarehr.dashboard.display.DisplayDashboardAction" scope="request" >
+		<action name="FrmForm" path="/web/dashboard/display/DashboardDisplay"
+				parameter="method" type="ca.openosp.openo.dashboard.display.DisplayDashboardAction" scope="request" >
 			<forward name="success" path="/web/dashboard/display/DashboardDisplay.jsp" />
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
 		
-		<action name="FrmForm" path="/web/dashboard/display/DrilldownDisplay" 
-			parameter="method" type="org.oscarehr.dashboard.display.DisplayDrilldownAction" scope="request" >
+		<action name="FrmForm" path="/web/dashboard/display/DrilldownDisplay"
+				parameter="method" type="ca.openosp.openo.dashboard.display.DisplayDrilldownAction" scope="request" >
 			<forward name="success" path="/web/dashboard/display/DrilldownDisplay.jsp" />
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
 		
-		<action name="FrmForm" path="/web/dashboard/display/AssignTickler" 
-			parameter="method" type="org.oscarehr.dashboard.admin.AssignTicklerAction" scope="request" >
+		<action name="FrmForm" path="/web/dashboard/display/AssignTickler"
+				parameter="method" type="ca.openosp.openo.dashboard.admin.AssignTicklerAction" scope="request" >
 			<forward name="success" path="/web/dashboard/display/AssignTickler.jsp" />
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
 		
-		<action name="FrmForm" path="/web/dashboard/display/ExportResults" 
-			parameter="method" type="org.oscarehr.dashboard.admin.ExportResultsAction" scope="request" >
+		<action name="FrmForm" path="/web/dashboard/display/ExportResults"
+				parameter="method" type="ca.openosp.openo.dashboard.admin.ExportResultsAction" scope="request" >
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
 		
-		<action name="FrmForm" path="/web/dashboard/display/DisplayIndicator" 
-			parameter="method" type="org.oscarehr.dashboard.display.DisplayIndicatorAction" scope="request" >
+		<action name="FrmForm" path="/web/dashboard/display/DisplayIndicator"
+				parameter="method" type="ca.openosp.openo.dashboard.display.DisplayIndicatorAction" scope="request" >
 			<forward name="success" path="/web/dashboard/display/IndicatorPanel.jsp" />
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
 	
-		<action path="/web/dashboard/OutcomesDashboard" 
-			parameter="method" type="org.oscarehr.integration.dashboard.OutcomesDashboardAction" scope="request" >
+		<action path="/web/dashboard/OutcomesDashboard"
+				parameter="method" type="ca.openosp.openo.integration.dashboard.OutcomesDashboardAction" scope="request" >
 			
 		</action>
 		
 		<action name="FrmForm" path="/web/dashboard/display/BulkPatientAction"
-			parameter="method" type="org.oscarehr.dashboard.admin.BulkPatientDashboardAction" scope="request" >
+				parameter="method" type="ca.openosp.openo.dashboard.admin.BulkPatientDashboardAction" scope="request" >
 			<forward name="unauthorized" path="/securityError.jsp" />
 			<forward name="error" path="/failure.jsp" />
 		</action>
@@ -716,12 +716,12 @@
 	
         <!-- Notification Mappings -->
         <action path="/notification/create"
-                type="org.oscarehr.common.web.ProviderNotificationAction"
+                type="ca.openosp.openo.common.web.ProviderNotificationAction"
                 scope="request">
         </action>
         <!-- End of Notification Mappings -->
 
-	<action path="/study/ManageStudy" scope="request" parameter="method" type="org.oscarehr.study.ManageStudyAction">
+	<action path="/study/ManageStudy" scope="request" parameter="method" type="ca.openosp.openo.study.ManageStudyAction">
 		<forward name="AddedToStudy" path="/admin/addStudy.jsp"></forward>
 		<forward name="closeWindow" path="/study/closeWindow.html"></forward>
 		<forward name="create" path="/study/closeWindow.html" />
@@ -746,13 +746,13 @@
     	</action>
 
 	<action input="/documentManager/addNewDocumentCategories.jsp" name="addDocumentType"
-			path="/documentManager/addDocumentType" type="org.oscarehr.documentManager.actions.AddDocumentTypeAction"
+			path="/documentManager/addDocumentType" type="documentManager.actions.AddDocumentTypeAction"
 			parameter="method" scope="request" validate="false">
 			<forward name="failed" path="/documentManager/addNewDocumentCategories.jsp"></forward>
 			<forward name="success" path="/documentManager/closeWindow.html"></forward>
 		</action>
 		<action input="/documentManager/changeStatus.jsp" name="changeDocStatus"
-			path="/documentManager/changeDocStatus" type="org.oscarehr.documentManager.actions.ChangeDocStatusAction"
+			path="/documentManager/changeDocStatus" type="documentManager.actions.ChangeDocStatusAction"
 			parameter="method" scope="request" validate="false">
 			<!--<forward name="failed" path="/documentManager/addNewDocumentCategories.jsp"></forward> -->
 			<forward name="success" path="/documentManager/closeWindow.html"></forward>
@@ -765,7 +765,7 @@
 
 		</action>
 
-		<action path="/Home" type="org.oscarehr.PMmodule.web.HomeAction" parameter="method" scope="request" validate="false">
+		<action path="/Home" type="ca.openosp.openo.PMmodule.web.HomeAction" parameter="method" scope="request" validate="false">
 			<forward name="home" path="page.home" />
 		</action>
 
@@ -947,8 +947,8 @@
 		</action>
 		<action input="/oscarRx/SearchDrug3.jsp" path="/oscarRx/UpdateScript" scope="request" parameter="parameterValue" type="ca.openosp.openo.oscarRx.pageUtil.RxWriteScriptAction">
 		</action>
-		<!--action input="/oscarRx/WriteScript.jsp" name="RxStashForm" path="/oscarRx/stash" scope="request" type="oscar.oscarRx.pageUtil.RxStashAction">
-            <forward name="success" path="/oscarRx/WriteScript.jsp" />
+		<!--action input="/ehroscarRx/WriteScript.jsp" name="RxStashForm" path="/ehroscarRx/stash" scope="request" type="oscar.ehroscarRx.pageUtil.RxStashAction">
+            <forward name="success" path="/ehroscarRx/WriteScript.jsp" />
         </action-->
 
 		<action name="RxUseFavoriteForm" path="/oscarRx/useFavorite" scope="request" parameter="parameterValue" type="ca.openosp.openo.oscarRx.pageUtil.RxUseFavoriteAction">
@@ -1097,16 +1097,16 @@
         <action input="/labDisplayOLIS.jsp" path="/lab/CA/ALL/PrintOLISLab" scope="request" type="ca.openosp.openo.oscarLab.ca.all.pageUtil.PrintOLISLabAction">
             <forward name="error" path="/lab/CA/ALL/labDisplay.jsp" />
         </action>
-        <action input="/olis/Search.jsp" path="/olis/Search" scope="request" type="org.oscarehr.olis.OLISSearchAction">
+        <action input="/olis/Search.jsp" path="/olis/Search" scope="request" type="ca.openosp.openo.olis.OLISSearchAction">
         	<forward name="results" path="/olis/Results.do" />
         </action>
-        <action input="/olis/Search.jsp" path="/olis/Results" scope="request" type="org.oscarehr.olis.OLISResultsAction">
+        <action input="/olis/Search.jsp" path="/olis/Results" scope="request" type="ca.openosp.openo.olis.OLISResultsAction">
         	<forward name="results" path="/olis/Results.jsp" />
         </action>
-        <action input="/olis/Results.jsp" path="/olis/AddToInbox" scope="request" parameter="method" type="org.oscarehr.olis.OLISAddToInboxAction">
+        <action input="/olis/Results.jsp" path="/olis/AddToInbox" scope="request" parameter="method" type="ca.openosp.openo.olis.OLISAddToInboxAction">
         	<forward name="ajax" path="/olis/ajaxResponse.jsp" />
         </action>
-        <action input="/olis/Simulate.jsp" path="/olis/UploadSimulationData" scope="request" type="org.oscarehr.olis.OLISUploadSimulationDataAction">
+        <action input="/olis/Simulate.jsp" path="/olis/UploadSimulationData" scope="request" type="ca.openosp.openo.olis.OLISUploadSimulationDataAction">
         	<forward name="success" path="/olis/Simulate.jsp" />
         </action>
 		<action input="/CMLDisplay.jsp" path="/lab/CA/ON/Forward" scope="request" type="ca.openosp.openo.oscarMDS.pageUtil.ReportReassignAction">
@@ -1277,7 +1277,7 @@
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 		</action>
 		
-		<action path="/previewDocs" validate="false" parameter="method" type="org.oscarehr.documentManager.actions.DocumentPreviewAction" scope="request">
+		<action path="/previewDocs" validate="false" parameter="method" type="documentManager.actions.DocumentPreviewAction" scope="request">
 			<forward name="fetchDocuments" path="/documentManager/attachDocument.jsp" />
 		</action>
 
@@ -1523,7 +1523,7 @@
 		</action>
 		<action name="EctStreamStyleSheet" path="/oscarEncounter/oscarMeasurements/StreamStyleSheet" scope="request" type="ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.EctStreamStyleSheet">
 		</action>
-		<action path="/oscarEncounter/MeasurementData" parameter="action" scope="request" type="org.oscarehr.measurements.web.MeasurementDataAction">
+		<action path="/oscarEncounter/MeasurementData" parameter="action" scope="request" type="ca.openosp.openo.web.MeasurementDataAction">
 		</action>
 		<action path="/oscarEncounter/oscarMeasurements/SetupDisplayHistory" scope="request" type="ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.EctSetupDisplayHistoryAction">
 			<forward name="continue" path="/oscarEncounter/oscarMeasurements/DisplayHistory.jsp" />
@@ -1643,7 +1643,7 @@
 		<action input="/admin/gstControl.jsp" name="GstControlForm" path="/admin/GstControl" scope="request" type="ca.openosp.openo.oscarBilling.ca.on.administration.GstControlAction">
 			<forward name="success" path="/admin/gstControl.jsp" />
 		</action>
-		<action input="/admin/manageCSSStyles.jsp" name="CSSStylesForm" path="/admin/manageCSSStyles" type="org.oscarehr.billing.CA.ON.web.ManageCSSAction" parameter="method" scope="request" validate="false">
+		<action input="/admin/manageCSSStyles.jsp" name="CSSStylesForm" path="/admin/manageCSSStyles" type="ca.openosp.openo.billing.CA.ON.web.ManageCSSAction" parameter="method" scope="request" validate="false">
 			<forward name="init" path="/admin/manageCSSStyles.jsp" />
 		</action>
 		<action input="/admin/demographicmergerecord.jsp" name="MergeRecords" path="/admin/MergeRecords" scope="request" type="ca.openosp.openo.oscarDemographic.pageUtil.DemographicMergeRecordAction">
@@ -1724,29 +1724,29 @@
 			<forward name="error" path="/provider/providerFaxErr.jsp" />
 			<forward name="eject" path="/index.jsp" />
 		</action>
-		<action input="/admin/configureFax.jsp" path="/admin/ManageFax" scope="request" parameter="method" type="org.oscarehr.fax.admin.ConfigureFaxAction">
+		<action input="/admin/configureFax.jsp" path="/admin/ManageFax" scope="request" parameter="method" type="ca.openosp.openo.fax.admin.ConfigureFaxAction">
 			<forward name="completed" path="/admin/manageFax.jsp"/>			
 		</action>
-		<action input="/admin/manageFaxes.jsp" path="/admin/ManageFaxes" scope="request" parameter="method" validate="false" type="org.oscarehr.fax.admin.ManageFaxes">
+		<action input="/admin/manageFaxes.jsp" path="/admin/ManageFaxes" scope="request" parameter="method" validate="false" type="ca.openosp.openo.fax.admin.ManageFaxes">
 			<forward name="faxstatus" path="/admin/faxStatusResults.jspf" />			
 		</action>		
-		<action input="/" path="/fax/faxAction" scope="request" name="FaxActionForm" parameter="method" validate="false" type="org.oscarehr.fax.action.FaxAction">
+		<action input="/" path="/fax/faxAction" scope="request" name="FaxActionForm" parameter="method" validate="false" type="ca.openosp.openo.fax.action.FaxAction">
 			<forward name="preview" path="/fax/CoverPage.jsp" />
 			<forward name="error" path="/errorpage.jsp" />
 			<forward name="CONSULTATION" path="/oscarEncounter/ViewRequest.do" />
 			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
 			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=true" />
 		</action>
-		<action input="/admin/manageEmails.jsp" path="/admin/ManageEmails" scope="request" parameter="method" validate="false" type="org.oscarehr.email.admin.ManageEmails">
+		<action input="/admin/manageEmails.jsp" path="/admin/ManageEmails" scope="request" parameter="method" validate="false" type="ca.openosp.openo.email.admin.ManageEmails">
 			<forward name="show" path="/admin/manageEmails.jsp" />
 			<forward name="emailstatus" path="/admin/emailStatusResults.jspf" />
 			<forward name="compose" path="/email/emailCompose.jsp" />			
 		</action>
-		<action input="/" path="/email/emailComposeAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailComposeAction">
+		<action input="/" path="/email/emailComposeAction" scope="request" parameter="method" validate="false" type="ca.openosp.openo.email.action.EmailComposeAction">
 			<forward name="compose" path="/email/emailCompose.jsp" />
 			<forward name="eFormError" path="/eform/efmshowform_data.jsp?error=true" />
 		</action>
-		<action input="/" path="/email/emailSendAction" scope="request" parameter="method" validate="false" type="org.oscarehr.email.action.EmailSendAction">
+		<action input="/" path="/email/emailSendAction" scope="request" parameter="method" validate="false" type="ca.openosp.openo.email.action.EmailSendAction">
 			<forward name="success" path="/email/emailCompose.jsp" />
 			<forward name="EFORM" path="/eform/efmshowform_data.jsp" />
 		</action>		
@@ -1798,7 +1798,7 @@
 			<forward name="eject" path="/index.jsp" />
 		</action>
 
-		<action path="/provider/rxInteractionWarningLevel" type="org.oscarehr.provider.web.ProviderRxInteractionWarningLevelAction" parameter="method" scope="request">
+		<action path="/provider/rxInteractionWarningLevel" type="ca.openosp.openo.provider.web.ProviderRxInteractionWarningLevelAction" parameter="method" scope="request">
 		</action>
 
                 <action path="/oscarResearch/oscarDxResearch/setupDxResearch" scope="request" type="ca.openosp.openo.oscarDxResearch.pageUtil.dxSetupResearchAction">
@@ -1839,10 +1839,10 @@
 		<action parameter="method" path="/oscarResearch/oscarDxResearch/dxResearchLoadAssociations" name="dxAssociationsForm" scope="request" type="ca.openosp.openo.oscarDxResearch.pageUtil.dxResearchLoadAssociationsAction">
 			<forward name="success" path="/oscarResearch/oscarDxResearch/dxResearchSelectAssociations.jsp" redirect="true" />
 		</action>
-		<action parameter="method" path="/oscarLearning/CourseManager" name="courseManagerForm" scope="request" type="org.oscarehr.learning.web.CourseManagerAction">
+		<action parameter="method" path="/oscarLearning/CourseManager" name="courseManagerForm" scope="request" type="ca.openosp.openo.learning.web.CourseManagerAction">
 			<forward name="success" path="/oscarLearning/CourseManager.jsp" redirect="true" />
 		</action>
-		<action parameter="method" path="/oscarLearning/StudentImport" name="StudentImportForm" scope="request" type="org.oscarehr.learning.web.StudentImportAction">
+		<action parameter="method" path="/oscarLearning/StudentImport" name="StudentImportForm" scope="request" type="ca.openosp.openo.learning.web.StudentImportAction">
 			<forward name="success" path="/oscarLearning/StudentImport.jsp" redirect="true" />
 		</action>
 		<action input="/billing/CA/BC/billingBC.jsp" name="BillingCreateBillingForm" path="/billing" scope="session" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingAction" validate="false">
@@ -1867,7 +1867,7 @@
 			<forward name="success" path="/billing/CA/BC/billStatement.jsp" />
 		</action>
 
-		<action path="/billing/CA/ON/BatchBill" scope="request" parameter="method" type="org.oscarehr.billing.CA.ON.web.BatchBillAction">
+		<action path="/billing/CA/ON/BatchBill" scope="request" parameter="method" type="ca.openosp.openo.billing.CA.ON.web.BatchBillAction">
 			<forward name="saved" path="/billing/CA/ON/batchsaved.jsp" />
 			<forward name="error" path="/billing/CA/ON/batcherror.jsp" />
 			<forward name="success" path="/billing/CA/ON/batchBilling.jsp" />
@@ -1960,10 +1960,10 @@
 			<forward name="error" path="/oscarPrevention/index.jsp" />
 		</action>
 
-		<action name="FrmForm" path="/demographic/SearchDemographic" scope="request" type="org.oscarehr.common.web.SearchDemographicAutoCompleteAction">
+		<action name="FrmForm" path="/demographic/SearchDemographic" scope="request" type="ca.openosp.openo.common.web.SearchDemographicAutoCompleteAction">
 			<forward name="success" path="/demographic/autocomplete.jsp" />
 		</action>
-		<action name="FrmForm" path="/provider/SearchProvider" scope="request" parameter="method" type="org.oscarehr.common.web.SearchProviderAutoCompleteAction">
+		<action name="FrmForm" path="/provider/SearchProvider" scope="request" parameter="method" type="ca.openosp.openo.common.web.SearchProviderAutoCompleteAction">
 		</action>
 
 		<action input="/demographic/AddAlternateContact.jsp" name="FrmForm" path="/demographic/AddRelation" scope="request" type="ca.openosp.openo.oscarDemographic.pageUtil.AddDemographicRelationshipAction">
@@ -2148,21 +2148,21 @@
 		<action input="/billing/CA/BC/billingSVCTrayAssoc.jsp" name="supServiceCodeAssocActionForm" path="/billing/CA/BC/supServiceCodeAssocAction" scope="request" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocAction" validate="false">
 			<forward name="success" path="/billing/CA/BC/billingSVCTrayAssoc.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="eDocsAddEditDocument" path="/documentManager/addEditDocument" type="org.oscarehr.documentManager.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="eDocsAddEditDocument" path="/documentManager/addEditDocument" type="documentManager.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
 			<forward name="successAdd" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failAdd" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failEdit" path="/documentManager/editDocument.jsp"></forward>
 			<forward name="successEdit" path="/documentManager/closeWindow.html"></forward>
 			<forward name="fastUploadSuccess" path="/documentManager/uploadMultiDocument.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="FrmForm" path="/documentManager/combinePDFs" type="org.oscarehr.documentManager.actions.CombinePDFAction" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="FrmForm" path="/documentManager/combinePDFs" type="documentManager.actions.CombinePDFAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/documentReport.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="addLinkDoc" path="/documentManager/addLink" type="org.oscarehr.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="addLinkDoc" path="/documentManager/addLink" type="documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failed" path="/documentManager/documentReport.jsp"></forward>
 		</action>
-		<action input="/documentManager/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/documentManager/addEditHtml" type="org.oscarehr.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/documentManager/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/documentManager/addEditHtml" type="documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/closeWindow.html" />
 			<forward name="failed" path="/documentManager/addedithtmldocument.jsp" />
 		</action>
@@ -2243,7 +2243,7 @@
 			<forward name="view" path="/ticklerPlus/viewUnreadTicklers.jsp" />
 			<forward name="login" path="/ticklerPlus/loginUnreadTicklers.jsp" />
 		</action>
-		<action path="/PMmodule/StreetHealthIntakeReportAction" type="org.oscarehr.PMmodule.streethealth.StreetHealthIntakeReportAction" name="StreetHealthIntakeReportForm" scope="request" input="/PMmodule/StreetHealthIntakeReport.jsp">
+		<action path="/PMmodule/StreetHealthIntakeReportAction" type="ca.openosp.openo.PMmodule.streethealth.StreetHealthIntakeReportAction" name="StreetHealthIntakeReportForm" scope="request" input="/PMmodule/StreetHealthIntakeReport.jsp">
 			<forward name="success" path="/PMmodule/StreetHealthIntakeReport.jsp" />
 			<forward name="download" path="/PMmodule/StreetHealthIntakeReportDownload.jsp" />
 			<forward name="error" path="/PMmodule/StreetHealthIntakeReport.jsp" />
@@ -2344,7 +2344,7 @@
 			<forward name="report" path="/PMmodule/GenericIntake/Report.jsp" />
 		</action>
 		<!-- FORMS -->
-		<action path="/PMmodule/Forms/SurveyExecute" type="org.oscarehr.PMmodule.web.forms.SurveyExecuteAction" parameter="method" name="surveyExecuteForm" scope="session">
+		<action path="/PMmodule/Forms/SurveyExecute" type="ca.openosp.openo.PMmodule.web.forms.SurveyExecuteAction" parameter="method" name="surveyExecuteForm" scope="session">
 			<forward name="view" path="/PMmodule/survey/surveyView.jsp" />
 			<forward name="execute" path="/PMmodule/survey/surveyExecute.jsp" />
 			<forward name="printPreview" path="/PMmodule/survey/surveyPrintPreview.jsp" />
@@ -2386,11 +2386,11 @@
 			<forward name="report" path="/PMmodule/reports/ClientListsReport.jsp" />
 		</action>
 		<!--
-			<action path="/PMmodule/Reports/CustomReport" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" name="customReportForm" scope="request" validate="false"> <forward name="list" path="page.customreport.list" /> <forward
+			<action path="/PMmodule/Reports/CustomReport" type="org.springframework.ehrweb.struts.DelegatingActionProxy" parameter="method" name="customReportForm" scope="request" validate="false"> <forward name="list" path="page.customreport.list" /> <forward
 			name="form" path="page.customreport.form" /> </action>
 		-->
 				
-		<action path="/SurveyManager" type="org.oscarehr.survey.web.SurveyManagerAction" parameter="method" name="surveyForm" scope="session">
+		<action path="/SurveyManager" type="ca.openosp.openo.survey.web.SurveyManagerAction" parameter="method" name="surveyForm" scope="session">
 			<forward name="edit" path=".view.survey.form" />
 			<forward name="list" path=".view.survey.manager" redirect="true" />
 			<forward name="new_survey" path=".view.survey.new_survey" />
@@ -2401,7 +2401,7 @@
 			<forward name="reportForm" path="/PMmodule/reports/UcfReportForm.jsp" />
 			<forward name="report" path="/PMmodule/reports/UcfReport.jsp" />
 		</action>
-		<action path="/SurveyTest" type="org.oscarehr.survey.web.SurveyTestAction" parameter="method" name="surveyTestForm" scope="session">
+		<action path="/SurveyTest" type="ca.openosp.openo.survey.web.SurveyTestAction" parameter="method" name="surveyTestForm" scope="session">
 			<forward name="view" path="/survey/surveyTest/surveyView.jsp" />
 			<forward name="execute" path="/survey/surveyTest/surveyExecute.jsp" />
 			<forward name="manager" path="/SurveyManager.do?method=list" redirect="true" />
@@ -2442,12 +2442,12 @@
 			<forward name="expired" path="/casemgmt/expired.jsp" />
 			<forward name="surveillance" path="/oscarSurveillance/CheckSurveillance.do" />
 		</action>
-		<action path="/OscarChartPrint" type="org.oscarehr.casemgmt.web.EChartPrintAction" parameter="method" scope="request">
+		<action path="/OscarChartPrint" type="ca.openosp.openo.casemgmt.web.EChartPrintAction" parameter="method" scope="request">
         </action>
 		<action path="/ClientImage" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request" name="clientImageForm" input="/casemgmt/uploadimage.jsp">
 			<forward name="success" path="/casemgmt/uploadimage.jsp" />
 		</action>
-		<action path="/OnCallQuestionnaire" type="org.oscarehr.casemgmt.web.OnCallQuestionnaireAction" parameter="method" scope="request" input="/casemgmt/CaseManagementView.jsp" name="onCallQuestionnaireForm">
+		<action path="/OnCallQuestionnaire" type="ca.openosp.openo.casemgmt.web.OnCallQuestionnaireAction" parameter="method" scope="request" input="/casemgmt/CaseManagementView.jsp" name="onCallQuestionnaireForm">
 			<forward name="form" path="/casemgmt/OnCallQuestionnaireForm.jsp" />
 			<forward name="windowClose" path="/casemgmt/close.jsp" />
 		</action>
@@ -2494,50 +2494,50 @@
 		</action>
 		<!-- RBT Groups END -->
 
-		<action path="/eyeform/OcularProc" type="org.oscarehr.eyeform.web.OcularProcAction" parameter="method" scope="request" validate="false" input="/eyeform/ocular_proc.jsp" name="ocularProcForm">
+		<action path="/eyeform/OcularProc" type="ca.openosp.openo.eyeform.web.OcularProcAction" parameter="method" scope="request" validate="false" input="/eyeform/ocular_proc.jsp" name="ocularProcForm">
 			<forward name="form" path="/eyeform/ocular_proc.jsp" />
 			<forward name="list" path="/eyeform/ocular_proc_list.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/SpecsHistory" type="org.oscarehr.eyeform.web.SpecsHistoryAction" parameter="method" scope="request" validate="false" input="/eyeform/specs_history.jsp" name="specsHistoryForm">
+		<action path="/eyeform/SpecsHistory" type="ca.openosp.openo.eyeform.web.SpecsHistoryAction" parameter="method" scope="request" validate="false" input="/eyeform/specs_history.jsp" name="specsHistoryForm">
 			<forward name="form" path="/eyeform/specs_history.jsp" />
 			<forward name="list" path="/eyeform/specs_history_list.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/Macro" type="org.oscarehr.eyeform.web.MacroAction" parameter="method" scope="request" validate="false" input="/eyeform/macro.jsp" name="macroForm">
+		<action path="/eyeform/Macro" type="ca.openosp.openo.eyeform.web.MacroAction" parameter="method" scope="request" validate="false" input="/eyeform/macro.jsp" name="macroForm">
 			<forward name="list" path="/eyeform/macro_list.jsp" />
 			<forward name="form" path="/eyeform/macro.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/NoteData" type="org.oscarehr.eyeform.web.NoteAddonAction" parameter="method" scope="request" validate="false">
+		<action path="/eyeform/NoteData" type="ca.openosp.openo.eyeform.web.NoteAddonAction" parameter="method" scope="request" validate="false">
 			<forward name="current_note" path="/eyeform/current_note.jsp" />
 		</action>
 
-		<action path="/eyeform/ProcedureBook" type="org.oscarehr.eyeform.web.ProcedureBookAction" parameter="method" scope="request" validate="false" input="/eyeform/procedure_book.jsp" name="procedureBookForm">
+		<action path="/eyeform/ProcedureBook" type="ca.openosp.openo.eyeform.web.ProcedureBookAction" parameter="method" scope="request" validate="false" input="/eyeform/procedure_book.jsp" name="procedureBookForm">
 			<forward name="form" path="/eyeform/procedure_book.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/TestBook" type="org.oscarehr.eyeform.web.TestBookAction" parameter="method" scope="request" validate="false" input="/eyeform/test_book.jsp" name="testBookForm">
+		<action path="/eyeform/TestBook" type="ca.openosp.openo.eyeform.web.TestBookAction" parameter="method" scope="request" validate="false" input="/eyeform/test_book.jsp" name="testBookForm">
 			<forward name="form" path="/eyeform/test_book.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/FollowUp" type="org.oscarehr.eyeform.web.FollowUpAction" parameter="method" scope="request" validate="false" input="/eyeform/followup.jsp" name="eyeForm">
+		<action path="/eyeform/FollowUp" type="ca.openosp.openo.eyeform.web.FollowUpAction" parameter="method" scope="request" validate="false" input="/eyeform/followup.jsp" name="eyeForm">
 			<forward name="form" path="/eyeform/followup.jsp" />
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/EyeformPlan" type="org.oscarehr.eyeform.web.PlanAction" parameter="method" scope="request" validate="false" input="/eyeform/plan_new.jsp" name="eyeformPlanForm">
+		<action path="/eyeform/EyeformPlan" type="ca.openosp.openo.eyeform.web.PlanAction" parameter="method" scope="request" validate="false" input="/eyeform/plan_new.jsp" name="eyeformPlanForm">
 			<forward name="form" path="/eyeform/plan_new.jsp" />
 			<forward name="edit" path="/eyeform/plan_edit.jsp" />
 			<forward name="success" path="/eyeform/plan_success.jsp" />
 		</action>
 
-		<action path="/eyeform/Eyeform" type="org.oscarehr.eyeform.web.EyeformAction" parameter="method" scope="request" validate="false" input="/eyeform/followup.jsp" name="eyeForm">
+		<action path="/eyeform/Eyeform" type="ca.openosp.openo.eyeform.web.EyeformAction" parameter="method" scope="request" validate="false" input="/eyeform/followup.jsp" name="eyeForm">
 			<forward name="conreqcc" path="/eyeform/conreqcc.jsp" />
 			<forward name="conspecial" path="/eyeform/conspecialScript.jsp" />
 			<forward name="conspecialhtml" path="/eyeform/conspecial.jsp" />
@@ -2546,54 +2546,54 @@
 			<forward name="success" path="/eyeform/success.jsp" />
 		</action>
 
-		<action path="/eyeform/ConsultationReportList" type="org.oscarehr.eyeform.web.ConReportListAction" parameter="method" scope="request" validate="false" input="/eyeform/conreportlist.jsp" name="consultationReportForm">
+		<action path="/eyeform/ConsultationReportList" type="ca.openosp.openo.eyeform.web.ConReportListAction" parameter="method" scope="request" validate="false" input="/eyeform/conreportlist.jsp" name="consultationReportForm">
 			<forward name="list" path="/eyeform/conreportlist.jsp" />
 		</action>
 
-		<action path="/eyeform/SendTickler" type="org.oscarehr.eyeform.EyeformSendTicklerAction"
+		<action path="/eyeform/SendTickler" type="ca.openosp.openo.eyeform.EyeformSendTicklerAction"
 			scope="request" validate="false">
 		</action>
 
-		<action path="/eyeform/Util" type="org.oscarehr.eyeform.EyeformUtilAction"
+		<action path="/eyeform/Util" type="ca.openosp.openo.eyeform.EyeformUtilAction"
 			scope="request" parameter="method">
 		</action>
 
 
-		<action path="/casemgmt/ExtPrintRegistry" type="org.oscarehr.casemgmt.web.ExtPrintRegistryAction" parameter="method" scope="request">
+		<action path="/casemgmt/ExtPrintRegistry" type="ca.openosp.openo.casemgmt.web.ExtPrintRegistryAction" parameter="method" scope="request">
 		</action>
 
-		<action path="/casemgmt/RegisterCppCode" type="org.oscarehr.casemgmt.web.RegisterCppCode" parameter="method" scope="request">
+		<action path="/casemgmt/RegisterCppCode" type="ca.openosp.openo.casemgmt.web.RegisterCppCode" parameter="method" scope="request">
 		</action>
 
-		<action path="/provider/UserPreference" type="org.oscarehr.provider.web.UserPreferenceAction" parameter="method" scope="request" validate="false" input="/provider/UserPreferences.jsp">
+		<action path="/provider/UserPreference" type="ca.openosp.openo.provider.web.UserPreferenceAction" parameter="method" scope="request" validate="false" input="/provider/UserPreferences.jsp">
 			<forward name="form" path="/provider/UserPreferences.jsp" />
 		</action>
 
-		<action path="/provider/CppPreferences" type="org.oscarehr.provider.web.CppPreferencesAction" parameter="method" scope="request" validate="false" input="/provider/cpp_preferences.jsp">
+		<action path="/provider/CppPreferences" type="ca.openosp.openo.provider.web.CppPreferencesAction" parameter="method" scope="request" validate="false" input="/provider/cpp_preferences.jsp">
 			<forward name="form" path="/provider/cpp_preferences.jsp" />
 			<forward name="exit" path="/oscarEncounter/close.jsp" />
 		</action>
 
-		<action path="/provider/OlisPreferences" type="org.oscarehr.provider.web.OlisPreferencesAction" parameter="method" scope="request" validate="false" input="/provider/olis_preferences.jsp">
+		<action path="/provider/OlisPreferences" type="ca.openosp.openo.provider.web.OlisPreferencesAction" parameter="method" scope="request" validate="false" input="/provider/olis_preferences.jsp">
 			<forward name="form" path="/provider/olis_preferences.jsp" />
 		</action>
 
-		<action path="/eyeform/ExaminationHistory" type="org.oscarehr.eyeform.web.ExaminationHistoryAction" parameter="method">
+		<action path="/eyeform/ExaminationHistory" type="ca.openosp.openo.eyeform.web.ExaminationHistoryAction" parameter="method">
 			<forward name="success" path="/eyeform/examination_history.jsp" />
 			<forward name="results" path="/eyeform/examination_history_results.jsp" />
 		</action>
 
 		<!-- END OSCAR Report By Template -->
 
-		<action path="/searchProfessionalSpecialist" type="org.oscarehr.contactRegistry.ProfessionalSpecialistAction"
+		<action path="/searchProfessionalSpecialist" type="ca.openosp.openo.contactRegistry.ProfessionalSpecialistAction"
 		        parameter="method"  scope="request">
 		</action>
 
-		<action path="/getProfessionalSpecialist" type="org.oscarehr.contactRegistry.ProfessionalSpecialistAction"
+		<action path="/getProfessionalSpecialist" type="ca.openosp.openo.contactRegistry.ProfessionalSpecialistAction"
 		        parameter="method" scope="request">
 		</action>
 
-		<action path="/demographic/Contact" type="org.oscarehr.common.web.ContactAction" parameter="method" scope="request" validate="false" name="contactForm">
+		<action path="/demographic/Contact" type="ca.openosp.openo.common.web.ContactAction" parameter="method" scope="request" validate="false" name="contactForm">
 			<forward name="pForm" path="/demographic/addEditProfessionalContact.jsp" />
 			<forward name="cForm" path="/demographic/addEditContact.jsp" />
             <forward name="view" path="/demographic/viewContact.jsp" />
@@ -2628,7 +2628,7 @@
 			<forward name="inputJsp" path="/phr/SendToPhrPreview.jsp" />
 			<forward name="loginPage" path="/phr/response.jsp" />
 		</action>
-		<action path="/demographic/viewPhrRecord" name="FrmForm" type="org.oscarehr.phr.web.PHRViewPatientRecord" parameter="method" scope="request">
+		<action path="/demographic/viewPhrRecord" name="FrmForm" type="ca.openosp.openo.phr.web.PHRViewPatientRecord" parameter="method" scope="request">
 			<forward name="login" path="/phr/PHRLoginAndRedirect.jsp" />
 			<forward name="phr" path="/phr/PHRRedirectToPhrForm.jsp" />
 			<forward name="viewVerification" path="/phr/PHRVerification.jsp" />
@@ -2639,7 +2639,7 @@
 			<forward name="success" path="/admin/clinicAdmin.jsp" />
 		</action>
 
-		<action path="/olis/Preferences" name="olisPreferences" type="org.oscarehr.olis.OLISPreferencesAction" parameter="method" scope="request">
+		<action path="/olis/Preferences" name="olisPreferences" type="ca.openosp.openo.olis.OLISPreferencesAction" parameter="method" scope="request">
 			<forward name="success" path="/olis/Preferences.jsp" />
 		</action>
 		<action path="/admin/ManageSites" name="siteForm" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
@@ -2647,7 +2647,7 @@
 			<forward name="details" path="/admin/sitesAdminDetail.jsp" />
 		</action>
 
-		<action path="/admin/ManageBillingReferral" name="billingreferralForm" type="org.oscarehr.common.web.BillingreferralEditAction" parameter="method" scope="request">
+		<action path="/admin/ManageBillingReferral" name="billingreferralForm" type="ca.openosp.openo.common.web.BillingreferralEditAction" parameter="method" scope="request">
 			<forward name="list" path="/admin/billingreferralAdmin.jsp" />
 		</action>
 
@@ -2657,32 +2657,32 @@
 		</action>
 
 
-		<action path="/oscarEncounter/oscarMeasurements/adminFlowsheet/FlowSheetCustomAction" name="FrmForm" type="org.oscarehr.common.web.FlowSheetCustomAction" parameter="method" scope="request">
+		<action path="/oscarEncounter/oscarMeasurements/adminFlowsheet/FlowSheetCustomAction" name="FrmForm" type="ca.openosp.openo.common.web.FlowSheetCustomAction" parameter="method" scope="request">
 			<forward name="success" path="/oscarEncounter/oscarMeasurements/adminFlowsheet/EditFlowsheet.jsp" />
 			<forward name="newflowsheet" path="/oscarEncounter/oscarMeasurements/adminFlowsheet/NewFlowsheet.jsp" />
 		</action>
 
-		<action path="/oscarEncounter/oscarMeasurements/FlowSheetDrugAction" name="FrmForm" type="org.oscarehr.common.web.FlowSheetDrugAction" parameter="method" scope="request">
+		<action path="/oscarEncounter/oscarMeasurements/FlowSheetDrugAction" name="FrmForm" type="ca.openosp.openo.common.web.FlowSheetDrugAction" parameter="method" scope="request">
 			<forward name="success" path="/oscarEncounter/oscarMeasurements/TemplateFlowSheet.jsp" />
 		</action>
 
-		<action path="/documentManager/ManageDocument" name="FrmForm" type="org.oscarehr.documentManager.actions.ManageDocumentAction" parameter="method" scope="request">
+		<action path="/documentManager/ManageDocument" name="FrmForm" type="documentManager.actions.ManageDocumentAction" parameter="method" scope="request">
 			<forward name="success" path="/documentManager/undocument.jsp" />
 			<forward name="displaySingleDoc" path="/documentManager/MultiPageDocDisplay.jsp" />
                         <forward name="nextIncomingDoc" path="/documentManager/incomingDocs.jsp" />
 		</action>
 		
-                <action path="/DocumentDescriptionTemplate" name="FrmForm" type="org.oscarehr.provider.web.DocumentDescriptionTemplateAction" parameter="method" scope="request">
+                <action path="/DocumentDescriptionTemplate" name="FrmForm" type="ca.openosp.openo.provider.web.DocumentDescriptionTemplateAction" parameter="method" scope="request">
 		</action>
                 
-                <action path="/PrinterList" name="FrmForm" type="org.oscarehr.printer.PrinterListAction" parameter="method" scope="request">
+                <action path="/PrinterList" name="FrmForm" type="ca.openosp.openo.printer.PrinterListAction" parameter="method" scope="request">
 		</action>
                 
-		<action path="/documentManager/SplitDocument" name="FrmForm" type="org.oscarehr.documentManager.actions.SplitDocumentAction" parameter="method" scope="request">
+		<action path="/documentManager/SplitDocument" name="FrmForm" type="documentManager.actions.SplitDocumentAction" parameter="method" scope="request">
         	<forward name="success" path="/oscarMDS/Splitclose.jsp" />
         </action>
 
-		<action input="/documentManager/documentUploader.jsp" name="documentUploadForm" path="/documentManager/documentUpload" type="org.oscarehr.documentManager.actions.DocumentUploadAction" parameter="method" scope="request" validate="false">
+		<action input="/documentManager/documentUploader.jsp" name="documentUploadForm" path="/documentManager/documentUpload" type="documentManager.actions.DocumentUploadAction" parameter="method" scope="request" validate="false">
         </action>
 
 		<action path="/PhrRetrieve" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
@@ -2702,10 +2702,10 @@
 		<action path="/phr/Logout" name="FrmForm" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
 		</action>
 		<!--
-		<action path="/phrExchange" name="FrmForm" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
-                    <forward name="success" path="/oscarRx/displayMedsFromPhr.jsp" />
-                    <forward name="displaySurveys" path="/oscarRx/displaySurveys.jsp"/>
-                    <forward name="phrNotAuthorized" path="/oscarRx/phrNotAuthorized.jsp"/>
+		<action path="/phrExchange" name="FrmForm" type="org.springframework.ehrweb.struts.DelegatingActionProxy" parameter="method" scope="request">
+                    <forward name="success" path="/ehroscarRx/displayMedsFromPhr.jsp" />
+                    <forward name="displaySurveys" path="/ehroscarRx/displaySurveys.jsp"/>
+                    <forward name="phrNotAuthorized" path="/ehroscarRx/phrNotAuthorized.jsp"/>
 		</action>
 		 -->
 		<action path="/phr/UserManagement" name="FrmForm" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">
@@ -2748,24 +2748,24 @@
 		<action path="/saveWorkView" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request" validate="false">
 		</action>
 
-		<action path="/Provider/showPersonal" type="org.oscarehr.provider.web.DisplayPersonalInfoAppointmentAction" parameter="method" validate="false" scope="request">
+		<action path="/Provider/showPersonal" type="ca.openosp.openo.provider.web.DisplayPersonalInfoAppointmentAction" parameter="method" validate="false" scope="request">
 		</action>
 		
 		<action path="/admin/oscarStatus" scope="request" parameter="method" validate="false" type="ca.openosp.openo.util.OscarStatusAction">
 			<forward name="success" path="/admin/oscarStatus.jsp" />
 		</action>
 
-		<action path="/OcanIarSubmit" type="org.oscarehr.web.OcanIarSubmitAction" parameter="method" scope="request">
+		<action path="/OcanIarSubmit" type="ca.openosp.openo.ehrweb.OcanIarSubmitAction" parameter="method" scope="request">
         </action>
 
-        <action path="/OcanReporting" type="org.oscarehr.web.OcanReportingAction" parameter="method" scope="request">
+        <action path="/OcanReporting" type="ca.openosp.openo.ehrweb.OcanReportingAction" parameter="method" scope="request">
         </action>
 
-        <action path="/PMmodule/OcanWorkload" type="org.oscarehr.PMmodule.web.OcanWorkloadAction" parameter="method" scope="request" >
+        <action path="/PMmodule/OcanWorkload" type="ca.openosp.openo.PMmodule.web.OcanWorkloadAction" parameter="method" scope="request" >
             <forward name="view" path="/PMmodule/OcanWorkload.jsp" />
        </action>
        
-       <action input="/billing/CA/ON/viewMOHFiles.jsp" path="/billing/CA/ON/moveMOHFiles" scope="request" type="org.oscarehr.billing.CA.ON.web.MoveMOHFilesAction" validate="false">
+       <action input="/billing/CA/ON/viewMOHFiles.jsp" path="/billing/CA/ON/moveMOHFiles" scope="request" type="ca.openosp.openo.billing.CA.ON.web.MoveMOHFilesAction" validate="false">
 			<forward name="success" path="/billing/CA/ON/viewMOHFiles.jsp"/>
 		</action>
         
@@ -2780,7 +2780,7 @@
             <forward name="failure" path="/billing/CA/ON/endYearStatement.jsp"/>
         </action>
 
-        <action name="ValidateSwipeCard" path="/demographic/ValidateSwipeCard" scope="request" type="org.oscarehr.integration.mchcv.ValidateSwipeCardAction" validate="false">
+        <action name="ValidateSwipeCard" path="/demographic/ValidateSwipeCard" scope="request" type="ca.openosp.openo.integration.mchcv.ValidateSwipeCardAction" validate="false">
             <forward name="success" path="/demographic/demographicswipe.jsp"/>
         </action>
 
@@ -2790,37 +2790,37 @@
 			<forward name="failure" path="/appointment/appointmentTypeList.jsp"/>
 		</action>
 
-		<action path="/hospitalReportManager/Display" type="org.oscarehr.hospitalReportManager.HRMDisplayReportAction" parameter="method" scope="request" validate="false">
+		<action path="/hospitalReportManager/Display" type="ca.openosp.openo.hospitalReportManager.HRMDisplayReportAction" parameter="method" scope="request" validate="false">
 			<forward name="display" path="/hospitalReportManager/displayHRMReport.jsp" />
 		</action>
-		<action input="/hospitalReportManager/hrmKeyUploader.jsp" name="hrmKeyUploadForm" path="/hospitalReportManager/hrmKeyUploader" scope="request" type="org.oscarehr.hospitalReportManager.HRMUploadKeyAction">
+		<action input="/hospitalReportManager/hrmKeyUploader.jsp" name="hrmKeyUploadForm" path="/hospitalReportManager/hrmKeyUploader" scope="request" type="ca.openosp.openo.hospitalReportManager.HRMUploadKeyAction">
 			<forward name="success" path="/hospitalReportManager/hrmPreferences.jsp" />
 		</action>
-		<action input="/hospitalReportManager/hospitalReportManager.jsp" name="hrmLabUploadForm" path="/hospitalReportManager/UploadLab" scope="request" type="org.oscarehr.hospitalReportManager.HRMUploadLabAction">
+		<action input="/hospitalReportManager/hospitalReportManager.jsp" name="hrmLabUploadForm" path="/hospitalReportManager/UploadLab" scope="request" type="ca.openosp.openo.hospitalReportManager.HRMUploadLabAction">
 			<forward name="success" path="/hospitalReportManager/hospitalReportManager.jsp" />
 		</action>
-		<action input="/hospitalReportManager/Display" path="/hospitalReportManager/Modify" type="org.oscarehr.hospitalReportManager.HRMModifyDocumentAction" parameter="method" scope="request" validate="false">
+		<action input="/hospitalReportManager/Display" path="/hospitalReportManager/Modify" type="ca.openosp.openo.hospitalReportManager.HRMModifyDocumentAction" parameter="method" scope="request" validate="false">
 			<forward name="ajax" path="/hospitalReportManager/ajaxResponse.jsp" />
 		</action>
-		<action path="/hospitalReportManager/Statement" type="org.oscarehr.hospitalReportManager.HRMStatementModifyAction" scope="request" validate="false">
+		<action path="/hospitalReportManager/Statement" type="ca.openosp.openo.hospitalReportManager.HRMStatementModifyAction" scope="request" validate="false">
 			<forward name="success" path="/hospitalReportManager/hospitalReportManager.jsp" />
 		</action>
-		<action path="/hospitalReportManager/Mapping" type="org.oscarehr.hospitalReportManager.HRMMappingAction" scope="request" validate="false">
+		<action path="/hospitalReportManager/Mapping" type="ca.openosp.openo.hospitalReportManager.HRMMappingAction" scope="request" validate="false">
 			<forward name="success" path="/hospitalReportManager/hrmShowMapping.jsp" />
 		</action>
-		<action path="/hospitalReportManager/HRMPreferences" type="org.oscarehr.hospitalReportManager.HRMPreferencesAction" scope="request" validate="false">
+		<action path="/hospitalReportManager/HRMPreferences" type="ca.openosp.openo.hospitalReportManager.HRMPreferencesAction" scope="request" validate="false">
 			<forward name="success" path="/hospitalReportManager/hrmPreferences.jsp" />
 		</action>
-		<action path="/hospitalReportManager/HRMDownloadFile" type="org.oscarehr.hospitalReportManager.HRMDownloadFileAction" />
+		<action path="/hospitalReportManager/HRMDownloadFile" type="ca.openosp.openo.hospitalReportManager.HRMDownloadFileAction" />
 
-		<action path="/hospitalReportManager/hrm" type="org.oscarehr.hospitalReportManager.v2018.HRMAction" parameter="method">		
+		<action path="/hospitalReportManager/hrm" type="ca.openosp.openo.hospitalReportManager.v2018.HRMAction" parameter="method">
 		</action>
 
-		<action input="/displayHRMReport.jsp" path="/hospitalReportManager/PrintHRMReport" scope="request" type="org.oscarehr.hospitalReportManager.PrintHRMReportAction">
+		<action input="/displayHRMReport.jsp" path="/hospitalReportManager/PrintHRMReport" scope="request" type="ca.openosp.openo.hospitalReportManager.PrintHRMReportAction">
 			<forward name="error" path="/hospitalReportManager/displayHRMReport.jsp" />
 		</action>
 
-		<action path="/caseload/CaseloadContent" scope="request" type="org.oscarehr.caseload.CaseloadContentAction" parameter="method" />
+		<action path="/caseload/CaseloadContent" scope="request" type="ca.openosp.openo.caseload.CaseloadContentAction" parameter="method" />
 
                 <action input="/tickler/ticklerEdit.jsp" name="serviceform" path="/tickler/EditTickler" scope="request" type="ca.openosp.openo.oscarTickler.pageUtil.EditTicklerAction" parameter="method">
 			<forward name="close" path="/closenreload.html" />
@@ -2832,22 +2832,22 @@
                         <forward name="error" path="/errorpage.jsp" />
 		</action>
 
-        <action path="/CodeSearch" type="org.oscarehr.common.web.CodeSearchService">
+        <action path="/CodeSearch" type="ca.openosp.openo.common.web.CodeSearchService">
         </action>
 
         <action path="/oscarEncounter/displayEpisodes" scope="request" type="ca.openosp.openo.oscarEncounter.pageUtil.EctDisplayEpisodeAction" />
 
-		<action path="/Episode" type="org.oscarehr.common.web.EpisodeAction" name="episodeForm" parameter="method">
+		<action path="/Episode" type="ca.openosp.openo.common.web.EpisodeAction" name="episodeForm" parameter="method">
 			<forward name="list" path="/episode/episodeList.jsp" />
 			<forward name="form" path="/episode/episodeForm.jsp" />
 			<forward name="success" path="/episode/success.jsp" />
 		</action>
 
-		<action path="/indivica/HCSearch" type="org.oscarehr.common.web.HealthCardSearchAction" scope="request" validate="false" parameter="method" />
+		<action path="/indivica/HCSearch" type="ca.openosp.openo.common.web.HealthCardSearchAction" scope="request" validate="false" parameter="method" />
 
         <action path="/oscarEncounter/displayPregnancies" scope="request" type="ca.openosp.openo.oscarEncounter.pageUtil.EctDisplayPregnancyAction" />
 
-		<action path="/Pregnancy" type="org.oscarehr.common.web.PregnancyAction" parameter="method">
+		<action path="/Pregnancy" type="ca.openosp.openo.common.web.PregnancyAction" parameter="method">
 			<forward name="list" path="/pregnancy/list.jsp" />
 			<forward name="success" path="/pregnancy/success.jsp" />
 			<forward name="complete" path="/pregnancy/complete.jsp" />
@@ -2865,19 +2865,19 @@
 			<forward name="exit" path="/oscarEncounter/close.jsp" />
 		</action>
 
-		 <action path="/PageMonitoringService" scope="request" type="org.oscarehr.common.web.PageMonitoringAction" parameter="method" />
+		 <action path="/PageMonitoringService" scope="request" type="ca.openosp.openo.common.web.PageMonitoringAction" parameter="method" />
 
-		<action path="/casemgmt/NotePermissions" type="org.oscarehr.casemgmt.web.NotePermissionsAction"
+		<action path="/casemgmt/NotePermissions" type="ca.openosp.openo.casemgmt.web.NotePermissionsAction"
 			scope="request" validate="false" parameter="method" />
                         
-                <action path="/BillingInvoice" scope="request" type="org.oscarehr.common.web.BillingInvoiceAction" parameter="method">
+                <action path="/BillingInvoice" scope="request" type="ca.openosp.openo.common.web.BillingInvoiceAction" parameter="method">
 			<forward name="success" path="/billing/CA/ON/billingONCorrection.jsp" />
                        <forward name="listSuccess" path="/billing/CA/ON/billingONStatus.jsp" />
 		</action>        
 
-            <action path="/BillingONReview" scope="request" type="org.oscarehr.common.web.BillingONReviewAction" parameter="method" />
+            <action path="/BillingONReview" scope="request" type="ca.openosp.openo.common.web.BillingONReviewAction" parameter="method" />
                  
-                 <action path="/admin/GroupPreference" name="groupPreference" scope="request" type="org.oscarehr.common.web.GroupPreferenceAction" parameter="method">
+                 <action path="/admin/GroupPreference" name="groupPreference" scope="request" type="ca.openosp.openo.common.web.GroupPreferenceAction" parameter="method">
                     <forward name="saved" path="/admin/groupPreferences.jsp"/>
                     <forward name="changedForm" path="/admin/groupPreferences.jsp"/>
                  </action>
@@ -2890,175 +2890,175 @@
                         <forward name="adminReload" path="/billing/CA/ON/billingONCorrection.jsp?billing_no=&amp;admin&amp;success"/>
 				</action>
                 
-                <action input="/billing/CA/ON/genRADesc.jsp" name="applyPractitionerPremium" path="/billing/CA/ON/ApplyPractitionerPremium" scope="request" type="org.oscarehr.common.web.ApplyPractitionerPremiumAction" parameter="method">
+                <action input="/billing/CA/ON/genRADesc.jsp" name="applyPractitionerPremium" path="/billing/CA/ON/ApplyPractitionerPremium" scope="request" type="ca.openosp.openo.common.web.ApplyPractitionerPremiumAction" parameter="method">
                         <forward name="success" path="/billing/CA/ON/genRADesc.jsp" />                        
                         <forward name="failure" path="/failure.jsp" />                       
 		</action>
 		
 		<action path="/oscarEncounter/displayContacts" scope="request" type="ca.openosp.openo.oscarEncounter.pageUtil.EctDisplayContactsAction" />
 		
-		<action path="/renal/CkdDSA" type="org.oscarehr.renal.web.CkdDSAAction" parameter="method">
+		<action path="/renal/CkdDSA" type="ca.openosp.openo.renal.web.CkdDSAAction" parameter="method">
 			<forward name="detail" path="/renal/ckd_dsa_detail.jsp" />
 		</action>
 		
-		<action path="/renal/Renal" type="org.oscarehr.renal.web.RenalAction" parameter="method">
+		<action path="/renal/Renal" type="ca.openosp.openo.renal.web.RenalAction" parameter="method">
 			
 		</action>
-		<action path="/admin/GenerateTraceAction" type="org.oscarehr.admin.traceability.GenerateTraceAction">
+		<action path="/admin/GenerateTraceAction" type="ca.openosp.openo.admin.traceability.GenerateTraceAction">
         </action>
-		<action path="/admin/GenerateTraceabilityReportAction" type="org.oscarehr.admin.traceability.GenerateTraceabilityReportAction">
+		<action path="/admin/GenerateTraceabilityReportAction" type="ca.openosp.openo.admin.traceability.GenerateTraceabilityReportAction">
         </action>
         
                 <!-- Sharing Center Actions/Servlets -->
                 <action path="/sharingcenter/affinitydomain/AffinityDomain"
-                        type="org.oscarehr.sharingcenter.actions.AffinityDomainServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.AffinityDomainServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/affinitydomain/AffinityDomainParser"
-                        type="org.oscarehr.sharingcenter.actions.AffinityDomainParseServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.AffinityDomainParseServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/affinitydomain/ClinicInfo"
-                        type="org.oscarehr.sharingcenter.actions.ClinicInfoServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.ClinicInfoServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/security/Infrastructure"
-                        type="org.oscarehr.sharingcenter.actions.SecurityInfrastructureServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.SecurityInfrastructureServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/networks/ShareDomain"
-                        type="org.oscarehr.sharingcenter.actions.ShareDomainServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.ShareDomainServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/documents/DocumentExport"
-                        type="org.oscarehr.sharingcenter.actions.DocumentExportServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.DocumentExportServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/documents/SharedDocuments"
-                        type="org.oscarehr.sharingcenter.actions.SharedDocumentsServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.SharedDocumentsServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/documents/DemographicExport"
-                        type="org.oscarehr.sharingcenter.actions.DemographicExportServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.DemographicExportServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/affinitydomain/DomainMappings"
-                        type="org.oscarehr.sharingcenter.actions.MappingServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.MappingServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/affinitydomain/ConsentChecker"
-                        type="org.oscarehr.sharingcenter.actions.ConsentCheckerServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.ConsentCheckerServlet"
                         scope="request">
                 </action>
                 <action path="/sharingcenter/documents/DocumentPreview"
-                        type="org.oscarehr.sharingcenter.actions.DocumentPreviewServlet"
+                        type="ca.openosp.openo.sharingcenter.actions.DocumentPreviewServlet"
                         scope="request">
                 </action>
 
-		<action path="/mcedt/mcedt" type="org.oscarehr.integration.mcedt.ResourceAction" name="mcedtResourceForm" parameter="method">
+		<action path="/mcedt/mcedt" type="ca.openosp.openo.integration.mcedt.ResourceAction" name="mcedtResourceForm" parameter="method">
 			<forward name="success" path="/mcedt/index.jsp" />
 		</action>
 		
-		<action path="/mcedt/uploads" type="org.oscarehr.integration.mcedt.UploadAction" name="mcedtUploadForm" parameter="method">
+		<action path="/mcedt/uploads" type="ca.openosp.openo.integration.mcedt.UploadAction" name="mcedtUploadForm" parameter="method">
 			<forward name="success" path="/mcedt/uploads.jsp" />
 			<forward name="addNew" path="/mcedt/addUpload.jsp" redirect="true" />
 			<forward name="cancel" path="/mcedt/mcedt.do" redirect="true" />
 			<forward name="done" path="/mcedt/mcedt.do" redirect="true" />
 		</action>
 		
-		<!--  <action path="/mcedt/addUpload" input="/mcedt/addUpload.jsp" type="org.oscarehr.integration.mcedt.UploadAddAction" name="mcedtUploadAddForm">
+		<!--  <action path="/mcedt/addUpload" input="/mcedt/addUpload.jsp" type="ca.openosp.openo.mcedt.integration.UploadAddAction" name="mcedtUploadAddForm">
 			<forward name="success" path="/mcedt/uploads.do" redirect="true" />
 		</action> -->
 		
-		<action path="/mcedt/update" type="org.oscarehr.integration.mcedt.UpdateAction" name="mcedtUpdateForm" parameter="method">
+		<action path="/mcedt/update" type="ca.openosp.openo.integration.mcedt.UpdateAction" name="mcedtUpdateForm" parameter="method">
 			<forward name="cancel" path="/mcedt/mcedt.do" redirect="true" />
 			<forward name="add" path="/mcedt/update.do" redirect="true" />
 			<forward name="success" path="/mcedt/mcedt.do" redirect="true" />
 			<forward name="initial" path="/mcedt/update.jsp"/>
 		</action>
 		
-		<action path="/mcedt/info" type="org.oscarehr.integration.mcedt.InfoAction" name="mcedtInfoForm">
+		<action path="/mcedt/info" type="ca.openosp.openo.integration.mcedt.InfoAction" name="mcedtInfoForm">
 			<forward name="info" path="/mcedt/info.jsp" />
 		</action>
 		
-		<action path="/mcedt/kaimcedt" type="org.oscarehr.integration.mcedt.mailbox.ResourceAction" name="mcedtResourceForm" parameter="method">			
+		<action path="/mcedt/kaimcedt" type="ca.openosp.openo.integration.mcedt.mailbox.ResourceAction" name="mcedtResourceForm" parameter="method">
 			<forward name="success" path="/mcedt/mailbox/index.jsp" />
 			<!-- <forward name="download" path="/mcedt/mailbox/download.jsp" /> -->
 			<forward name="successUserDownload" path="/mcedt/mailbox/index.jsp?tab=download" />
 			<forward name="failUserDownload" path="/mcedt/mailbox/index.jsp?tab=download" />	
 			<forward name="successUserSent" path="/mcedt/mailbox/index.jsp?tab=sent" />		
 		</action>
-		<action path="/mcedt/openAutoUpload" type="org.oscarehr.integration.mcedt.mailbox.ResourceAction" name="kaiedtHomeForm" parameter="method">			
+		<action path="/mcedt/openAutoUpload" type="ca.openosp.openo.integration.mcedt.mailbox.ResourceAction" name="kaiedtHomeForm" parameter="method">
 			<forward name="success" path="/mcedt/mailbox/autoUpload.jsp" />
 		</action>
-		<action path="/mcedt/autoUpload" input="/mcedt/mailbox/autoUpload.jsp" type="org.oscarehr.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >			
+		<action path="/mcedt/autoUpload" input="/mcedt/mailbox/autoUpload.jsp" type="ca.openosp.openo.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >
 			<forward name="success" path="/mcedt/mailbox/autoUpload.jsp" />
 			<forward name="failure" path="/mcedt/mailbox/autoUpload.jsp?connection=failed" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />
 		</action>
 		
-		<action path="/mcedt/upload" input="/mcedt/mailbox/upload.jsp" type="org.oscarehr.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >			
+		<action path="/mcedt/upload" input="/mcedt/mailbox/upload.jsp" type="ca.openosp.openo.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=upload" />
 			<forward name="failure" path="/mcedt/mailbox/index.jsp?tab=upload" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />
 		</action>
 		
-		<action path="/mcedt/addUpload" input="/mcedt/mailbox/addUpload.jsp" type="org.oscarehr.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >			
+		<action path="/mcedt/addUpload" input="/mcedt/mailbox/addUpload.jsp" type="ca.openosp.openo.integration.mcedt.mailbox.UploadAction" name="kaiedtAutoUploadForm" parameter="method" validate="false" >
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=upload" />
 			<forward name="failure" path="/mcedt/mailbox/addUpload.jsp" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />
 		</action>
 		
-		<action path="/mcedt/kaichpass" type="org.oscarehr.integration.mcedt.mailbox.UserAction" name="loginForm" parameter="method">			
+		<action path="/mcedt/kaichpass" type="ca.openosp.openo.integration.mcedt.mailbox.UserAction" name="loginForm" parameter="method">
 			<forward name="success" path="/mcedt/mailbox/changepass.jsp" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />
 		</action>
 		
-		<action path="/mcedt/kaiautodl" type="org.oscarehr.integration.mcedt.mailbox.DownloadAction" name="mcedtDownloadForm" parameter="method">			
+		<action path="/mcedt/kaiautodl" type="ca.openosp.openo.integration.mcedt.mailbox.DownloadAction" name="mcedtDownloadForm" parameter="method">
 			<forward name="success" path="/mcedt/mailbox/autoDownload.jsp" />
 			<forward name="cancel" path="/mcedt/kaimcedt.do" redirect="true" />			
 			<!-- <forward name="successUserDownload" path="/mcedt/mailbox/index.jsp?tab=download" />
 			<forward name="failUserDownload" path="/mcedt/mailbox/index.jsp?tab=download" /> -->
 		</action>
 		
-		<action path="/mcedt/download" type="org.oscarehr.integration.mcedt.mailbox.DownloadAction" name="mcedtDownloadForm" parameter="method">							
+		<action path="/mcedt/download" type="ca.openosp.openo.integration.mcedt.mailbox.DownloadAction" name="mcedtDownloadForm" parameter="method">
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=download" />
 			<forward name="error" path="/mcedt/mailbox/index.jsp?tab=download" />
 		</action>
 		
-		<action path="/mcedt/resourceInfo" type="org.oscarehr.integration.mcedt.mailbox.InfoAction" name="mcedtResourceForm" parameter="method">
+		<action path="/mcedt/resourceInfo" type="ca.openosp.openo.integration.mcedt.mailbox.InfoAction" name="mcedtResourceForm" parameter="method">
 			<!-- <forward name="info" path="/mcedt/info.jsp" /> -->
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=sent" />
 		</action>				
 		
-		<action path="/mcedt/reSubmit" type="org.oscarehr.integration.mcedt.mailbox.ReSubmitAction" name="mcedtResourceForm" parameter="method">
+		<action path="/mcedt/reSubmit" type="ca.openosp.openo.integration.mcedt.mailbox.ReSubmitAction" name="mcedtResourceForm" parameter="method">
 			<!-- <forward name="info" path="/mcedt/info.jsp" /> -->
 			<forward name="success" path="/mcedt/mailbox/index.jsp?tab=sent" />
 		</action>
 		
-		<action path="/mcedt/uploads" type="org.oscarehr.integration.mcedt.UploadAction" name="mcedtUploadForm" parameter="method">
+		<action path="/mcedt/uploads" type="ca.openosp.openo.integration.mcedt.UploadAction" name="mcedtUploadForm" parameter="method">
 			<forward name="success" path="/mcedt/uploads.jsp" />
 			<forward name="addNew" path="/mcedt/addUpload.jsp" redirect="true" />
 			<forward name="cancel" path="/mcedt/mcedt.do" redirect="true" />
 			<forward name="done" path="/mcedt/mcedt.do" redirect="true" />
 		</action>
 		
-		<action path="/demographicSupport" type="org.oscarehr.common.web.DemographicAction" parameter="method">
+		<action path="/demographicSupport" type="ca.openosp.openo.common.web.DemographicAction" parameter="method">
 		</action>
 		
-		<action path="/oscarRx/Dispense" type="org.oscarehr.rx.dispensary.DispensaryAction" parameter="method" scope="request">	
+		<action path="/oscarRx/Dispense" type="ca.openosp.openo.rx.dispensary.DispensaryAction" parameter="method" scope="request">
 			<forward name="list" path="/oscarRx/dispensary/list.jsp" />	
 		</action>
-     <action path="/consults/Consultations" type="org.oscarehr.consultations.ConsultationAction">
+     <action path="/consults/Consultations" type="ca.openosp.openo.consultations.ConsultationAction">
       </action>
 		     
-		<action path="/DemographicExtService" type="org.oscarehr.common.web.DemographicExtServiceAction" parameter="method" scope="request">
+		<action path="/DemographicExtService" type="ca.openosp.openo.common.web.DemographicExtServiceAction" parameter="method" scope="request">
 		</action>
 
-		<action path="/integrator/IntegratorPush" type="org.oscarehr.common.web.IntegratorPushAction" parameter="method">
+		<action path="/integrator/IntegratorPush" type="ca.openosp.openo.common.web.IntegratorPushAction" parameter="method">
 		</action>
 
-		<action path="/printReferralLabelAction" type="org.oscarehr.common.web.PrintReferralLabelAction" />
+		<action path="/printReferralLabelAction" type="ca.openosp.openo.common.web.PrintReferralLabelAction" />
 		
 		<action path="/billing/CA/ON/billingON3rdPayments" scope="request" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method">
 			<forward name="success" path="/billing/CA/ON/billingON3rdPayments.jsp"/>
@@ -3072,27 +3072,27 @@
 		<action input="/billing/CA/ON/viewMOHFiles.jsp" scope="request" path="/billing/CA/ON/moveMOHFiles" type="org.oscarehr.billing.CA.ON.web.ArchiveMOHFileAction">
 			<forward name="showInbox" path="/billing/CA/ON/viewMOHFiles.jsp" />
 		</action>
-		<action input="/billing/CA/ON/billingON3rdInv.jsp" name="FrmForm" path="/billing/ca/on/DisplayInvoiceLogo" scope="request" type="org.oscarehr.billing.CA.ON.util.DisplayInvoiceLogo"></action>
+		<action input="/billing/CA/ON/billingON3rdInv.jsp" name="FrmForm" path="/billing/ca/on/DisplayInvoiceLogo" scope="request" type="ca.openosp.openo.billing.CA.ON.util.DisplayInvoiceLogo"></action>
 
-		<action path="/cvc" type="org.oscarehr.integration.born.CVCTesterAction" parameter="method">
+		<action path="/cvc" type="ca.openosp.openo.integration.born.CVCTesterAction" parameter="method">
 		</action>
 
-		<action path="/admin/AuditLogPurge" type="org.oscarehr.admin.web.AuditLogPurgeAction" parameter="method">
+		<action path="/admin/AuditLogPurge" type="ca.openosp.openo.admin.web.AuditLogPurgeAction" parameter="method">
 			<forward name="success" path="/admin/auditLogPurge.jsp" />
 		</action>
 		<action path="/lab/DownloadEmbeddedDocumentFromLab" type="ca.openosp.openo.oscarLab.ca.all.pageUtil.DownloadEmbeddedDocumentFromLabAction" >
 		</action>
 		
-		<action path="/dhir/submit" type="org.oscarehr.integration.dhir.SubmitImmunizationAction" parameter="method" scope="request">
+		<action path="/dhir/submit" type="ca.openosp.openo.integration.dhir.SubmitImmunizationAction" parameter="method" scope="request">
 			<forward name="success" path="/oscarPrevention/dhirSubmission.jsp"/>
 			<forward name="testresult" path="/oscarPrevention/test_case.jsp"/>
 		</action>
 		
-		<action path="/clinicalConnectEHRViewer" type="org.oscarehr.integration.clinicalconnect.ClinicalConnectViewerAction" parameter="method">
+		<action path="/clinicalConnectEHRViewer" type="ca.openosp.openo.integration.clinicalconnect.ClinicalConnectViewerAction" parameter="method">
 			<forward name="error" path="/cc/launcherError.jsp"/>
 		</action>
 		
-		<action path="/admin/Flowsheet" type="org.oscarehr.flowsheet.FlowsheetAction" parameter="method">
+		<action path="/admin/Flowsheet" type="ca.openosp.openo.flowsheet.FlowsheetAction" parameter="method">
 		</action>
 		
 		

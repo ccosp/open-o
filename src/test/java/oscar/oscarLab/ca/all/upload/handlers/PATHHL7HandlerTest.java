@@ -38,12 +38,13 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.runners.Parameterized;
 import org.oscarehr.common.dao.utils.AuthUtils;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.PATHL7Handler;
 import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
@@ -51,7 +52,7 @@ import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
 @Ignore //Skipping until issue is resolved
 public class PATHHL7HandlerTest {
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private static String hl7Body;
     private static ZipFile zipFile;
     private static int TEST_COUNT = 0;

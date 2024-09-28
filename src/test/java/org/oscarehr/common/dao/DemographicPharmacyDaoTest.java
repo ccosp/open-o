@@ -32,12 +32,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.DemographicPharmacy;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class DemographicPharmacyDaoTest extends DaoTestFixtures {
 

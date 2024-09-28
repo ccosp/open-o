@@ -26,7 +26,7 @@
 <%@page isErrorPage="true" %>
 
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

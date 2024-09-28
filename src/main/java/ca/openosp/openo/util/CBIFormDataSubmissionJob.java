@@ -28,12 +28,13 @@ package ca.openosp.openo.util;
 import java.util.List;
 import java.util.TimerTask;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.OcanStaffForm;
-import org.oscarehr.util.DbConnectionFilter;
+import ca.openosp.openo.common.model.OcanStaffForm;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
 
 public class CBIFormDataSubmissionJob extends TimerTask {
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private static CBIUtil cbiUtil = new CBIUtil();
 
     @Override

@@ -5,14 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.EReferAttachmentDao;
-import org.oscarehr.common.model.EReferAttachment;
-import org.oscarehr.common.model.EReferAttachmentData;
-import org.oscarehr.common.model.enumerator.DocumentType;
-import org.oscarehr.documentManager.DocumentAttachmentManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EReferAttachmentDao;
+import ca.openosp.openo.common.model.EReferAttachment;
+import ca.openosp.openo.common.model.EReferAttachmentData;
+import ca.openosp.openo.common.model.enumerator.DocumentType;
+import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.StringUtils;
 

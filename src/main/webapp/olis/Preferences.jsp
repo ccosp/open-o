@@ -11,7 +11,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
-        import="java.util.*,oscar.oscarReport.reportByTemplate.*,org.oscarehr.olis.*,org.oscarehr.olis.model.*, org.oscarehr.olis.dao.*, org.oscarehr.util.SpringUtils, org.joda.time.DateTime, org.joda.time.format.DateTimeFormat, org.joda.time.format.DateTimeFormatter" %>
+        import="java.util.*,oscar.oscarReport.reportByTemplate.*,org.oscarehr.olis.*,org.oscarehr.olis.model.*, org.oscarehr.olis.dao.*, ca.openosp.openo.ehrutil.SpringUtils, org.joda.time.DateTime, org.joda.time.format.DateTimeFormat, org.joda.time.format.DateTimeFormatter" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
 
@@ -52,6 +52,8 @@
 
 <%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*" %>
 <%@ page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.olis.model.OLISSystemPreferences" %>
+<%@ page import="ca.openosp.openo.olis.dao.OLISSystemPreferencesDao" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

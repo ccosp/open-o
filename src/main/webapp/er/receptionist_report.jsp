@@ -25,7 +25,7 @@
 
 
 <%@ include file="/taglibs.jsp" %>
-<%@page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
+<%@page import="ca.openosp.openo.casemgmt.web.CaseManagementViewAction" %>
 
 <table width="100%" cellspacing="3" cellpadding="3">
     <tr>

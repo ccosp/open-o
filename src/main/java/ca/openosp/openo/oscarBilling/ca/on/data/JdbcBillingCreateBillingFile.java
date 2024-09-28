@@ -36,25 +36,25 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.ON.dao.BillingONDiskNameDao;
-import org.oscarehr.billing.CA.ON.dao.BillingONFilenameDao;
-import org.oscarehr.billing.CA.ON.dao.BillingONHeaderDao;
-import org.oscarehr.billing.CA.ON.model.BillingONDiskName;
-import org.oscarehr.billing.CA.ON.model.BillingONFilename;
-import org.oscarehr.billing.CA.ON.model.BillingONHeader;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.BillingONItemDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.dao.SiteDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONItem;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Site;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.ON.dao.BillingONDiskNameDao;
+import ca.openosp.openo.billing.CA.ON.dao.BillingONFilenameDao;
+import ca.openosp.openo.billing.CA.ON.dao.BillingONHeaderDao;
+import ca.openosp.openo.billing.CA.ON.model.BillingONDiskName;
+import ca.openosp.openo.billing.CA.ON.model.BillingONFilename;
+import ca.openosp.openo.billing.CA.ON.model.BillingONHeader;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.BillingONItemDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.dao.SiteDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONItem;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Site;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarProvider.data.ProviderBillCenter;
@@ -62,7 +62,7 @@ import ca.openosp.openo.util.ConversionUtils;
 
 public class JdbcBillingCreateBillingFile {
 
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
 
     public String errorFatalMsg = "";
     private BillingBatchHeaderData bhObj = null;

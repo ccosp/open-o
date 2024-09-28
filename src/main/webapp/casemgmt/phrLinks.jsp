@@ -24,11 +24,11 @@
 
 --%>
 <%@page import="ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.dao.PHRVerificationDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.PHRVerificationDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     String demographicNo = request.getParameter("demographicNo");
     String provNo = (String) session.getAttribute("user");

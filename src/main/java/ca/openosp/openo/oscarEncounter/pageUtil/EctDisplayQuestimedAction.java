@@ -33,10 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.ws.rest.util.QuestimedUtil;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ws.rest.util.QuestimedUtil;
 import ca.openosp.openo.OscarProperties;
 
 import ca.openosp.openo.util.StringUtils;

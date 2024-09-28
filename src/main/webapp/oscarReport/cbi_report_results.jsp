@@ -39,14 +39,14 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.dao.AdmissionDao" %>
-<%@page import="org.oscarehr.common.model.FunctionalCentre" %>
-<%@page import="org.oscarehr.common.dao.FunctionalCentreDao" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
-<%@page import="org.oscarehr.PMmodule.model.OcanSubmissionLog" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.dao.AdmissionDao" %>
+<%@page import="ca.openosp.openo.common.model.FunctionalCentre" %>
+<%@page import="ca.openosp.openo.common.dao.FunctionalCentreDao" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanForm" %>
+<%@page import="ca.openosp.openo.PMmodule.model.OcanSubmissionLog" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="ca.openosp.openo.util.CBIUtil" %>
@@ -57,17 +57,17 @@
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
 
 <%@page import="java.util.HashSet" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.managers.ProviderManager2" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.managers.ProviderManager2" %>
 
 
-<%@page import="org.oscarehr.common.model.CdsFormOption" %>
-<%@page import="org.oscarehr.web.Cds4ReportUIBean" %>
+<%@page import="ca.openosp.openo.common.model.CdsFormOption" %>
+<%@page import="ca.openosp.openo.ehrweb.Cds4ReportUIBean" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%
     CBIUtil cbiUtil = new CBIUtil();

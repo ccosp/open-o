@@ -43,8 +43,8 @@ import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Hsfo2Patient;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class Hsfo2PatientDaoTest extends DaoTestFixtures {
     protected Hsfo2PatientDao dao = (Hsfo2PatientDao) SpringUtils.getBean(Hsfo2PatientDao.class);

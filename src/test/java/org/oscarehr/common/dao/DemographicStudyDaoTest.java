@@ -32,7 +32,7 @@ import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.DemographicStudy;
 import org.oscarehr.common.model.DemographicStudyPK;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class DemographicStudyDaoTest extends DaoTestFixtures {
 

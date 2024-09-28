@@ -26,20 +26,20 @@
 
 <%-- Updated by Eugene Petruhin on 30 dec 2008 while fixing #2456688 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ include file="/taglibs.jsp" %>
-<%@ page import="org.oscarehr.PMmodule.model.Intake" %>
-<%@ page import="org.oscarehr.PMmodule.model.IntakeNodeJavascript" %>
-<%@ page import="org.oscarehr.PMmodule.web.formbean.GenericIntakeEditFormBean" %>
-<%@ page import="org.oscarehr.PMmodule.web.ProgramUtils" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Intake" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNodeJavascript" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.GenericIntakeEditFormBean" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.ProgramUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 
@@ -62,7 +62,7 @@
 <%@page import="java.util.List" %>
 <%@page import="java.text.DateFormatSymbols" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <html:html xhtml="true" locale="true">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

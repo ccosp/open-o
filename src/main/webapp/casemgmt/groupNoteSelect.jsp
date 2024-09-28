@@ -37,17 +37,17 @@
     }
 %>
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.dao.GroupNoteDao" %>
-<%@page import="org.oscarehr.common.model.GroupNoteLink" %>
-<%@page import="org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.GroupNoteDao" %>
+<%@page import="ca.openosp.openo.common.model.GroupNoteLink" %>
+<%@page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
 
 <%
     ProgramManager programManager = (ProgramManager) SpringUtils.getBean(ProgramManager.class);

@@ -53,9 +53,9 @@
     }
 %>
 
-<%@ page import="org.oscarehr.decisionSupport.model.DSGuideline" %>
+<%@ page import="ca.openosp.openo.decisionSupport.model.DSGuideline" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.decisionSupport.model.DSCondition" %>
+<%@ page import="ca.openosp.openo.decisionSupport.model.DSCondition" %>
 
 <%
     pageContext.setAttribute("demographic_no", request.getParameter("demographic_no"));
@@ -103,7 +103,7 @@ Conditions:
         <th><bean:message key="oscarrx.showallergies.evaluate"/></th>
     </tr>
     <logic:iterate name="conditionResults" id="conditionResult"
-                   type="org.oscarehr.decisionSupport.web.DSGuidelineAction.ConditionResult" indexId="index">
+                   type="ca.openosp.openo.decisionSupport.web.DSGuidelineAction.ConditionResult" indexId="index">
         <bean:define name="conditionResult" property="condition" id="condition"/>
         <%
             String cssClass = "even";

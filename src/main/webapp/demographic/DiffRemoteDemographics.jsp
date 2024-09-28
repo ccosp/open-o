@@ -38,9 +38,9 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page
-        import="org.oscarehr.common.dao.DemographicDao,org.oscarehr.caisi_integrator.ws.DemographicWs,org.oscarehr.util.SpringUtils,org.oscarehr.common.model.Demographic" %>
+        import="ca.openosp.openo.common.dao.DemographicDao,org.oscarehr.caisi_integrator.ws.DemographicWs,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.common.model.Demographic" %>
 <%@page
         import="org.oscarehr.caisi_integrator.ws.DemographicTransfer,org.oscarehr.caisi_integrator.ws.CachedProvider,org.oscarehr.caisi_integrator.ws.*" %>
 <%@page
@@ -97,11 +97,13 @@
         import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
 <%@ page
         import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
-<%@ page import="org.oscarehr.common.model.Flowsheet" %>
-<%@ page import="org.oscarehr.common.dao.FlowsheetDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Flowsheet" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowsheetDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="ca.openosp.openo.util.DateUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.caisi_integrator.ConformanceTestHelper" %>
+<%@ page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 
 <html:html lang="en">
     <head>

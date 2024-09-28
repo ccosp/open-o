@@ -18,9 +18,9 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%@page import="org.oscarehr.common.dao.BillingOnItemPaymentDao" %>
-<%@page import="org.oscarehr.managers.SecurityInfoManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.BillingOnItemPaymentDao" %>
+<%@page import="ca.openosp.openo.managers.SecurityInfoManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.math.*,java.util.*,java.sql.*,oscar.*,java.net.*" %>
 <!-- errorPage="/errorpage.jsp" -->
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
@@ -28,24 +28,24 @@
 <%@page import="oscar.oscarDemographic.data.*" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.common.model.BillingONItem" %>
-<%@page import="org.oscarehr.common.model.BillingONErrorCode, org.oscarehr.common.dao.BillingONErrorCodeDao" %>
-<%@page import="org.oscarehr.common.dao.BillingONEAReportDao, org.oscarehr.common.model.BillingONEAReport" %>
-<%@page import="org.oscarehr.common.model.RaDetail, org.oscarehr.common.dao.RaDetailDao" %>
-<%@page import="org.oscarehr.common.model.ClinicLocation, org.oscarehr.common.dao.ClinicLocationDao" %>
-<%@page import="org.oscarehr.common.dao.BillingONPaymentDao, org.oscarehr.common.model.BillingONPayment" %>
-<%@page import="org.oscarehr.common.model.Provider,org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao, org.oscarehr.common.model.BillingONCHeader1" %>
-<%@page import="org.oscarehr.common.model.BillingONExt, org.oscarehr.common.dao.BillingONExtDao" %>
-<%@page import="org.oscarehr.common.model.BillingService, org.oscarehr.common.dao.BillingServiceDao" %>
-<%@page import="org.oscarehr.common.model.ClinicNbr, org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@page import="org.oscarehr.common.model.Site, org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.ProviderSite, org.oscarehr.common.dao.ProviderSiteDao" %>
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
-<%@page import="org.oscarehr.common.service.BillingONService" %>
+<%@page import="ca.openosp.openo.common.model.BillingONItem" %>
+<%@page import="ca.openosp.openo.common.model.BillingONErrorCode, ca.openosp.openo.common.dao.BillingONErrorCodeDao" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONEAReportDao, ca.openosp.openo.common.model.BillingONEAReport" %>
+<%@page import="ca.openosp.openo.common.model.RaDetail, ca.openosp.openo.common.dao.RaDetailDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicLocation, ca.openosp.openo.common.dao.ClinicLocationDao" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONPaymentDao, ca.openosp.openo.common.model.BillingONPayment" %>
+<%@page import="ca.openosp.openo.common.model.Provider,ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao, ca.openosp.openo.common.model.BillingONCHeader1" %>
+<%@page import="ca.openosp.openo.common.model.BillingONExt, ca.openosp.openo.common.dao.BillingONExtDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingService, ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicNbr, ca.openosp.openo.common.dao.ClinicNbrDao" %>
+<%@page import="ca.openosp.openo.common.model.Site, ca.openosp.openo.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.model.ProviderSite, ca.openosp.openo.common.dao.ProviderSiteDao" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.dao.ProfessionalSpecialistDao" %>
+<%@page import="ca.openosp.openo.common.service.BillingONService" %>
 <%@page import="java.text.NumberFormat" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
@@ -55,6 +55,8 @@
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 <%@taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -123,7 +125,7 @@
     <% isTeamBillingOnly = true; %>
 </security:oscarSec>
 <%
-    boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+    boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
     List<String> mgrSites = new ArrayList<String>();
 
     if (bMultisites) {
@@ -511,7 +513,7 @@
 
                     BigDecimal billTotal = bCh1.getTotal();
 
-                    org.oscarehr.common.model.Demographic sdemo = (new DemographicData()).getDemographic(loggedInInfo, DemoNo);
+                    Demographic sdemo = (new DemographicData()).getDemographic(loggedInInfo, DemoNo);
                     hin = sdemo.getHin() + sdemo.getVer();
                     DemoDOB = sdemo.getYearOfBirth() + sdemo.getMonthOfBirth() + sdemo.getDateOfBirth();
                     DemoSex = sdemo.getSex();

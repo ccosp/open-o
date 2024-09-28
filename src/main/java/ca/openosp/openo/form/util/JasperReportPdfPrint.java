@@ -24,7 +24,7 @@
  */
 package ca.openosp.openo.form.util;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import java.io.OutputStream;
 import java.util.List;

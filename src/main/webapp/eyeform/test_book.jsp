@@ -24,8 +24,8 @@
 
 --%>
 
-<%@page import="org.oscarehr.eyeform.model.EyeformTestBook" %>
-<%@page import="org.oscarehr.eyeform.web.TestBookAction" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformTestBook" %>
+<%@page import="ca.openosp.openo.eyeform.web.TestBookAction" %>
 
 
 <%@ include file="/taglibs.jsp" %>

@@ -21,9 +21,9 @@ package ca.openosp.openo.oscarBilling.ca.on.data;
 
 import java.util.List;
 
-import org.oscarehr.common.dao.DiagnosticCodeDao;
-import org.oscarehr.common.model.DiagnosticCode;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DiagnosticCodeDao;
+import ca.openosp.openo.common.model.DiagnosticCode;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class JdbcBillingDxImpl {
     private DiagnosticCodeDao diagnosticCodeDao = SpringUtils.getBean(DiagnosticCodeDao.class);

@@ -35,15 +35,15 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.CtlDocumentDao;
-import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.model.CtlDocument;
-import org.oscarehr.common.model.CtlDocumentPK;
-import org.oscarehr.common.model.Document;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.CtlDocumentDao;
+import ca.openosp.openo.common.dao.DocumentDao;
+import ca.openosp.openo.common.model.CtlDocument;
+import ca.openosp.openo.common.model.CtlDocumentPK;
+import ca.openosp.openo.common.model.Document;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class UploadEFormAttachmentAction extends Action {
 

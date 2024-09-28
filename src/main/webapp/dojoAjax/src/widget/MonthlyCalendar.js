@@ -174,7 +174,7 @@ dojo.widget.MonthlyCalendar.util = new function () {
         return new Date(parseInt(tempDate[0]), (parseInt(tempDate[1], 10) - 1), parseInt(tempDate[2].substr(0, 2), 10));
     }
 
-//Note: redundant with dojo.widget.DatePicker.util	
+//Note: redundant with dojo.widget.DatePicker.ehrutil
     this.initFirstSaturday = function (month, year) {
         if (!month) {
             month = this.date.getMonth();

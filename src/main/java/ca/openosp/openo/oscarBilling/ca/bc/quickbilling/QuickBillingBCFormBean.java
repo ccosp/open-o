@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.common.model.ProviderData;
+import ca.openosp.openo.common.model.ProviderData;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData.BillingVisit;
 import ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean;

@@ -24,7 +24,7 @@
 
 --%>
 <%@page import="org.apache.cxf.rs.security.oauth.services.OOBAuthorizationResponse" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" %>
 <%@page import="org.apache.cxf.rs.security.oauth.data.OAuthPermission" %>
 <%@page import="ca.openosp.openo.login.OAuthSessionMerger" %>

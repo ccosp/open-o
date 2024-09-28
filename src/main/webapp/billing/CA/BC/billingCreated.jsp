@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     if (session.getValue("user") == null)
         response.sendRedirect(request.getContextPath() + "/logout.jsp");
@@ -50,8 +50,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page import="oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.BillingreferralDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData" %>
@@ -59,6 +59,7 @@
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.WCBForm" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%
     BillingreferralDao billingReferralDao = (BillingreferralDao) SpringUtils.getBean(BillingreferralDAO.class);
 %>
@@ -67,7 +68,7 @@
     String color = "", colorflag = "";
     BillingSessionBean bean = (BillingSessionBean) pageContext.findAttribute("billingSessionBean");
     DemographicData demoData = new DemographicData();
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+    Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
 
     ArrayList billItem = bean.getBillItem();
     BillingFormData billform = new BillingFormData();

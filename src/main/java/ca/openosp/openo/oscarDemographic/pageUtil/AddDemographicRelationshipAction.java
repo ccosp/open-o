@@ -33,15 +33,15 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.CtlRelationshipsDao;
-import org.oscarehr.common.model.CtlRelationships;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SessionConstants;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.CtlRelationshipsDao;
+import ca.openosp.openo.common.model.CtlRelationships;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SessionConstants;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDemographic.data.DemographicRelationship;
 

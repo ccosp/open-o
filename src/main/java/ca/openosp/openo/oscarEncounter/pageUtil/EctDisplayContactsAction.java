@@ -29,16 +29,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.ContactDao;
-import org.oscarehr.common.dao.DemographicContactDao;
-import org.oscarehr.common.dao.ProfessionalSpecialistDao;
-import org.oscarehr.common.model.Contact;
-import org.oscarehr.common.model.DemographicContact;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.ContactDao;
+import ca.openosp.openo.common.dao.DemographicContactDao;
+import ca.openosp.openo.common.dao.ProfessionalSpecialistDao;
+import ca.openosp.openo.common.model.Contact;
+import ca.openosp.openo.common.model.DemographicContact;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.util.StringUtils;

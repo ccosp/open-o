@@ -41,7 +41,7 @@
 
 <%@page import="java.text.SimpleDateFormat" %>
 <%@ page
-        import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.myoscar.utils.MyOscarLoggedInInfo,org.oscarehr.util.WebUtils" %>
+        import="ca.openosp.openo.phr.util.MyOscarUtils,ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo,ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -50,19 +50,28 @@
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ page import="oscar.log.*" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*" %>
-<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDoc" %>
-<%@ page import="org.oscarehr.documentManager.IncomingDocUtil" %>
+<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="documentManager.EDoc" %>
+<%@ page import="documentManager.IncomingDocUtil" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
 <%@ page import="ca.openosp.openo.oscarMDS.data.ReportStatus" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.QueueDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderInboxRoutingDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderInboxItem" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%
 
     ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
@@ -329,7 +338,7 @@
 
         <!--input type="button" id="ticklerBtn_<%=docId%>" value="Tickler" onclick="handleDocSave('<%=docId%>','addTickler')"/-->
         <%
-            if (org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+            if (IsPropertiesOn.isTicklerPlusEnable()) {
         %>
         <input type="button" id="mainTickler_<%=docId%>" value="Tickler"
                onClick="popupPatientTicklerPlus(710, 1024,'${pageContext.servletContext.contextPath}/Tickler.do?', 'Tickler','<%=docId%>')" <%=btnDisabled %>>

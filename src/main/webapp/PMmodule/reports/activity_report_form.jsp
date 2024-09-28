@@ -25,19 +25,21 @@
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.dao.*" %>
 <%@page import="org.caisi.model.*" %>
-<%@page import="org.oscarehr.common.dao.SecRoleDao" %>
-<%@page import="org.oscarehr.common.model.SecRole" %>
+<%@page import="ca.openosp.openo.common.dao.SecRoleDao" %>
+<%@page import="ca.openosp.openo.common.model.SecRole" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.PMmodule.dao.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.managers.ProviderManager2" %>
-<%@page import="org.oscarehr.common.dao.FunctionalCentreDao" %>
-<%@page import="org.oscarehr.common.model.FunctionalCentre" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.managers.ProviderManager2" %>
+<%@page import="ca.openosp.openo.common.dao.FunctionalCentreDao" %>
+<%@page import="ca.openosp.openo.common.model.FunctionalCentre" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
 
 
 <%

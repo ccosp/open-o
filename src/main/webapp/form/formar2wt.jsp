@@ -45,7 +45,7 @@
         import="java.util.*, java.sql.*, java.net.*, oscar.util.*, oscar.form.graphic.*"
         errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.form.*" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.form.graphic.FrmGraphicAR" %>
 <HTML>
 <head>

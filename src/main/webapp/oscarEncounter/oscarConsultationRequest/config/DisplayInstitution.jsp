@@ -45,14 +45,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Institution" %>
-<%@page import="org.oscarehr.common.dao.InstitutionDao" %>
-<%@page import="org.oscarehr.common.model.Department" %>
-<%@page import="org.oscarehr.common.dao.DepartmentDao" %>
-<%@page import="org.oscarehr.common.model.InstitutionDepartment" %>
-<%@page import="org.oscarehr.common.model.InstitutionDepartmentPK" %>
-<%@page import="org.oscarehr.common.dao.InstitutitionDepartmentDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Institution" %>
+<%@page import="ca.openosp.openo.common.dao.InstitutionDao" %>
+<%@page import="ca.openosp.openo.common.model.Department" %>
+<%@page import="ca.openosp.openo.common.dao.DepartmentDao" %>
+<%@page import="ca.openosp.openo.common.model.InstitutionDepartment" %>
+<%@page import="ca.openosp.openo.common.model.InstitutionDepartmentPK" %>
+<%@page import="ca.openosp.openo.common.dao.InstitutitionDepartmentDao" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 <%
     InstitutionDao institutionDao = SpringUtils.getBean(InstitutionDao.class);

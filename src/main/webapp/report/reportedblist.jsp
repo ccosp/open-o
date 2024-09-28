@@ -55,11 +55,11 @@
          errorPage="../errorpage.jsp" %>
 
 <jsp:useBean id="providerNameBean" class="ca.openosp.openo.Dict" scope="page"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ReportTemp" %>
 <%@ page import="org.oscarehr.common.dao.ReportTempDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.Form" %>
 <%@ page import="org.oscarehr.common.dao.FormDao" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>

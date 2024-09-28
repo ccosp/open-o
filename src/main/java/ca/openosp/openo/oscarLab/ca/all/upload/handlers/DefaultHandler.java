@@ -42,8 +42,9 @@ import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -51,7 +52,7 @@ import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
 import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 public class DefaultHandler implements MessageHandler {
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     String hl7Type = null;
 
     String getHl7Type() {
@@ -120,7 +121,7 @@ public class DefaultHandler implements MessageHandler {
     }
 
 
-    //TODO: Dont think this needs to be in this class.  Better as a util method
+    //TODO: Dont think this needs to be in this class.  Better as a ehrutil method
     public String readTextFile(String fullPathFilename) throws IOException {
         StringBuilder sb = new StringBuilder(1024);
         BufferedReader reader = new BufferedReader(new FileReader(fullPathFilename));

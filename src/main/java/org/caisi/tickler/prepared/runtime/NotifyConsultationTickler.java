@@ -38,15 +38,15 @@ import org.caisi.tickler.prepared.PreparedTickler;
 import org.caisi.tickler.prepared.seaton.consultation.ConsultationConfiguration;
 import org.caisi.tickler.prepared.seaton.consultation.ConsultationsConfigBean;
 import org.caisi.tickler.prepared.seaton.consultation.NotifyConsultationBean;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.dao.ProfessionalSpecialistDao;
-import org.oscarehr.common.model.ConsultationRequest;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.ConsultationRequestDao;
+import ca.openosp.openo.common.dao.ProfessionalSpecialistDao;
+import ca.openosp.openo.common.model.ConsultationRequest;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class NotifyConsultationTickler extends AbstractPreparedTickler implements PreparedTickler {
 

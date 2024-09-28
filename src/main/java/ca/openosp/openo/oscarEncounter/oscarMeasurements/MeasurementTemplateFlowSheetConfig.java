@@ -50,13 +50,13 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
-import org.oscarehr.common.dao.FlowSheetUserCreatedDao;
-import org.oscarehr.common.dao.FlowsheetDao;
-import org.oscarehr.common.model.FlowSheetCustomization;
-import org.oscarehr.common.model.FlowSheetUserCreated;
-import org.oscarehr.common.model.Flowsheet;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.FlowSheetUserCreatedDao;
+import ca.openosp.openo.common.dao.FlowsheetDao;
+import ca.openosp.openo.common.model.FlowSheetCustomization;
+import ca.openosp.openo.common.model.FlowSheetUserCreated;
+import ca.openosp.openo.common.model.Flowsheet;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.beans.factory.InitializingBean;
 
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler;
@@ -1034,7 +1034,7 @@ public class MeasurementTemplateFlowSheetConfig implements InitializingBean {
         int count = 0;
         if (measurements != null) {
             for (String mstring : measurements) {
-                //java.util.List ruleList = mFlowsheet.getRules(mstring);
+                //java.ehrutil.List ruleList = mFlowsheet.getRules(mstring);
 
                 EctMeasurementTypesBean measurementTypesBean = mType.getMeasurementType(mstring);
 

@@ -38,7 +38,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
         import="java.util.*,oscar.oscarLab.ca.on.*,oscar.oscarDemographic.data.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -55,7 +55,7 @@
 
     DemographicData dData = new DemographicData();
 
-    org.oscarehr.common.model.Demographic demographic = dData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
+    Demographic demographic = dData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
 
 
     RxPrescriptionData prescriptData = new RxPrescriptionData();
@@ -85,9 +85,10 @@
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath()%>/js/global.js"></script>

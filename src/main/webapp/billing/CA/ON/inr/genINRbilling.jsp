@@ -25,14 +25,14 @@
 
 <jsp:useBean id="SxmlMisc" class="ca.openosp.openo.SxmlMisc" scope="session"/>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.model.Billing" %>
-<%@ page import="org.oscarehr.common.dao.BillingDao" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
-<%@page import="org.oscarehr.billing.CA.model.BillingInr" %>
-<%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.model.Billing" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingDetail" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingDetailDao" %>
+<%@page import="ca.openosp.openo.billing.CA.model.BillingInr" %>
+<%@page import="ca.openosp.openo.billing.CA.dao.BillingInrDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%

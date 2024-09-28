@@ -33,21 +33,21 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Date;
 
-import org.oscarehr.common.dao.MessageListDao;
-import org.oscarehr.common.dao.MessageTblDao;
-import org.oscarehr.common.dao.OscarCommLocationsDao;
-import org.oscarehr.common.dao.forms.FormsDao;
-import org.oscarehr.common.model.MessageList;
-import org.oscarehr.common.model.MessageTbl;
-import org.oscarehr.common.model.OscarCommLocations;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MessageListDao;
+import ca.openosp.openo.common.dao.MessageTblDao;
+import ca.openosp.openo.common.dao.OscarCommLocationsDao;
+import ca.openosp.openo.common.dao.forms.FormsDao;
+import ca.openosp.openo.common.model.MessageList;
+import ca.openosp.openo.common.model.MessageTbl;
+import ca.openosp.openo.common.model.OscarCommLocations;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarMessenger.data.MsgDisplayMessage;
 import ca.openosp.openo.util.ConversionUtils;
 
 /**
- * @deprecated Use org.oscarehr.managers.MessagingManager and JPA model.
+ * @deprecated Use ca.openosp.openo.managers.MessagingManager and JPA model.
  */
 @Deprecated
 public class MsgDisplayMessagesBean implements java.io.Serializable {

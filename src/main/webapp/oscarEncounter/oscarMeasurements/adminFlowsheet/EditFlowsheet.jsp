@@ -30,15 +30,17 @@
         import="org.jdom.Element,oscar.oscarEncounter.oscarMeasurements.data.*,org.jdom.output.Format,org.jdom.output.XMLOutputter,oscar.oscarEncounter.oscarMeasurements.util.*,java.io.*" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
-<%@ page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.FlowSheetCustomization" %>
+<%@ page import="org.oscarehr.common.dao.*,ca.openosp.openo.common.model.FlowSheetCustomization" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBeanHandler" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

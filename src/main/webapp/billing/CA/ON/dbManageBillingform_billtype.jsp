@@ -27,9 +27,9 @@
 <%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat" %>
 
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.CtlBillingType" %>
-<%@ page import="org.oscarehr.common.dao.CtlBillingTypeDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.CtlBillingType" %>
+<%@ page import="ca.openosp.openo.common.dao.CtlBillingTypeDao" %>
 <%
     CtlBillingTypeDao ctlBillingTypeDao = SpringUtils.getBean(CtlBillingTypeDao.class);
 %>

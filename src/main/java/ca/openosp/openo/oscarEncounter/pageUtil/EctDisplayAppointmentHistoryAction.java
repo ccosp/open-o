@@ -33,13 +33,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.OscarAppointmentDao;
-import org.oscarehr.common.model.Appointment;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.OscarAppointmentDao;
+import ca.openosp.openo.common.model.Appointment;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.StringUtils;
 

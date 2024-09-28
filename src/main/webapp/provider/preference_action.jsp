@@ -22,13 +22,13 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 
-<%@page import="org.oscarehr.common.dao.ProviderPreferenceDao" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderPreferenceDao" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.Map" %>

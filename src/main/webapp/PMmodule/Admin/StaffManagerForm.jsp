@@ -24,6 +24,7 @@
 --%>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.StaffManagerViewFormBean" %>
 <style>
     .sortable {
         background-color: #555;
@@ -104,7 +105,7 @@
             </div>
             <%@ include file="/common/messages.jsp" %>
             <jsp:include
-                    page='<%="/PMmodule/Admin/StaffEdit/"+selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
+                    page='<%="/ca/openosp/openo/PMmodule/Admin/StaffEdit/"+selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
         </c:when>
         <c:otherwise>
             <%@ include file="/common/messages.jsp" %>

@@ -1,7 +1,7 @@
 //CHECKSTYLE:OFF
 package org.caisi.service;
 
-import org.oscarehr.common.model.Demographic;
+import ca.openosp.openo.common.model.Demographic;
 
 import java.util.List;
 

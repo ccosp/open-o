@@ -24,13 +24,13 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="oscar.oscarLab.ca.on.*" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.dao.ViewDao" %>
 <%@ page import="org.oscarehr.common.model.View" %>
 <%@ page import="org.oscarehr.common.model.TicklerLink" %>
@@ -42,7 +42,7 @@
 <%@ page import="org.oscarehr.common.model.Tickler" %>
 <%@ page import="org.oscarehr.common.model.TicklerComment" %>
 <%@ page import="org.oscarehr.common.model.CustomFilter" %>
-<%@ page import="org.oscarehr.managers.TicklerManager" %>
+<%@ page import="ca.openosp.openo.managers.TicklerManager" %>
 <%@ page import="java.text.DateFormat" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.owasp.encoder.Encode" %>

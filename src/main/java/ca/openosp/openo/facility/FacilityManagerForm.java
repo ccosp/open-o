@@ -27,7 +27,7 @@
 package ca.openosp.openo.facility;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.common.model.Facility;
+import ca.openosp.openo.common.model.Facility;
 
 
 public class FacilityManagerForm extends ActionForm {

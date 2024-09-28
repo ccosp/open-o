@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@ page import="org.oscarehr.PMmodule.model.DischargeReason" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.DischargeReason" %>
 <%@ include file="/taglibs.jsp" %>
 
 <script>

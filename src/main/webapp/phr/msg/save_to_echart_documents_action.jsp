@@ -27,13 +27,13 @@
 <%@page import="org.apache.commons.codec.binary.Base64" %>
 <%@page import="java.util.Calendar" %>
 <%@page import="org.w3c.dom.Node" %>
-<%@page import="org.oscarehr.util.XmlUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.XmlUtils" %>
 <%@page import="org.w3c.dom.Document" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
 <%@page import="org.oscarehr.myoscar_server.ws.Message2DataTransfer" %>
-<%@page import="org.oscarehr.phr.web.MyOscarMessagesHelper" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.phr.web.PHRMessageAction" %>
+<%@page import="ca.openosp.openo.phr.web.MyOscarMessagesHelper" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.phr.web.PHRMessageAction" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(session);

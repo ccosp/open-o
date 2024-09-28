@@ -44,8 +44,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.struts.util.MessageResources;
 import org.codehaus.jettison.json.JSONObject;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.OscarProperties;
 

@@ -37,7 +37,7 @@
 
 <jsp:useBean id="scheduleDateBean" class="java.util.Hashtable" scope="session"/>
 <jsp:useBean id="scheduleRscheduleBean" class="ca.openosp.openo.RscheduleBean" scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleDate" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleDateDao" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>

@@ -38,12 +38,12 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.caisi.service.IssueAdminManager;
-import org.oscarehr.casemgmt.model.Issue;
-import org.oscarehr.common.dao.SecRoleDao;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.casemgmt.model.Issue;
+import ca.openosp.openo.common.dao.SecRoleDao;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 // use your IDE to handle imports
 public class IssueAdminAction extends DispatchAction {

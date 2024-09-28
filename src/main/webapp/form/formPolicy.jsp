@@ -45,11 +45,11 @@
 
 <%@ page import="ca.openosp.openo.form.FrmRecord" %>
 <%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
-<%@ page import="org.oscarehr.util.LocaleUtils" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 
 <%
     String formClass = "Policy";

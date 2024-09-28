@@ -29,7 +29,7 @@
     String weekdaytag[] = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*" errorPage="../appointment/errorpage.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.RSchedule" %>
 <%@page import="org.oscarehr.common.dao.RScheduleDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>

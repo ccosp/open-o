@@ -27,9 +27,9 @@ package ca.openosp.openo.oscarDxResearch.bean;
 
 import java.util.Vector;
 
-import org.oscarehr.common.dao.DxresearchDAO;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DxresearchDAO;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDxResearch.util.dxResearchCodingSystem;
 

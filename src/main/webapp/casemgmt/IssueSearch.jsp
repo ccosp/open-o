@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" %><%--
 
 
     Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
@@ -44,7 +44,7 @@
 <%
     String demographicNo = request.getParameter("demographicNo");
     String sessionFrmName = "caseManagementEntryForm" + demographicNo;
-    org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean form = (org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean) session.getAttribute(sessionFrmName);
+    CaseManagementEntryFormBean form = (CaseManagementEntryFormBean) session.getAttribute(sessionFrmName);
     pageContext.setAttribute("caseManagementEntryForm", form);
 %>
 
@@ -109,7 +109,7 @@
                 <%-- table contents --%>
 
             <nested:iterate indexId="ind" id="newIssueCheckList" property="newIssueCheckList"
-                            type="org.oscarehr.casemgmt.web.CheckIssueBoxBean">
+                            type="ca.openosp.openo.casemgmt.web.CheckIssueBoxBean">
                 <tr bgcolor="<%= (ind.intValue()%2==0)?"#EEEEFF":"white" %>" align="center">
                     <td><nested:checkbox indexed="true" name="newIssueCheckList" property="checked"></nested:checkbox>
                     <td>

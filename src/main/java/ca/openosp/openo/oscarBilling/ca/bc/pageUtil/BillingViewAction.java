@@ -35,18 +35,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.PropertyDao;
-import org.oscarehr.common.model.Property;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.PropertyDao;
+import ca.openosp.openo.common.model.Property;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillRecipient;
@@ -94,7 +95,7 @@ public final class BillingViewAction
             DemographicData demoData = new DemographicData();
             log.debug("Calling Demo");
 
-            org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+            Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
             bean.setPatientLastName(demo.getLastName());
             bean.setPatientFirstName(demo.getFirstName());
             bean.setPatientDoB(demo.getDateOfBirth());

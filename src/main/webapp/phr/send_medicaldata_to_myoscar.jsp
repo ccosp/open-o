@@ -24,13 +24,13 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.managers.DemographicManager" %>
-<%@page import="org.oscarehr.common.service.myoscar.MyOscarMedicalDataManagerUtils" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@page import="ca.openosp.openo.common.service.myoscar.MyOscarMedicalDataManagerUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     DemographicManager demographicManager = (DemographicManager) SpringUtils.getBean(DemographicManager.class);

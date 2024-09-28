@@ -22,12 +22,12 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.OcanStaffFormData" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffFormData" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanForm" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.List" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

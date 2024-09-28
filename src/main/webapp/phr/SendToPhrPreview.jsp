@@ -32,11 +32,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="java.util.Enumeration,org.oscarehr.documentManager.EDoc,org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.util.SpringUtils,org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="org.oscarehr.common.dao.Hl7TextInfoDao,org.oscarehr.common.model.Hl7TextInfo" %>
+<%@ page import="java.util.Enumeration,documentManager.EDoc,documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils,org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.Hl7TextInfoDao,ca.openosp.openo.common.model.Hl7TextInfo" %>
 
 
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>

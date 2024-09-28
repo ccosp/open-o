@@ -40,24 +40,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.web.PrescriptionQrCodeUIBean" %>
-<%@page import="org.oscarehr.common.model.EForm" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrweb.PrescriptionQrCodeUIBean" %>
+<%@page import="ca.openosp.openo.common.model.EForm" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.EncounterForm" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingServiceDao" %>
-<%@page import="org.oscarehr.common.model.CtlBillingService" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.EncounterForm" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.CtlBillingService" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 
 <%!
     CtlBillingServiceDao ctlBillingServiceDao = SpringUtils.getBean(CtlBillingServiceDao.class);

@@ -29,15 +29,15 @@
 <%@ page import="org.oscarehr.PMmodule.model.*" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramProviderDAO" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
-<%@page import="org.oscarehr.PMmodule.web.AdmissionForDisplay" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.PMmodule.web.ReferralHistoryDisplay" %>
+<%@page import="ca.openosp.openo.PMmodule.web.AdmissionForDisplay" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ReferralHistoryDisplay" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 %>

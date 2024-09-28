@@ -33,12 +33,11 @@ import ca.openosp.openo.oscarRx.data.RxPatientData;
 import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.phr.model.PHRMedication;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.phr.model.PHRMedication;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.OscarProperties;
-import ca.openosp.openo.oscarRx.data.*;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;

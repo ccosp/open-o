@@ -41,10 +41,10 @@ import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicCust;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DemographicCust;
+import ca.openosp.openo.common.model.Provider;
 
 /*
  * Author: Dennis Warren

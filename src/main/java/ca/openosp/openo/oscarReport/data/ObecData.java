@@ -33,11 +33,11 @@ import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.OscarAppointmentDao;
-import org.oscarehr.common.model.Appointment;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarAppointmentDao;
+import ca.openosp.openo.common.model.Appointment;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDB.DBPreparedHandler;
 import ca.openosp.openo.util.ConversionUtils;

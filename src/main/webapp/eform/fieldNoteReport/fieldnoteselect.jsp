@@ -24,9 +24,9 @@
 
 --%>
 
-<%@ page import="org.oscarehr.common.service.FieldNoteManager" %>
-<%@ page import="org.oscarehr.common.model.EForm, org.oscarehr.common.dao.EFormDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.service.FieldNoteManager" %>
+<%@ page import="ca.openosp.openo.common.model.EForm, ca.openosp.openo.common.dao.EFormDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.*" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

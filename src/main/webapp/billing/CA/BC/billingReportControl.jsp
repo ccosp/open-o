@@ -54,17 +54,17 @@
 %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <%@ page import="java.math.*,java.util.*, java.sql.*, oscar.*, java.net.*" errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.ReportProvider" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.dao.ReportProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Billing" %>
-<%@ page import="org.oscarehr.common.dao.BillingDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Billing" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingDao" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingDetail" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingDetailDao" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
 

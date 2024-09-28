@@ -30,10 +30,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscarProp" %>
 <%@ page import="oscar.oscarRx.data.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.ArrayList,oscar.util.*,java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.common.dao.*" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
@@ -95,7 +95,7 @@
     %>
 
     <%-- bean:define id="patient"
-                 type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient" / --%>
+                 type="oscar.ehroscarRx.data.RxPatientData.Patient" name="Patient" / --%>
 
     <body topmargin="0" leftmargin="0" vlink="#0000FF">
     <table border="0" cellpadding="0" cellspacing="0"

@@ -43,7 +43,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="java.text.SimpleDateFormat" %>
-<%@page import="org.oscarehr.eyeform.model.EyeformConsultationReport" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformConsultationReport" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <html:html>
 

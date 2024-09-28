@@ -25,32 +25,33 @@
 --%>
 
 <%@page import="java.text.ParseException" %>
-<%@page import="org.oscarehr.common.model.PartialDate" %>
-<%@page import="org.oscarehr.common.dao.PartialDateDao" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.common.dao.PartialDateDao" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.Consent" %>
-<%@page import="org.oscarehr.common.dao.ConsentDao" %>
-<%@page import="org.oscarehr.common.model.CVCMapping" %>
-<%@page import="org.oscarehr.common.dao.CVCImmunizationDao" %>
-<%@page import="org.oscarehr.common.dao.CVCMappingDao" %>
-<%@page import="org.oscarehr.common.model.CVCMedicationLotNumber" %>
+<%@page import="ca.openosp.openo.common.model.Consent" %>
+<%@page import="ca.openosp.openo.common.dao.ConsentDao" %>
+<%@page import="ca.openosp.openo.common.model.CVCMapping" %>
+<%@page import="ca.openosp.openo.common.dao.CVCImmunizationDao" %>
+<%@page import="ca.openosp.openo.common.dao.CVCMappingDao" %>
+<%@page import="ca.openosp.openo.common.model.CVCMedicationLotNumber" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.common.model.CVCImmunization" %>
-<%@page import="org.oscarehr.managers.CanadianVaccineCatalogueManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.CVCImmunization" %>
+<%@page import="ca.openosp.openo.managers.CanadianVaccineCatalogueManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page
         import="ca.openosp.openo.oscarDemographic.data.DemographicData,java.text.SimpleDateFormat, java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*" %>
-<%@ page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
-<%@ page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
-<%@page import="org.oscarehr.common.model.PreventionsLotNrs" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@ page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@page import="ca.openosp.openo.common.dao.PreventionsLotNrsDao" %>
+<%@page import="ca.openosp.openo.common.model.PreventionsLotNrs" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.PreventionData" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.PreventionDisplayConfig" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExt" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -756,7 +757,7 @@
                 &nbsp;
                 <!--
                <%
-                 org.oscarehr.common.model.DemographicExt ineligx = demographicExtDao.getDemographicExt(Integer.parseInt(demographic_no),prevention+"Inelig");
+                 DemographicExt ineligx = demographicExtDao.getDemographicExt(Integer.parseInt(demographic_no),prevention+"Inelig");
 				 String inelig = "";
 				 if(ineligx != null) {
 					 inelig = ineligx.getValue();

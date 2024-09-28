@@ -31,8 +31,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.oscarehr.billing.CA.BC.model.BillingPrivateTransactions;
-import org.oscarehr.common.dao.AbstractDaoImpl;
+import ca.openosp.openo.billing.CA.BC.model.BillingPrivateTransactions;
+import ca.openosp.openo.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import ca.openosp.openo.entities.PrivateBillTransaction;

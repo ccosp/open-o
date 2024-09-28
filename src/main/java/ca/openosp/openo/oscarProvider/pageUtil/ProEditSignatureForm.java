@@ -27,7 +27,7 @@
 package ca.openosp.openo.oscarProvider.pageUtil;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public final class ProEditSignatureForm extends ActionForm {
 

@@ -39,8 +39,8 @@
     }
 %>
 
-<%@page import="org.oscarehr.integration.born.ONAREnhancedFormToXML" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.integration.born.ONAREnhancedFormToXML" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <%

@@ -29,14 +29,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

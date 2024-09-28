@@ -25,10 +25,10 @@
 <%@ include file="/taglibs.jsp" %>
 <%@ include file="/common/messages.jsp" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.web.utils.UserRoleUtils" %>
 <%@page import="java.util.*" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

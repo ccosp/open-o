@@ -23,27 +23,28 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.DrugDao" %>
-<%@page import="org.oscarehr.common.dao.PartialDateDao" %>
-<%@page import="org.oscarehr.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DrugDao" %>
+<%@page import="ca.openosp.openo.common.dao.PartialDateDao" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.common.model.Drug" %>
+<%@page import="ca.openosp.openo.common.model.Drug" %>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicWs" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehroscarRx.StaticScriptBean" %>
 <%@page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <%@page import="java.util.ArrayList" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -123,7 +124,7 @@
             ArrayList<StaticScriptBean.DrugDisplayData> drugs = StaticScriptBean.getDrugList(loggedInInfo, currentDemographicNo, regionalIdentifier, cn, bn, atc);
 
             RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, currentDemographicNo);
-            String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
+            String annotation_display = CaseManagementNoteLink.DISP_PRESCRIP;
         %>
         <script type="text/javascript" src="../share/javascript/prototype.js"/>
         "></script>
@@ -137,7 +138,7 @@
                 var favoriteName = window.prompt('Please enter a name for the Favorite:', brandName);
 
                 if (favoriteName.length > 0) {
-                    var url = '<%=request.getContextPath()%>' + "/oscarRx/addFavorite2.do?parameterValue=addFav2";
+                    var url = '<%=request.getContextPath()%>' + "/ehroscarRx/addFavorite2.do?parameterValue=addFav2";
                     oscarLog(url);
                     favoriteName = encodeURIComponent(favoriteName);
                     var data = "drugId=" + drugId + "&favoriteName=" + favoriteName;
@@ -152,11 +153,11 @@
             //represcribe a drug
             function reRxDrugSearch3(reRxDrugId) {
                 var dataUpdateId = "reRxDrugId=" + reRxDrugId + "&action=addToReRxDrugIdList&rand=" + Math.floor(Math.random() * 10001);
-                var urlUpdateId = "<c:out value="${ctx}"/>" + "/oscarRx/WriteScript.do?parameterValue=updateReRxDrug";
+                var urlUpdateId = "<c:out value="${ctx}"/>" + "/ehroscarRx/WriteScript.do?parameterValue=updateReRxDrug";
                 new Ajax.Request(urlUpdateId, {method: 'get', parameters: dataUpdateId});
 
                 var data = "drugId=" + reRxDrugId;
-                var url = "<c:out value="${ctx}"/>" + "/oscarRx/rePrescribe2.do?method=saveReRxDrugIdToStash";
+                var url = "<c:out value="${ctx}"/>" + "/ehroscarRx/rePrescribe2.do?method=saveReRxDrugIdToStash";
                 new Ajax.Request(url, {
                     method: 'post', parameters: data, asynchronous: false, onSuccess: function (transport) {
                         location.href = "SearchDrug3.jsp?";

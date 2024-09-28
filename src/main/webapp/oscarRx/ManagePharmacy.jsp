@@ -31,6 +31,7 @@
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxManagePharmacyForm" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -72,7 +73,7 @@
                 RxPharmacyData rxp = new RxPharmacyData();
                 rxp.deletePharmacy(request.getParameter("ID"));
 
-                response.sendRedirect(request.getContextPath() + "/oscarRx/SelectPharmacy2.jsp");
+                response.sendRedirect(request.getContextPath() + "/ehroscarRx/SelectPharmacy2.jsp");
                 return;
             }
         %>
@@ -120,7 +121,7 @@
                                     RxManagePharmacyForm frm = (RxManagePharmacyForm) request.getAttribute("RxManagePharmacyForm");
                                     String ID = request.getParameter("ID");
                                     RxPharmacyData pharmacy = new RxPharmacyData();
-                                    org.oscarehr.common.model.PharmacyInfo ph = pharmacy.getPharmacy(ID);
+                                    PharmacyInfo ph = pharmacy.getPharmacy(ID);
                                     frm.setID(ID);
                                     frm.setAddress(ph.getAddress());
                                     frm.setCity(ph.getCity());

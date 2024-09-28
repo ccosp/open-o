@@ -42,15 +42,15 @@
                  org.springframework.web.context.support.WebApplicationContextUtils,
                  org.oscarehr.common.dao.UserPropertyDAO,
                  org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <!-- Classes needed for signature injection -->
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.common.dao.*,org.oscarehr.managers.PrescriptionManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="org.oscarehr.common.dao.*,ca.openosp.openo.managers.PrescriptionManager" %>
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
 <!-- end -->
 <%@ page import="org.owasp.encoder.Encode" %>
 <%
@@ -63,7 +63,7 @@
 %>
 
 
-<%@page import="org.oscarehr.web.PrescriptionQrCodeUIBean" %>
+<%@page import="ca.openosp.openo.ehrweb.PrescriptionQrCodeUIBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
@@ -133,10 +133,10 @@
     RxProviderData.Provider provider;
     String signingProvider = loggedInInfo.getLoggedInProviderNo();
     if (rePrint != null && rePrint.equalsIgnoreCase("true")) {
-        //bean = (oscar.oscarRx.pageUtil.RxSessionBean)session.getAttribute("tmpBeanRX");
+        //bean = (oscar.ehroscarRx.pageUtil.RxSessionBean)session.getAttribute("tmpBeanRX");
         //signingProvider = bean.getStashItem(0).getProviderNo();
         //rxDate = bean.getStashItem(0).getRxDate();
-        //provider = new oscar.oscarRx.data.RxProviderData().getProvider(signingProvider);
+        //provider = new oscar.ehroscarRx.data.RxProviderData().getProvider(signingProvider);
 
 //    String ip = request.getRemoteAddr();
 
@@ -243,7 +243,7 @@
                                             + "<bean:message key='RxPreview.msgTel'/>" + ": " + patientPhone
                                             + (patientDOB != null && !patientDOB.trim().equals("") ? "\n"
                                             + "<bean:message key='RxPreview.msgDOB'/>" + ": " + patientDOB : "")
-                                            + (!patientHin.trim().equals("") ? "\n" + "<bean:message key='oscar.oscarRx.hin'/>" + ": " + patientHin : "");
+                                            + (!patientHin.trim().equals("") ? "\n" + "<bean:message key='oscar.ehroscarRx.hin'/>" + ": " + patientHin : "");
                                 }
 
                             %> <input type="hidden" name="doctorName"
@@ -494,7 +494,7 @@
                                             signatureRequestId = loggedInInfo.getLoggedInProviderNo();
                                             imageUrl = request.getContextPath() + "/imageRenderingServlet?source=" + ImageRenderingServlet.Source.signature_preview.name() + "&" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
                                             startimageUrl = request.getContextPath() + "/images/1x1.gif";
-                                            statusUrl = request.getContextPath() + "/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
+                                            statusUrl = request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
                                         %>
                                         <input type="hidden" name="<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>"
                                                value="<%=signatureRequestId%>"/>

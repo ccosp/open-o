@@ -35,14 +35,14 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
-import org.oscarehr.common.dao.forms.Rourke2009DAO;
+import ca.openosp.openo.common.dao.forms.Rourke2009DAO;
 import ca.openosp.openo.form.model.FormRourke2009;
 import ca.openosp.openo.oscarEncounter.data.EctFormData;
 import ca.openosp.openo.util.UtilDateUtilities;

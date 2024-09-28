@@ -31,15 +31,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ca.openosp.openo.PMmodule.dao.OcanSubmissionLogDao;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.PMmodule.model.OcanSubmissionLog;
+import ca.openosp.openo.PMmodule.model.OcanSubmissionLog;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class OcanSubmissionLogDaoTest extends DaoTestFixtures {
 

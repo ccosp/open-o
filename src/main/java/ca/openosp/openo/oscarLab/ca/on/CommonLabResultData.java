@@ -26,22 +26,41 @@
 
 package ca.openosp.openo.oscarLab.ca.on;
 
+import ca.openosp.openo.common.dao.CtlDocumentDao;
+import ca.openosp.openo.common.dao.DemographicCustDao;
+import ca.openosp.openo.common.dao.DocumentResultsDao;
+import ca.openosp.openo.common.dao.Hl7TextMessageDao;
+import ca.openosp.openo.common.dao.LabPatientPhysicianInfoDao;
+import ca.openosp.openo.common.dao.MdsMSHDao;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.dao.QueueDocumentLinkDao;
+import ca.openosp.openo.common.model.CtlDocument;
+import ca.openosp.openo.common.model.DemographicCust;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.common.model.QueueDocumentLink;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.ehrutil.XmlUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
-import org.oscarehr.billing.CA.BC.dao.Hl7MshDao;
+import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7MshDao;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.common.dao.*;
-import org.oscarehr.common.model.*;
-import org.oscarehr.hospitalReportManager.dao.HRMDocumentToDemographicDao;
-import org.oscarehr.hospitalReportManager.dao.HRMDocumentToProviderDao;
-import org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic;
-import org.oscarehr.labs.LabIdAndType;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.*;
+import ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToDemographicDao;
+import ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToProviderDao;
+import ca.openosp.openo.hospitalReportManager.model.HRMDocumentToDemographic;
+import ca.openosp.openo.labs.LabIdAndType;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import org.oscarehr.ehrutil.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -540,7 +559,7 @@ public class CommonLabResultData {
             return result;
 
         } catch (Exception e) {
-            Logger l = org.oscarehr.util.MiscUtils.getLogger();
+            Logger l = MiscUtils.getLogger();
             l.error("exception in CommonLabResultData.updateLabRouting()", e);
             return false;
         }
@@ -589,7 +608,7 @@ public class CommonLabResultData {
 
             return true;
         } catch (Exception e) {
-            Logger l = org.oscarehr.util.MiscUtils.getLogger();
+            Logger l = MiscUtils.getLogger();
             l.error("exception in CommonLabResultData.updateLabRouting()", e);
             return false;
         }

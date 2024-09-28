@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.Hl7TextInfoDao;
-import org.oscarehr.common.model.Hl7TextInfo;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.Hl7TextInfoDao;
+import ca.openosp.openo.common.model.Hl7TextInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
@@ -27,7 +28,7 @@ import ca.openosp.openo.oscarLab.ca.all.util.PFHTUtilities;
 
 public class PFHTHandler implements MessageHandler {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     public String parse(LoggedInInfo loggedInInfo, String serviceName, String fileName, int fileId, String ipAddr) {
 

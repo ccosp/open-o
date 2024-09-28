@@ -19,7 +19,7 @@
 --%>
 <%-- new billing report as its only slightly over 10 years old --%>
 <!DOCTYPE html>
-<%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+<%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -43,17 +43,18 @@
 
 <%@ page import="java.util.*, java.sql.*, oscar.login.*, oscar.*, java.net.*" errorPage="/errorpage.jsp" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.ReportProvider" %>
-<%@ page import="org.oscarehr.common.dao.ReportProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@ page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="ca.openosp.openo.login.DBHelp" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 

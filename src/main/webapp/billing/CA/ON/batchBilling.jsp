@@ -34,9 +34,9 @@
 %>
 <%@ include file="../../../casemgmt/taglibs.jsp" %>
 <%@ page import="java.util.*, java.sql.*, java.net.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.ClinicLocationDao, org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.dao.BatchBillingDAO, org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.ClinicLocation, org.oscarehr.common.model.Provider, org.oscarehr.common.model.BatchBilling, org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicLocationDao, ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.common.dao.BatchBillingDAO, ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicLocation, ca.openosp.openo.common.model.Provider, ca.openosp.openo.common.model.BatchBilling, ca.openosp.openo.common.model.Demographic" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <%
     ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean(ClinicLocationDao.class);

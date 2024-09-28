@@ -24,9 +24,9 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.casemgmt.web.PrescriptDrug" %>
+<%@page import="ca.openosp.openo.casemgmt.web.PrescriptDrug" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -36,25 +36,26 @@
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 <%@ page
         import="oscar.oscarRx.data.*,ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData,ca.openosp.openo.oscarDemographic.data.DemographicData,ca.openosp.openo.OscarProperties,oscar.log.*" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager,
                 org.springframework.web.context.WebApplicationContext,
                 org.springframework.web.context.support.WebApplicationContextUtils,
-                org.oscarehr.casemgmt.model.CaseManagementNoteLink,
-                org.oscarehr.casemgmt.model.CaseManagementNote" %>
+                ca.openosp.openo.casemgmt.model.CaseManagementNoteLink,
+                ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Calendar" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="java.util.List,ca.openosp.openo.util.StringUtils" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo,org.oscarehr.common.dao.DrugReasonDao,org.oscarehr.common.model.DrugReason" %>
-<%@page import="java.util.ArrayList,oscar.util.*,java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.common.dao.*" %>
-<%@page import="org.oscarehr.managers.DrugDispensingManager" %>
-<%@page import="org.oscarehr.managers.CodingSystemManager" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo,ca.openosp.openo.common.dao.DrugReasonDao,ca.openosp.openo.common.model.DrugReason" %>
+<%@page import="java.util.ArrayList,oscar.util.*,java.util.*,ca.openosp.openo.common.model.Drug,org.oscarehr.common.dao.*" %>
+<%@page import="ca.openosp.openo.managers.DrugDispensingManager" %>
+<%@page import="ca.openosp.openo.managers.CodingSystemManager" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.common.dao.PartialDateDao" %>
 <bean:define id="patient" type="ca.openosp.openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 <logic:notPresent name="RxSessionBean" scope="session">
     <logic:redirect href="error.html"/>
@@ -98,7 +99,7 @@
     CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);
 
     boolean integratorEnabled = loggedInInfo.getCurrentFacility().isIntegratorEnabled();
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
+    String annotation_display = CaseManagementNoteLink.DISP_PRESCRIP;
     String heading = request.getParameter("heading");
 
     if (heading != null) {
@@ -405,7 +406,7 @@
 
                 %>
                 <a href="javascript:void(0)"
-                   onclick="javascript:popupWindow(720,700,'<%=request.getContextPath()%>/oscarRx/Dispense.do?method=view&id=<%=prescriptDrug.getId()%>','Dispense<%=prescriptIdInt %>'); return false;">Dispense
+                   onclick="javascript:popupWindow(720,700,'<%=request.getContextPath()%>/ehroscarRx/Dispense.do?method=view&id=<%=prescriptDrug.getId()%>','Dispense<%=prescriptIdInt %>'); return false;">Dispense
                     (<%=dispensingStatus%>)</a>
                 <%
                         }

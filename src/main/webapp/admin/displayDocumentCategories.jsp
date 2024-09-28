@@ -10,7 +10,7 @@
 --%>
 <!DOCTYPE html>
 <%@ page
-        import="java.util.*, org.oscarehr.documentManager.EDocUtil" %>
+        import="java.util.*, documentManager.EDocUtil" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

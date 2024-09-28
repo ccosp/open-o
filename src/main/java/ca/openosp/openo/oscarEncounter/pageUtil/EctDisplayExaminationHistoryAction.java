@@ -30,8 +30,8 @@ package ca.openosp.openo.oscarEncounter.pageUtil;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class EctDisplayExaminationHistoryAction extends EctDisplayAction {
     private static final String cmd = "examhistory";

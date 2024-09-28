@@ -35,10 +35,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.Teleplan.TeleplanSequenceDAO;
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillActivityDAO;

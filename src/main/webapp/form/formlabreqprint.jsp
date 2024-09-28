@@ -64,7 +64,7 @@
     int demoNo = Integer.parseInt(request.getParameter("demographic_no"));
     int formId = Integer.parseInt(request.getParameter("formId"));
 	FrmRecord rec = (new FrmRecordFactory()).factory(formClass);
-    java.util.Properties props = rec.getPrintRecord(demoNo, formId);
+    java.ehrutil.Properties props = rec.getPrintRecord(demoNo, formId);
 */
         OscarProperties oscarProps = OscarProperties.getInstance();
     %>

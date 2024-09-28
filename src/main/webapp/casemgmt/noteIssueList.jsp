@@ -24,13 +24,13 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
-        import="org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean, org.oscarehr.common.model.Facility" %>
+        import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean, ca.openosp.openo.common.model.Facility" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ include file="/casemgmt/taglibs.jsp" %>
 
 <%
@@ -297,7 +297,7 @@
                                 String submitString = "this.form.method.value='issueChange';";
                                 submitString = submitString + "this.form.lineId.value=" + "'" + ind.intValue() + "'; return ajaxUpdateIssues('issueChange', $('noteIssues').up().id);";
                                 String id = "noteIssue" + ind;
-                                org.oscarehr.casemgmt.web.CheckBoxBean cbb = (org.oscarehr.casemgmt.web.CheckBoxBean) pageContext.getAttribute("issueCheckList");
+                                CheckBoxBean cbb = (CheckBoxBean) pageContext.getAttribute("issueCheckList");
                                 boolean writeAccess = cbb.getIssueDisplay().isWriteAccess();
                                 boolean disabled = !writeAccess;
                             %>
@@ -413,7 +413,7 @@
                                 String submitString = "this.form.method.value='issueChange';";
                                 submitString = submitString + "this.form.lineId.value=" + "'" + ind.intValue() + "'; return ajaxUpdateIssues('issueChange', $('noteIssues').up().id);";
                                 String id = "noteIssue" + ind;
-                                org.oscarehr.casemgmt.web.CheckBoxBean cbb = (org.oscarehr.casemgmt.web.CheckBoxBean) pageContext.getAttribute("issueCheckList");
+                                CheckBoxBean cbb = (CheckBoxBean) pageContext.getAttribute("issueCheckList");
                                 boolean writeAccess = cbb.getIssueDisplay().isWriteAccess();
                                 boolean disabled = !writeAccess;
                             %>

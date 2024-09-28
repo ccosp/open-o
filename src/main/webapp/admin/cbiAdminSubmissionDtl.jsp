@@ -38,12 +38,12 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.dao.AdmissionDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.PMmodule.model.OcanSubmissionLog" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.dao.AdmissionDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.PMmodule.model.OcanSubmissionLog" %>
 <%@page import="java.util.List" %>
 <%@page import="ca.openosp.openo.util.CBIUtil" %>
 <%@page import="java.util.Date" %>

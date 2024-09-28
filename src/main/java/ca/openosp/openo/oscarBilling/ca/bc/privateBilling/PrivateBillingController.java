@@ -17,12 +17,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.oscarClinic.ClinicData;
 
 /*

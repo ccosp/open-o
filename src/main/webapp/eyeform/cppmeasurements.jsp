@@ -40,12 +40,12 @@
 %>
 
 <%@ page import="java.util.Collection" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.casemgmt.dao.IssueDAO" %>
-<%@ page import="org.oscarehr.casemgmt.model.Issue" %>
-<%@ page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@ page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@ page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.casemgmt.dao.IssueDAO" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.Issue" %>
+<%@ page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
+<%@ page import="ca.openosp.openo.casemgmt.web.CaseManagementViewAction" %>
 <%
     //we need the issue ids
     IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);

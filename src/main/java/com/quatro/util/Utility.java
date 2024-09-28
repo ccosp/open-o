@@ -30,8 +30,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import ca.openosp.openo.MyDateFormat;
-import org.oscarehr.PMmodule.model.FieldDefinition;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.PMmodule.model.FieldDefinition;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class Utility {
     public static boolean IsEmpty(String pStr) {

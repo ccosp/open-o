@@ -28,9 +28,9 @@ package com.quatro.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.model.Facility;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.common.model.Facility;
 
 import com.quatro.model.LookupCodeValue;
 import com.quatro.model.LookupTableDefValue;

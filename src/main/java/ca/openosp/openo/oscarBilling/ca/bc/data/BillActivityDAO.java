@@ -32,9 +32,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.oscarehr.billing.CA.dao.BillActivityDao;
-import org.oscarehr.billing.CA.model.BillActivity;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.dao.BillActivityDao;
+import ca.openosp.openo.billing.CA.model.BillActivity;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.entities.Billactivity;
 import ca.openosp.openo.util.ConversionUtils;

@@ -23,10 +23,10 @@
 <%@ page import="java.util.*,java.sql.*,oscar.util.*,oscar.*,oscar.oscarBilling.ca.on.data.*"
          errorPage="../../../errorpage.jsp" %>
 
-<%@page import="org.oscarehr.billing.CA.model.BillingInr" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.billing.CA.model.BillingInr" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.billing.CA.dao.BillingInrDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingClaimImpl" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>

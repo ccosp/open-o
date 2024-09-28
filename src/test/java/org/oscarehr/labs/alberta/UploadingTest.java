@@ -28,9 +28,9 @@ import static org.junit.Assert.assertTrue;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.SchemaUtils;
@@ -50,7 +50,7 @@ public class UploadingTest extends DaoTestFixtures {
      */
     public static final String CLIENT_KEY = "";
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
 
     @BeforeClass
     public static void init() throws Exception {

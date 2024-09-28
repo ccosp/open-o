@@ -25,18 +25,18 @@
 --%>
 
 <%@page import="org.oscarehr.myoscar.commons.MedicalDataType" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.MessageManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.Message2RecipientPersonAttributesTransfer" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.AccountManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.phr.web.MyOscarMessagesHelper" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.phr.web.MyOscarMessagesHelper" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
@@ -52,14 +52,14 @@
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="org.oscarehr.phr.model.PHRAction" %>
+<%@ page import="ca.openosp.openo.phr.model.PHRAction" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
-<%@ page import="org.oscarehr.phr.model.PHRMessage" %>
+<%@ page import="ca.openosp.openo.phr.model.PHRMessage" %>
 <%@ page
-        import="org.oscarehr.phr.dao.PHRActionDAO, org.springframework.web.context.support.WebApplicationContextUtils" %>
+        import="ca.openosp.openo.phr.dao.PHRActionDAO, org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="java.util.*" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
-<%@ page import="org.oscarehr.phr.indivo.service.accesspolicies.IndivoAPService" %>
+<%@ page import="ca.openosp.openo.phr.indivo.service.accesspolicies.IndivoAPService" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 
 <%

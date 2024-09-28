@@ -44,6 +44,7 @@
 <%@ page import="org.oscarehr.common.model.Tickler" %>
 
 <%@ page import="java.util.Calendar" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
 <%
     Calendar now = Calendar.getInstance();
     int curYear = now.get(Calendar.YEAR);

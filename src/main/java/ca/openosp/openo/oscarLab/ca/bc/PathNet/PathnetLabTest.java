@@ -34,17 +34,17 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.BC.dao.Hl7ObrDao;
-import org.oscarehr.billing.CA.BC.dao.Hl7ObxDao;
-import org.oscarehr.billing.CA.BC.dao.Hl7PidDao;
-import org.oscarehr.billing.CA.BC.model.Hl7Msh;
-import org.oscarehr.billing.CA.BC.model.Hl7Obr;
-import org.oscarehr.billing.CA.BC.model.Hl7Obx;
-import org.oscarehr.billing.CA.BC.model.Hl7Pid;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7ObrDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7ObxDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7PidDao;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Msh;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Obr;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Obx;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Pid;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
 import ca.openosp.openo.oscarMDS.data.ReportStatus;
@@ -56,7 +56,7 @@ import ca.openosp.openo.util.UtilDateUtilities;
  */
 public class PathnetLabTest {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     public String pName = "";          //  5. Patient: First name
     public String pSex = "";                //  7. Sex F or M

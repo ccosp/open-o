@@ -20,24 +20,24 @@
 
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@page import="ca.openosp.openo.util.DateUtils,org.oscarehr.util.SpringUtils, org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.util.DateUtils,ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="java.util.Properties,java.util.Date,java.util.List,java.util.ArrayList,java.math.BigDecimal" %>
-<%@page import="org.oscarehr.common.dao.BillingONPaymentDao,org.oscarehr.common.model.BillingONPayment" %>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao,org.oscarehr.common.model.BillingService" %>
-<%@page import="org.oscarehr.common.dao.ClinicDAO,org.oscarehr.common.model.Clinic" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao,org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao,org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.BillingONExtDao,org.oscarehr.common.model.BillingONExt" %>
-<%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao,org.oscarehr.common.model.BillingONCHeader1" %>
-<%@page import="org.oscarehr.common.model.BillingONItem, org.oscarehr.common.service.BillingONService" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONPaymentDao,ca.openosp.openo.common.model.BillingONPayment" %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao,ca.openosp.openo.common.model.BillingService" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicDAO,ca.openosp.openo.common.model.Clinic" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao,ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao,ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONExtDao,ca.openosp.openo.common.model.BillingONExt" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao,ca.openosp.openo.common.model.BillingONCHeader1" %>
+<%@page import="ca.openosp.openo.common.model.BillingONItem, ca.openosp.openo.common.service.BillingONService" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.billing.CA.ON.util.DisplayInvoiceLogo" %>
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="ca.openosp.openo.billing.CA.ON.util.DisplayInvoiceLogo" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
 <%@page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
 <%@page import="ca.openosp.openo.oscarBilling.ca.on.administration.GstControlAction" %>
 

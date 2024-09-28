@@ -35,14 +35,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarBilling.pageUtil.BillingBillingManager.BillingItem;
@@ -83,7 +84,7 @@ public final class BillingViewAction extends Action {
             DemographicData demoData = new DemographicData();
             MiscUtils.getLogger().debug("Calling Demo");
 
-            org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+            Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
             bean.setPatientLastName(demo.getLastName());
             bean.setPatientFirstName(demo.getFirstName());
             bean.setPatientDoB(demo.getFirstName());

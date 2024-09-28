@@ -39,7 +39,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarEncounter.immunization.config.data.EctImmHeading;
 import ca.openosp.openo.oscarEncounter.immunization.config.data.EctImmImmunizationSetWriter;

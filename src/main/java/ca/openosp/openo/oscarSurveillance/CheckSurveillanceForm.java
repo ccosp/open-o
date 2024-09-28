@@ -35,7 +35,7 @@ package ca.openosp.openo.oscarSurveillance;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * @author Jay Gallagher

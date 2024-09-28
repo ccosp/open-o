@@ -10,13 +10,13 @@
 --%>
 
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.oscarRx.util.*, oscar.util.*" errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.common.dao.MeasurementDao" %>
-<%@ page import="org.oscarehr.common.model.Measurement" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.MeasurementDao" %>
+<%@ page import="ca.openosp.openo.common.model.Measurement" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ include file="/common/webAppContextAndSuperMgr.jsp" %>
 
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 
 <%

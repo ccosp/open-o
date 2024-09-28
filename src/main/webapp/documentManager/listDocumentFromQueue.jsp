@@ -51,10 +51,10 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="oscar.oscarProvider.data.*" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="documentManager.EDoc" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <style type="text/css">
     #myAutoComplete {
@@ -229,7 +229,7 @@
 
 
                                         YAHOO.example.BasicRemote = function () {
-                                            //var oDS = new YAHOO.util.XHRDataSource("http://localhost:8080/drugref2/test4.jsp");
+                                            //var oDS = new YAHOO.ehrutil.XHRDataSource("http://localhost:8080/drugref2/test4.jsp");
                                             var url = "../demographic/SearchDemographic.do";
                                             var oDS = new YAHOO.util.XHRDataSource(url, {
                                                 connMethodPost: true,
@@ -308,7 +308,7 @@
 
                                                 // Define an event handler to populate a hidden form field
                                                 // when an item gets selected and populate the input field
-                                                //var myHiddenField = YAHOO.util.Dom.get("myHidden");
+                                                //var myHiddenField = YAHOO.ehrutil.Dom.get("myHidden");
                                                 var myHandler = function (sType, aArgs) {
                                                     var myAC = aArgs[0]; // reference back to the AC instance
                                                     var elLI = aArgs[1]; // reference to the selected LI element

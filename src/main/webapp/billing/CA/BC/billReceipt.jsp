@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     if (session.getValue("user") == null)
         response.sendRedirect("../logout.jsp");
@@ -50,12 +50,12 @@
 <%@page import="java.util.*, oscar.oscarDemographic.data.*" %>
 <%@page import="oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.oscarClinic.*" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
-<%@ page import="org.oscarehr.common.dao.PropertyDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
-<%@ page import="org.oscarehr.common.model.SystemPreferences" %>
+<%@ page import="ca.openosp.openo.common.dao.PropertyDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.SystemPreferencesDao" %>
+<%@ page import="ca.openosp.openo.common.model.SystemPreferences" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.model.Property" %>
+<%@ page import="ca.openosp.openo.common.model.Property" %>
 <%@ page import="ca.openosp.openo.entities.BillHistory" %>
 <%@ page import="ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData" %>
@@ -64,6 +64,7 @@
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingViewBean" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     double totalPayments = 0;
@@ -73,7 +74,7 @@
     BillingViewBean bean = (BillingViewBean) pageContext.findAttribute("billingViewBean");
     request.setAttribute("paymentTypes", bean.getPaymentTypes());
     DemographicData demoData = new DemographicData();
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+    Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
     List<BillingBillingManager.BillingItem> billItem = bean.getBillItem();
     BillingFormData billform = new BillingFormData();
     OscarProperties props = OscarProperties.getInstance();

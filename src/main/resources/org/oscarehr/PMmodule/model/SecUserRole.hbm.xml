@@ -20,7 +20,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="SecUserRole" table="secUserRole">
+	<class name="ca.openosp.openo.PMmodule.model.SecUserRole" table="secUserRole">
 		<composite-id>
 			<key-property name="RoleName" column="role_name" type="string" />
 			<key-property name="ProviderNo" column="provider_no"

@@ -35,11 +35,11 @@
 
 <c:if test="${authenticated eq true}">
 
-    <%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
-    <%@page import="org.oscarehr.util.MiscUtils" %>
+    <%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+    <%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
     <%@page import="java.io.FileOutputStream" %>
     <%@page import="java.io.InputStream" %>
-    <%@page import="org.oscarehr.util.LoggedInInfo" %>
+    <%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
     <%@page import="org.apache.commons.codec.binary.Base64" %>
     <%@ page import="org.oscarehr.common.model.DigitalSignature" %>
     <%

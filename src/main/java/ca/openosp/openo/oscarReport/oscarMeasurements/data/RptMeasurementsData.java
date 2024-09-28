@@ -27,8 +27,8 @@ package ca.openosp.openo.oscarReport.oscarMeasurements.data;
 
 import java.util.ArrayList;
 
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

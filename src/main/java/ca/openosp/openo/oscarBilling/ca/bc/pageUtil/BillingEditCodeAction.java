@@ -40,10 +40,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.model.BillingService;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.model.BillingService;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData;
 import ca.openosp.openo.util.UtilDateUtilities;

@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.util.DateRange;
+import ca.openosp.openo.ehrutil.DateRange;
 
 import ca.openosp.openo.util.Appender;
 import ca.openosp.openo.util.ConversionUtils;

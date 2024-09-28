@@ -44,15 +44,15 @@
 <%@page import="org.marc.shic.core.configuration.IheActorType" %>
 <%@page import="org.marc.shic.core.configuration.consent.PolicyActionOutcome" %>
 <%@page import="org.marc.shic.core.configuration.consent.DemandPermission" %>
-<%@page import="org.oscarehr.sharingcenter.model.CodeValueDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.CodeMappingDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.ValueSetDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.AclDefinitionDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.PolicyDefinitionDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.ActorDataObject" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.CodeValueDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.CodeMappingDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.ValueSetDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AclDefinitionDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PolicyDefinitionDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.ActorDataObject" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <%
     String domainId = request.getParameter("id");

@@ -37,8 +37,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData;
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData.BillingVisit;

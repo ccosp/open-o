@@ -1,4 +1,5 @@
-<%--
+<%@ page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
+<%@ page import="ca.openosp.openo.casemgmt.web.CheckBoxBean" %><%--
 
 
     Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
@@ -54,7 +55,7 @@
 
             String demographicNo = request.getParameter("demographicNo");
             String sessionFrmName = "caseManagementEntryForm" + demographicNo;
-            org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean form=(org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean) session.getAttribute(sessionFrmName);
+            CaseManagementEntryFormBean form=(CaseManagementEntryFormBean) session.getAttribute(sessionFrmName);
             request.setAttribute("caseManagementEntryForm", form);
 
         int size=form.getIssueCheckList().length;
@@ -288,13 +289,13 @@
             </tr>
 
             <nested:iterate indexId="ind" id="issueCheckList" property="issueCheckList"
-                            type="org.oscarehr.casemgmt.web.CheckBoxBean">
+                            type="ca.openosp.openo.casemgmt.web.CheckBoxBean">
                 <%
                     String submitString = "this.form.method.value='issueChange';";
                     submitString = submitString + "this.form.lineId.value=" + "'"
                             + ind.intValue() + "';" + "this.form.submit();";
 
-                    org.oscarehr.casemgmt.web.CheckBoxBean cbb = (org.oscarehr.casemgmt.web.CheckBoxBean) pageContext.getAttribute("issueCheckList");
+                    CheckBoxBean cbb = (CheckBoxBean) pageContext.getAttribute("issueCheckList");
                     boolean writeAccess = cbb.getIssueDisplay().isWriteAccess();
                     boolean disabled = !"local".equals(cbb.getIssueDisplay().location) ? true : !writeAccess;
                     boolean checkBoxDisabled = !"local".equals(cbb.getIssueDisplay().location) ? false : disabled;

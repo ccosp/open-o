@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.openosp.openo.oscarMessenger.util.MsgStringQuote;
-import org.oscarehr.common.dao.forms.FormsDao;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.forms.FormsDao;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarPrevention.reports.PreventionReportUtil;
 import ca.openosp.openo.oscarReport.pageUtil.RptDemographicReportForm;

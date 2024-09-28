@@ -8,14 +8,14 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader" %>
 <%@ page language="java" errorPage="../../../provider/errorpage.jsp" %>
 <%@ page
-        import="java.util.*,java.sql.*,org.oscarehr.olis.*,org.oscarehr.common.dao.PatientLabRoutingDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,ca.openosp.openo.oscarLab.LabRequestReportLink,ca.openosp.openo.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
-<%@page import="org.oscarehr.util.AppointmentUtil" %>
+        import="java.util.*,java.sql.*,org.oscarehr.olis.*,ca.openosp.openo.common.dao.PatientLabRoutingDao, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,ca.openosp.openo.oscarLab.LabRequestReportLink,ca.openosp.openo.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
+<%@page import="ca.openosp.openo.ehrutil.AppointmentUtil" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
@@ -24,6 +24,8 @@
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.Factory" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler" %>
 <%@ page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.olis.OLISResultsAction" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -121,7 +123,7 @@
             try {
                 handler.importSourceOrganizations((OLISHL7Handler) Factory.getHandler(tempId));
             } catch (Exception e) {
-                org.oscarehr.util.MiscUtils.getLogger().error("error", e);
+                MiscUtils.getLogger().error("error", e);
             }
         }
     }

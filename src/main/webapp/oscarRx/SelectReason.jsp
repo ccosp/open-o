@@ -28,12 +28,12 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ page
-        import="oscar.oscarRx.data.*,java.util.*,org.oscarehr.common.dao.DrugReasonDao,org.oscarehr.common.model.DrugReason" %>
-<%@page import="org.oscarehr.util.SpringUtils,ca.openosp.openo.util.StringUtils" %>
+        import="oscar.oscarRx.data.*,java.util.*,ca.openosp.openo.common.dao.DrugReasonDao,ca.openosp.openo.common.model.DrugReason" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.util.StringUtils" %>
 <%@ page
-        import="org.oscarehr.common.dao.DxresearchDAO,org.oscarehr.common.model.Dxresearch,org.oscarehr.common.dao.Icd9Dao,org.oscarehr.common.model.Icd9" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.managers.CodingSystemManager" %>
+        import="ca.openosp.openo.common.dao.DxresearchDAO,ca.openosp.openo.common.model.Dxresearch,ca.openosp.openo.common.dao.Icd9Dao,ca.openosp.openo.common.model.Icd9" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.managers.CodingSystemManager" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%
     CodingSystemManager codingSystemManager = SpringUtils.getBean(CodingSystemManager.class);

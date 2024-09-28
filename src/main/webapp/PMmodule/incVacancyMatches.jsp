@@ -24,7 +24,7 @@
 --%>
 
 <%@page language="java" import="java.util.*" %>
-<%@page import="org.oscarehr.PMmodule.wlmatch.MatchBO" %>
+<%@page import="ca.openosp.openo.PMmodule.wlmatch.MatchBO" %>
 <%@ include file="/taglibs.jsp" %>
 
 

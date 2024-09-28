@@ -24,8 +24,8 @@
 --%>
 <%-- Updated by Eugene Petruhin on 20 feb 2009 while fixing check_date() error --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.ConformanceTestHelper" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.ConformanceTestHelper" %>
 <%@page import="java.util.Properties" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@ include file="/taglibs.jsp" %>

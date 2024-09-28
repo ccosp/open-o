@@ -49,6 +49,7 @@ package org.oscarehr.integration.born;
 
 import static org.junit.Assert.assertEquals;
 
+import ca.openosp.openo.integration.born.AR2005BornConnector;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;

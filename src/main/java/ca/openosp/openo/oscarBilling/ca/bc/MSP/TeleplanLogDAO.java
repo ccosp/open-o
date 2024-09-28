@@ -28,10 +28,10 @@ package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
 import java.util.List;
 
-import org.oscarehr.billing.CA.BC.dao.LogTeleplanTxDao;
-import org.oscarehr.billing.CA.BC.model.LogTeleplanTx;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.LogTeleplanTxDao;
+import ca.openosp.openo.billing.CA.BC.model.LogTeleplanTx;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author jay

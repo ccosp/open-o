@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
             var role = jQuery('#selectHealthCareTeamRoleType option:selected').text().trim();
             var url;
             if ("PHARMACY" == role) {
-                url = ctx + "/oscarRx/managePharmacy.do?method=search";
+                url = ctx + "/ehroscarRx/managePharmacy.do?method=search";
             } else {
                 url = ctx + "/demographic/Contact.do?method=searchAllContacts&searchMode=search_name&orderBy=c.lastName,c.firstName";
             }

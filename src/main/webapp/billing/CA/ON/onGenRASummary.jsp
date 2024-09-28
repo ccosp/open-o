@@ -17,7 +17,7 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+<%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 
 <%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, ca.openosp.openo.MyDateFormat"
@@ -26,12 +26,13 @@
 
 <jsp:useBean id="billingLocalInvNoBean" class="java.util.Properties" scope="page"/>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.RaHeader" %>
-<%@page import="org.oscarehr.common.dao.RaHeaderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.RaHeader" %>
+<%@page import="ca.openosp.openo.common.dao.RaHeaderDao" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingRAPrep" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);
 %>

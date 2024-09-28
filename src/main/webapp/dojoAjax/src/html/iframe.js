@@ -9,7 +9,7 @@
 */
 
 dojo.provide("dojo.html.iframe");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 
 // thanks burstlib!
 dojo.html.iframeContentWindow = function (/* HTMLIFrameElement */iframe_el) {

@@ -47,6 +47,8 @@
                 org.oscarehr.PMmodule.model.*,
                 org.springframework.context.*,
                 org.springframework.web.context.support.*" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Tickler" %>
 
 <table width="100%" border="0" cellpadding="0" cellspacing="1"
        bgcolor="#C0C0C0">

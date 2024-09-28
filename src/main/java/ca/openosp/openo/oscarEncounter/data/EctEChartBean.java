@@ -27,9 +27,9 @@ package ca.openosp.openo.oscarEncounter.data;
 
 import java.util.Date;
 
-import org.oscarehr.common.dao.EChartDao;
-import org.oscarehr.common.model.EChart;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EChartDao;
+import ca.openosp.openo.common.model.EChart;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

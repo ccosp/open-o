@@ -24,12 +24,12 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*,oscar.oscarEncounter.oscarMeasurements.pageUtil.*" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
-<%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.FlowSheetCustomization,org.oscarehr.common.model.Validations" %>
+<%@page import="org.oscarehr.common.dao.*,ca.openosp.openo.common.model.FlowSheetCustomization,ca.openosp.openo.common.model.Validations" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
@@ -39,6 +39,8 @@
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.EctMeasurementsForm" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ValidationsDao" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

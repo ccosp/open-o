@@ -35,7 +35,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="java.io.*,java.util.*, java.sql.*, oscar.*, java.net.*, org.oscarehr.integration.mcedt.mailbox.ActionUtils" %>
+        import="java.io.*,java.util.*, java.sql.*, oscar.*, java.net.*, ca.openosp.openo.integration.mcedt.mailbox.ActionUtils" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

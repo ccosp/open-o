@@ -20,7 +20,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="ProgramSignature" table="programSignature">
+	<class name="ca.openosp.openo.PMmodule.model.ProgramSignature" table="programSignature">
 		<id column="id" name="id" type="integer" unsaved-value="0">
 			<generator class="native" />
 		</id>

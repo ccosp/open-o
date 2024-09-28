@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -29,14 +29,14 @@
     String ocanWarningWindow = null;
     String cbiReminderWindow = null;
 
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         newticklerwarningwindow = (String) session.getAttribute("newticklerwarningwindow");
     }
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.propertiesOn("OCAN_warning_window")) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.propertiesOn("OCAN_warning_window")) {
         ocanWarningWindow = (String) session.getAttribute("ocanWarningWindow");
     }
 
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.propertiesOn("CBI_REMINDER_WINDOW")) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.propertiesOn("CBI_REMINDER_WINDOW")) {
         cbiReminderWindow = (String) session.getAttribute("cbiReminderWindow");
     }
 

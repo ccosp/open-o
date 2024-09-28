@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.PMmodule.web.CdsForm4" %>
+<%@page import="ca.openosp.openo.PMmodule.web.CdsForm4" %>
 
 <%
     Integer hospitalisationId = Integer.parseInt(request.getParameter("hospitalisationId"));

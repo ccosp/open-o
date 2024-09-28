@@ -28,9 +28,9 @@ package ca.openosp.openo.oscarReport.data;
 import java.util.Arrays;
 import java.util.List;
 
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.util.ConversionUtils;

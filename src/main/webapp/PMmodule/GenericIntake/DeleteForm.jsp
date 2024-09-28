@@ -25,6 +25,8 @@
 <%@page import="java.sql.*,oscar.oscarDB.*" %>
 <%@page
         import="java.util.*,org.oscarehr.PMmodule.dao.*,org.oscarehr.PMmodule.service.*,org.oscarehr.PMmodule.model.*,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNode" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.GenericIntakeManager" %>
 <%@ include file="/taglibs.jsp" %>
 <%
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());

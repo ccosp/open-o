@@ -24,20 +24,20 @@
 --%>
 
 <%@page language="java" import="java.util.*" %>
-<%@page import="org.oscarehr.PMmodule.wlservice.ProgramQuery" %>
-<%@page import="org.oscarehr.PMmodule.wlservice.VacancyQuery" %>
-<%@page import="org.oscarehr.PMmodule.wlmatch.VacancyDisplayBO" %>
-<%@page import="org.oscarehr.PMmodule.wlmatch.MatchBO" %>
-<%@page import="org.oscarehr.PMmodule.wlservice.TopMatchesQuery" %>
+<%@page import="ca.openosp.openo.PMmodule.wlservice.ProgramQuery" %>
+<%@page import="ca.openosp.openo.PMmodule.wlservice.VacancyQuery" %>
+<%@page import="ca.openosp.openo.PMmodule.wlmatch.VacancyDisplayBO" %>
+<%@page import="ca.openosp.openo.PMmodule.wlmatch.MatchBO" %>
+<%@page import="ca.openosp.openo.PMmodule.wlservice.TopMatchesQuery" %>
 <%@page import="javax.xml.datatype.XMLGregorianCalendar" %>
 <%@page import="javax.xml.datatype.DatatypeFactory" %>
-<%@page import="org.oscarehr.PMmodule.wlservice.MatchParam" %>
-<%@page import="org.oscarehr.PMmodule.wlservice.WaitListService" %>
+<%@page import="ca.openosp.openo.PMmodule.wlservice.MatchParam" %>
+<%@page import="ca.openosp.openo.PMmodule.wlservice.WaitListService" %>
 
-<%@page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
-<%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramProviderDAO" %>
+<%@page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 
 <%@ include file="/taglibs.jsp" %>
 <%

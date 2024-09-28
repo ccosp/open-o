@@ -24,22 +24,22 @@
 
 --%>
 <!DOCTYPE html>
-<%@ page import="org.oscarehr.common.dao.ProviderSiteDao" %>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleHolidayDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleHoliday" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@ page import="org.oscarehr.common.model.MyGroup" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderSiteDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleHolidayDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleHoliday" %>
+<%@ page import="ca.openosp.openo.common.dao.MyGroupDao" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroup" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleDateDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleDate" %>
-<%@ page import="org.oscarehr.common.dao.ProviderSiteDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleDateDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleDate" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderSiteDao" %>
 
 <%
     UserPropertyDAO userPropertyDao = SpringUtils.getBean(UserPropertyDAO.class);
@@ -53,7 +53,7 @@
 <%!
     //multisite starts =====================
     private List<Site> sites;
-    private boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+    private boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
 
     private List<Site> curUserSites = new ArrayList<Site>();
     private String[] curScheduleMultisite;
@@ -96,12 +96,12 @@
     mygroupno = (request.getParameter("mygroup_no") == null ? providerPreference.getMyGroupNo() : request.getParameter("mygroup_no"));
     if (mygroupno == null)
         mygroupno = ".default";
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         n_t_w_w = (String) session.getAttribute("newticklerwarningwindow");
     }
     String newticklerwarningwindow = null;
     String default_pmm = null;
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         newticklerwarningwindow = (String) session.getAttribute("newticklerwarningwindow");
         default_pmm = (String) session.getAttribute("default_pmm");
     }
@@ -311,13 +311,14 @@
 %>
 
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
 <%@page import="ca.openosp.openo.appt.JdbcApptImpl" %>
 <%@page import="ca.openosp.openo.appt.ApptUtil" %>
 <%@ page import="ca.openosp.openo.DateInMonthTable" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <html:html lang="en">
     <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();">
 
@@ -390,7 +391,7 @@
             function selectprovider(s) {
                 if (s.options[s.selectedIndex].value.indexOf("_grp_") != -1) {
                     var newGroupNo = s.options[s.selectedIndex].value.substring(5);
-                    <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
+                    <%if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()){%>
                     {
                         popupOscarRx(10, 10, "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&new_tickler_warning_window=<%=n_t_w_w%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo) + "<%=eformIds.toString()%><%=ectFormNames.toString()%>";
                     }

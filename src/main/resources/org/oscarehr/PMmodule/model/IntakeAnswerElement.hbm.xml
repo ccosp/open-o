@@ -17,7 +17,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="IntakeAnswerElement" table="intake_answer_element">
+	<class name="ca.openosp.openo.PMmodule.model.IntakeAnswerElement" table="intake_answer_element">
 		<meta attribute="sync-DAO">false</meta>
 
 		<id name="id" type="integer" column="intake_answer_element_id">
@@ -32,10 +32,10 @@
 			 length="255" />
 
 		<many-to-one name="nodeTemplate" column="intake_node_template_id"
-			class="IntakeNodeTemplate" not-null="true" />
+                     class="ca.openosp.openo.PMmodule.model.IntakeNodeTemplate" not-null="true" />
 
 		<many-to-one name="validation" column="intake_answer_validation_id"
-			class="IntakeAnswerValidation" lazy="false" cascade="save-update" />
+                     class="ca.openosp.openo.PMmodule.model.IntakeAnswerValidation" lazy="false" cascade="save-update" />
 
 	</class>
 </hibernate-mapping>

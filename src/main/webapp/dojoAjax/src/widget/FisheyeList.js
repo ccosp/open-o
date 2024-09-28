@@ -20,7 +20,7 @@ dojo.require("dojo.widget.*");
 dojo.require("dojo.widget.HtmlWidget");
 dojo.require("dojo.html.style");
 dojo.require("dojo.html.selection");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 dojo.require("dojo.event.*");
 
 

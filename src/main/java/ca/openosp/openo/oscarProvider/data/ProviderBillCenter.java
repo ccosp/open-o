@@ -22,11 +22,11 @@ package ca.openosp.openo.oscarProvider.data;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.BillCenterDao;
-import org.oscarehr.common.dao.ProviderBillCenterDao;
-import org.oscarehr.common.model.BillCenter;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillCenterDao;
+import ca.openosp.openo.common.dao.ProviderBillCenterDao;
+import ca.openosp.openo.common.model.BillCenter;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author Toby
@@ -43,7 +43,7 @@ public class ProviderBillCenter {
 
     public boolean hasBillCenter(String provider_no) {
         boolean retval = false;
-        org.oscarehr.common.model.ProviderBillCenter pbc = dao.find(provider_no);
+        ca.openosp.openo.common.model.ProviderBillCenter pbc = dao.find(provider_no);
         if (pbc != null && pbc.getBillCenterCode() != null && pbc.getBillCenterCode().length() > 0) {
             retval = true;
         }
@@ -59,7 +59,7 @@ public class ProviderBillCenter {
     }
 
     public void addBillCenter(String provider_no, String billCenterCode) {
-        org.oscarehr.common.model.ProviderBillCenter pbc = new org.oscarehr.common.model.ProviderBillCenter();
+        ca.openosp.openo.common.model.ProviderBillCenter pbc = new ca.openosp.openo.common.model.ProviderBillCenter();
         pbc.setProviderNo(provider_no);
         pbc.setBillCenterCode(billCenterCode);
         dao.persist(pbc);
@@ -68,7 +68,7 @@ public class ProviderBillCenter {
     public String getBillCenter(String provider_no) {
         String billCenterCode = "";
 
-        org.oscarehr.common.model.ProviderBillCenter pbc = dao.find(provider_no);
+        ca.openosp.openo.common.model.ProviderBillCenter pbc = dao.find(provider_no);
         if (pbc != null) {
             billCenterCode = pbc.getBillCenterCode();
         }
@@ -79,7 +79,7 @@ public class ProviderBillCenter {
         if (!hasProvider(provider_no)) {
             addBillCenter(provider_no, billCenterCode);
         } else {
-            org.oscarehr.common.model.ProviderBillCenter pbc = dao.find(provider_no);
+            ca.openosp.openo.common.model.ProviderBillCenter pbc = dao.find(provider_no);
             if (pbc != null) {
                 pbc.setBillCenterCode(billCenterCode);
                 dao.merge(pbc);

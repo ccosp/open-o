@@ -25,7 +25,7 @@
 
 package ca.openosp.openo.form.model;
 
-import org.oscarehr.common.model.AbstractModel;
+import ca.openosp.openo.common.model.AbstractModel;
 
 import ca.openosp.openo.form.FrmRecordHelp;
 

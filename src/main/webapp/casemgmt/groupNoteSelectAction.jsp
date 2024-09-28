@@ -22,15 +22,15 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@page import="org.oscarehr.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
-<%@page import="org.oscarehr.casemgmt.web.GroupNoteAction" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
+<%@page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
+<%@page import="ca.openosp.openo.casemgmt.web.GroupNoteAction" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

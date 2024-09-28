@@ -54,10 +54,10 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.printing.FontSettings;
+import ca.openosp.openo.common.printing.PdfWriterFactory;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.form.graphic.FrmGraphicFactory;
@@ -79,7 +79,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class EFormPDFServlet extends HttpServlet {
 
     public static final String HSFO_RX_DATA_KEY = "hsfo.rx.data";
-    Logger log = org.oscarehr.util.MiscUtils.getLogger();
+    Logger log = MiscUtils.getLogger();
 
     /**
      *

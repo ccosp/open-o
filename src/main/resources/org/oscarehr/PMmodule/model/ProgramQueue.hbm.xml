@@ -20,7 +20,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="ProgramQueue" table="program_queue">
+	<class name="ca.openosp.openo.PMmodule.model.ProgramQueue" table="program_queue">
 		<id column="queue_id" name="Id" type="java.lang.Long">
 			<generator class="native" />
 		</id>

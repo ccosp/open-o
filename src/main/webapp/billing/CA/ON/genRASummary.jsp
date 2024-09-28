@@ -25,15 +25,15 @@
 
 <jsp:useBean id="billingLocalInvNoBean" class="java.util.Properties" scope="page"/>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.RaHeader" %>
-<%@page import="org.oscarehr.common.dao.RaHeaderDao" %>
-<%@page import="org.oscarehr.common.model.RaDetail" %>
-<%@page import="org.oscarehr.common.dao.RaDetailDao" %>
-<%@page import="org.oscarehr.common.dao.BillingDao" %>
-<%@page import="org.oscarehr.common.model.Billing" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.RaHeader" %>
+<%@page import="ca.openosp.openo.common.dao.RaHeaderDao" %>
+<%@page import="ca.openosp.openo.common.model.RaDetail" %>
+<%@page import="ca.openosp.openo.common.dao.RaDetailDao" %>
+<%@page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@page import="ca.openosp.openo.common.model.Billing" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);
@@ -43,7 +43,7 @@
 %>
 
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <html>

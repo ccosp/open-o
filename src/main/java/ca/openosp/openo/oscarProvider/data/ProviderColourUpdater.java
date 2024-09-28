@@ -28,9 +28,9 @@ package ca.openosp.openo.oscarProvider.data;
 
 import java.util.List;
 
-import org.oscarehr.common.dao.PropertyDao;
-import org.oscarehr.common.model.Property;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.PropertyDao;
+import ca.openosp.openo.common.model.Property;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * Manages Fax number for provider

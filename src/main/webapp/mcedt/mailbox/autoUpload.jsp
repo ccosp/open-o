@@ -35,7 +35,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="java.io.*,java.util.*, java.sql.*, oscar.*, java.net.*, org.oscarehr.integration.mcedt.mailbox.ActionUtils, java.math.BigInteger,ca.ontario.health.edt.ResponseResult" %>
+        import="java.io.*,java.util.*, java.sql.*, oscar.*, java.net.*, ca.openosp.openo.integration.mcedt.mailbox.ActionUtils, java.math.BigInteger,ca.ontario.health.edt.ResponseResult" %>
 <%
 
     List<File> toEdt = ActionUtils.getUploadList();
@@ -203,7 +203,7 @@
 </head>
 <body>
 <!-- <div class="show">
-    <img class="logo" src="web/img/kai.png"/>
+    <img class="logo" src="ehrweb/img/kai.png"/>
 </div> -->
 <div class="greyBox">
     <div class="center">

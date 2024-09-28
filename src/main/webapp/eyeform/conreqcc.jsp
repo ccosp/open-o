@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
 
 
 <tr>

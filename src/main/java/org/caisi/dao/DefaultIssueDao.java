@@ -34,7 +34,7 @@ import java.util.Set;
 import javax.persistence.Query;
 
 import org.caisi.model.DefaultIssue;
-import org.oscarehr.common.dao.AbstractDao;
+import ca.openosp.openo.common.dao.AbstractDao;
 
 public interface DefaultIssueDao extends AbstractDao<DefaultIssue> {
 

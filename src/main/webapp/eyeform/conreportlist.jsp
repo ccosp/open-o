@@ -44,7 +44,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.eyeform.model.EyeformConsultationReport" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformConsultationReport" %>
 
 <html:html>
     <head>

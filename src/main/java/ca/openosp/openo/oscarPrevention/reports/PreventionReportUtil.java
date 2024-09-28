@@ -30,13 +30,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.DemographicArchiveDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicArchive;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DemographicArchiveDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DemographicArchive;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public final class PreventionReportUtil {
     private static Logger logger = MiscUtils.getLogger();

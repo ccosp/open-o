@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.dao.EFormDao" %>
+<%@page import="ca.openosp.openo.common.dao.EFormDao" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -50,14 +50,14 @@
 <%@page import="java.util.List" %>
 <%@page import="java.util.Map" %>
 <%@page import="java.util.HashMap" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.InstitutionDao" %>
-<%@page import="org.oscarehr.common.model.Institution" %>
-<%@page import="org.oscarehr.common.dao.InstitutitionDepartmentDao, org.oscarehr.common.dao.ConsultationServiceDao" %>
-<%@page import="org.oscarehr.common.model.InstitutionDepartment, org.oscarehr.common.model.ConsultationServices" %>
-<%@page import="org.oscarehr.common.dao.DepartmentDao" %>
-<%@page import="org.oscarehr.common.model.Department" %>
-<%@page import="org.oscarehr.common.model.EForm" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.InstitutionDao" %>
+<%@page import="ca.openosp.openo.common.model.Institution" %>
+<%@page import="ca.openosp.openo.common.dao.InstitutitionDepartmentDao, ca.openosp.openo.common.dao.ConsultationServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.InstitutionDepartment, ca.openosp.openo.common.model.ConsultationServices" %>
+<%@page import="ca.openosp.openo.common.dao.DepartmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Department" %>
+<%@page import="ca.openosp.openo.common.model.EForm" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 

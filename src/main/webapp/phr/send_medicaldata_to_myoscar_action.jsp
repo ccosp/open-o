@@ -24,16 +24,16 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="org.oscarehr.common.service.myoscar.AllergiesManager" %>
-<%@page import="org.oscarehr.common.service.myoscar.ImmunizationsManager" %>
-<%@page import="org.oscarehr.common.service.myoscar.MeasurementsManager" %>
-<%@page import="org.oscarehr.common.service.myoscar.PrescriptionMedicationManager" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.service.myoscar.AllergiesManager" %>
+<%@page import="ca.openosp.openo.common.service.myoscar.ImmunizationsManager" %>
+<%@page import="ca.openosp.openo.common.service.myoscar.MeasurementsManager" %>
+<%@page import="ca.openosp.openo.common.service.myoscar.PrescriptionMedicationManager" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 

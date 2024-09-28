@@ -26,7 +26,7 @@
 
 package ca.openosp.openo;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;

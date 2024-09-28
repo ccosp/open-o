@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.commons.validator.GenericValidator;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
@@ -48,15 +49,15 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.xmlrpc.XmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
-import org.oscarehr.common.dao.EncounterFormDao;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.dao.MeasurementDaoImpl.SearchCriteria;
-import org.oscarehr.common.model.EncounterForm;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EncounterFormDao;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.dao.MeasurementDaoImpl.SearchCriteria;
+import ca.openosp.openo.common.model.EncounterForm;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.form.FrmRecordHelp;
@@ -174,7 +175,7 @@ public class FrmFormAction extends Action {
 
         if (valid) {
             DemographicData demoData = new DemographicData();
-            org.oscarehr.common.model.Demographic demo = demoData
+            Demographic demo = demoData
                     .getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
             logger.debug("is valid, procede write to table");
             // Store form information as properties for saving to form table

@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -147,7 +147,7 @@
 %>
 
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
@@ -163,6 +163,7 @@
 <%@ page import="ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.Allergy" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
@@ -915,7 +916,7 @@
                                title="<bean:message key="global.unbil"/>">-<bean:message
                                     key="global.billing"/></a> <% } %> <br>
                             <a href=#
-                               onClick="popupOscarRx(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
+                               onClick="popupOscarRx(700,1027,'../ehroscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
                                     key="global.prescriptions"/></a><br>
                             <a href=#
                                onClick="popupOscarCon(700,960,'<rewrite:reWrite
@@ -1392,13 +1393,13 @@
                                 <!--hr style="border-bottom: 0pt solid #888888; background-color: #888888;"-->
                                 <td valign="top">
                                     <div class="RowTop"><a href=#
-                                                           onClick="popupOscarRx(700,960,'../oscarRx/showAllergy.do?demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
+                                                           onClick="popupOscarRx(700,960,'../ehroscarRx/showAllergy.do?demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
                                             key="global.allergies"/></a>:&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;
                                     </div>
                                     <div class="presBox" id="allergyBox">
                                         <ul>
                                             <%
-                                                org.oscarehr.common.model.Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, Integer.parseInt(demoNo)).getAllergies(loggedInInfo);
+                                                Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, Integer.parseInt(demoNo)).getAllergies(loggedInInfo);
 
                                                 for (int j = 0; j < allergies.length; j++) {%>
                                             <li><a
@@ -1419,7 +1420,7 @@
                                             <td>
                                                 <div class="RowTop">
                                                     <div class="RowTop"><a href=#
-                                                                           onClick="popupOscarRx(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
+                                                                           onClick="popupOscarRx(700,1027,'../ehroscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;"><bean:message
                                                             key="global.prescriptions"/></a></div>
                                                 </div>
                                             </td>

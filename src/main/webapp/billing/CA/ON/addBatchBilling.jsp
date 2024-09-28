@@ -24,13 +24,13 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     if (session.getAttribute("user") == null) response.sendRedirect("../../logout.jsp");
 %>
 
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 
 <%@include file="../../../casemgmt/taglibs.jsp" %>

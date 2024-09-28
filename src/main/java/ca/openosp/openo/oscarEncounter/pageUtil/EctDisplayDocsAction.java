@@ -41,13 +41,13 @@ import ca.openosp.openo.util.plugin.IsPropertiesOn;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.dao.DocumentDao.DocumentType;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.dao.DocumentDao.DocumentType;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
-import org.oscarehr.documentManager.EDoc;
-import org.oscarehr.documentManager.EDocUtil;
-import org.oscarehr.documentManager.EDocUtil.EDocSort;
+import documentManager.EDoc;
+import documentManager.EDocUtil;
+import documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.util.DateUtils;
 import ca.openosp.openo.util.StringUtils;
 

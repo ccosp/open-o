@@ -40,25 +40,25 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.model.MiscMapping" %>
-<%@page import="org.oscarehr.sharingcenter.DocumentType" %>
-<%@page import="org.oscarehr.sharingcenter.dao.MiscMappingDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.EFormMapping" %>
-<%@page import="org.oscarehr.sharingcenter.dao.EFormMappingDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.MiscMapping" %>
+<%@page import="ca.openosp.openo.sharingcenter.DocumentType" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.MiscMappingDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.EFormMapping" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.EFormMappingDao" %>
 <%@page import="org.oscarehr.common.dao.EFormDao" %>
 <%@page import="org.oscarehr.common.model.EForm" %>
 <%@page import="org.marc.shic.core.MappingCodeType" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="org.oscarehr.sharingcenter.model.EDocMapping" %>
-<%@page import="org.oscarehr.sharingcenter.dao.EDocMappingDao" %>
-<%@page import="org.oscarehr.sharingcenter.dao.SiteMappingDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.SiteMapping" %>
-<%@page import="org.oscarehr.sharingcenter.model.CodeValueDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.CodeMappingDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.EDocMapping" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.EDocMappingDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.SiteMappingDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.SiteMapping" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.CodeValueDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.CodeMappingDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Set" %>
 <%@page import="java.util.HashSet" %>

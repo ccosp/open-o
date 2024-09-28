@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.eyeform.model.EyeformSpecsHistory" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformSpecsHistory" %>
 
 
 <%@ include file="/taglibs.jsp" %>

@@ -42,12 +42,12 @@
 
 <%@ page import="java.util.*, java.sql.*, java.net.*, oscar.*" errorPage="../appointment/errorpage.jsp" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>

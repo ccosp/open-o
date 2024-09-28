@@ -24,9 +24,9 @@
 package org.oscarehr.common.dao;
 
 //import static org.junit.Assert.assertTrue;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
+//import java.ehrutil.ArrayList;
+//import java.ehrutil.Arrays;
+//import java.ehrutil.List;
 //import org.junit.Test;
 //import org.oscarehr.common.dao.utils.EntityDataGenerator;
 //import org.oscarehr.common.model.ClientLink;
@@ -34,7 +34,7 @@ package org.oscarehr.common.dao;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class ClientLinkDaoTest extends DaoTestFixtures {
 

@@ -44,9 +44,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.jobs.OscarJobExecutingManager" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -69,7 +70,7 @@
 
 
         <%
-            java.util.Map<Integer, java.util.concurrent.ScheduledFuture<Object>> futures = org.oscarehr.common.jobs.OscarJobExecutingManager.getFutures();
+            java.util.Map<Integer, java.util.concurrent.ScheduledFuture<Object>> futures = OscarJobExecutingManager.getFutures();
         %>
         <style>
             .red {

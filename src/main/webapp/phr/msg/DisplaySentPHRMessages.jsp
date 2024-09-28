@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.net.URLEncoder" %>
 

@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -52,49 +52,52 @@
 
 
 <%@page import="java.util.ArrayList, java.util.List, java.util.*, ca.openosp.openo.OscarProperties, oscar.oscarLab.ca.on.*" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,org.oscarehr.casemgmt.model.CaseManagementNote,org.oscarehr.casemgmt.model.Issue,org.oscarehr.common.model.UserProperty,org.oscarehr.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager,ca.openosp.openo.casemgmt.model.CaseManagementNote,ca.openosp.openo.casemgmt.model.Issue,ca.openosp.openo.common.model.UserProperty,ca.openosp.openo.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" %>
 <%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
 <%@page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestAction" %>
-<%@page import="org.oscarehr.util.MiscUtils,ca.openosp.openo.oscarClinic.ClinicData" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@ page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao, org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils,ca.openosp.openo.oscarClinic.ClinicData" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@ page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao, ca.openosp.openo.PMmodule.model.Program" %>
 <%@page import="ca.openosp.openo.oscarDemographic.data.DemographicData, ca.openosp.openo.oscarRx.data.RxProviderData, ca.openosp.openo.oscarRx.data.RxProviderData.Provider, ca.openosp.openo.oscarClinic.ClinicData" %>
-<%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
-<%@page import="org.oscarehr.common.dao.ConsultationServiceDao" %>
-<%@page import="org.oscarehr.common.model.ConsultationServices" %>
-<%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@page import="org.oscarehr.common.model.DemographicContact" %>
-<%@page import="org.oscarehr.common.model.ProfessionalContact" %>
-<%@page import="org.oscarehr.common.dao.ContactSpecialtyDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicContactDao" %>
-<%@page import="org.oscarehr.common.model.ContactSpecialty" %>
-<%@ page import="org.oscarehr.common.model.enumerator.ConsultationRequestExtKey" %>
-<%@ page import="org.oscarehr.common.dao.ConsultationRequestExtDao" %>
-<%@ page import="org.oscarehr.managers.ConsultationManager" %>
+<%@ page import="ca.openosp.openo.common.dao.FaxConfigDao, ca.openosp.openo.common.model.FaxConfig" %>
+<%@page import="ca.openosp.openo.common.dao.ConsultationServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.ConsultationServices" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@page import="ca.openosp.openo.common.model.DemographicContact" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalContact" %>
+<%@page import="ca.openosp.openo.common.dao.ContactSpecialtyDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicContactDao" %>
+<%@page import="ca.openosp.openo.common.model.ContactSpecialty" %>
+<%@ page import="ca.openosp.openo.common.model.enumerator.ConsultationRequestExtKey" %>
+<%@ page import="ca.openosp.openo.common.dao.ConsultationRequestExtDao" %>
+<%@ page import="ca.openosp.openo.managers.ConsultationManager" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.model.EFormData" %>
+<%@ page import="ca.openosp.openo.common.model.EFormData" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.Hl7textResultsData" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.EctInformation" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.RxInformation" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.managers.LookupListManager" %>
 
 
 <jsp:useBean id="displayServiceUtil" scope="request"
@@ -102,7 +105,7 @@
 <!DOCTYPE html>
 <html:html lang="en">
 
-    <%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+    <%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
     <%
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -143,7 +146,7 @@
         String providerNo = (String) session.getAttribute("user");
         String providerNoFromChart = null;
         DemographicData demoData = null;
-        org.oscarehr.common.model.Demographic demographic = null;
+        Demographic demographic = null;
 
         RxProviderData rx = new RxProviderData();
         List<Provider> prList = rx.getAllProviders();
@@ -269,7 +272,7 @@
 		 --%>
     <%
 
-        org.oscarehr.managers.LookupListManager lookupListManager = SpringUtils.getBean(org.oscarehr.managers.LookupListManager.class);
+        LookupListManager lookupListManager = SpringUtils.getBean(LookupListManager.class);
         pageContext.setAttribute("appointmentInstructionList", lookupListManager.findLookupListByName(loggedInInfo, "consultApptInst"));
 
     %>

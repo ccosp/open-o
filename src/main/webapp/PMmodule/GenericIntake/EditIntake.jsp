@@ -25,6 +25,9 @@
 --%>
 
 <%@page import="java.util.*,org.oscarehr.PMmodule.dao.*,org.oscarehr.PMmodule.service.*,org.oscarehr.PMmodule.model.*,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeAnswerElement" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNode" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.GenericIntakeManager" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ include file="/taglibs.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

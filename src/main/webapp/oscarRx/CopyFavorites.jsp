@@ -21,13 +21,13 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.FavoritesDao" %>
-<%@ page import="org.oscarehr.common.model.Favorites" %>
-<%@ page import="org.oscarehr.common.dao.FavoritesPrivilegeDao" %>
-<%@ page import="org.oscarehr.common.model.FavoritesPrivilege" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.FavoritesDao" %>
+<%@ page import="ca.openosp.openo.common.model.Favorites" %>
+<%@ page import="ca.openosp.openo.common.dao.FavoritesPrivilegeDao" %>
+<%@ page import="ca.openosp.openo.common.model.FavoritesPrivilege" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxCodesData" %>
 <%

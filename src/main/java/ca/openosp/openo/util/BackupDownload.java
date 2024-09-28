@@ -35,9 +35,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.oscarehr.common.dao.SecObjPrivilegeDao;
-import org.oscarehr.common.model.SecObjPrivilege;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.SecObjPrivilegeDao;
+import ca.openosp.openo.common.model.SecObjPrivilege;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BackupDownload extends GenericDownload {
 

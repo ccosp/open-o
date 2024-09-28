@@ -30,9 +30,9 @@ import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author Jay Gallagher

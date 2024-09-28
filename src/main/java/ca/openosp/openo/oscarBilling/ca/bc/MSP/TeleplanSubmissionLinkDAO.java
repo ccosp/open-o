@@ -28,9 +28,9 @@ package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
 import java.util.List;
 
-import org.oscarehr.billing.CA.BC.dao.TeleplanSubmissionLinkDao;
-import org.oscarehr.billing.CA.BC.model.TeleplanSubmissionLink;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanSubmissionLinkDao;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanSubmissionLink;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class TeleplanSubmissionLinkDAO {
 

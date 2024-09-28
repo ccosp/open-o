@@ -114,7 +114,7 @@ public class CreateHRMFile {
         try {
             omdCdsDoc.save(file, options);
         } catch (IOException ex) {
-            org.oscarehr.util.MiscUtils.getLogger();
+            ca.openosp.openo.ehrutil.MiscUtils.getLogger();
         }
 
         MiscUtils.getLogger().debug("saved HRM file: " + filepath);
@@ -149,7 +149,7 @@ public class CreateHRMFile {
                 }
             }
         } else {
-            org.oscarehr.util.MiscUtils.getLogger();
+            ca.openosp.openo.ehrutil.MiscUtils.getLogger();
         }
 
         PersonNameStandard HRMpersonName = HRMdemo.addNewNames();

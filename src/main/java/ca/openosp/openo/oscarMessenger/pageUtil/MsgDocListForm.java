@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class MsgDocListForm implements java.io.Serializable {
 

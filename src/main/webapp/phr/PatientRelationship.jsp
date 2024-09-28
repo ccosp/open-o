@@ -26,11 +26,11 @@
 
 <%-- TODO:Only works for local patients right now. Not sure if that's a big deal. Probably should be a warning that this isn't a local patient --%>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.AccountManager" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="org.apache.http.HttpRequest" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.phr.RegistrationHelper" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.phr.RegistrationHelper" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

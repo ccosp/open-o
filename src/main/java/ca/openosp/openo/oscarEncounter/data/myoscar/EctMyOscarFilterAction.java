@@ -36,11 +36,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.common.service.myoscar.MeasurementsManager;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.common.service.myoscar.MeasurementsManager;
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
-import org.oscarehr.util.DateRange;
+import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.ehrutil.DateRange;
 
 public class EctMyOscarFilterAction extends Action {
 

@@ -26,9 +26,9 @@
 
 package ca.openosp.openo.oscarBilling.ca.bc.Teleplan;
 
-import org.oscarehr.billing.CA.BC.dao.TeleplanResponseLogDao;
-import org.oscarehr.billing.CA.BC.model.TeleplanResponseLog;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanResponseLogDao;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanResponseLog;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author jay

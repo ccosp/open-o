@@ -9,7 +9,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.common.model">
-	<class name="Demographic" table="demographic">
+	<class name="ca.openosp.openo.common.model.Demographic" table="demographic">
 		<id column="demographic_no" name="DemographicNo" type="integer">
 			<generator class="native" />
 		</id>
@@ -77,7 +77,7 @@
 			<element column="demographic_no" type="integer" />
 		</set>
 
-                <many-to-one name="provider" class="org.oscarehr.common.model.Provider"
+                <many-to-one name="provider" class="ca.openosp.openo.common.model.Provider"
 			column="provider_no" update="false" not-found='ignore' insert="false"
 			lazy="false" />
 

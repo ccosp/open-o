@@ -26,7 +26,7 @@
 <%@ page import="java.util.*,ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData" %>
 <%@ page import="oscar.oscarBilling.ca.shared.administration.GstControlAction" %>
 <%@ page import="java.math.BigDecimal" %>
-<%@ page import="org.oscarehr.common.model.BillingService" %>
+<%@ page import="ca.openosp.openo.common.model.BillingService" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%

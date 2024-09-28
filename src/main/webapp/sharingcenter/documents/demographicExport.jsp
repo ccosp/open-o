@@ -45,19 +45,19 @@
 <%@page import="org.oscarehr.common.model.ProviderData" %>
 <%@page import="org.marc.shic.core.FolderMetaData" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.sharingcenter.model.PolicyDefinitionDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.PatientSharingNetworkDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PolicyDefinitionDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PatientSharingNetworkDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="org.oscarehr.common.model.Document" %>
 <%@page import="ca.openosp.openo.oscarDemographic.pageUtil.DemographicExportAction4" %>
 <%@page import="org.marc.shic.core.configuration.IheConfiguration" %>
 <%@page import="org.marc.shic.core.configuration.IheAffinityDomainConfiguration" %>
-<%@page import="org.oscarehr.sharingcenter.DocumentType" %>
+<%@page import="ca.openosp.openo.sharingcenter.DocumentType" %>
 
 <%
     Demographic demographic = null;

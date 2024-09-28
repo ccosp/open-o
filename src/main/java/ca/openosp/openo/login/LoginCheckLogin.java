@@ -32,8 +32,8 @@ import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.commons.lang3.StringUtils;
-import org.oscarehr.common.model.Security;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Security;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 

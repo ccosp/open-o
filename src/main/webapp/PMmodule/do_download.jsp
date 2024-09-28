@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="java.io.FileInputStream" %>
 <%@page import="java.io.OutputStream" %>
 <%@page import="java.io.File" %>

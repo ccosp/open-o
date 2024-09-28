@@ -32,7 +32,7 @@
         errorPage="../appointment/errorpage.jsp" %>
 
 <jsp:useBean id="providerNameBean" class="ca.openosp.openo.Dict" scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
 <%

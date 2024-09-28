@@ -30,11 +30,11 @@ import java.util.List;
 
 import org.jdom.Document;
 import org.jdom.output.XMLOutputter;
-import org.oscarehr.common.dao.TableModificationDao;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.common.model.TableModification;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.TableModificationDao;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.common.model.TableModification;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * This class is used to archive deleted or updated rows that won't be used again.

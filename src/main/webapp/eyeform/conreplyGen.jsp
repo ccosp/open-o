@@ -40,7 +40,7 @@
 %>
 
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
 <%@ include file="/taglibs.jsp" %>
 
@@ -48,11 +48,12 @@
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <%@page import="org.oscarehr.eyeform.model.*" %>
-<%@page import="org.oscarehr.eyeform.web.EyeformAction" %>
+<%@page import="ca.openosp.openo.eyeform.web.EyeformAction" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.common.model.DemographicContact" %>
+<%@page import="ca.openosp.openo.common.model.DemographicContact" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.Allergy" %>
 
 <html:html>
     <head>
@@ -80,7 +81,7 @@
         <%
             LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
             String demographicNo = (String) request.getAttribute("demographicNo");
-            org.oscarehr.common.model.Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, Integer.parseInt(demographicNo)).getAllergies(loggedInInfo);
+            Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, Integer.parseInt(demographicNo)).getAllergies(loggedInInfo);
             String aller = "";
             for (int j = 0; j < allergies.length; j++) {
                 aller += allergies[j].getShortDesc(13, 8,

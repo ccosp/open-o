@@ -40,9 +40,9 @@
                  java.sql.*,
                  oscar.*,
                  oscar.util.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>
@@ -54,9 +54,9 @@
 <jsp:useBean id="checklist"
              class="ca.openosp.openo.decision.DesAnnualReviewPlannerChecklist" scope="page"/>
 <%@ include file="../../admin/dbconnection.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.DesAnnualReviewPlan" %>
-<%@page import="org.oscarehr.common.dao.DesAnnualReviewPlanDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.DesAnnualReviewPlan" %>
+<%@page import="ca.openosp.openo.common.dao.DesAnnualReviewPlanDao" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%

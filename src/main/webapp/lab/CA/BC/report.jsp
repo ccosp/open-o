@@ -39,18 +39,18 @@
     }
 %>
 
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obx" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obr" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.Hl7ObrDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Obx" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Obr" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.Hl7ObrDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.Hl7PidDao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Pid" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.Hl7LinkDao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Link" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.Hl7MessageDao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Message" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.Hl7PidDao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Pid" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.Hl7LinkDao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Link" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.Hl7MessageDao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Message" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 

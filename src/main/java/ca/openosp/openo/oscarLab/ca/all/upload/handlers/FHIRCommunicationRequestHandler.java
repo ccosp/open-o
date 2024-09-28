@@ -48,15 +48,15 @@ import org.hl7.fhir.dstu3.model.CommunicationRequest;
 
 import org.hl7.fhir.dstu3.model.Reference;
 
-import org.oscarehr.common.dao.ProviderInboxRoutingDao;
+import ca.openosp.openo.common.dao.ProviderInboxRoutingDao;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
-import org.oscarehr.documentManager.EDoc;
-import org.oscarehr.documentManager.EDocUtil;
+import documentManager.EDoc;
+import documentManager.EDocUtil;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 import ca.openosp.openo.oscarLab.ca.all.util.Utilities;

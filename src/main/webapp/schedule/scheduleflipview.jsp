@@ -25,11 +25,11 @@
 --%>
 
 <%@page import="ca.openosp.openo.appt.ApptData" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="org.oscarehr.common.model.MyGroup" %>
 <%@page import="org.oscarehr.common.dao.MyGroupDao" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>

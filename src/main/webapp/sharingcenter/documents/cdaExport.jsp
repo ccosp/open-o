@@ -41,8 +41,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.dao.DemographicExportDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.DemographicExport" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.DemographicExportDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.DemographicExport" %>
 <%@page import="javax.xml.transform.Transformer" %>
 <%@page import="javax.xml.transform.TransformerException" %>
 <%@page import="javax.xml.transform.TransformerFactory" %>
@@ -51,7 +51,7 @@
 <%@page import="java.io.StringReader" %>
 <%@page import="java.io.StringWriter" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     String htmlResult = "No result";
     String demographic_no = request.getParameter("document_no");

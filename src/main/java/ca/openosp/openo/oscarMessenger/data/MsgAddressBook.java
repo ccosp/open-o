@@ -30,10 +30,10 @@ import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
 
-import org.oscarehr.common.dao.OscarCommLocationsDao;
-import org.oscarehr.common.model.OscarCommLocations;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarCommLocationsDao;
+import ca.openosp.openo.common.model.OscarCommLocations;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -303,7 +303,7 @@ public class MsgAddressBook {
 
             } else {
 
-                //int binSearch = java.util.Arrays.binarySearch(thePros,element.getAttribute("id")) ;
+                //int binSearch = java.ehrutil.Arrays.binarySearch(thePros,element.getAttribute("id")) ;
 
                 //if ( ( binSearch > 0 ) && ( ( (String) locationVector.elementAt(binSearch) ).equals( (String) remoteLocationId.elementAt(remoId)  ) )){
 

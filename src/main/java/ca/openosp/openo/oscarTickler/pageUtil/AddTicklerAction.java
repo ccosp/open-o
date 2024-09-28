@@ -33,11 +33,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarTickler.TicklerData;
 

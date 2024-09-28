@@ -23,6 +23,7 @@
 
 package org.caisi.wl;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import java.net.MalformedURLException;
@@ -51,7 +52,7 @@ import javax.xml.ws.WebServiceClient;
 public class WaitListService_Service extends Service {
 
     private final static URL WAITLISTSERVICE_WSDL_LOCATION;
-    private final static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private final static Logger logger = MiscUtils.getLogger();
 
     static {
         URL url = null;

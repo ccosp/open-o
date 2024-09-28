@@ -39,17 +39,17 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.web.MisReportUIBean" %>
-<%@page import="org.oscarehr.common.dao.FunctionalCentreDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrweb.MisReportUIBean" %>
+<%@page import="ca.openosp.openo.common.dao.FunctionalCentreDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.common.model.FunctionalCentre" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.FunctionalCentre" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.GregorianCalendar" %>
 <%@page import="java.text.DateFormatSymbols" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <%

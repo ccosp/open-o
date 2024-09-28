@@ -38,17 +38,17 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedProvider" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.FacilityIdStringCompositePk" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page contentType="text/html" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/casemgmt/taglibs.jsp" %>
 <%@taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page
-        import="org.oscarehr.casemgmt.model.*, org.oscarehr.common.dao.DemographicDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.Demographic" %>
+        import="org.oscarehr.casemgmt.model.*, ca.openosp.openo.common.dao.DemographicDao, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.model.Demographic" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 
 <%

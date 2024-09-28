@@ -10,7 +10,7 @@
 --%>
 
 <%@ include file="/casemgmt/taglibs.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -27,7 +27,7 @@
 %>
 
 <%@ page
-        import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic, org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.util.LoggedInInfo, org.oscarehr.util.SpringUtils, ca.openosp.openo.OscarProperties, org.oscarehr.common.dao.OscarAppointmentDao, org.oscarehr.common.model.Appointment, org.oscarehr.util.MiscUtils, ca.openosp.openo.SxmlMisc, org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
+        import="ca.openosp.openo.common.dao.DemographicDao, ca.openosp.openo.common.model.Demographic, ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.ehrutil.LoggedInInfo, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.OscarProperties, ca.openosp.openo.common.dao.OscarAppointmentDao, ca.openosp.openo.common.model.Appointment, ca.openosp.openo.ehrutil.MiscUtils, ca.openosp.openo.SxmlMisc, ca.openosp.openo.common.dao.ProfessionalSpecialistDao" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

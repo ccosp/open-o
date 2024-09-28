@@ -28,20 +28,20 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
-<%@page import="org.oscarehr.util.SpringUtils,org.oscarehr.util.LocaleUtils,org.oscarehr.util.MiscUtils, ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic, org.oscarehr.common.model.BillingONItem, org.oscarehr.common.model.BillingOnItemPayment, org.oscarehr.common.model.RaDetail" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.ehrutil.LocaleUtils,ca.openosp.openo.ehrutil.MiscUtils, ca.openosp.openo.util.DateUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic, ca.openosp.openo.common.model.BillingONItem, ca.openosp.openo.common.model.BillingOnItemPayment, ca.openosp.openo.common.model.RaDetail" %>
 <%@page import="java.util.Locale, java.math.BigDecimal, java.util.Calendar,java.util.List,java.util.ArrayList, java.util.HashMap, java.util.Map, java.util.Date" %>
 <%@page import="java.text.ParseException" %>
-<%@page import="org.oscarehr.common.model.BillingONPayment,org.oscarehr.common.dao.BillingONPaymentDao" %>
-<%@page import="org.oscarehr.common.model.BillingONPayment,org.oscarehr.common.dao.BillingOnItemPaymentDao" %>
-<%@page import="org.oscarehr.common.model.BillingONCHeader1,org.oscarehr.common.dao.BillingONCHeader1Dao" %>
-<%@page import="org.oscarehr.common.model.BillingONExt,org.oscarehr.common.dao.BillingONExtDao" %>
-<%@page import="org.oscarehr.common.model.Demographic,org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Provider,org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.RaHeader,org.oscarehr.common.dao.RaHeaderDao" %>
-<%@page import="org.oscarehr.common.model.RaDetail,org.oscarehr.common.dao.RaDetailDao" %>
-<%@page import="org.oscarehr.common.model.BillingONPremium,org.oscarehr.common.dao.BillingONPremiumDao" %>
-<%@page import="org.oscarehr.common.model.BillingONItem, org.oscarehr.common.service.BillingONService" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPayment,ca.openosp.openo.common.dao.BillingONPaymentDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPayment,ca.openosp.openo.common.dao.BillingOnItemPaymentDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONCHeader1,ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONExt,ca.openosp.openo.common.dao.BillingONExtDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic,ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider,ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.RaHeader,ca.openosp.openo.common.dao.RaHeaderDao" %>
+<%@page import="ca.openosp.openo.common.model.RaDetail,ca.openosp.openo.common.dao.RaDetailDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPremium,ca.openosp.openo.common.dao.BillingONPremiumDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONItem, ca.openosp.openo.common.service.BillingONService" %>
 
 <%
     if (session.getAttribute("userrole") == null) response.sendRedirect("../logout.jsp");

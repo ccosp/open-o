@@ -41,7 +41,7 @@
 %>
 
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,ca.openosp.openo.oscarDemographic.pageUtil.Util" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao, org.oscarehr.util.SpringUtils,org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao, ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.PMmodule.model.Program" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

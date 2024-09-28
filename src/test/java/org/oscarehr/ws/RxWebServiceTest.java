@@ -32,20 +32,18 @@ import org.oscarehr.common.exception.AccessDeniedException;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.common.model.Prescription;
 import org.oscarehr.managers.MockSecurityInfoManager;
-import org.oscarehr.managers.RxManager;
-import org.oscarehr.managers.RxManagerImpl;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.ws.rest.RxWebService;
-import org.oscarehr.ws.rest.conversion.ConversionException;
-import org.oscarehr.ws.rest.conversion.DrugConverter;
-import org.oscarehr.ws.rest.conversion.DrugConverterImpl;
-import org.oscarehr.ws.rest.conversion.PrescriptionConverter;
-import org.oscarehr.ws.rest.conversion.PrescriptionConverterImpl;
-import org.oscarehr.ws.rest.to.DrugResponse;
-import org.oscarehr.ws.rest.to.DrugSearchResponse;
-import org.oscarehr.ws.rest.to.GenericRESTResponse;
-import org.oscarehr.ws.rest.to.PrescriptionResponse;
-import org.oscarehr.ws.rest.to.model.DrugTo1;
+import ca.openosp.openo.managers.RxManager;
+import ca.openosp.openo.managers.RxManagerImpl;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ws.rest.RxWebService;
+import ca.openosp.openo.ws.rest.conversion.ConversionException;
+import ca.openosp.openo.ws.rest.conversion.DrugConverterImpl;
+import ca.openosp.openo.ws.rest.conversion.PrescriptionConverterImpl;
+import ca.openosp.openo.ws.rest.to.DrugResponse;
+import ca.openosp.openo.ws.rest.to.DrugSearchResponse;
+import ca.openosp.openo.ws.rest.to.GenericRESTResponse;
+import ca.openosp.openo.ws.rest.to.PrescriptionResponse;
+import ca.openosp.openo.ws.rest.to.model.DrugTo1;
 
 import javax.naming.OperationNotSupportedException;
 import java.util.ArrayList;
@@ -503,7 +501,7 @@ public class RxWebServiceTest {
     // We use these classes mock the objects that are actually
     // injected into the RxWebService class at runtime.
     //
-    // This allows us to test the behaviour of the web service
+    // This allows us to test the behaviour of the ehrweb service
     // without worrying about other details like the database...
     //
 

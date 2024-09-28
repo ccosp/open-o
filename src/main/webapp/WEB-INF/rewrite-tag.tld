@@ -19,7 +19,7 @@
         <body-content>empty</body-content>
         <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
         <tldx>
-            <packagename>oscar.util</packagename>
+            <packagename>oscar.ehrutil</packagename>
             <extendsSupportClass>TRUE</extendsSupportClass>
             <supportClass>TagSupport</supportClass>
             <implementsTryCatchFinally>FALSE</implementsTryCatchFinally>

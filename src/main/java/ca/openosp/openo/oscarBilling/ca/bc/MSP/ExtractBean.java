@@ -27,15 +27,15 @@
 package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.BC.dao.LogTeleplanTxDao;
-import org.oscarehr.billing.CA.BC.model.LogTeleplanTx;
-import org.oscarehr.billing.CA.BC.model.Wcb;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.LogTeleplanTxDao;
+import ca.openosp.openo.billing.CA.BC.model.LogTeleplanTx;
+import ca.openosp.openo.billing.CA.BC.model.Wcb;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.entities.Billingmaster;

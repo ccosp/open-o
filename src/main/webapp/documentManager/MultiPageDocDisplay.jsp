@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -43,19 +43,24 @@
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="java.util.*" %>
 <%@ page
-        import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.myoscar.utils.MyOscarLoggedInInfo,org.oscarehr.util.WebUtils" %>
+        import="ca.openosp.openo.phr.util.MyOscarUtils,ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo,ca.openosp.openo.ehrutil.WebUtils" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*,oscar.oscarLab.ca.all.util.*" %>
-<%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*, org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDoc" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*, ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
 <%@ page import="ca.openosp.openo.oscarMDS.data.ReportStatus" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderInboxRoutingDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderInboxItem" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%!
     ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -605,7 +610,7 @@
                                         YAHOO.example.BasicRemote = function () {
                                             if ($("autocompletedemo<%=docId%>") && $("autocomplete_choices<%=docId%>")) {
                                                 oscarLog('in basic remote');
-                                                //var oDS = new YAHOO.util.XHRDataSource("http://localhost:8080/drugref2/test4.jsp");
+                                                //var oDS = new YAHOO.ehrutil.XHRDataSource("http://localhost:8080/drugref2/test4.jsp");
                                                 var url = "../demographic/SearchDemographic.do";
                                                 var oDS = new YAHOO.util.XHRDataSource(url, {
                                                     connMethodPost: true,

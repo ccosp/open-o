@@ -46,7 +46,7 @@
 * @license Mit Style License
 */
 -->
-<%@page import="oscar.oscarProvider.data.*,java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,org.oscarehr.util.SpringUtils,org.oscarehr.common.dao.QueueDao" %>
+<%@page import="oscar.oscarProvider.data.*,java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.common.dao.QueueDao" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

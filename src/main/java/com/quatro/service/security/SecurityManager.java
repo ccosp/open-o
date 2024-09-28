@@ -26,7 +26,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
 
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 

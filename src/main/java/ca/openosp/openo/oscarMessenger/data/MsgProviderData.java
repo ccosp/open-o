@@ -27,7 +27,7 @@
 package ca.openosp.openo.oscarMessenger.data;
 
 import org.oscarehr.caisi_integrator.ws.CachedProvider;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 
 public final class MsgProviderData {
 

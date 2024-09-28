@@ -41,7 +41,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.DocumentType" %>
+<%@page import="ca.openosp.openo.sharingcenter.DocumentType" %>
 <%
     String demographicId = "";
     String affinityDomain = request.getParameter("affinityDomain");

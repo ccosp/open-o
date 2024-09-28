@@ -39,7 +39,7 @@ import java.util.Properties;
 
 import ca.openosp.openo.Misc;
 import org.apache.commons.lang.StringUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.w3c.dom.Document;
 
 import ca.openosp.openo.OscarProperties;

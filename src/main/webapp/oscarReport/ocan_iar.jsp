@@ -38,18 +38,21 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.dao.*" %>
 <%@page import="org.caisi.model.*" %>
-<%@page import="org.oscarehr.common.dao.SecRoleDao" %>
+<%@page import="ca.openosp.openo.common.dao.SecRoleDao" %>
 <%@page import="org.oscarehr.common.model.*" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.PMmodule.dao.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.text.DateFormatSymbols" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.web.*" %>
+<%@page import="org.oscarehr.ehrweb.*" %>
+<%@ page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@ page import="ca.openosp.openo.ehrweb.OcanReportUIBean" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.OcanSubmissionLog" %>
 
 <%@ include file="/taglibs.jsp" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"

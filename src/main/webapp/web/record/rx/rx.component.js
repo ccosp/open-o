@@ -1,6 +1,6 @@
 const RxComponent = {
     bindings: {},
-    templateUrl: '../web/record/rx/rx.template.jsp',
+    templateUrl: '../ehrweb/record/rx/rx.template.jsp',
     controller: ['$stateParams', '$state', '$log', 'summaryService', 'rxService', '$uibModal', function ($stateParams, $state, $log, summaryService, rxService, $uibModal) {
         rxComp = this;
 
@@ -275,7 +275,7 @@ const RxComponent = {
 
         rxComp.openAllergies = function () {
             win = "Allergy" + $stateParams.demographicNo;
-            var url = "../oscarRx/showAllergy.do?demographicNo=" + $stateParams.demographicNo;
+            var url = "../ehroscarRx/showAllergy.do?demographicNo=" + $stateParams.demographicNo;
             window.open(url, win, "scrollbars=yes, location=no, width=900, height=600", "");
             return false;
         }

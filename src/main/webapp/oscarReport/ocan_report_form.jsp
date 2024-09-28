@@ -41,11 +41,11 @@
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.dao.*" %>
 <%@page import="org.caisi.model.*" %>
-<%@page import="org.oscarehr.common.dao.SecRoleDao" %>
-<%@page import="org.oscarehr.common.model.SecRole" %>
+<%@page import="ca.openosp.openo.common.dao.SecRoleDao" %>
+<%@page import="ca.openosp.openo.common.model.SecRole" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.PMmodule.dao.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.text.DateFormatSymbols" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 

@@ -24,9 +24,9 @@
 
 --%>
 <!DOCTYPE HTML>
-<%@ page import="org.oscarehr.common.dao.StudyDetailsDao, org.oscarehr.common.model.StudyDetails" %>
-<%@ page import="org.oscarehr.common.model.Demographic, org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.StudyDetailsDao, ca.openosp.openo.common.model.StudyDetails" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic, ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 

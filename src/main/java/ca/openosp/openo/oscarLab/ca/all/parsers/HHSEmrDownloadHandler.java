@@ -33,8 +33,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.integration.hl7.model.PatientId;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.integration.hl7.model.PatientId;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.OscarProperties;
@@ -53,7 +53,7 @@ import ca.uhn.hl7v2.validation.impl.NoValidation;
  */
 public class HHSEmrDownloadHandler extends DefaultGenericHandler implements MessageHandler {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     ArrayList<String> headerList = null;
     //   Message msg = null;
     //   Terser terser;
@@ -538,7 +538,7 @@ public class HHSEmrDownloadHandler extends DefaultGenericHandler implements Mess
 //        try {
 //            // Some examples
 //            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            java.util.Date date = (java.util.Date)formatter.parse(dob);
+//            java.ehrutil.Date date = (java.ehrutil.Date)formatter.parse(dob);
 //            age = UtilDateUtilities.calcAge(date);
 //        } catch (ParseException e) {
 //            logger.error("Could not get age", e);

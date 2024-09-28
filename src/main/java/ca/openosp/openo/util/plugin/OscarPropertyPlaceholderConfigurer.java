@@ -22,14 +22,14 @@ package ca.openosp.openo.util.plugin;
 import java.util.Properties;
 
 import ca.openosp.openo.OscarProperties;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 public class OscarPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
 
     /* (non-Javadoc)
-     * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#resolvePlaceholder(java.lang.String, java.util.Properties, int)
+     * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#resolvePlaceholder(java.lang.String, java.ehrutil.Properties, int)
      */
     protected String resolvePlaceholder(String placeholder, Properties properties, int systemPropertiesMode) {
 
@@ -47,7 +47,7 @@ public class OscarPropertyPlaceholderConfigurer extends PropertyPlaceholderConfi
     }
 
     /* (non-Javadoc)
-     * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#resolvePlaceholder(java.lang.String, java.util.Properties)
+     * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#resolvePlaceholder(java.lang.String, java.ehrutil.Properties)
      */
     protected String resolvePlaceholder(String placeholder, Properties properties) {
 

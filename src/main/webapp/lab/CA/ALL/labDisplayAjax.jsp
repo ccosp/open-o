@@ -24,30 +24,30 @@
 
 --%>
 
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.common.model.PatientLabRouting" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.model.PatientLabRouting" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao" %>
+<%@ page import="ca.openosp.openo.common.dao.PatientLabRoutingDao" %>
 <%@ page import="java.util.*,
                  java.sql.*,
                  oscar.oscarDB.*,
                  oscar.oscarLab.ca.all.*,
                  oscar.oscarLab.ca.all.util.*,
-                 org.oscarehr.util.SpringUtils,
+                 ca.openosp.openo.ehrutil.SpringUtils,
                  oscar.oscarLab.ca.all.parsers.*,
                  ca.openosp.openo.oscarLab.LabRequestReportLink,
                  ca.openosp.openo.oscarMDS.data.ReportStatus,
                  oscar.log.*,
                  ca.openosp.openo.OscarProperties,
                  org.apache.commons.codec.binary.Base64,
-                 org.oscarehr.common.dao.Hl7TextInfoDao,
-                 org.oscarehr.common.model.Hl7TextInfo,
-                 org.oscarehr.common.dao.UserPropertyDAO,
-                 org.oscarehr.common.model.UserProperty,
+                 ca.openosp.openo.common.dao.Hl7TextInfoDao,
+                 ca.openosp.openo.common.model.Hl7TextInfo,
+                 ca.openosp.openo.common.dao.UserPropertyDAO,
+                 ca.openosp.openo.common.model.UserProperty,
                  javax.swing.text.rtf.RTFEditorKit,
                  java.io.ByteArrayInputStream" %>
-<%@ page import="org.oscarehr.common.model.Tickler" %>
-<%@ page import="org.oscarehr.managers.TicklerManager" %>
+<%@ page import="ca.openosp.openo.common.model.Tickler" %>
+<%@ page import="ca.openosp.openo.managers.TicklerManager" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>

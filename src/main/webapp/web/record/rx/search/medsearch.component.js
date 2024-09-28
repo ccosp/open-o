@@ -5,7 +5,7 @@ const MedsearchComponent = {
         medSelected: '&',
         customRx: '&'
     },
-    templateUrl: '../web/record/rx/search/medsearch.template.jsp',
+    templateUrl: '../ehrweb/record/rx/search/medsearch.template.jsp',
     controller: ['$stateParams', '$state', '$log', '$timeout', 'summaryService', 'rxService', '$http', '$filter', '$uibModal', function ($stateParams, $state, $log, $timeout, summaryService, rxService, $http, $filter, $uibModal) {
         rxSearchComp = this;
 

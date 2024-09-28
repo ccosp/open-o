@@ -142,7 +142,7 @@
 <!DOCTYPE html>
 
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabTestValues" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>

@@ -33,18 +33,18 @@
 <%@page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
 <%@page import="org.oscarehr.common.dao.TicklerTextSuggestDao" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.model.TicklerTextSuggest" %>
 <%@page import="org.oscarehr.common.model.Tickler" %>
 <%@page import="org.oscarehr.common.model.TicklerComment" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.managers.TicklerManager" %>
-<%@page import="org.oscarehr.managers.DemographicManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.managers.TicklerManager" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 
 

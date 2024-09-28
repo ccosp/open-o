@@ -27,10 +27,10 @@
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="java.util.Properties" %>
-<%@ page import="java.util.List, org.oscarehr.util.SpringUtils" %>
+<%@ page import="java.util.List, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="org.oscarehr.common.dao.ContactSpecialtyDao" %>
-<%@ page import="org.oscarehr.common.model.ContactSpecialty" %>
+<%@ page import="ca.openosp.openo.common.dao.ContactSpecialtyDao" %>
+<%@ page import="ca.openosp.openo.common.model.ContactSpecialty" %>
 
 <html:html lang="en">
     <script src="${pageContext.request.contextPath}/csrfguard"></script>

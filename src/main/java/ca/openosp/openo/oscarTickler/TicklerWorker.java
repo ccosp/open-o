@@ -28,10 +28,10 @@ package ca.openosp.openo.oscarTickler;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.model.ConsultationRequest;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConsultationRequestDao;
+import ca.openosp.openo.common.model.ConsultationRequest;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDemographic.data.DemographicNameAgeString;
 import ca.openosp.openo.util.ConversionUtils;

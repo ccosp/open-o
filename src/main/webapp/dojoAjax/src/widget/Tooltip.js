@@ -16,7 +16,7 @@ dojo.require("dojo.uri.Uri");
 dojo.require("dojo.widget.*");
 dojo.require("dojo.event.*");
 dojo.require("dojo.html.style");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 
 dojo.widget.defineWidget(
     "dojo.widget.Tooltip",

@@ -32,9 +32,9 @@ import java.util.Map;
 
 import javax.persistence.Query;
 
-import org.oscarehr.billing.CA.BC.model.BillingTrayFee;
-import org.oscarehr.common.dao.AbstractDaoImpl;
-import org.oscarehr.common.model.BillingService;
+import ca.openosp.openo.billing.CA.BC.model.BillingTrayFee;
+import ca.openosp.openo.common.dao.AbstractDaoImpl;
+import ca.openosp.openo.common.model.BillingService;
 import org.springframework.stereotype.Repository;
 
 import ca.openosp.openo.util.ConversionUtils;

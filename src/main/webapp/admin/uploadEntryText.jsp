@@ -38,7 +38,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.WebUtils,org.oscarehr.common.service.AcceptableUseAgreementManager,org.oscarehr.common.model.Property" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils,ca.openosp.openo.common.service.AcceptableUseAgreementManager,ca.openosp.openo.common.model.Property" %>
 <%
 
     Property latestProperty = AcceptableUseAgreementManager.findLatestProperty();

@@ -39,9 +39,9 @@
 %>
 
 <%@page import="ca.openosp.openo.util.CBIUtil" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.common.dao.OcanStaffFormDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.common.dao.OcanStaffFormDao" %>
 <%@page import="java.util.List" %>
 <%
     String[] cbiFormIds = request.getParameterValues("cbiFormIdsSelected");

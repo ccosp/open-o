@@ -57,15 +57,15 @@
 
 <%@ include file="../admin/dbconnection.jsp" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.ClinicLocationDao" %>
-<%@page import="org.oscarehr.common.model.ClinicLocation" %>
-<%@page import="org.oscarehr.common.dao.ReportProviderDao" %>
-<%@page import="org.oscarehr.common.model.ReportProvider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao" %>
-<%@page import="org.oscarehr.common.model.BillingONCHeader1" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicLocationDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicLocation" %>
+<%@page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONCHeader1" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean(ClinicLocationDao.class);

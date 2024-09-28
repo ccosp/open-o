@@ -39,12 +39,12 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedFacility" %>
 <%@page import="java.util.List" %>
-<%@page import="java.util.Calendar,org.oscarehr.util.MiscUtils" %>
+<%@page import="java.util.Calendar,ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%@include file="/layouts/caisi_html_top.jspf" %>

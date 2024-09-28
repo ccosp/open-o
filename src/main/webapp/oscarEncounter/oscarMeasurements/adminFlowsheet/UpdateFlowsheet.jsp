@@ -45,7 +45,7 @@
         import="org.jdom.Element,oscar.oscarEncounter.oscarMeasurements.data.*,org.jdom.output.Format,org.jdom.output.XMLOutputter,oscar.oscarEncounter.oscarMeasurements.util.*,java.io.*" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
-<%@ page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.FlowSheetCustomization" %>
+<%@ page import="org.oscarehr.common.dao.*,ca.openosp.openo.common.model.FlowSheetCustomization" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
@@ -53,6 +53,7 @@
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.util.TargetCondition" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.util.RecommendationCondition" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.util.TargetColour" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

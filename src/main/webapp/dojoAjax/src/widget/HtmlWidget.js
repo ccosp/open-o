@@ -10,7 +10,7 @@
 
 dojo.provide("dojo.widget.HtmlWidget");
 dojo.require("dojo.widget.DomWidget");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 dojo.require("dojo.html.display");
 dojo.require("dojo.html.layout");
 dojo.require("dojo.lang.extras");

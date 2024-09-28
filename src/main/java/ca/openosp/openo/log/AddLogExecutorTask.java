@@ -23,8 +23,8 @@
 
 package ca.openosp.openo.log;
 
-import org.oscarehr.common.model.OscarLog;
-import org.oscarehr.util.DbConnectionFilter;
+import ca.openosp.openo.common.model.OscarLog;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
 
 /**
  * No one should be calling / using this class except the LogAction.java class.

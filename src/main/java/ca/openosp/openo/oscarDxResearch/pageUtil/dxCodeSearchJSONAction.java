@@ -36,16 +36,16 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.DiagnosticCodeDao;
-import org.oscarehr.common.dao.Icd10Dao;
-import org.oscarehr.common.dao.Icd9Dao;
-import org.oscarehr.common.model.DiagnosticCode;
-import org.oscarehr.common.model.Icd10;
-import org.oscarehr.common.model.Icd9;
-import org.oscarehr.managers.CodingSystemManager;
-import org.oscarehr.util.JsonUtil;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DiagnosticCodeDao;
+import ca.openosp.openo.common.dao.Icd10Dao;
+import ca.openosp.openo.common.dao.Icd9Dao;
+import ca.openosp.openo.common.model.DiagnosticCode;
+import ca.openosp.openo.common.model.Icd10;
+import ca.openosp.openo.common.model.Icd9;
+import ca.openosp.openo.managers.CodingSystemManager;
+import ca.openosp.openo.ehrutil.JsonUtil;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import net.sf.json.JSONObject;
 

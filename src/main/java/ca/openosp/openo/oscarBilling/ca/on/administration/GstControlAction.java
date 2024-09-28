@@ -40,9 +40,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.billing.CA.dao.GstControlDao;
-import org.oscarehr.billing.CA.model.GstControl;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.dao.GstControlDao;
+import ca.openosp.openo.billing.CA.model.GstControl;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class GstControlAction extends Action {
 

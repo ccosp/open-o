@@ -18,6 +18,7 @@
 
 --%>
 <%@ page import="java.util.*,org.oscarehr.common.model.*" %>
+<%@ page import="ca.openosp.openo.common.model.AppointmentStatus" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

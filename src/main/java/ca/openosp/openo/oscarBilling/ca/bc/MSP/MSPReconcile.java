@@ -24,6 +24,19 @@
  */
 package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
+import ca.openosp.openo.billing.CA.BC.dao.BillRecipientsDao;
+import ca.openosp.openo.billing.CA.BC.dao.BillingHistoryDao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanAdjCodesDao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanC12Dao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanRefusalCodeDao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanS00Dao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanS21Dao;
+import ca.openosp.openo.billing.CA.BC.model.BillRecipients;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanAdjCodes;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanC12;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanRefusalCode;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanS00;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanS21;
 import ca.openosp.openo.entities.S21;
 import ca.openosp.openo.util.BeanUtilHlp;
 import ca.openosp.openo.util.ConversionUtils;
@@ -31,16 +44,15 @@ import ca.openosp.openo.util.SqlUtils;
 import ca.openosp.openo.util.StringUtils;
 import ca.openosp.openo.util.UtilMisc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import org.oscarehr.billing.CA.BC.dao.*;
-import org.oscarehr.billing.CA.BC.model.*;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingPaymentTypeDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.BillingPaymentType;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.BillingPaymentType;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.entities.Billingmaster;
 import ca.openosp.openo.entities.MSPBill;
 import ca.openosp.openo.entities.Provider;
@@ -1847,11 +1859,11 @@ public class MSPReconcile {
         }
 
         ProviderDao dao = SpringUtils.getBean(ProviderDao.class);
-        org.oscarehr.common.model.Provider provider = null;
+        ca.openosp.openo.common.model.Provider provider = null;
         boolean isSearchingProvidersByOhipNumber = criteria == 1;
 
         if (isSearchingProvidersByOhipNumber) {
-            List<org.oscarehr.common.model.Provider> providersByOhip = dao.getBillableProvidersByOHIPNo(providerNo);
+            List<ca.openosp.openo.common.model.Provider> providersByOhip = dao.getBillableProvidersByOHIPNo(providerNo);
 
             if (providersByOhip != null) {
                 provider = providersByOhip.get(0); // get the first entry only.
@@ -1878,7 +1890,7 @@ public class MSPReconcile {
     public List<Provider> getAllProviders() {
         ArrayList<Provider> list = new ArrayList<Provider>();
         ProviderDao dao = SpringUtils.getBean(ProviderDao.class);
-        for (org.oscarehr.common.model.Provider p : dao.getProvidersByType("doctor")) {
+        for (ca.openosp.openo.common.model.Provider p : dao.getProvidersByType("doctor")) {
             Provider prov = new Provider();
             prov.setFirstName(p.getFirstName());
             prov.setLastName(p.getLastName());

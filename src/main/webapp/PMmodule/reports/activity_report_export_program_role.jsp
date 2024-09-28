@@ -29,11 +29,18 @@
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.PMmodule.web.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.util.*" %>
+<%@page import="org.oscarehr.ehrutil.*" %>
 <%@page import="java.text.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.IssueGroup" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.PopulationReportDataObjects" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.PopulationReportUIBean" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.ehrutil.EncounterUtil" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     String[] programIds = request.getParameterValues("programIds");

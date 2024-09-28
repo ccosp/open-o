@@ -38,7 +38,7 @@ import org.apache.logging.log4j.Logger;
 
 import org.junit.Test;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class FTPScheck {
     private Logger logger = MiscUtils.getLogger();

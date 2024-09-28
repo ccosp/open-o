@@ -26,7 +26,7 @@
 
 <%@ include file="/taglibs.jsp" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.eyeform.web.MacroAction" %>
+<%@page import="ca.openosp.openo.eyeform.web.MacroAction" %>
 <%@page import="org.apache.struts.util.LabelValueBean" %>
 <%
     List<LabelValueBean> sliCodes = MacroAction.sliCodeList;

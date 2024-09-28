@@ -28,12 +28,17 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, ca.openosp.openo.util.UtilDateUtilities" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctPatientData" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctProviderData" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderColourUpdater" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -94,8 +99,8 @@
     java.util.Locale vLocale = (java.util.Locale) session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
 
     //referring doctor
-    org.oscarehr.common.dao.DemographicDao dao = (org.oscarehr.common.dao.DemographicDao) org.oscarehr.util.SpringUtils.getBean(DemographicDao.class);
-    org.oscarehr.common.model.Demographic d = dao.getDemographic(demoNo);
+    DemographicDao dao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
+    Demographic d = dao.getDemographic(demoNo);
     String familyDoctorXml = d.getFamilyDoctor();
     String rd = "";
     if (familyDoctorXml != null) {
@@ -106,8 +111,8 @@
     String apptNo = request.getParameter("appointmentNo");
     String reason = new String();
     if (apptNo != null && apptNo.length() > 0) {
-        org.oscarehr.common.dao.OscarAppointmentDao appointmentDao = org.oscarehr.util.SpringUtils.getBean(org.oscarehr.common.dao.OscarAppointmentDao.class);
-        org.oscarehr.common.model.Appointment a = appointmentDao.find(Integer.parseInt(apptNo));
+        OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
+        Appointment a = appointmentDao.find(Integer.parseInt(apptNo));
         if (a != null) {
             reason = a.getReason();
         }

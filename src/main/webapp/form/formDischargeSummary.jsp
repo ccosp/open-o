@@ -39,15 +39,16 @@
 %>
 
 <%@ page
-        import="oscar.util.*, oscar.form.*, oscar.form.data.*, org.oscarehr.util.*" %>
+        import="oscar.util.*, oscar.form.*, oscar.form.data.*, org.oscarehr.ehrutil.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
         import="org.springframework.context.*,org.springframework.web.context.support.*" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
 <%@ page import="ca.openosp.openo.form.FrmRecord" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 <%
     String formClass = "DischargeSummary";
@@ -58,7 +59,7 @@
     int formId = Integer.parseInt(request.getParameter("formId"));
     int provNo = Integer.parseInt((String) session.getAttribute("user"));
     FrmRecord rec = (new FrmRecordFactory()).factory(formClass);
-    //java.util.Properties props = rec.getFormRecord(demoNo, formId);
+    //java.ehrutil.Properties props = rec.getFormRecord(demoNo, formId);
     java.util.Properties props = rec.getCaisiFormRecord(demoNo, formId, provNo, programNo);
     //FrmData fd = new FrmData();    String resource = fd.getResource(); resource = resource + "ob/riskinfo/";
 

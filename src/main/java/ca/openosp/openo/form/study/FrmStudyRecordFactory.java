@@ -26,7 +26,7 @@
 
 package ca.openosp.openo.form.study;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class FrmStudyRecordFactory {
     public FrmStudyRecord factory(String which) {

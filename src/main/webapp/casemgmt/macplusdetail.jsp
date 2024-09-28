@@ -26,7 +26,7 @@
 
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.XmlUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.XmlUtils" %>
 <%@page import="java.util.Map,java.util.HashMap" %>
 <%@page import="java.util.Date" %>
 <%@page import="javax.crypto.Cipher" %>

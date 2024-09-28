@@ -23,12 +23,12 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.CaisiAccessType" %>
-<%@page import="org.oscarehr.common.dao.SecRoleDao" %>
-<%@page import="org.oscarehr.common.model.SecRole" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.CaisiAccessTypeDao" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.model.CaisiAccessType" %>
+<%@page import="ca.openosp.openo.common.dao.SecRoleDao" %>
+<%@page import="ca.openosp.openo.common.model.SecRole" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.CaisiAccessTypeDao" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

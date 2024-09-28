@@ -31,7 +31,7 @@
 --%>
 
 <%@page %>
-<%@page import="oscar.oscarDemographic.data.*,org.oscarehr.common.model.Demographic" %>
+<%@page import="oscar.oscarDemographic.data.*,ca.openosp.openo.common.model.Demographic" %>
 <%@page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler,java.util.*,oscar.oscarRx.util.*" %>
 <%@page import="oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*" %>
 <%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseLookup" %>

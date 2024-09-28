@@ -26,7 +26,7 @@
 
 package ca.openosp.openo.oscarEncounter.oscarMeasurements.bean;
 
-import org.oscarehr.common.model.Validations;
+import ca.openosp.openo.common.model.Validations;
 
 
 public class EctValidationsBean {

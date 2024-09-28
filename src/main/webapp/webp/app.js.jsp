@@ -52,7 +52,7 @@
         //		})
         //		.state('dashboard', {
         //		  url: '/dashboard',
-        //		  templateUrl: '../web/dashboard/dashboard.jsp',
+        //		  templateUrl: '../ehrweb/dashboard/dashboard.jsp',
         //		  controller: 'DashboardCtrl'
         //		})
         //		.state('inbox', {

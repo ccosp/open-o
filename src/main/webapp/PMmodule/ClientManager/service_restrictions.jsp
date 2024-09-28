@@ -27,11 +27,12 @@
 <%-- Updated by Eugene Petruhin on 10 dec 2008 while fixing #2389527 --%>
 
 <%@ page import="java.util.*,
-                 org.oscarehr.util.SpringUtils,
+                 ca.openosp.openo.ehrutil.SpringUtils,
                  org.oscarehr.PMmodule.model.*,
-                 org.oscarehr.common.model.Provider,
-                 org.oscarehr.PMmodule.dao.ProviderDao"
+                 ca.openosp.openo.common.model.Provider,
+                 ca.openosp.openo.PMmodule.dao.ProviderDao"
 %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramClientRestriction" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <script>

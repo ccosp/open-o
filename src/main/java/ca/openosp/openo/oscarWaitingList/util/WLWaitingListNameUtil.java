@@ -22,12 +22,12 @@ package ca.openosp.openo.oscarWaitingList.util;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.WaitingListDao;
-import org.oscarehr.common.dao.WaitingListNameDao;
-import org.oscarehr.common.model.WaitingList;
-import org.oscarehr.common.model.WaitingListName;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.WaitingListDao;
+import ca.openosp.openo.common.dao.WaitingListNameDao;
+import ca.openosp.openo.common.model.WaitingList;
+import ca.openosp.openo.common.model.WaitingListName;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class WLWaitingListNameUtil {
 

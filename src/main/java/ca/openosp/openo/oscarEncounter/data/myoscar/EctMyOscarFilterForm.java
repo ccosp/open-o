@@ -28,7 +28,7 @@ import java.util.Date;
 
 import org.apache.struts.action.ActionForm;
 import org.oscarehr.myoscar.commons.MedicalDataType;
-import org.oscarehr.util.DateRange;
+import ca.openosp.openo.ehrutil.DateRange;
 
 import ca.openosp.openo.util.ConversionUtils;
 import ca.openosp.openo.util.DateUtils;

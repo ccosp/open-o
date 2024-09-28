@@ -32,15 +32,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.service.AcceptableUseAgreementManager;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.service.AcceptableUseAgreementManager;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
@@ -49,7 +50,7 @@ import ca.openosp.openo.log.LogConst;
  * @author rjonasz
  */
 public class LoginAgreementAction extends DispatchAction {
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
 
     private ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 

@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -40,7 +40,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -51,12 +51,13 @@
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsUtil" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 <%
     String demo = request.getParameter("de");
     String proNo = (String) session.getAttribute("user");
     DemographicData demoData = null;
-    org.oscarehr.common.model.Demographic demographic = null;
+    Demographic demographic = null;
 
     ProviderData pdata = new ProviderData(proNo);
     String team = pdata.getTeam();

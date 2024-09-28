@@ -34,7 +34,7 @@ import java.util.HashMap;
 import ca.openosp.openo.MyDateFormat;
 import org.apache.xmlbeans.XmlOptions;
 import org.junit.Test;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.oscarmcmaster.ar2005.AR1;
 import org.oscarmcmaster.ar2005.AR2;
 import org.oscarmcmaster.ar2005.ARRecord;

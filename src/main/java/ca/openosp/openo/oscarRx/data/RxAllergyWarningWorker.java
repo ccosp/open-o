@@ -29,9 +29,9 @@ package ca.openosp.openo.oscarRx.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarRx.pageUtil.RxSessionBean;
 

@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * @author rjonasz

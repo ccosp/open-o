@@ -33,7 +33,7 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Facility;
 import org.oscarehr.common.model.FacilityDemographicPrimaryKey;
 import org.oscarehr.common.model.IntegratorConsentComplexExitInterview;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class IntegratorConsentComplexExitInterviewDaoTest extends DaoTestFixtures {
 

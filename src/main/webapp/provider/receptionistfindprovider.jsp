@@ -23,8 +23,8 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -42,13 +42,13 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
          errorPage="../appointment/errorpage.jsp" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@page import="org.oscarehr.common.model.MyGroup" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.dao.MyGroupAccessRestrictionDao" %>
-<%@page import="org.oscarehr.common.model.MyGroupAccessRestriction" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.MyGroupDao" %>
+<%@page import="ca.openosp.openo.common.model.MyGroup" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.MyGroupAccessRestrictionDao" %>
+<%@page import="ca.openosp.openo.common.model.MyGroupAccessRestriction" %>
 <%
     MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -76,7 +76,7 @@
     }
 
     String n_t_w_w = null;
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         n_t_w_w = (String) session.getAttribute("newticklerwarningwindow");
     }
     boolean caisi = Boolean.valueOf(request.getParameter("caisi")).booleanValue();
@@ -96,8 +96,9 @@
 
 %>
 
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
@@ -108,7 +109,7 @@
 
         function selectProvider(p, pn) {
             newGroupNo = p;
-            <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
+            <%if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()){%>
             this.location.href = "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&new_tickler_warning_window=<%=n_t_w_w%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&default_servicetype=<%=defaultServiceType%>&mygroup_no=" + newGroupNo;
             <%}else{%>
             this.location.href = "providercontrol.jsp?provider_no=<%=curUser_no%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&default_servicetype=<%=defaultServiceType%>&mygroup_no=" + newGroupNo;

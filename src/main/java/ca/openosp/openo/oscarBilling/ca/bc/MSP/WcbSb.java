@@ -28,10 +28,10 @@ import java.math.BigDecimal;
 
 import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.BC.model.Wcb;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.model.Wcb;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.entities.Billingmaster;

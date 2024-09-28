@@ -35,6 +35,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ca.openosp.openo.common.IsPropertiesOn;
+import ca.openosp.openo.common.dao.FacilityDao;
+import ca.openosp.openo.common.dao.ProviderPreferenceDao;
+import ca.openosp.openo.common.dao.SecurityDao;
+import ca.openosp.openo.common.dao.ServiceRequestTokenDao;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.ProviderPreference;
+import ca.openosp.openo.common.model.Security;
+import ca.openosp.openo.common.model.ServiceRequestToken;
+import ca.openosp.openo.common.model.UserProperty;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInUserFilter;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SSOUtility;
+import ca.openosp.openo.ehrutil.SessionConstants;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import net.sf.json.JSONObject;
 
 import org.apache.logging.log4j.Logger;
@@ -43,16 +61,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.service.ProviderManager;
-import org.oscarehr.PMmodule.web.OcanForm;
-import org.oscarehr.PMmodule.web.utils.UserRoleUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.service.ProviderManager;
+import ca.openosp.openo.PMmodule.web.OcanForm;
+import ca.openosp.openo.PMmodule.web.utils.UserRoleUtils;
 import org.oscarehr.common.dao.*;
-import org.oscarehr.common.model.*;
-import org.oscarehr.decisionSupport.service.DSService;
-import org.oscarehr.managers.AppManager;
-//import org.oscarehr.managers.SsoAuthenticationManager;
-import org.oscarehr.util.*;
+import ca.openosp.openo.decisionSupport.service.DSService;
+import ca.openosp.openo.managers.AppManager;
+//import ca.openosp.openo.managers.SsoAuthenticationManager;
+import org.oscarehr.ehrutil.*;
 import org.owasp.encoder.Encode;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -409,7 +426,7 @@ public final class LoginAction extends DispatchAction {
 
             session.setAttribute(SessionConstants.LOGGED_IN_PROVIDER_PREFERENCE, providerPreference);
 
-            if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable()) {
+            if (IsPropertiesOn.isCaisiEnable()) {
                 String tklerProviderNo = null;
                 UserProperty prop = propDao.getProp(providerNo, UserProperty.PROVIDER_FOR_TICKLER_WARNING);
                 if (prop == null) {

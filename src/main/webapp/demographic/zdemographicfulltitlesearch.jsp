@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="java.lang.*" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>

@@ -30,13 +30,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import org.oscarehr.common.dao.AbstractCodeSystemDao;
-import org.oscarehr.common.dao.AbstractCodeSystemDaoImpl;
-import org.oscarehr.common.dao.QuickListDao;
-import org.oscarehr.common.dao.QuickListUserDao;
-import org.oscarehr.common.model.AbstractCodeSystemModel;
-import org.oscarehr.common.model.QuickListUser;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.AbstractCodeSystemDao;
+import ca.openosp.openo.common.dao.AbstractCodeSystemDaoImpl;
+import ca.openosp.openo.common.dao.QuickListDao;
+import ca.openosp.openo.common.dao.QuickListUserDao;
+import ca.openosp.openo.common.model.AbstractCodeSystemModel;
+import ca.openosp.openo.common.model.QuickListUser;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDxResearch.util.dxResearchCodingSystem;
 

@@ -34,11 +34,11 @@ import java.util.List;
 
 import ca.openosp.openo.Misc;
 import org.hibernate.Session;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import ca.openosp.openo.MyDateFormat;

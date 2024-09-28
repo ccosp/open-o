@@ -31,10 +31,10 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.MyGroup" %>
-<%@ page import="org.oscarehr.common.model.MyGroupPrimaryKey" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroup" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroupPrimaryKey" %>
+<%@ page import="ca.openosp.openo.common.dao.MyGroupDao" %>
 <%
     MyGroupDao myGroupDao = SpringUtils.getBean(MyGroupDao.class);
 %>

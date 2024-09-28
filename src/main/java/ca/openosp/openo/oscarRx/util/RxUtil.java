@@ -46,12 +46,12 @@ import java.util.regex.Pattern;
 import org.apache.logging.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcClient;
 import org.apache.xmlrpc.XmlRpcClientLite;
-import org.oscarehr.common.dao.DrugDao;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.common.model.UserProperty;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DrugDao;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.Drug;
+import ca.openosp.openo.common.model.UserProperty;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarRx.data.RxCodesData;

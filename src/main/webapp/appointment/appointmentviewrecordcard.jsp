@@ -40,17 +40,17 @@
     }
 %>
 
-<%@ page import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, org.oscarehr.common.OtherIdManager" %>
-<%@ page import="org.oscarehr.event.EventService, org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
+<%@ page import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.common.OtherIdManager" %>
+<%@ page import="ca.openosp.openo.event.EventService, ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.dao.ClinicDAO" %>
-<%@ page import="org.oscarehr.common.model.Clinic" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.ClinicDAO" %>
+<%@ page import="ca.openosp.openo.common.model.Clinic" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

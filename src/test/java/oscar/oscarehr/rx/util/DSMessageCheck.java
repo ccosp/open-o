@@ -32,10 +32,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.rx.util.DrugrefUtil;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.ws.rest.to.model.RxDsMessageTo1;
+import ca.openosp.openo.rx.util.DrugrefUtil;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ws.rest.to.model.RxDsMessageTo1;
 
 import ca.openosp.openo.OscarProperties;
 

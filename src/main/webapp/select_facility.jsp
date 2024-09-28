@@ -23,10 +23,10 @@
 
 --%>
 <%@page import="org.oscarehr.common.dao.FacilityDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Facility" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 
 <%@include file="/layouts/caisi_html_top.jspf" %>

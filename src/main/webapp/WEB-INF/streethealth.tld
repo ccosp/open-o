@@ -9,7 +9,7 @@
     <info>Street Health Tags Library</info>
 <tag>
     <name>report_element</name>
-    <tagclass>org.oscarehr.PMmodule.streethealth.ReportElementTag</tagclass>
+    <tagclass>ca.openosp.openo.PMmodule.streethealth.ReportElementTag</tagclass>
     <bodycontent>jsp</bodycontent>
     <info>Write Report Element</info>
     <attribute>

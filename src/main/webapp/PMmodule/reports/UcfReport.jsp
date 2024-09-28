@@ -31,12 +31,12 @@
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.PMmodule.dao.*" %>
 <%@page import="org.oscarehr.PMmodule.web.*" %>
-<%@page import="org.oscarehr.util.*" %>
+<%@page import="org.oscarehr.ehrutil.*" %>
 <%@page import="java.text.*" %>
-<%@page import="org.oscarehr.common.model.CaisiForm" %>
-<%@page import="org.oscarehr.common.dao.CaisiFormDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.survey.service.OscarFormManager" %>
+<%@page import="ca.openosp.openo.common.model.CaisiForm" %>
+<%@page import="ca.openosp.openo.common.dao.CaisiFormDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.survey.service.OscarFormManager" %>
 
 <%
     Long formId = Long.parseLong(request.getParameter("formId"));

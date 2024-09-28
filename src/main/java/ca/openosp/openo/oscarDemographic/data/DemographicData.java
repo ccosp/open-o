@@ -35,12 +35,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.oscarehr.common.dao.DemographicCustDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicCust;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DemographicCustDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DemographicCust;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.UtilDateUtilities;
 
@@ -57,7 +57,7 @@ public class DemographicData {
     }
 
     public String getDemographicFirstLastName(LoggedInInfo loggedInInfo, String demographicNo) {
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (demographic != null) {
             return demographic.getFirstName() + " " + demographic.getLastName();
         }
@@ -68,7 +68,7 @@ public class DemographicData {
     public Date getDemographicDOB(LoggedInInfo loggedInInfo, String demographicNo) {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (demographic != null) {
             try {
                 date = formatter.parse(demographic.getYearOfBirth() + "-" + demographic.getMonthOfBirth() + "-" + demographic.getDateOfBirth());
@@ -80,7 +80,7 @@ public class DemographicData {
     }
 
     public String getDemographicNoByIndivoId(LoggedInInfo loggedInInfo, String myOscarUserName) {
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
+        Demographic demographic = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
         if (demographic != null) {
             return demographic.getDemographicNo().toString();
         }
@@ -88,7 +88,7 @@ public class DemographicData {
     }
 
     public String getDemoNoByNamePhoneEmail(LoggedInInfo loggedInInfo, String firstName, String lastName, String hPhone, String wPhone, String email) {
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographicByNamePhoneEmail(loggedInInfo, firstName, lastName, hPhone, wPhone, email);
+        Demographic demographic = demographicManager.getDemographicByNamePhoneEmail(loggedInInfo, firstName, lastName, hPhone, wPhone, email);
 
         if (demographic != null) {
             return String.valueOf(demographic.getDemographicNo());
@@ -107,8 +107,8 @@ public class DemographicData {
 
     public ArrayList<Demographic> getDemographicWithHIN(LoggedInInfo loggedInInfo, String hin) {
         ArrayList<Demographic> list = new ArrayList<Demographic>();
-        List<org.oscarehr.common.model.Demographic> demos = demographicManager.searchByHealthCard(loggedInInfo, hin);
-        for (org.oscarehr.common.model.Demographic demo : demos) {
+        List<Demographic> demos = demographicManager.searchByHealthCard(loggedInInfo, hin);
+        for (Demographic demo : demos) {
             list.add(getDemographic(loggedInInfo, String.valueOf(demo.getDemographicNo())));
         }
         return list;
@@ -129,8 +129,8 @@ public class DemographicData {
 
     public ArrayList<Demographic> getDemographicWithLastFirstDOB(LoggedInInfo loggedInInfo, String lastname, String firstname, String year_of_birth, String month_of_birth, String date_of_birth) {
         ArrayList<Demographic> list = new ArrayList<Demographic>();
-        List<org.oscarehr.common.model.Demographic> demos = demographicManager.getDemographicWithLastFirstDOB(loggedInInfo, lastname, firstname, year_of_birth, month_of_birth, date_of_birth);
-        for (org.oscarehr.common.model.Demographic demo : demos) {
+        List<Demographic> demos = demographicManager.getDemographicWithLastFirstDOB(loggedInInfo, lastname, firstname, year_of_birth, month_of_birth, date_of_birth);
+        for (Demographic demo : demos) {
             list.add(getDemographic(loggedInInfo, String.valueOf(demo.getDemographicNo())));
         }
 
@@ -139,7 +139,7 @@ public class DemographicData {
 
     public String getNameAgeString(LoggedInInfo loggedInInfo, String demographicNo) {
         String nameage = "";
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (demographic != null) {
             String age = UtilDateUtilities.calcAge(UtilDateUtilities.calcDate(demographic.getYearOfBirth(), demographic.getMonthOfBirth(), demographic.getDateOfBirth()));
             if (age == null) {
@@ -153,7 +153,7 @@ public class DemographicData {
 
     public String[] getNameAgeSexArray(LoggedInInfo loggedInInfo, Integer demographicNo) {
         String[] nameage = null;
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (demographic != null) {
             String age = UtilDateUtilities.calcAge(UtilDateUtilities.calcDate(demographic.getYearOfBirth(), demographic.getMonthOfBirth(), demographic.getDateOfBirth()));
             if (age == null) {
@@ -166,7 +166,7 @@ public class DemographicData {
     }
 
     public String getDemographicSex(LoggedInInfo loggedInInfo, String demographicNo) {
-        org.oscarehr.common.model.Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic demographic = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (demographic != null) {
             return demographic.getSex();
         }
@@ -202,7 +202,7 @@ public class DemographicData {
     }
 
     public String getDemographicNoByMyOscarUserName(LoggedInInfo loggedInInfo, String myOscarUserName) {
-        org.oscarehr.common.model.Demographic d = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
+        Demographic d = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
         if (d != null) {
             return d.getDemographicNo().toString();
         }
@@ -210,7 +210,7 @@ public class DemographicData {
     }
 
     public String getDemographicDateJoined(LoggedInInfo loggedInInfo, String demographicNo) {
-        org.oscarehr.common.model.Demographic d = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic d = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (d != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             return sdf.format(d.getDateJoined());
@@ -219,7 +219,7 @@ public class DemographicData {
     }
 
     public void setDemographicPin(LoggedInInfo loggedInInfo, String demographicNo, String myOscarUserName) {
-        org.oscarehr.common.model.Demographic d = demographicManager.getDemographic(loggedInInfo, demographicNo);
+        Demographic d = demographicManager.getDemographic(loggedInInfo, demographicNo);
         if (d != null) {
             d.setMyOscarUserName(myOscarUserName);
             demographicManager.updateDemographic(loggedInInfo, d);

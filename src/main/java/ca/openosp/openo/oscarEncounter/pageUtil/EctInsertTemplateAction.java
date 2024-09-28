@@ -32,9 +32,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.EncounterTemplateDao;
-import org.oscarehr.common.model.EncounterTemplate;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EncounterTemplateDao;
+import ca.openosp.openo.common.model.EncounterTemplate;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public final class EctInsertTemplateAction extends Action {
 

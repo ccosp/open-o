@@ -24,17 +24,17 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@page import="org.apache.commons.lang3.StringUtils" %>
-<%@page import="org.oscarehr.common.model.DemographicArchive" %>
-<%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.casemgmt.dao.CaseManagementNoteDAO" %>
-<%@page import="org.oscarehr.common.model.SecRole" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.SecRoleDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicArchive" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO" %>
+<%@page import="ca.openosp.openo.common.model.SecRole" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.SecRoleDao" %>
 <%@page import="oscar.oscarDB.*" %>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>

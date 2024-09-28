@@ -41,14 +41,14 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.model.PatientSharingNetworkDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
-<%@page import="org.oscarehr.sharingcenter.dao.PatientSharingNetworkDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PatientSharingNetworkDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.PatientSharingNetworkDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 
 <%
 

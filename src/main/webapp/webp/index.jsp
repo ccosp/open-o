@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <%
@@ -353,39 +353,39 @@
 <script src="../webp/recordController.js"></script>
 <%--
 
-<script src="../web/dashboard/dashboardController.js"></script>
-<script src="../web/common/navBarController.js"></script>
-<script src="../web/patientlist/patientListController.js"></script>
+<script src="../ehrweb/dashboard/dashboardController.js"></script>
+<script src="../ehrweb/common/navBarController.js"></script>
+<script src="../ehrweb/patientlist/patientListController.js"></script>
 
-<script src="../web/record/summary/summaryController.js"></script>
-<script src="../web/record/forms/formsController.js"></script>
-<script src="../web/record/details/detailsController.js"></script>
-<script src="../web/record/phr/phrController.js"></script>
-<script src="../web/record/tracker/trackerController.js"></script>
+<script src="../ehrweb/record/summary/summaryController.js"></script>
+<script src="../ehrweb/record/forms/formsController.js"></script>
+<script src="../ehrweb/record/details/detailsController.js"></script>
+<script src="../ehrweb/record/phr/phrController.js"></script>
+<script src="../ehrweb/record/tracker/trackerController.js"></script>
 
-<script src="../web/tickler/ticklerController.js"></script>
-<script src="../web/tickler/ticklerViewController.js"></script>
-<script src="../web/tickler/ticklerAddController.js"></script>
+<script src="../ehrweb/tickler/ticklerController.js"></script>
+<script src="../ehrweb/tickler/ticklerViewController.js"></script>
+<script src="../ehrweb/tickler/ticklerAddController.js"></script>
 
-<script src="../web/schedule/scheduleController.js"></script>
-<script src="../web/admin/adminController.js"></script>
-<script src="../web/billing/billingController.js"></script>
-<script src="../web/consults/consultRequestListController.js"></script>
-<script src="../web/consults/consultRequestController.js"></script>
-<script src="../web/consults/consultResponseListController.js"></script>
-<script src="../web/consults/consultResponseController.js"></script>
-<script src="../web/inbox/inboxController.js"></script>
-<script src="../web/patientsearch/patientSearchController.js"></script>
+<script src="../ehrweb/schedule/scheduleController.js"></script>
+<script src="../ehrweb/admin/adminController.js"></script>
+<script src="../ehrweb/billing/billingController.js"></script>
+<script src="../ehrweb/consults/consultRequestListController.js"></script>
+<script src="../ehrweb/consults/consultRequestController.js"></script>
+<script src="../ehrweb/consults/consultResponseListController.js"></script>
+<script src="../ehrweb/consults/consultResponseController.js"></script>
+<script src="../ehrweb/inbox/inboxController.js"></script>
+<script src="../ehrweb/patientsearch/patientSearchController.js"></script>
 
-<script src="../web/report/reportsController.js"></script>
-<script src="../web/document/documentsController.js"></script>
-<script src="../web/settings/settingsController.js"></script>
-<script src="../web/help/supportController.js"></script>
-<script src="../web/help/helpController.js"></script>
-<script src="../web/clinicalconnect/ccController.js"></script>
+<script src="../ehrweb/report/reportsController.js"></script>
+<script src="../ehrweb/document/documentsController.js"></script>
+<script src="../ehrweb/settings/settingsController.js"></script>
+<script src="../ehrweb/help/supportController.js"></script>
+<script src="../ehrweb/help/helpController.js"></script>
+<script src="../ehrweb/clinicalconnect/ccController.js"></script>
 
-<script src="../web/schedule/appointmentAddController.js"></script>
-<script src="../web/schedule/appointmentViewController.js"></script>
+<script src="../ehrweb/schedule/appointmentAddController.js"></script>
+<script src="../ehrweb/schedule/appointmentViewController.js"></script>
 --%>
 
 <!--

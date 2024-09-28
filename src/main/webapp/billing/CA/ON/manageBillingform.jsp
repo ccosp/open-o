@@ -31,13 +31,13 @@
 
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.CtlBillingService" %>
-<%@ page import="org.oscarehr.common.dao.CtlBillingServiceDao" %>
-<%@ page import="org.oscarehr.common.model.CtlDiagCode" %>
-<%@ page import="org.oscarehr.common.dao.CtlDiagCodeDao" %>
-<%@ page import="org.oscarehr.common.model.CtlBillingServicePremium" %>
-<%@ page import="org.oscarehr.common.dao.CtlBillingServicePremiumDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.CtlBillingService" %>
+<%@ page import="ca.openosp.openo.common.dao.CtlBillingServiceDao" %>
+<%@ page import="ca.openosp.openo.common.model.CtlDiagCode" %>
+<%@ page import="ca.openosp.openo.common.dao.CtlDiagCodeDao" %>
+<%@ page import="ca.openosp.openo.common.model.CtlBillingServicePremium" %>
+<%@ page import="ca.openosp.openo.common.dao.CtlBillingServicePremiumDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%
     CtlBillingServiceDao ctlBillingServiceDao = SpringUtils.getBean(CtlBillingServiceDao.class);

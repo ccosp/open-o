@@ -28,7 +28,7 @@ package ca.openosp.openo.oscarEncounter.oscarMeasurements.data;
 
 import java.util.List;
 
-import org.oscarehr.common.model.MeasurementsExt;
+import ca.openosp.openo.common.model.MeasurementsExt;
 
 public class LabMeasurements {
     private Measurements measure;

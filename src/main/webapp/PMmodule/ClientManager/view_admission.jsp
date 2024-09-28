@@ -1,7 +1,7 @@
 <%@ page import="org.apache.struts.validator.DynaValidatorForm" %>
-<%@ page import="org.oscarehr.common.model.Admission" %>
-<%@ page import="org.oscarehr.PMmodule.model.DischargeReason" %>
-<%@ page import="org.oscarehr.common.model.OscarLog" %>
+<%@ page import="ca.openosp.openo.common.model.Admission" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.DischargeReason" %>
+<%@ page import="ca.openosp.openo.common.model.OscarLog" %>
 <%@ page import="java.util.List" %>
 <%--
 

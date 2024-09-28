@@ -28,7 +28,7 @@ package ca.openosp.openo.form.study.hsfo2;
 
 import java.util.List;
 
-import org.oscarehr.common.model.Hsfo2Visit;
+import ca.openosp.openo.common.model.Hsfo2Visit;
 
 /**
  * Class used by the HSFO Study

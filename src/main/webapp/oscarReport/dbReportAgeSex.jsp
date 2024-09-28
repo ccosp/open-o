@@ -40,8 +40,8 @@
 %>
 
 <%@page import="java.util.Date" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.ReportAgeSexDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.ReportAgeSexDao" %>
 <%
     ReportAgeSexDao reportAgeSexDao = SpringUtils.getBean(ReportAgeSexDao.class);
     reportAgeSexDao.deleteAllByDate(new Date()); // delete all from now on

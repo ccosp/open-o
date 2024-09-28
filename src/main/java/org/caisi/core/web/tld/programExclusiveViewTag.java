@@ -37,9 +37,9 @@ package org.caisi.core.web.tld;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.dao.ProviderDefaultProgramDao;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.common.dao.ProviderDefaultProgramDao;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author cronnie

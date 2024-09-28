@@ -36,21 +36,21 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.dao.DocumentDao.DocumentType;
-import org.oscarehr.common.dao.DocumentDao.Module;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.dao.forms.FormsDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Document;
-import org.oscarehr.common.model.LabPatientPhysicianInfo;
-import org.oscarehr.common.model.MdsMSH;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.dao.DocumentDao;
+import ca.openosp.openo.common.dao.DocumentDao.DocumentType;
+import ca.openosp.openo.common.dao.DocumentDao.Module;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.dao.forms.FormsDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Document;
+import ca.openosp.openo.common.model.LabPatientPhysicianInfo;
+import ca.openosp.openo.common.model.MdsMSH;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

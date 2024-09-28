@@ -28,10 +28,10 @@ package ca.openosp.openo.oscarBilling.ca.bc.Teleplan;
 
 import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.entities.Billingmaster;
 import ca.openosp.openo.entities.WCB;

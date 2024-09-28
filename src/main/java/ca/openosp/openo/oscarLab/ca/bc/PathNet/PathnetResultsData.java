@@ -25,18 +25,29 @@
 
 package ca.openosp.openo.oscarLab.ca.bc.PathNet;
 
+import ca.openosp.openo.billing.CA.BC.dao.Hl7MessageDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7MshDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7ObrDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7ObxDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7OrcDao;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7PidDao;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Message;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Msh;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Obr;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Orc;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Pid;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.billing.CA.BC.dao.*;
-import org.oscarehr.billing.CA.BC.model.*;
-import org.oscarehr.common.dao.ConsultDocsDao;
-import org.oscarehr.common.dao.ConsultResponseDocDao;
-import org.oscarehr.common.dao.EFormDocsDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.model.ConsultDocs;
-import org.oscarehr.common.model.EFormDocs;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConsultDocsDao;
+import ca.openosp.openo.common.dao.ConsultResponseDocDao;
+import ca.openosp.openo.common.dao.EFormDocsDao;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.model.ConsultDocs;
+import ca.openosp.openo.common.model.EFormDocs;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 import ca.openosp.openo.util.ConversionUtils;
 import ca.openosp.openo.util.UtilDateUtilities;
@@ -58,7 +69,7 @@ public class PathnetResultsData {
     private Hl7PidDao hl7PidDao = SpringUtils.getBean(Hl7PidDao.class);
     private EFormDocsDao eformDocsDao = SpringUtils.getBean(EFormDocsDao.class);
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     /**
      * Populates ArrayList with labs attached to a consultation

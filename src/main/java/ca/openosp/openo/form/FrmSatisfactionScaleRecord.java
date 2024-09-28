@@ -33,8 +33,8 @@ import java.util.Date;
 import java.util.Properties;
 
 import ca.openosp.openo.Misc;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarDB.DBHandler;
 import ca.openosp.openo.util.UtilDateUtilities;

@@ -46,7 +46,8 @@
 <html:html lang="en">
 
     <%@ page
-            import="org.oscarehr.common.dao.BillingServiceDao,org.oscarehr.util.SpringUtils,org.oscarehr.common.model.*" %>
+            import="ca.openosp.openo.common.dao.BillingServiceDao,ca.openosp.openo.ehrutil.SpringUtils,org.oscarehr.common.model.*" %>
+    <%@ page import="ca.openosp.openo.common.model.BillingService" %>
     <%BillingServiceDao billingServiceDao = (BillingServiceDao) SpringUtils.getBean(BillingServiceDao.class); %>
 
     <head>

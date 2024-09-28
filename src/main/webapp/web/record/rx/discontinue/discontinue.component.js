@@ -4,7 +4,7 @@ const DiscontinueComponent = {
         dismiss: '&',
         resolve: '<',
     },
-    templateUrl: '../web/record/rx/discontinue/discontinue.template.jsp',
+    templateUrl: '../ehrweb/record/rx/discontinue/discontinue.template.jsp',
     controller: ['$stateParams', '$state', '$uibModal', '$log', function ($stateParams, $state, $uibModal, $log) {
 
         disconComp = this;

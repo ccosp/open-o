@@ -22,7 +22,7 @@
 "-//Hibernate/Hibernate Mapping DTD//EN"
 "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.phr.model">
-	<class name="PHRDocument" table="phr_documents">
+	<class name="ca.openosp.openo.phr.model.PHRDocument" table="phr_documents">
 		<id column="id" name="id" type="integer">
 			<generator class="native" />
 		</id>
@@ -61,9 +61,9 @@
 			<element column="`value`" type="string" />
 
 		</map>
-		<subclass name="PHRMessage"
+		<subclass name="ca.openosp.openo.phr.model.PHRMessage"
 			discriminator-value="urn:org:indivo:document:classification:message" />
-                <subclass name="PHRMedication"
+                <subclass name="ca.openosp.openo.phr.model.PHRMedication"
 			discriminator-value="urn:org:indivo:document:classification:medical:medication" />
 
 	</class>

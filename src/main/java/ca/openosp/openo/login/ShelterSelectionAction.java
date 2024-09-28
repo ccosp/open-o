@@ -34,8 +34,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.PMmodule.service.ProviderManager;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.service.ProviderManager;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;

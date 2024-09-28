@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarReport.data.DemographicSets, ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ include file="/casemgmt/taglibs.jsp" %>

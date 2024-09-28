@@ -25,7 +25,7 @@
 --%>
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%
     String myOscarExternalLinkUrl = OscarProperties.getInstance().getProperty("myOSCAR.url") + "external_page_view_action.jsp";

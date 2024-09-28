@@ -39,16 +39,16 @@
 %>
 
 <%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.TeleplanS00Dao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.TeleplanS00" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.TeleplanS22Dao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.TeleplanS22" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.TeleplanS23Dao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.TeleplanS23" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.TeleplanS25Dao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.TeleplanS25" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.TeleplanS00Dao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.TeleplanS00" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.TeleplanS22Dao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.TeleplanS22" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.TeleplanS23Dao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.TeleplanS23" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.TeleplanS25Dao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.TeleplanS25" %>
 <%
     TeleplanS00Dao teleplanS00Dao = SpringUtils.getBean(TeleplanS00Dao.class);
     TeleplanS22Dao teleplanS22Dao = SpringUtils.getBean(TeleplanS22Dao.class);

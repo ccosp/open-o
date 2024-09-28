@@ -24,12 +24,13 @@
 --%>
 
 
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/casemgmt/taglibs.jsp" %>
 <%@taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.casemgmt.model.*" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.ClientImage" %>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%
     String demo = request.getParameter("demographicNo");

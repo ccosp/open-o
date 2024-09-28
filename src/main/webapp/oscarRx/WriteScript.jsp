@@ -29,9 +29,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ page import="java.util.*,oscar.oscarRx.data.*,oscar.oscarRx.pageUtil.*,oscar.oscarRx.util.*" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxWriteScriptForm" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxCodesData" %>
@@ -39,6 +39,7 @@
 <%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseLookup" %>
 <%@ page import="ca.openosp.openo.oscarRx.util.LimitedUseCode" %>
 <%@ page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
 
 <%long start = System.currentTimeMillis();%>
 
@@ -91,7 +92,7 @@
             boolean isCustom = true;
             String atcCode = null;
             String regionalIdentifier = "";
-            String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
+            String annotation_display = CaseManagementNoteLink.DISP_PRESCRIP;
             Long now = new Date().getTime();
             String annotation_attrib = "";// = "anno"+now;
 
@@ -1450,7 +1451,7 @@ Outside ProOhip: <%= thisForm.getOutsideProviderOhip() %><br>
                             <br>
                             <!-- peice Went Here --> <%
                                 //RxPatientData.Patient.Allergy[] allerg = (RxPatientData.Patient.Allergy[]) request.getAttribute("ALLERGIES");
-                                org.oscarehr.common.model.Allergy[] allerg = bean.getAllergyWarnings(loggedInInfo, atcCode);
+                                Allergy[] allerg = bean.getAllergyWarnings(loggedInInfo, atcCode);
                                 if (allerg != null && allerg.length > 0) {
                                     for (int i = 0; i < allerg.length; i++) {
                             %>

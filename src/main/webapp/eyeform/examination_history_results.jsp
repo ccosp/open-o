@@ -25,9 +25,9 @@
 --%>
 
 <%@ include file="/taglibs.jsp" %>
-<%@page import="org.oscarehr.eyeform.web.EyeformAction" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.model.Measurement" %>
+<%@page import="ca.openosp.openo.eyeform.web.EyeformAction" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.model.Measurement" %>
 <%@page import="java.util.List" %>
 <%@page import="ca.openosp.openo.util.StringUtils" %>
 <%@page import="java.text.SimpleDateFormat" %>

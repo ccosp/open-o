@@ -31,17 +31,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
-import org.oscarehr.ws.rest.DemographicMergeService;
-import org.oscarehr.ws.rest.DemographicService;
-import org.oscarehr.ws.rest.to.OscarSearchResponse;
-import org.oscarehr.ws.rest.to.model.DemographicMergedTo1;
-import org.oscarehr.ws.rest.to.model.DemographicTo1;
+import ca.openosp.openo.ws.rest.DemographicMergeService;
+import ca.openosp.openo.ws.rest.DemographicService;
+import ca.openosp.openo.ws.rest.to.OscarSearchResponse;
+import ca.openosp.openo.ws.rest.to.model.DemographicMergedTo1;
+import ca.openosp.openo.ws.rest.to.model.DemographicTo1;
 
 public class DemographicServiceTest extends BaseRestServiceTest {
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
 
     /**
      * Generates a new pre-populated random demographic

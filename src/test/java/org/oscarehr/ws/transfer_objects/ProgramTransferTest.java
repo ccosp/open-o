@@ -25,8 +25,9 @@ package org.oscarehr.ws.transfer_objects;
 
 import static org.junit.Assert.*;
 
+import ca.openosp.openo.ws.transfer_objects.ProgramTransfer;
 import org.junit.Test;
-import org.oscarehr.PMmodule.model.Program;
+import ca.openosp.openo.PMmodule.model.Program;
 
 public class ProgramTransferTest {
 

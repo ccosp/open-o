@@ -23,20 +23,20 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.DrugReason" %>
-<%@page import="org.oscarehr.common.dao.DrugReasonDao" %>
-<%@page import="org.oscarehr.common.model.PartialDate" %>
-<%@page import="org.oscarehr.common.dao.PartialDateDao" %>
-<%@page import="org.oscarehr.managers.CodingSystemManager" %>
-<%@page import="org.oscarehr.managers.PharmacyManager" %>
-<%@page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@page import="org.oscarehr.common.model.PharmacyInfo" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.DrugReason" %>
+<%@page import="ca.openosp.openo.common.dao.DrugReasonDao" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.common.dao.PartialDateDao" %>
+<%@page import="ca.openosp.openo.managers.CodingSystemManager" %>
+<%@page import="ca.openosp.openo.managers.PharmacyManager" %>
+<%@page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.common.model.PharmacyInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.List" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.common.dao.DrugDao,org.oscarehr.common.model.Drug,org.oscarehr.util.MiscUtils,org.oscarehr.util.SpringUtils,org.oscarehr.PMmodule.dao.ProviderDao,org.oscarehr.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.DrugDao,ca.openosp.openo.common.model.Drug,ca.openosp.openo.ehrutil.MiscUtils,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.PMmodule.dao.ProviderDao,ca.openosp.openo.common.dao.DemographicDao" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -120,7 +120,7 @@
 
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <html>
 <head>
@@ -499,7 +499,7 @@
             <br/>
 
             <input type="button" value="Annotation" title="Annotation" class="ControlPushButton"
-                   onclick="window.open('../annotation/annotation.jsp?display=<%=org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP%>&table_id=<%=drug.getId()%>&demo=<%=drug.getDemographicId()%>','anwin','width=400,height=500');">
+                   onclick="window.open('../annotation/annotation.jsp?display=<%=ca.openosp.openo.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP%>&table_id=<%=drug.getId()%>&demo=<%=drug.getDemographicId()%>','anwin','width=400,height=500');">
 
 
             <%--

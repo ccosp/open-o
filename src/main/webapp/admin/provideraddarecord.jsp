@@ -52,22 +52,23 @@
 <%@ page import="ca.openosp.openo.log.LogAction,ca.openosp.openo.log.LogConst" %>
 <%@ page import="oscar.log.*, oscar.oscarDB.*" %>
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
 
 <%@ page import="org.apache.commons.lang.StringEscapeUtils,ca.openosp.openo.oscarProvider.data.ProviderBillCenter" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.ProviderSite" %>
-<%@page import="org.oscarehr.common.model.ProviderSitePK" %>
-<%@page import="org.oscarehr.common.dao.ProviderSiteDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.ProviderSite" %>
+<%@page import="ca.openosp.openo.common.model.ProviderSitePK" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderSiteDao" %>
 <%@ page import="ca.openosp.openo.oscarDB.DBPreparedHandler" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <%
     ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
     ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);
@@ -126,7 +127,7 @@
             Integer min_value = 0;
             Integer max_value = 0;
 
-            if (org.oscarehr.common.IsPropertiesOn.isProviderFormalizeEnable()) {
+            if (IsPropertiesOn.isProviderFormalizeEnable()) {
 
                 String StrProviderId = request.getParameter("provider_no");
                 OscarProperties props = OscarProperties.getInstance();
@@ -176,7 +177,7 @@
                 }
             }
 
-            if (!org.oscarehr.common.IsPropertiesOn.isProviderFormalizeEnable() || isProviderFormalize) {
+            if (!IsPropertiesOn.isProviderFormalizeEnable() || isProviderFormalize) {
 
                 DBPreparedHandler dbObj = new DBPreparedHandler();
 
@@ -193,7 +194,7 @@
                     isOk = true;
                 }
 
-                if (isOk && org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+                if (isOk && IsPropertiesOn.isMultisitesEnable()) {
                     String[] sites = request.getParameterValues("sites");
                     if (sites != null)
                         for (int i = 0; i < sites.length; i++) {

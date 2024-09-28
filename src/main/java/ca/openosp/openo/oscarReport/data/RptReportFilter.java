@@ -33,9 +33,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import org.oscarehr.common.dao.ReportFilterDao;
-import org.oscarehr.common.model.ReportFilter;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ReportFilterDao;
+import ca.openosp.openo.common.model.ReportFilter;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.login.DBHelp;
 

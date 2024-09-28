@@ -34,16 +34,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.LazyValidatorForm;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.CustomFilter;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.common.model.UserProperty;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.CustomFilter;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.common.model.UserProperty;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.login.LoginCheckLogin;
 

@@ -32,11 +32,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.eyeform.dao.EyeformSpecsHistoryDao;
-import org.oscarehr.eyeform.model.EyeformSpecsHistory;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.eyeform.dao.EyeformSpecsHistoryDao;
+import ca.openosp.openo.eyeform.model.EyeformSpecsHistory;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.StringUtils;
 

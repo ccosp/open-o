@@ -25,6 +25,7 @@ package org.oscarehr.integration.born;
 
 import static org.junit.Assert.assertEquals;
 
+import ca.openosp.openo.integration.born.ONAREnhancedBornConnector;
 import org.junit.Ignore;
 
 import org.junit.Before;

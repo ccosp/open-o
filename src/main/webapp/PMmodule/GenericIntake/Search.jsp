@@ -31,7 +31,7 @@
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.GregorianCalendar" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@ page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.utils.UserRoleUtils" %>
 
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

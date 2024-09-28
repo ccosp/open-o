@@ -23,9 +23,9 @@
 
 --%>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.DiagnosticCode" %>
-<%@ page import="org.oscarehr.common.dao.DiagnosticCodeDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.DiagnosticCode" %>
+<%@ page import="ca.openosp.openo.common.dao.DiagnosticCodeDao" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 <%
     DiagnosticCodeDao diagnosticCodeDao = SpringUtils.getBean(DiagnosticCodeDao.class);

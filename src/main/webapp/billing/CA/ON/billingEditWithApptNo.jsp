@@ -22,15 +22,15 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.dao.CtlBillingServiceDao" %>
-<%@page import="org.oscarehr.common.model.BillingONItem" %>
-<%@page import="org.oscarehr.common.dao.BillingONItemDao" %>
-<%@page import="java.util.*, java.text.*,java.sql.*, java.net.*, oscar.*, oscar.util.*, org.oscarehr.provider.model.PreventionManager" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONItem" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONItemDao" %>
+<%@page import="java.util.*, java.text.*,java.sql.*, java.net.*, oscar.*, oscar.util.*, ca.openosp.openo.provider.model.PreventionManager" %>
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.common.dao.ProviderPreferenceDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderPreferenceDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingItemData" %>

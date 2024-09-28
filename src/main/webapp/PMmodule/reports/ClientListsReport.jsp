@@ -27,6 +27,7 @@
 <%@page import="org.oscarehr.PMmodule.dao.*" %>
 <%@page import="org.oscarehr.common.dao.*" %>
 <%@page import="org.apache.commons.lang.time.*" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%@ include file="/taglibs.jsp" %>
 
 <div class="h4">

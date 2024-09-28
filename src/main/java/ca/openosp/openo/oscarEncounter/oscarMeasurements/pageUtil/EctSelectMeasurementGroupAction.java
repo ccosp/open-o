@@ -38,13 +38,13 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.MeasurementGroupDao;
-import org.oscarehr.common.dao.MeasurementGroupStyleDao;
-import org.oscarehr.common.model.MeasurementGroup;
-import org.oscarehr.common.model.MeasurementGroupStyle;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.managers.MeasurementManager;
+import ca.openosp.openo.common.dao.MeasurementGroupDao;
+import ca.openosp.openo.common.dao.MeasurementGroupStyleDao;
+import ca.openosp.openo.common.model.MeasurementGroup;
+import ca.openosp.openo.common.model.MeasurementGroupStyle;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.managers.MeasurementManager;
 
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctStyleSheetBeanHandler;
 

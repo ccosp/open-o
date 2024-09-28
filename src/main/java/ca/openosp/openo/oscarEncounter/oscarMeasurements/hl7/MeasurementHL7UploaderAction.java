@@ -31,6 +31,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -40,13 +41,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.web.struts.DispatchActionSupport;
 
 import ca.openosp.openo.OscarProperties;
@@ -65,7 +66,7 @@ import ca.uhn.hl7v2.parser.Parser;
 import ca.uhn.hl7v2.validation.impl.NoValidation;
 
 public class MeasurementHL7UploaderAction extends DispatchActionSupport {
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private static SimpleDateFormat sdf = new SimpleDateFormat(OscarProperties.getInstance().getProperty("ca.openosp.openo.measurements.hl7.datetime.format", "yyyyMMddHHmmss"));
 
     private static MeasurementDao measurementsDao = SpringUtils.getBean(MeasurementDao.class);

@@ -28,17 +28,17 @@ package ca.openosp.openo.oscarLab.ca.on;
 
 import java.util.Date;
 
-import org.oscarehr.common.dao.LabPatientPhysicianInfoDao;
-import org.oscarehr.common.dao.LabReportInformationDao;
-import org.oscarehr.common.dao.LabTestResultsDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.LabPatientPhysicianInfo;
-import org.oscarehr.common.model.LabReportInformation;
-import org.oscarehr.common.model.LabTestResults;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.LabPatientPhysicianInfoDao;
+import ca.openosp.openo.common.dao.LabReportInformationDao;
+import ca.openosp.openo.common.dao.LabTestResultsDao;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.model.LabPatientPhysicianInfo;
+import ca.openosp.openo.common.model.LabReportInformation;
+import ca.openosp.openo.common.model.LabTestResults;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 import ca.openosp.openo.util.UtilDateUtilities;

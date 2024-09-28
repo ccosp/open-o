@@ -28,11 +28,11 @@
 
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page
-        import="org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.CSSStylesDAO, org.oscarehr.common.model.CssStyle, java.util.List" %>
-<%@ page import="org.oscarehr.common.model.BillingService" %>
-<%@ page import="org.oscarehr.common.dao.BillingServiceDao" %>
-<%@ page import="org.oscarehr.billing.CA.ON.model.BillingPercLimit" %>
-<%@ page import="org.oscarehr.billing.CA.ON.dao.BillingPercLimitDao" %>
+        import="ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.dao.CSSStylesDAO, ca.openosp.openo.common.model.CssStyle, java.util.List" %>
+<%@ page import="ca.openosp.openo.common.model.BillingService" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.ON.model.BillingPercLimit" %>
+<%@ page import="ca.openosp.openo.billing.CA.ON.dao.BillingPercLimitDao" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%

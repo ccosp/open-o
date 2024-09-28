@@ -27,8 +27,8 @@ package ca.openosp.openo.oscarBilling.ca.bc.data;
 
 import java.util.Date;
 
-import org.oscarehr.billing.CA.BC.model.BillRecipients;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.billing.CA.BC.model.BillRecipients;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

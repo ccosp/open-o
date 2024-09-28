@@ -30,12 +30,12 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.oscarehr.common.dao.MeasurementGroupDao;
-import org.oscarehr.common.dao.MeasurementTypeDao;
-import org.oscarehr.common.model.MeasurementGroup;
-import org.oscarehr.common.model.MeasurementType;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementGroupDao;
+import ca.openosp.openo.common.dao.MeasurementTypeDao;
+import ca.openosp.openo.common.model.MeasurementGroup;
+import ca.openosp.openo.common.model.MeasurementType;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class RptMeasurementTypesBeanHandler {
 

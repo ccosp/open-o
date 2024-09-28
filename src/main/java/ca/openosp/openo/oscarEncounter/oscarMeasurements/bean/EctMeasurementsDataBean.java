@@ -29,7 +29,7 @@ package ca.openosp.openo.oscarEncounter.oscarMeasurements.bean;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class EctMeasurementsDataBean {
 

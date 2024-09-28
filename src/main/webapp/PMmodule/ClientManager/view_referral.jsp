@@ -24,8 +24,8 @@
 --%>
 
 <%@ page import="org.apache.struts.validator.DynaValidatorForm" %>
-<%@ page import="org.oscarehr.PMmodule.model.ClientReferral" %>
-<%@ page import="org.oscarehr.common.model.OscarLog" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ClientReferral" %>
+<%@ page import="ca.openosp.openo.common.model.OscarLog" %>
 <%@ page import="java.util.List" %>
 
 

@@ -31,9 +31,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import org.oscarehr.common.dao.ConfigImmunizationDao;
-import org.oscarehr.common.model.ConfigImmunization;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConfigImmunizationDao;
+import ca.openosp.openo.common.model.ConfigImmunization;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.w3c.dom.Document;
 
 import ca.openosp.openo.util.UtilXML;

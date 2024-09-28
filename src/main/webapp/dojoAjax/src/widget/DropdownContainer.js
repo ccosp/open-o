@@ -16,7 +16,7 @@ dojo.require("dojo.event.*");
 dojo.require("dojo.html.layout");
 dojo.require("dojo.html.display");
 dojo.require("dojo.html.iframe");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 
 dojo.widget.defineWidget(
     "dojo.widget.DropdownContainer",

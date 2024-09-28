@@ -24,9 +24,9 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.StudyLogin" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.StudyLoginDao" %>
+<%@page import="ca.openosp.openo.common.model.StudyLogin" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.StudyLoginDao" %>
 <%@ page import="java.sql.*, oscar.oscarDB.*" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 

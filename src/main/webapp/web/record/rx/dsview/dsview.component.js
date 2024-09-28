@@ -4,7 +4,7 @@ const DsviewComponent = {
         dismiss: '&',
         resolve: '<',
     },
-    templateUrl: '../web/record/rx/dsview/dsview.template.jsp',
+    templateUrl: '../ehrweb/record/rx/dsview/dsview.template.jsp',
     controller: ['$stateParams', '$state', '$uibModal', '$log', function ($stateParams, $state, $uibModal, $log) {
 
         dsView = this;

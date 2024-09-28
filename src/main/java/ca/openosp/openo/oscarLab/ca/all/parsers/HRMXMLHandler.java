@@ -38,17 +38,17 @@ import javax.xml.validation.SchemaFactory;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.Hl7TextInfoDao;
-import org.oscarehr.common.model.Hl7TextMessageInfo;
-import org.oscarehr.hospitalReportManager.SFTPConnector;
+import ca.openosp.openo.common.dao.Hl7TextInfoDao;
+import ca.openosp.openo.common.model.Hl7TextMessageInfo;
+import ca.openosp.openo.hospitalReportManager.SFTPConnector;
 import org.oscarehr.hospitalReportManager.xsd.DateFullOrPartial;
 import org.oscarehr.hospitalReportManager.xsd.HealthCard;
 import org.oscarehr.hospitalReportManager.xsd.OmdCds;
 import org.oscarehr.hospitalReportManager.xsd.PatientRecord;
 import org.oscarehr.hospitalReportManager.xsd.PhoneNumber;
 import org.oscarehr.hospitalReportManager.xsd.ReportsReceived;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.UtilDateUtilities;
 import ca.uhn.hl7v2.HL7Exception;

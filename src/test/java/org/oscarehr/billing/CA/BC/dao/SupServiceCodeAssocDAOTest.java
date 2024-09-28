@@ -31,11 +31,11 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.oscarehr.billing.CA.BC.model.BillingTrayFee;
+import ca.openosp.openo.billing.CA.BC.model.BillingTrayFee;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.SupServiceCodeAssocDAO;
 

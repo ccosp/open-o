@@ -53,8 +53,9 @@
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@ page import="org.oscarehr.common.model.MyGroup" %>
 <%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
@@ -163,7 +164,7 @@
                         appointmentArchiveDao.archiveAppointment(appt);
                     }
                 } catch (java.text.ParseException e) {
-                    org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
+                    MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
 
                 for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {
@@ -183,7 +184,7 @@
                         appointmentArchiveDao.archiveAppointment(appt);
                     }
                 } catch (java.text.ParseException e) {
-                    org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
+                    MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
 
                 for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {

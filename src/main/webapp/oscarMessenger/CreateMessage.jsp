@@ -24,25 +24,27 @@
 
 --%>
 
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.w3c.dom.*" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.util.Msgxml" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
-<%@ page import="org.oscarehr.managers.MessagingManager" %>
-<%@ page import="org.oscarehr.common.model.Groups" %>
+<%@ page import="ca.openosp.openo.managers.MessagingManager" %>
+<%@ page import="ca.openosp.openo.common.model.Groups" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.data.MsgProviderData" %>
 <%@ page import="java.util.Map, java.util.List" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.managers.MessengerGroupManager" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed = true;
@@ -72,7 +74,7 @@
 
 
 <%
-    org.oscarehr.managers.MessengerGroupManager groupManager = SpringUtils.getBean(org.oscarehr.managers.MessengerGroupManager.class);
+    MessengerGroupManager groupManager = SpringUtils.getBean(MessengerGroupManager.class);
     Map<Groups, List<MsgProviderData>> groups = groupManager.getAllGroupsWithMembers(LoggedInInfo.getLoggedInInfoFromSession(request));
     Map<String, List<MsgProviderData>> remoteMembers = groupManager.getAllRemoteMembers(LoggedInInfo.getLoggedInInfoFromSession(request));
     List<MsgProviderData> localMembers = groupManager.getAllLocalMembers(LoggedInInfo.getLoggedInInfoFromSession(request));
@@ -90,7 +92,7 @@
 
     String demographic_no = (String) request.getAttribute("demographic_no");
     DemographicData demoData = new DemographicData();
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographic_no);
+    Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographic_no);
     String demoName = "";
     if (demo != null) {
         demoName = demo.getLastName() + ", " + demo.getFirstName();

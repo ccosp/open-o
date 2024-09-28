@@ -24,7 +24,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

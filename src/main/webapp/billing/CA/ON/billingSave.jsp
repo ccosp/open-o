@@ -26,14 +26,14 @@
 <%@ page import="java.sql.*, java.util.*,java.net.*, oscar.util.*, oscar.oscarBilling.ca.on.data.*, ca.openosp.openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Billing" %>
-<%@ page import="org.oscarehr.common.dao.BillingDao" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
-<%@page import="org.oscarehr.common.dao.AppointmentArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Billing" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingDetail" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingDetailDao" %>
+<%@page import="ca.openosp.openo.common.dao.AppointmentArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
 <%@ page import="ca.openosp.openo.appt.ApptStatusData" %>
 <%
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);

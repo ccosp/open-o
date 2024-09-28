@@ -75,7 +75,7 @@ AGPL v2+
 and other liscences (MIT, LGPL etc) as indicated
 -->
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.eform.EFormLoader" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%

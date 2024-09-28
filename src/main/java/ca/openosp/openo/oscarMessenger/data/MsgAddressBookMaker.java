@@ -29,13 +29,13 @@ package ca.openosp.openo.oscarMessenger.data;
 
 import java.util.List;
 
-import org.oscarehr.common.dao.GroupMembersDao;
-import org.oscarehr.common.dao.GroupsDao;
-import org.oscarehr.common.dao.OscarCommLocationsDao;
-import org.oscarehr.common.model.Groups;
-import org.oscarehr.common.model.OscarCommLocations;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.GroupMembersDao;
+import ca.openosp.openo.common.dao.GroupsDao;
+import ca.openosp.openo.common.dao.OscarCommLocationsDao;
+import ca.openosp.openo.common.model.Groups;
+import ca.openosp.openo.common.model.OscarCommLocations;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

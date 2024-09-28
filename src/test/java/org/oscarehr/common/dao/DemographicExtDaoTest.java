@@ -32,13 +32,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.oscarehr.common.dao.DemographicDao;
 
 public class DemographicExtDaoTest extends DaoTestFixtures {

@@ -24,10 +24,10 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page %>
-<%@page import="oscar.oscarDemographic.data.*,org.oscarehr.common.model.Demographic" %>
+<%@page import="oscar.oscarDemographic.data.*,ca.openosp.openo.common.model.Demographic" %>
 <%@page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBeanHandler,java.util.*,oscar.oscarRx.util.*" %>
 <%@page import="oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>

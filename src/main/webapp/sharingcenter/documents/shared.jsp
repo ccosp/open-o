@@ -26,25 +26,25 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.model.PolicyDefinitionDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.model.CodeValueDataObject" %>
-<%@page import="org.oscarehr.sharingcenter.actions.DocumentPermissionStatus" %>
-<%@page import="org.oscarehr.sharingcenter.DocumentConsentWrapper" %>
-<%@page import="org.oscarehr.sharingcenter.AffinityDomainDocuments" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PolicyDefinitionDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.CodeValueDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.actions.DocumentPermissionStatus" %>
+<%@page import="ca.openosp.openo.sharingcenter.DocumentConsentWrapper" %>
+<%@page import="ca.openosp.openo.sharingcenter.AffinityDomainDocuments" %>
 <%@page import="org.marc.shic.xds.utils.XdStarUtility" %>
-<%@page import="org.oscarehr.sharingcenter.SharedDocumentsModel" %>
-<%@page import="org.oscarehr.sharingcenter.AffinityDomainFolderMetaData" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharedDocumentsModel" %>
+<%@page import="ca.openosp.openo.sharingcenter.AffinityDomainFolderMetaData" %>
 <%@page import="org.marc.shic.core.FolderMetaData" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="org.marc.shic.core.exceptions.CommunicationsException" %>
 <%@page import="org.marc.shic.core.DocumentMetaData" %>
 <%@page import="org.marc.shic.xds.XdsCommunicator" %>
 <%@page import="org.marc.shic.core.configuration.IheConfiguration" %>
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
 <%@page import="org.marc.shic.pix.PixApplicationException" %>
-<%@page import="org.oscarehr.sharingcenter.model.PatientDocument" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic, org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.PatientDocument" %>
+<%@page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     SharedDocumentsModel model = (SharedDocumentsModel) request.getAttribute("model");
 

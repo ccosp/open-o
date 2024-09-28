@@ -34,17 +34,17 @@
 <%@ page
         import="java.lang.*, java.util.*, java.text.*,java.security.*, oscar.*"
         errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Security" %>
-<%@ page import="org.oscarehr.common.dao.SecurityDao" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.managers.SecurityManager" %>
-<%@ page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Security" %>
+<%@ page import="ca.openosp.openo.common.dao.SecurityDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.managers.SecurityManager" %>
+<%@ page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData" %>
-<%@ page import="org.oscarehr.phr.util.MyOscarUtils" %>
+<%@ page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    org.oscarehr.managers.SecurityManager securityManager = SpringUtils.getBean(org.oscarehr.managers.SecurityManager.class);
+    SecurityManager securityManager = SpringUtils.getBean(SecurityManager.class);
 
 %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>

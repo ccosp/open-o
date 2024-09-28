@@ -38,15 +38,15 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.caisi.service.DemographicManagerTickler;
-import org.oscarehr.PMmodule.service.ProgramManager;
-import org.oscarehr.PMmodule.service.ProviderManager;
-import org.oscarehr.common.model.CustomFilter;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.service.ProgramManager;
+import ca.openosp.openo.PMmodule.service.ProviderManager;
+import ca.openosp.openo.common.model.CustomFilter;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class CustomFilterAction extends DispatchAction {
 

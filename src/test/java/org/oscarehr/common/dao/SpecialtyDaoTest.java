@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Specialty;
 import org.oscarehr.common.model.SpecialtyPK;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class SpecialtyDaoTest extends DaoTestFixtures {
 

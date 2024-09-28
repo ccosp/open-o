@@ -32,18 +32,18 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.dao.ConsultationServiceDao;
-import org.oscarehr.common.model.ConsultationRequest;
-import org.oscarehr.common.model.ConsultationServices;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.ConsultationRequestDao;
+import ca.openosp.openo.common.dao.ConsultationServiceDao;
+import ca.openosp.openo.common.model.ConsultationRequest;
+import ca.openosp.openo.common.model.ConsultationServices;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctViewConsultationRequestsUtil {
 

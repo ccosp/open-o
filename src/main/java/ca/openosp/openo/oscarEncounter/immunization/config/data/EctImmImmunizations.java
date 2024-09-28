@@ -29,7 +29,7 @@ package ca.openosp.openo.oscarEncounter.immunization.config.data;
 import java.util.Arrays;
 import java.util.Vector;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class EctImmImmunizations {
 

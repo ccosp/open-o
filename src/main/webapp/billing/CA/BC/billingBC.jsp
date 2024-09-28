@@ -40,7 +40,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -50,14 +50,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@page import="java.util.*, oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.entities.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.BillingreferralDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.BillingreferralDao" %>
 <%@ page import="ca.openosp.openo.oscarDxResearch.util.dxResearchCodingSystem" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.dao.PropertyDao" %>
-<%@ page import="org.oscarehr.common.model.Property" %>
-<%@ page import="org.oscarehr.managers.DemographicManager,ca.openosp.openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.PropertyDao" %>
+<%@ page import="ca.openosp.openo.common.model.Property" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager,ca.openosp.openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="ca.openosp.openo.entities.PaymentType" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData" %>

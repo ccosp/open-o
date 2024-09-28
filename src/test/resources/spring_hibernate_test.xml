@@ -12,14 +12,14 @@
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 	 -->
 	
-	<bean id="sessionFactory" class="org.oscarehr.util.SpringHibernateLocalSessionFactoryBean">
+	<bean id="sessionFactory" class="ca.openosp.openo.ehrutil.SpringHibernateLocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingDirectoryLocations">
 			<!-- only *.hbm.xml will be loaded -->
 			<list>
 				<value>classpath:/org/caisi/model</value>
 				<value>classpath:/org/oscarehr/PMmodule/model</value>
-				<value>classpath:/org/oscarehr/survey/model</value>
+				<value>classpath:/ca/openosp/openo/survey/model</value>
 				<value>classpath:/org/oscarehr/casemgmt/model</value>
 				<value>classpath:/org/oscarehr/phr/model</value>
 				<value>classpath:/org/oscarehr/common/model</value>
@@ -53,7 +53,7 @@
 	</bean>
 
 <!--
-	<bean id="auditSessionFactory" class="org.oscarehr.util.SpringHibernateLocalSessionFactoryBean">
+	<bean id="auditSessionFactory" class="org.oscarehr.ehrutiltil.SpringHibernateLocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingDirectoryLocations">
 			<list>
@@ -64,7 +64,7 @@
 				<value>classpath:/org/oscarehr/casemgmt/model</value>
 				<value>classpath:/com/quatro/model</value>
 				<value>classpath:/oscar/appt/status/model</value>
-				<value>classpath:/oscar/oscarRx/model</value>
+				<value>classpath:/oscar/ehroscarRx/model</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

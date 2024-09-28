@@ -24,11 +24,11 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="org.oscarehr.provider.web.UserPreferenceAction" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.provider.web.UserPreferenceAction" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <%
     @SuppressWarnings("unchecked")

@@ -34,14 +34,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-import org.oscarehr.billing.CA.BC.dao.TeleplanC12Dao;
-import org.oscarehr.billing.CA.BC.dao.TeleplanS00Dao;
-import org.oscarehr.billing.CA.BC.model.TeleplanC12;
-import org.oscarehr.billing.CA.BC.model.TeleplanS00;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanC12Dao;
+import ca.openosp.openo.billing.CA.BC.dao.TeleplanS00Dao;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanC12;
+import ca.openosp.openo.billing.CA.BC.model.TeleplanS00;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.entities.Billingmaster;
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingmasterDAO;

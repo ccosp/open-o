@@ -45,7 +45,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.ca.bc.PathNet.pageUtil.LabUploadForm;
@@ -55,7 +55,7 @@ import ca.openosp.openo.oscarLab.ca.bc.PathNet.pageUtil.LabUploadForm;
  * @author Jay Gallagher
  */
 public class ScheduleOfBenefitsUploadAction extends Action {
-    Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger _logger = MiscUtils.getLogger();
 
     boolean checkBox(String str) {
         boolean check = false;

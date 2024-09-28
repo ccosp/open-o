@@ -32,18 +32,18 @@
 
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="java.util.Calendar" %>
-<%@page import="org.oscarehr.managers.DashboardManager" %>
-<%@ page import="org.oscarehr.common.model.Dashboard" %>
+<%@page import="ca.openosp.openo.managers.DashboardManager" %>
+<%@ page import="ca.openosp.openo.common.model.Dashboard" %>
 <%@ page import="java.util.Properties" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.managers.AppManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.managers.AppManager" %>
 <%@ page import="java.net.URLEncoder" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%

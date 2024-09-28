@@ -44,7 +44,7 @@
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.util.*" %>
 <%@ page import="oscar.form.*" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <html>
 <head>

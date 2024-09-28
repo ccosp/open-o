@@ -33,16 +33,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.LazyValidatorForm;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.ProviderPreference;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SessionConstants;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.ProviderPreference;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SessionConstants;
 
 import ca.openosp.openo.oscarProvider.bean.ProviderNameBean;
 import ca.openosp.openo.oscarProvider.bean.ProviderNameBeanHandler;
@@ -54,7 +55,7 @@ import ca.openosp.openo.util.UtilDateUtilities;
 
 public final class WLSetupDisplayWaitingListAction extends Action {
 
-    private Logger log = org.oscarehr.util.MiscUtils.getLogger();
+    private Logger log = MiscUtils.getLogger();
 
     public ActionForward execute(ActionMapping mapping,
                                  ActionForm form,

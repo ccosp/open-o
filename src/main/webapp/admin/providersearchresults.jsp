@@ -28,9 +28,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <%@ page import="java.sql.*, java.util.*, oscar.*" buffer="none" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

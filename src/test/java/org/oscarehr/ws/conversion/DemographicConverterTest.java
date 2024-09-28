@@ -31,8 +31,8 @@ import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicExt;
 import org.oscarehr.common.model.Provider;
-import org.oscarehr.ws.rest.conversion.DemographicConverter;
-import org.oscarehr.ws.rest.to.model.DemographicTo1;
+import ca.openosp.openo.ws.rest.conversion.DemographicConverter;
+import ca.openosp.openo.ws.rest.to.model.DemographicTo1;
 
 public class DemographicConverterTest extends DaoTestFixtures {
 

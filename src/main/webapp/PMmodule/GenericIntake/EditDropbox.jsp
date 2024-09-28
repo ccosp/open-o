@@ -27,6 +27,11 @@
 <%@page import="java.sql.*,oscar.oscarDB.*" %>
 <%@page
         import="java.util.*,org.oscarehr.PMmodule.dao.*,org.oscarehr.PMmodule.service.*,org.oscarehr.PMmodule.model.*,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeAnswerElement" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNodeTemplate" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNodeType" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.IntakeNode" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.GenericIntakeManager" %>
 <%
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
     GenericIntakeManager genericIntakeManager = (GenericIntakeManager) ctx.getBean(GenericIntakeManager.class);

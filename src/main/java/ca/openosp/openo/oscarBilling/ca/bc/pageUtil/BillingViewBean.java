@@ -29,13 +29,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.oscarehr.billing.CA.BC.dao.BillRecipientsDao;
-import org.oscarehr.billing.CA.BC.model.BillRecipients;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingPaymentTypeDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.BillingPaymentType;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.BillRecipientsDao;
+import ca.openosp.openo.billing.CA.BC.model.BillRecipients;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.BillingPaymentType;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.entities.Billingmaster;
 import ca.openosp.openo.entities.PaymentType;

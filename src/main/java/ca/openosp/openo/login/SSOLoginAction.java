@@ -36,6 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import com.onelogin.saml2.Auth;
 import com.onelogin.saml2.exception.Error;
 import com.onelogin.saml2.exception.SettingsException;
@@ -49,16 +52,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.service.ProviderManager;
-import org.oscarehr.common.dao.FacilityDao;
-import org.oscarehr.common.dao.ProviderPreferenceDao;
-import org.oscarehr.common.dao.SecurityDao;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.Security;
-import org.oscarehr.managers.AppManager;
-import org.oscarehr.managers.SsoAuthenticationManager;
-import org.oscarehr.util.*;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.service.ProviderManager;
+import ca.openosp.openo.common.dao.FacilityDao;
+import ca.openosp.openo.common.dao.ProviderPreferenceDao;
+import ca.openosp.openo.common.dao.SecurityDao;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.Security;
+import ca.openosp.openo.managers.AppManager;
+import ca.openosp.openo.managers.SsoAuthenticationManager;
+import org.oscarehr.ehrutil.*;
 
 import net.sf.json.JSONObject;
 import ca.openosp.openo.OscarProperties;
@@ -457,7 +460,7 @@ public final class SSOLoginAction extends DispatchAction {
             String[] parts = data.split(":");
 
             IvParameterSpec iv = new IvParameterSpec(Base64.decodeBase64(parts[1]));
-            //    IvParameterSpec iv = new IvParameterSpec(java.util.Base64.getDecoder().decode(parts[1]));
+            //    IvParameterSpec iv = new IvParameterSpec(java.ehrutil.Base64.getDecoder().decode(parts[1]));
             SecretKeySpec secretKey = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");

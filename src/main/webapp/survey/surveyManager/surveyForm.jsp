@@ -38,7 +38,7 @@
 
         function navigate(pageName) {
             document.surveyForm.method.value = "navigate";
-            document.surveyForm.elements['web.page'].value = pageName;
+            document.surveyForm.elements['ehrweb.page'].value = pageName;
             document.surveyForm.submit();
         }
 
@@ -49,8 +49,8 @@
 
         function addQuestionType(toSection, qType) {
             document.surveyForm.method.value = "add_question";
-            document.surveyForm.elements['web.section'].value = toSection;
-            document.surveyForm.elements['web.questionTypeData'].value = qType;
+            document.surveyForm.elements['ehrweb.section'].value = toSection;
+            document.surveyForm.elements['ehrweb.questionTypeData'].value = qType;
             document.surveyForm.submit();
         }
 
@@ -71,7 +71,7 @@
 
         function removePage(pageName) {
             document.surveyForm.method.value = "remove_page";
-            document.surveyForm.elements['web.page'].value = pageName;
+            document.surveyForm.elements['ehrweb.page'].value = pageName;
             document.surveyForm.submit();
         }
 

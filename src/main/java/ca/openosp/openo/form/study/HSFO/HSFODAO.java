@@ -37,8 +37,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ca.openosp.openo.OscarProperties;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * Class used by the HSFO Study

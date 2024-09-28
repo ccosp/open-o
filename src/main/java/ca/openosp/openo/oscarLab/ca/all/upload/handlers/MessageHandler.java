@@ -26,7 +26,7 @@
 
 package ca.openosp.openo.oscarLab.ca.all.upload.handlers;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 /**
  * @author wrighd

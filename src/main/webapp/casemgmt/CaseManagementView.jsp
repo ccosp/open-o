@@ -36,10 +36,14 @@
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.apache.logging.log4j.Logger" %>
-<%@page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
-<%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
+<%@page import="ca.openosp.openo.casemgmt.web.CaseManagementViewAction" %>
+<%@page import="ca.openosp.openo.casemgmt.web.NoteDisplay" %>
+<%@ page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementViewFormBean" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.ClientImage" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementCPP" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     @SuppressWarnings("unchecked")
     java.util.List<NoteDisplay> noteList = (java.util.List<NoteDisplay>) request.getAttribute("Notes");

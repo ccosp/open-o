@@ -36,9 +36,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarBilling.ca.on.data.BillingCodeData;
 

@@ -28,13 +28,13 @@ package ca.openosp.openo.oscarWaitingList.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.common.dao.WaitingListDao;
-import org.oscarehr.common.dao.WaitingListNameDao;
-import org.oscarehr.common.model.Appointment;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.WaitingList;
-import org.oscarehr.common.model.WaitingListName;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.WaitingListDao;
+import ca.openosp.openo.common.dao.WaitingListNameDao;
+import ca.openosp.openo.common.model.Appointment;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.WaitingList;
+import ca.openosp.openo.common.model.WaitingListName;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarWaitingList.util.WLWaitingListUtil;
 import ca.openosp.openo.util.ConversionUtils;

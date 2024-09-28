@@ -47,16 +47,17 @@ import java.util.Date;
 import java.util.ListIterator;
 import java.util.Properties;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import net.sf.json.JSONObject;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.ProviderDataDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.ProviderData;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ProviderDataDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.ProviderData;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.entities.Billingmaster;
@@ -77,7 +78,7 @@ import ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean;
 public class QuickBillingBCHandler {
 
     // full logging to be added later. too pressed for time.
-    private static Logger log = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger log = MiscUtils.getLogger();
 
     // default attributes for MSP billing.
     // create new attributes for dynamic form input.

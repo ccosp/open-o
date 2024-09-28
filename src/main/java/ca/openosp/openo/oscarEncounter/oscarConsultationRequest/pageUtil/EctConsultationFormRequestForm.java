@@ -36,7 +36,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
-import org.oscarehr.util.WebUtils;
+import ca.openosp.openo.ehrutil.WebUtils;
 
 public final class EctConsultationFormRequestForm extends ActionForm {
 

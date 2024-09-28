@@ -17,7 +17,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="IntakeNodeType" table="intake_node_type">
+	<class name="ca.openosp.openo.PMmodule.model.IntakeNodeType" table="intake_node_type">
 		<meta attribute="sync-DAO">false</meta>
 
 		<id name="id" type="integer" column="intake_node_type_id">

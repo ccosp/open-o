@@ -83,7 +83,7 @@
 
     /**
      * --------------------------------------------------------------------------
-     * Bootstrap (v5.0.2): util/index.js
+     * Bootstrap (v5.0.2): ehrutil/index.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
@@ -4201,7 +4201,7 @@
 
     /**
      * --------------------------------------------------------------------------
-     * Bootstrap (v5.0.2): util/scrollBar.js
+     * Bootstrap (v5.0.2): ehrutil/scrollBar.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */
@@ -4305,7 +4305,7 @@
 
     /**
      * --------------------------------------------------------------------------
-     * Bootstrap (v5.0.2): util/backdrop.js
+     * Bootstrap (v5.0.2): ehrutil/backdrop.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
      * --------------------------------------------------------------------------
      */
@@ -5132,7 +5132,7 @@
 
     /**
      * --------------------------------------------------------------------------
-     * Bootstrap (v5.0.2): util/sanitizer.js
+     * Bootstrap (v5.0.2): ehrutil/sanitizer.js
      * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
      * --------------------------------------------------------------------------
      */

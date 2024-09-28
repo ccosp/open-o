@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.util.StringUtils;

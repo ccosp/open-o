@@ -29,12 +29,12 @@ package ca.openosp.openo.oscarEncounter.pageUtil;
 import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicDrug;
-import org.oscarehr.provider.web.CppPreferencesUIBean;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.provider.web.CppPreferencesUIBean;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarRx.data.RxPrescriptionData.Prescription;
 import ca.openosp.openo.util.DateUtils;
@@ -63,7 +63,7 @@ public class EctDisplayRxAction extends EctDisplayAction {
 
             //set lefthand module heading and link
             String winName = "Rx" + bean.demographicNo;
-            String leftUrl = "popupPage(580,1027,'" + winName + "','" + request.getContextPath() + "/oscarRx/choosePatient.do?providerNo=" + bean.providerNo + "&demographicNo=" + bean.demographicNo + "')";
+            String leftUrl = "popupPage(580,1027,'" + winName + "','" + request.getContextPath() + "/ehroscarRx/choosePatient.do?providerNo=" + bean.providerNo + "&demographicNo=" + bean.demographicNo + "')";
             String url = leftUrl;
             Dao.setLeftHeading(messages.getMessage(request.getLocale(), "oscarEncounter.NavBar.Medications"));
             Dao.setLeftURL(leftUrl);

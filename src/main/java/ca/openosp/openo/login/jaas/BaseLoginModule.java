@@ -42,6 +42,7 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 /**
@@ -54,7 +55,7 @@ public class BaseLoginModule implements LoginModule {
      */
     public static final String OPTION_ATN_ENABLED = "authorizationEnabled";
 
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     private Subject subject;
 
@@ -155,7 +156,7 @@ public class BaseLoginModule implements LoginModule {
 
         if (isAuthorizationEnabled()) {
             // CallerPrincipal group is necessary for making custom principal as the
-            // principal returned by the getUserPrincipal() methods in web apps
+            // principal returned by the getUserPrincipal() methods in ehrweb apps
             OscarGroup callerPrincipal = new OscarGroup("CallerPrincipal");
             callerPrincipal.addMember(getPrincipal());
             setCallerPrincipal(callerPrincipal);

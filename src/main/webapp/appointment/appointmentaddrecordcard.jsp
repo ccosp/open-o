@@ -40,14 +40,14 @@
 %>
 
 <%@ page
-        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, org.oscarehr.common.OtherIdManager, ca.openosp.openo.util.ConversionUtils" %>
-<%@ page import="org.oscarehr.event.EventService, org.oscarehr.util.SpringUtils" %>
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.common.OtherIdManager, ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.event.EventService, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@page import="org.oscarehr.common.dao.AppointmentArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.AppointmentArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);

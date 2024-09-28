@@ -22,19 +22,19 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.model.Security" %>
-<%@page import="org.oscarehr.common.dao.SecurityDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Security" %>
+<%@page import="ca.openosp.openo.common.dao.SecurityDao" %>
 <%@page
         import="java.util.Collections, java.util.Arrays, java.util.ArrayList" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.common.dao.ProviderPreferenceDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderPreferenceDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

@@ -40,14 +40,14 @@
                  ca.openosp.openo.oscarRx.util.RxUtil,
                  org.springframework.web.context.WebApplicationContext,
                  org.springframework.web.context.support.WebApplicationContextUtils,
-                 org.oscarehr.common.dao.UserPropertyDAO,
-                 org.oscarehr.common.model.UserProperty" %>
+                 ca.openosp.openo.common.dao.UserPropertyDAO,
+                 ca.openosp.openo.common.model.UserProperty" %>
 
 <!-- Classes needed for signature injection -->
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
 <!-- end -->
 <%@ page import="org.owasp.encoder.Encode" %>
 <%
@@ -57,14 +57,17 @@
     String rx_enhance = OscarProperties.getInstance().getProperty("rx_enhance");
 %>
 
-<%@page import="org.oscarehr.web.PrescriptionQrCodeUIBean" %>
-<%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrweb.PrescriptionQrCodeUIBean" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExt" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -336,7 +339,7 @@
                                                 + "<bean:message key='RxPreview.msgTel'/>" + ": " + patientPhone
                                                 + (patientDOB != null && !patientDOB.trim().equals("") ? "\n"
                                                 + "<bean:message key='RxPreview.msgDOB'/>" + ": " + patientDOB : "")
-                                                + (!patientHin.trim().equals("") ? "\n" + "<bean:message key='oscar.oscarRx.hin'/>" + ": " + patientHin : "");
+                                                + (!patientHin.trim().equals("") ? "\n" + "<bean:message key='oscar.ehroscarRx.hin'/>" + ": " + patientHin : "");
                                     }
                                 %>
                                 <input type="hidden" name="doctorName"
@@ -537,7 +540,7 @@
                                     signatureRequestId = loggedInInfo.getLoggedInProviderNo();
                                     imageUrl = request.getContextPath() + "/imageRenderingServlet?source=" + ImageRenderingServlet.Source.signature_preview.name() + "&" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
                                     startimageUrl = request.getContextPath() + "/images/1x1.gif";
-                                    statusUrl = request.getContextPath() + "/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
+                                    statusUrl = request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
                                 %>
 
                                 <input type="hidden" name="<%= DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY %>"
@@ -637,7 +640,7 @@
                                 String fullOutLine = rx.getFullOutLine().replaceAll(";", "<br />");
 
                                 if (fullOutLine == null || fullOutLine.length() <= 6) {
-                                    org.oscarehr.util.MiscUtils.getLogger();
+                                    MiscUtils.getLogger();
                                     fullOutLine = "<span style=\"color:red;font-size:16;font-weight:bold\">An error occurred, please write a new prescription.</span><br />" + fullOutLine;
                                 }
                         %>

@@ -23,7 +23,14 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.apache.cxf.rs.security.oauth.client.OAuthClientUtils,org.apache.cxf.jaxrs.client.WebClient,java.util.*,java.net.*,org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.*,org.oscarehr.app.*" %>
+<%@page import="org.apache.cxf.rs.security.oauth.client.OAuthClientUtils,org.apache.cxf.jaxrs.client.WebClient,java.util.*,java.net.*,org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.ehrutil.*,org.oscarehr.app.*" %>
+<%@ page import="ca.openosp.openo.app.AppOAuth1Config" %>
+<%@ page import="ca.openosp.openo.common.model.AppUser" %>
+<%@ page import="ca.openosp.openo.common.model.AppDefinition" %>
+<%@ page import="ca.openosp.openo.common.dao.AppDefinitionDao" %>
+<%@ page import="ca.openosp.openo.common.dao.AppUserDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
 
     AppUserDao appUserDao = SpringUtils.getBean(AppUserDao.class);

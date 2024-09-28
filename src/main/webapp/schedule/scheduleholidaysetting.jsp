@@ -57,7 +57,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <jsp:useBean id="scheduleHolidayBean" class="java.util.Hashtable" scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleHoliday" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleHolidayDao" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>

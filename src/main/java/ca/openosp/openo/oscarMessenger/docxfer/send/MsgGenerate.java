@@ -32,7 +32,7 @@ import java.sql.ResultSetMetaData;
 
 import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

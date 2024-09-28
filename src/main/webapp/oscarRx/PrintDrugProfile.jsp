@@ -27,7 +27,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscarProp" %>
-<%@ page import="oscar.oscarRx.data.*, org.oscarehr.common.model.PharmacyInfo" %>
+<%@ page import="oscar.oscarRx.data.*, ca.openosp.openo.common.model.PharmacyInfo" %>
 <%@page import="java.util.List" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>

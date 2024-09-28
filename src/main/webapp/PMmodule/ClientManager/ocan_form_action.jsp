@@ -22,12 +22,12 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.common.model.OcanStaffFormData" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanFormAction" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffFormData" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanForm" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanFormAction" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.Map" %>
@@ -35,7 +35,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="org.apache.commons.lang.ArrayUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -219,5 +219,5 @@
         }
     }
 
-    response.sendRedirect(request.getContextPath() + "/PMmodule/ClientManager.do?id=" + clientId);
+    response.sendRedirect(request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager.do?id=" + clientId);
 %>

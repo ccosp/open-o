@@ -26,8 +26,8 @@ package ca.openosp.openo.oscarLab.ca.all.upload.handlers;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
 import ca.openosp.openo.oscarLab.ca.all.util.Utilities;

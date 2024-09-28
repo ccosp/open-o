@@ -24,8 +24,8 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <%
     if (session.getValue("user") == null) response.sendRedirect("../../logout.jsp");
 

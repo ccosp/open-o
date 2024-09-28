@@ -38,14 +38,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.oscarehr.common.dao.AbstractCodeSystemDao;
-import org.oscarehr.common.dao.AbstractCodeSystemDaoImpl;
-import org.oscarehr.common.dao.QuickListDao;
-import org.oscarehr.common.model.AbstractCodeSystemModel;
-import org.oscarehr.common.model.QuickList;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.AbstractCodeSystemDao;
+import ca.openosp.openo.common.dao.AbstractCodeSystemDaoImpl;
+import ca.openosp.openo.common.dao.QuickListDao;
+import ca.openosp.openo.common.model.AbstractCodeSystemModel;
+import ca.openosp.openo.common.model.QuickList;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class dxResearchUpdateQuickListAction extends Action {
     private static SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);

@@ -42,10 +42,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     AffinityDomainDao affDao = SpringUtils.getBean(AffinityDomainDao.class);
     List<AffinityDomainDataObject> affList = affDao.getAllAffinityDomains();

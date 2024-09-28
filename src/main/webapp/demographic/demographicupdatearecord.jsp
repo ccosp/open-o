@@ -38,42 +38,43 @@
     }
 %>
 
-<%@page import="org.oscarehr.provider.model.PreventionManager" %>
+<%@page import="ca.openosp.openo.provider.model.PreventionManager" %>
 <%@ page
-        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" %>
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, ca.openosp.openo.common.OtherIdManager" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
-<%@page import="org.oscarehr.common.model.DemographicCust" %>
-<%@page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtArchiveDao" %>
-<%@page import="org.oscarehr.common.model.DemographicExt" %>
-<%@page import="org.oscarehr.common.model.DemographicExtArchive" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicArchiveDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtArchiveDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicExt" %>
+<%@page import="ca.openosp.openo.common.model.DemographicExtArchive" %>
 
-<%@ page import="org.oscarehr.common.dao.WaitingListDao" %>
-<%@ page import="org.oscarehr.common.model.WaitingList" %>
+<%@ page import="ca.openosp.openo.common.dao.WaitingListDao" %>
+<%@ page import="ca.openosp.openo.common.model.WaitingList" %>
 
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.provider.model.PreventionManager" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.provider.model.PreventionManager" %>
 
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@page import="org.oscarehr.managers.PatientConsentManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.ConsentType" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.web.GenericIntakeEditAction" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
+<%@page import="ca.openosp.openo.managers.PatientConsentManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.ConsentType" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicNameAgeString" %>
+<%@ page import="ca.openosp.openo.PMmodule.exception.AdmissionException" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -425,7 +426,7 @@
                 if (!isFound(servP, p.getId().toString())) {
                     try {
                         am.processDischarge(p.getId(), demographic.getDemographicNo(), "(Master record change)", "0");
-                    } catch (org.oscarehr.PMmodule.exception.AdmissionException e) {
+                    } catch (AdmissionException e) {
                     }
                 }
             }

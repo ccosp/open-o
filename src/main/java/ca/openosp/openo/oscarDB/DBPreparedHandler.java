@@ -33,7 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import ca.openosp.openo.Misc;
-import org.oscarehr.util.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
 
 /**
  * deprecated Use JPA instead, no new code should be written against this class.

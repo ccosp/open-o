@@ -60,42 +60,43 @@ Ontario, Canada
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
-<%@ page import="org.oscarehr.common.model.AppointmentStatus" %>
-<%@ page import="org.oscarehr.common.model.DemographicCust" %>
-<%@ page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.EncounterForm" %>
-<%@ page import="org.oscarehr.common.dao.EncounterFormDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@ page import="org.oscarehr.common.model.Facility" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@ page import="org.oscarehr.managers.ProgramManager2" %>
-<%@ page import="org.oscarehr.decisionSupport.model.DSConsequence" %>
+<%@ page import="ca.openosp.openo.common.model.AppointmentStatus" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.EncounterForm" %>
+<%@ page import="ca.openosp.openo.common.dao.EncounterFormDao" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@ page import="ca.openosp.openo.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProviderManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@ page import="ca.openosp.openo.managers.ProgramManager2" %>
+<%@ page import="ca.openosp.openo.decisionSupport.model.DSConsequence" %>
 
-<%@ page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
 
-<%@ page import="org.oscarehr.managers.LookupListManager" %>
-<%@ page import="org.oscarehr.common.model.LookupList" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.AppointmentTypeDao" %>
-<%@ page import="org.oscarehr.common.model.AppointmentType" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.managers.LookupListManager" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.dao.AppointmentTypeDao" %>
+<%@ page import="ca.openosp.openo.common.model.AppointmentType" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.appt.ApptData" %>
 <%@ page import="ca.openosp.openo.appt.JdbcApptImpl" %>
 <%@ page import="ca.openosp.openo.appt.ApptUtil" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -268,7 +269,7 @@ Ontario, Canada
             // multisites start ==================
             SiteDao siteDao = (SiteDao) SpringUtils.getBean("siteDao");
             List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
-            boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+            boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
             // multisites end ==================
             if (bMultisites) { %>
         <style>

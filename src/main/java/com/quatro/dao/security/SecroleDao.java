@@ -28,10 +28,6 @@ package com.quatro.dao.security;
 
 import java.util.List;
 
-import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
-
 import com.quatro.model.security.Secrole;
 
 public interface SecroleDao {

@@ -24,11 +24,17 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="java.io.*,java.util.*,java.net.*,org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.util.*" %>
+<%@page import="java.io.*,java.util.*,java.net.*,org.oscarehr.common.dao.*,org.oscarehr.common.model.*,org.oscarehr.ehrutil.*" %>
 <%@page import="org.codehaus.jettison.json.*" %>
 <%@page import="org.joda.time.*" %>
-<%@page import="org.oscarehr.ws.rest.FormsService" %>
-<%@page import="org.oscarehr.app.AppOAuth1Config" %>
+<%@page import="ca.openosp.openo.ws.rest.FormsService" %>
+<%@page import="ca.openosp.openo.app.AppOAuth1Config" %>
+<%@ page import="ca.openosp.openo.common.model.AppUser" %>
+<%@ page import="ca.openosp.openo.common.model.AppDefinition" %>
+<%@ page import="ca.openosp.openo.common.dao.AppDefinitionDao" %>
+<%@ page import="ca.openosp.openo.common.dao.AppUserDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:html lang="en">

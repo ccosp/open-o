@@ -37,12 +37,13 @@ package ca.openosp.openo.oscarLab.ca.all.upload.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.Hl7TextInfoDao;
-import org.oscarehr.common.model.Hl7TextInfo;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.OscarAuditLogger;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.Hl7TextInfoDao;
+import ca.openosp.openo.common.model.Hl7TextInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.OscarAuditLogger;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
@@ -51,7 +52,7 @@ import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 public class MDSHandler implements MessageHandler {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     Hl7TextInfoDao hl7TextInfoDao = (Hl7TextInfoDao) SpringUtils.getBean(Hl7TextInfoDao.class);
 
     private Integer labNo = null;

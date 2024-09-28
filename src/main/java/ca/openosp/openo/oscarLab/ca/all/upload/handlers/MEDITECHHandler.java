@@ -39,9 +39,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -51,7 +52,7 @@ import ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader;
 
 public class MEDITECHHandler implements MessageHandler {
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private final String XML = "<(\\S+?)(.*?)>(.*?)</\\1>";
 
     @Override

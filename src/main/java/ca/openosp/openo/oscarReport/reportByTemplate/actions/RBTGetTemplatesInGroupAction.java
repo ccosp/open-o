@@ -36,10 +36,10 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.RBTGroup;
-import org.oscarehr.managers.RBTGroupManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.RBTGroup;
+import ca.openosp.openo.managers.RBTGroupManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarReport.reportByTemplate.ReportManager;
 import ca.openosp.openo.oscarReport.reportByTemplate.ReportObjectGeneric;

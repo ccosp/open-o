@@ -40,8 +40,8 @@
 %>
 
 <%@page import="java.util.*" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%

@@ -28,9 +28,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
-<%@ page import="org.oscarehr.common.model.PreventionsLotNrs" %>
-<%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.PreventionsLotNrs" %>
+<%@ page import="ca.openosp.openo.common.dao.PreventionsLotNrsDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.*" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>

@@ -18,7 +18,7 @@
 
 --%>
 <%@ page
-        import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*, oscar.appt.*, org.oscarehr.common.dao.AppointmentTypeDao, org.oscarehr.common.model.AppointmentType, org.oscarehr.util.SpringUtils" %>
+        import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*, oscar.appt.*, ca.openosp.openo.common.dao.AppointmentTypeDao, ca.openosp.openo.common.model.AppointmentType, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -40,6 +40,7 @@
 <%@ page import="oscar.login.*" %>
 <%@ page import="oscar.log.*" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <html>
 <head>
     <title>
@@ -261,7 +262,7 @@
                     </th>
                 </tr>
                 <%
-                    boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+                    boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
                     List<AppointmentType> types = new ArrayList<AppointmentType>();
                     AppointmentTypeDao dao = (AppointmentTypeDao) SpringUtils.getBean(AppointmentTypeDao.class);
                     types = dao.listAll();

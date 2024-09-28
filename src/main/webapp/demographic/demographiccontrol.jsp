@@ -24,13 +24,13 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicTransferScore" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.web.DemographicSearchHelper" %>
+<%@page import="ca.openosp.openo.ehrweb.DemographicSearchHelper" %>
 <%@page import="java.util.GregorianCalendar" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters" %>
 

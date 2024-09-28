@@ -32,7 +32,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public final class UtilDict extends Properties {
     private static final Logger logger = MiscUtils.getLogger();

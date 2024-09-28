@@ -37,13 +37,13 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.model.MessageTbl;
-import org.oscarehr.common.model.MsgDemoMap;
-import org.oscarehr.managers.MessagingManager;
-import org.oscarehr.managers.MessengerDemographicManager;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.MessageTbl;
+import ca.openosp.openo.common.model.MsgDemoMap;
+import ca.openosp.openo.managers.MessagingManager;
+import ca.openosp.openo.managers.MessengerDemographicManager;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 
 import ca.openosp.openo.oscarMessenger.data.ContactIdentifier;

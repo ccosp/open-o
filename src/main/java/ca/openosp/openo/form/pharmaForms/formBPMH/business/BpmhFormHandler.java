@@ -29,37 +29,38 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.AllergyDao;
-import org.oscarehr.common.dao.ContactSpecialtyDao;
-import org.oscarehr.common.dao.DemographicContactDao;
-import org.oscarehr.common.dao.DemographicCustDao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.DrugDao;
-import org.oscarehr.common.dao.DrugReasonDao;
-import org.oscarehr.common.dao.Icd9SynonymDao;
-import org.oscarehr.common.dao.FormBPMHDao;
-import org.oscarehr.common.dao.Icd9Dao;
-import org.oscarehr.common.dao.OscarAppointmentDao;
-import org.oscarehr.common.dao.ProfessionalContactDao;
-import org.oscarehr.common.dao.ProfessionalSpecialistDao;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.Appointment;
-import org.oscarehr.common.model.Contact;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DemographicContact;
-import org.oscarehr.common.model.DemographicCust;
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.common.model.DrugReason;
-import org.oscarehr.common.model.Icd9Synonym;
-import org.oscarehr.common.model.FormBPMH;
-import org.oscarehr.common.model.Icd9;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.AllergyDao;
+import ca.openosp.openo.common.dao.ContactSpecialtyDao;
+import ca.openosp.openo.common.dao.DemographicContactDao;
+import ca.openosp.openo.common.dao.DemographicCustDao;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.dao.DrugDao;
+import ca.openosp.openo.common.dao.DrugReasonDao;
+import ca.openosp.openo.common.dao.Icd9SynonymDao;
+import ca.openosp.openo.common.dao.FormBPMHDao;
+import ca.openosp.openo.common.dao.Icd9Dao;
+import ca.openosp.openo.common.dao.OscarAppointmentDao;
+import ca.openosp.openo.common.dao.ProfessionalContactDao;
+import ca.openosp.openo.common.dao.ProfessionalSpecialistDao;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.common.model.Appointment;
+import ca.openosp.openo.common.model.Contact;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DemographicContact;
+import ca.openosp.openo.common.model.DemographicCust;
+import ca.openosp.openo.common.model.Drug;
+import ca.openosp.openo.common.model.DrugReason;
+import ca.openosp.openo.common.model.Icd9Synonym;
+import ca.openosp.openo.common.model.FormBPMH;
+import ca.openosp.openo.common.model.Icd9;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhDrug;
 import ca.openosp.openo.form.pharmaForms.formBPMH.bean.BpmhFormBean;
@@ -105,7 +106,7 @@ import ca.openosp.openo.oscarRx.data.RxDrugData;
  */
 public class BpmhFormHandler {
 
-    private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger logger = MiscUtils.getLogger();
     private static final String[] IGNORE_METHODS = new String[]{
             "handler",
             "hibernateLazyInitializer",

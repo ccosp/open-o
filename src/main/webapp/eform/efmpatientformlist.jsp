@@ -24,14 +24,14 @@
 
 --%>
 
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
-<%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
+<%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 
 <%@page import="java.util.*,oscar.eform.*" %>
-<%@page import="org.oscarehr.web.eform.EfmPatientFormList" %>
+<%@page import="ca.openosp.openo.ehrweb.eform.EfmPatientFormList" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

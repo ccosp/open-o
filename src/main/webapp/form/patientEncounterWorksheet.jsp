@@ -42,18 +42,18 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.common.model.Clinic" %>
-<%@ page import="org.oscarehr.common.dao.ClinicDAO" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.Allergy" %>
-<%@ page import="org.oscarehr.common.dao.AllergyDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.model.Clinic" %>
+<%@ page import="ca.openosp.openo.common.dao.ClinicDAO" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.Allergy" %>
+<%@ page import="ca.openosp.openo.common.dao.AllergyDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 
 <%
@@ -99,7 +99,7 @@
 
 
     // FrmRecord rec = (new FrmRecordFactory()).factory(formClass);
-    //java.util.Properties props = rec.getFormRecord(demoNo, formId);
+    //java.ehrutil.Properties props = rec.getFormRecord(demoNo, formId);
 
     //FrmData fd = new FrmData();    String resource = fd.getResource(); resource = resource + "ob/riskinfo/";
 

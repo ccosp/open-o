@@ -26,24 +26,24 @@
 
 <%@page import="java.util.List" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.model.ClientReferral" %>
-<%@page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.model.ClientReferral" %>
+<%@page import="ca.openosp.openo.PMmodule.web.utils.UserRoleUtils" %>
 <%@page import="java.util.Date" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.casemgmt.dao.ClientImageDAO" %>
-<%@page import="org.oscarehr.casemgmt.model.ClientImage" %>
-<%@page import="org.oscarehr.common.dao.IntegratorConsentDao" %>
-<%@page import="org.oscarehr.common.model.IntegratorConsent" %>
-<%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.casemgmt.dao.ClientImageDAO" %>
+<%@page import="ca.openosp.openo.casemgmt.model.ClientImage" %>
+<%@page import="ca.openosp.openo.common.dao.IntegratorConsentDao" %>
+<%@page import="ca.openosp.openo.common.model.IntegratorConsent" %>
+<%@page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.GetConsentTransfer" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramProviderDAO" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%
     ProgramProviderDAO ppd = (ProgramProviderDAO) SpringUtils.getBean(ProgramProviderDAO.class);
@@ -57,16 +57,16 @@
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedFacility" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.ConsentState" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.common.model.CdsClientForm" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.PMmodule.web.ClientManagerAction" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.DemographicCust" %>
-<%@page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@page import="org.oscarehr.PMmodule.web.AdmissionForDisplay" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.model.CdsClientForm" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ClientManagerAction" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@page import="ca.openosp.openo.PMmodule.web.AdmissionForDisplay" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
 
 <input type="hidden" name="clientId" value=""/>
 <input type="hidden" name="formId" value=""/>
@@ -75,7 +75,7 @@
 <%
     //get current program, to check for OCAN
     boolean programEnableOcan = false;
-    String currentProgram = (String) session.getAttribute(org.oscarehr.util.SessionConstants.CURRENT_PROGRAM_ID);
+    String currentProgram = (String) session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
     if (currentProgram != null) {
         ProgramManager pm = SpringUtils.getBean(ProgramManager.class);
         Program program = pm.getProgram(currentProgram);

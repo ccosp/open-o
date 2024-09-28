@@ -54,9 +54,9 @@ import org.junit.Test;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.RemoteIntegratedDataCopy;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.ObjectMarshalUtil;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.ObjectMarshalUtil;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 
 public class RemoteIntegratedDataCopyDaoTest extends DaoTestFixtures {

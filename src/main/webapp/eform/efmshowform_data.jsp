@@ -26,12 +26,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="oscar.eform.data.*" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
-<%@ page import="org.oscarehr.common.model.enumerator.DocumentType" %>
-<%@ page import="org.oscarehr.documentManager.DocumentAttachmentManager" %>
-<%@ page import="org.oscarehr.managers.EmailComposeManager" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.enumerator.DocumentType" %>
+<%@ page import="documentManager.DocumentAttachmentManager" %>
+<%@ page import="ca.openosp.openo.managers.EmailComposeManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ca.openosp.openo.eform.data.EForm" %>

@@ -30,7 +30,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
         import="java.util.*, ca.openosp.openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig, ca.openosp.openo.OscarProperties, ca.openosp.openo.util.StringUtils" %>
-<%@ page import="org.oscarehr.common.model.MeasurementMap" %>
+<%@ page import="ca.openosp.openo.common.model.MeasurementMap" %>
 
 <%
 

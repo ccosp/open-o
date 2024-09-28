@@ -26,12 +26,12 @@
 
 <%@ include file="/casemgmt/taglibs.jsp" %>
 <%@ page
-        import="org.springframework.web.context.*,org.springframework.web.context.support.*, org.oscarehr.PMmodule.service.ProviderManager, org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.dao.AdmissionDao" %>
-<%@page import="org.oscarehr.common.model.OscarLog" %>
-<%@page import="org.oscarehr.common.dao.OscarLogDao" %>
+        import="org.springframework.web.context.*,org.springframework.web.context.support.*, ca.openosp.openo.PMmodule.service.ProviderManager, ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.dao.AdmissionDao" %>
+<%@page import="ca.openosp.openo.common.model.OscarLog" %>
+<%@page import="ca.openosp.openo.common.dao.OscarLogDao" %>
 <%@page import="java.util.List" %>
 
 <%

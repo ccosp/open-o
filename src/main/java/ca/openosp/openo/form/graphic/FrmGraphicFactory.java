@@ -26,7 +26,7 @@
 
 package ca.openosp.openo.form.graphic;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 
 /**

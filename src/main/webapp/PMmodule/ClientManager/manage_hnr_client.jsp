@@ -22,14 +22,14 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageHnrClient" %>
-<%@page import="org.oscarehr.common.model.Facility" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageHnrClient" %>
+<%@page import="ca.openosp.openo.common.model.Facility" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.util.HinValidator" %>
+<%@page import="ca.openosp.openo.ehrutil.HinValidator" %>
 
 <%@include file="/layouts/caisi_html_top2.jspf" %>
 

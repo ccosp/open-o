@@ -39,8 +39,8 @@
         return;
     }
 %>
-<%@page import="org.oscarehr.web.admin.KeyManagerUIBean" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.KeyManagerUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%
     String serviceName = request.getParameter("serviceName");

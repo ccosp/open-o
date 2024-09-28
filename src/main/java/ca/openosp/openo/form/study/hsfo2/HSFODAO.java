@@ -31,13 +31,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ca.openosp.openo.util.DateUtils;
-import org.oscarehr.common.dao.Hsfo2PatientDao;
-import org.oscarehr.common.dao.Hsfo2VisitDao;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.model.Hsfo2Patient;
-import org.oscarehr.common.model.Hsfo2Visit;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.Hsfo2PatientDao;
+import ca.openosp.openo.common.dao.Hsfo2VisitDao;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.model.Hsfo2Patient;
+import ca.openosp.openo.common.model.Hsfo2Visit;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.form.study.hsfo2.pageUtil.ConvertUtil;
 

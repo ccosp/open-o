@@ -37,18 +37,19 @@ package ca.openosp.openo.oscarLab;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.IncomingLabRulesDao;
-import org.oscarehr.common.model.IncomingLabRules;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.IncomingLabRulesDao;
+import ca.openosp.openo.common.model.IncomingLabRules;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author wrighd
  */
 public class ForwardingRules {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     /**
      * Creates a new instance of ForwardingRules

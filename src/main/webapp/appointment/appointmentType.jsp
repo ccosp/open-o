@@ -19,7 +19,7 @@
 --%>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page
-        import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*, oscar.appt.*, org.oscarehr.common.dao.AppointmentTypeDao, org.oscarehr.common.model.AppointmentType, org.oscarehr.util.SpringUtils" %>
+        import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*, oscar.appt.*, ca.openosp.openo.common.dao.AppointmentTypeDao, ca.openosp.openo.common.model.AppointmentType, ca.openosp.openo.ehrutil.SpringUtils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
     AppointmentTypeDao appDao = (AppointmentTypeDao) SpringUtils.getBean(AppointmentTypeDao.class);

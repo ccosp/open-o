@@ -9294,7 +9294,7 @@
          * - **parent** `{object}` - returns the parent state object.
          * - **data** `{object}` - returns state data, including any inherited data that is not
          *   overridden by own values (if any).
-         * - **url** `{object}` - returns a {@link ui.router.util.type:UrlMatcher UrlMatcher}
+         * - **url** `{object}` - returns a {@link ui.router.ehrutil.type:UrlMatcher UrlMatcher}
          *   or `null`.
          * - **navigable** `{object}` - returns closest ancestor state that has a URL (aka is
          *   navigable).
@@ -9705,9 +9705,9 @@
     /** for typedoc */
     ng.module("ui.router.angular1", []);
     var mod_init = ng.module('ui.router.init', []);
-    var mod_util = ng.module('ui.router.util', ['ng', 'ui.router.init']);
-    var mod_rtr = ng.module('ui.router.router', ['ui.router.util']);
-    var mod_state = ng.module('ui.router.state', ['ui.router.router', 'ui.router.util', 'ui.router.angular1']);
+    var mod_util = ng.module('ui.router.ehrutil', ['ng', 'ui.router.init']);
+    var mod_rtr = ng.module('ui.router.router', ['ui.router.ehrutil']);
+    var mod_state = ng.module('ui.router.state', ['ui.router.router', 'ui.router.ehrutil', 'ui.router.angular1']);
     var mod_main = ng.module('ui.router', ['ui.router.init', 'ui.router.state', 'ui.router.angular1']);
     var mod_cmpt = ng.module('ui.router.compat', ['ui.router']); // tslint:disable-line
     var router = null;

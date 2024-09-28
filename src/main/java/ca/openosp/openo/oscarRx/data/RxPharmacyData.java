@@ -36,12 +36,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.oscarehr.common.dao.DemographicPharmacyDao;
-import org.oscarehr.common.dao.PharmacyInfoDao;
-import org.oscarehr.common.model.DemographicPharmacy;
-import org.oscarehr.common.model.PharmacyInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DemographicPharmacyDao;
+import ca.openosp.openo.common.dao.PharmacyInfoDao;
+import ca.openosp.openo.common.model.DemographicPharmacy;
+import ca.openosp.openo.common.model.PharmacyInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * @author Jay Gallagher

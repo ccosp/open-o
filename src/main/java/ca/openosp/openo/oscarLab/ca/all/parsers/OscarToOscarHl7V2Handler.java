@@ -29,8 +29,8 @@ package ca.openosp.openo.oscarLab.ca.all.parsers;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.hl7.v2.oscar_to_oscar.OscarToOscarUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarLab.ca.all.parsers.OscarToOscarHl7V2.ChainnedMessageAdapter;
 import ca.openosp.openo.oscarLab.ca.all.parsers.OscarToOscarHl7V2.OruR01Handler;

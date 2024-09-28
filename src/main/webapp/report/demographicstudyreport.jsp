@@ -50,7 +50,7 @@
 %>
 
 <%@ page import="java.sql.*" errorPage="../errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.dao.StudyDao" %>
 <%@ page import="org.oscarehr.common.model.Study" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>

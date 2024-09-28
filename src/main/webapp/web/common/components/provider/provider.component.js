@@ -2,7 +2,7 @@ const ProviderNameComponent = {
     bindings: {
         providerNo: '<'
     },
-    templateUrl: '../web/common/components/provider/provider.template.jsp',
+    templateUrl: '../ehrweb/common/components/provider/provider.template.jsp',
     controller: ['$stateParams', '$state', '$log', '$timeout', 'providerService', 'rxService', '$http', '$filter', function ($stateParams, $state, $log, $timeout, providerService, rxService, $http, $filter) {
         var providerNameComp = this;
         providerNameComp.providerName = "-";

@@ -28,7 +28,7 @@ package ca.openosp.openo.oscarRx.util;
 
 import java.util.Comparator;
 
-import org.oscarehr.common.model.Drug;
+import ca.openosp.openo.common.model.Drug;
 
 public class ShowAllSorter implements Comparator<Drug> {
 

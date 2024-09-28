@@ -36,14 +36,14 @@ import java.util.List;
 
 import org.apache.struts.util.LabelValueBean;
 import org.caisi.dao.BedProgramDao;
-import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.dao.ProgramProviderDAO;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.PMmodule.model.ProgramProvider;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.ProviderDefaultProgramDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.ProviderDefaultProgram;
+import ca.openosp.openo.PMmodule.dao.ProgramDao;
+import ca.openosp.openo.PMmodule.dao.ProgramProviderDAO;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.PMmodule.model.ProgramProvider;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.dao.ProviderDefaultProgramDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.ProviderDefaultProgram;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 

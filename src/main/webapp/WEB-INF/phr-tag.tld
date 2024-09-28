@@ -75,7 +75,7 @@
     </tag>
         <tag>
         <name>ifDocumentPreviouslySent</name>
-        <tag-class>org.oscarehr.phr.taglib.IfDocumentPreviouslySent</tag-class>
+        <tag-class>ca.openosp.openo.phr.taglib.IfDocumentPreviouslySent</tag-class>
         <body-content>JSP</body-content>
 
         <attribute>
@@ -101,7 +101,7 @@
     <!-- Validators are new in JSP1.2. You may have zero or one validator
          in a tag library. They look like this:
       <validator>
-          <validator-class>org.your.web.app.ValidateTaglibUsage</validator-class>
+          <validator-class>org.your.ehrweb.app.ValidateTaglibUsage</validator-class>
           <init-param>
              <param-name>aparameter</param-name>
              <param-value>value</param-value>
@@ -113,7 +113,7 @@
    <!-- listeners are new in JSP1.2. You may have as many listeners as you like
         in a tag library. They look like this:
      <listener>
-         <listener-class>org.your.web.app.TaglibListener1</listener-class> 
+         <listener-class>org.your.ehrweb.app.TaglibListener1</listener-class>
      </listener>
    -->
 </taglib>

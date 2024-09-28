@@ -36,7 +36,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SimpleTrigger;
@@ -51,7 +51,7 @@ import ca.openosp.openo.form.study.HSFO.pageUtil.RecommitHSFOAction.ResubmitJob;
 public class HsfoQuartzServlet implements Servlet {
     public static final String RESUBMIT_JOB = "hsfoResubmitJob";
 
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     public static final String RESUBMIT_TRIGGER = "hsfoResubmitTrigger";
 

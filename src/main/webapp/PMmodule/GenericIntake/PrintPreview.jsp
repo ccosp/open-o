@@ -23,9 +23,9 @@
 
 --%>
 <%@ include file="/taglibs.jsp" %>
-<%@ page import="org.oscarehr.PMmodule.model.Intake" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Intake" %>
 <%@ page
-        import="org.oscarehr.PMmodule.web.formbean.GenericIntakeEditFormBean" %>
+        import="ca.openosp.openo.PMmodule.web.formbean.GenericIntakeEditFormBean" %>
 <%
     GenericIntakeEditFormBean intakeEditForm = (GenericIntakeEditFormBean) session.getAttribute("genericIntakeEditForm");
     Intake intake = intakeEditForm.getIntake();

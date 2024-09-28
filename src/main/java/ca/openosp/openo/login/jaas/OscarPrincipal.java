@@ -26,7 +26,7 @@ package ca.openosp.openo.login.jaas;
 
 import java.security.Principal;
 
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 
 /**
  * Adapter class for bridging OSCAR provider to the JAAS principal.

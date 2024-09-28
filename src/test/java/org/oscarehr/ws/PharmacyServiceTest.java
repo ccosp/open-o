@@ -27,9 +27,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.oscarehr.ws.rest.PharmacyService;
-import org.oscarehr.ws.rest.to.OscarSearchResponse;
-import org.oscarehr.ws.rest.to.model.PharmacyInfoTo1;
+import ca.openosp.openo.ws.rest.PharmacyService;
+import ca.openosp.openo.ws.rest.to.OscarSearchResponse;
+import ca.openosp.openo.ws.rest.to.model.PharmacyInfoTo1;
 
 public class PharmacyServiceTest extends BaseRestServiceTest {
 

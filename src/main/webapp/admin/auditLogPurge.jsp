@@ -44,7 +44,7 @@
 %>
 
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page
         import="java.util.*,oscar.oscarDemographic.data.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarPrevention.pageUtil.*,oscar.oscarDemographic.pageUtil.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

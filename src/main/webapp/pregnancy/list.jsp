@@ -24,7 +24,7 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -45,9 +45,10 @@
 %>
 
 <%@page import="java.util.*" %>
-<%@page import="org.oscarehr.common.model.Episode" %>
-<%@page import="org.oscarehr.common.dao.EpisodeDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Episode" %>
+<%@page import="ca.openosp.openo.common.dao.EpisodeDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.PregnancyFormsDao" %>
 
 <%
 
@@ -123,7 +124,7 @@
                     if (episode.getEndDate() != null) {
                         endDateStr = dateFormatter.format(episode.getEndDate());
                     }
-                    Integer formId = org.oscarehr.common.dao.PregnancyFormsDao.getLatestFormIdByPregnancy(episode.getId());
+                    Integer formId = PregnancyFormsDao.getLatestFormIdByPregnancy(episode.getId());
                     String url = request.getContextPath() + "/form/formonarenhancedpg1.jsp?demographic_no=" + episode.getDemographicNo() + "&formId=" + formId + "&provNo=" + loggedInInfo.getLoggedInProviderNo();
             %>
             <tr class="gradeB">

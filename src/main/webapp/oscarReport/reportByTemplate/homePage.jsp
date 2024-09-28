@@ -29,10 +29,10 @@
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
 %>
 
-<%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*,org.oscarehr.managers.RBTGroupManager" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.RBTGroup" %>
+<%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*,ca.openosp.openo.managers.RBTGroupManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.RBTGroup" %>
 <%@ page import="ca.openosp.openo.oscarReport.reportByTemplate.ReportObject" %>
 <%@ page import="ca.openosp.openo.oscarReport.reportByTemplate.ReportManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

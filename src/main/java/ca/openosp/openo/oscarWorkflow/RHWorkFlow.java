@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * Generic WorkFlow Description

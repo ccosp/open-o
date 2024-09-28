@@ -65,7 +65,7 @@
 
 <link rel="stylesheet" type="text/css" href="../encounterStyles.css">
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.docxfer.send.MsgGenerate" %>
 <%@ page import="ca.openosp.openo.oscarMessenger.docxfer.util.MsgCommxml" %>

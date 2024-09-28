@@ -23,21 +23,22 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.service.AcceptableUseAgreementManager" %>
+<%@page import="ca.openosp.openo.common.service.AcceptableUseAgreementManager" %>
 <%@page import="ca.openosp.openo.OscarProperties, javax.servlet.http.Cookie, ca.openosp.openo.oscarSecurity.CookieSecurity, ca.openosp.openo.login.UAgentInfo" %>
 <%@page import="org.apache.velocity.runtime.directive.Foreach" %>
-<%@page import="org.oscarehr.common.service.AcceptableUseAgreementManager" %>
+<%@page import="ca.openosp.openo.common.service.AcceptableUseAgreementManager" %>
 <%@page import="java.util.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.common.model.Facility" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProviderManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.caisi.service.InfirmBedProgramManager" %>
 <%@ page import="org.apache.struts.util.LabelValueBean" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -93,7 +94,7 @@
 <script type="text/javascript">
     function setLocation() {
         var programIdForLocation = jQuery("#programIdForLocation").val();
-        window.location.href = "provider/providercontrol.jsp?<%=org.oscarehr.util.SessionConstants.CURRENT_PROGRAM_ID%>=" + programIdForLocation;
+        window.location.href = "provider/providercontrol.jsp?<%=SessionConstants.CURRENT_PROGRAM_ID%>=" + programIdForLocation;
     }
 </script>
 </html>

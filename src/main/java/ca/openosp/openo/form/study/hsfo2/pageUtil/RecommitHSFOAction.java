@@ -42,16 +42,16 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.LazyValidatorForm;
 import org.caisi.dao.ProviderDAO;
 import org.hsfo.v2.HsfHmpDataDocument;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.Hsfo2RecommitScheduleDao;
-import org.oscarehr.common.dao.SecurityDao;
-import org.oscarehr.common.model.Hsfo2RecommitSchedule;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Security;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.Hsfo2RecommitScheduleDao;
+import ca.openosp.openo.common.dao.SecurityDao;
+import ca.openosp.openo.common.model.Hsfo2RecommitSchedule;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Security;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -219,7 +219,7 @@ public class RecommitHSFOAction extends DispatchActionSupport {
                     return;
                 }
 
-                // send to hsfo web
+                // send to hsfo ehrweb
 
                 try {
                     StringBuilder memoMsg = new StringBuilder();

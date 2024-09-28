@@ -30,17 +30,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.dao.MeasurementGroupDao;
-import org.oscarehr.common.dao.MeasurementTypeDao;
-import org.oscarehr.common.dao.ValidationsDao;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.common.model.MeasurementGroup;
-import org.oscarehr.common.model.MeasurementType;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Validations;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.dao.MeasurementGroupDao;
+import ca.openosp.openo.common.dao.MeasurementTypeDao;
+import ca.openosp.openo.common.dao.ValidationsDao;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.common.model.MeasurementGroup;
+import ca.openosp.openo.common.model.MeasurementType;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Validations;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.util.ConversionUtils;

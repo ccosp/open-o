@@ -13,7 +13,7 @@
        default-autowire="no">
 
 
-	<bean id="phrService" class="org.oscarehr.phr.service.PHRService">
+	<bean id="phrService" class="ca.openosp.openo.phr.service.PHRService">
 		<property name="phrDocumentDAO">
 			<ref bean="phrDocumentDAO" />
 		</property>
@@ -22,7 +22,7 @@
 		</property>
 	</bean>
 	<bean id="indivoAPService"
-		class="org.oscarehr.phr.indivo.service.accesspolicies.IndivoAPService">
+		class="ca.openosp.openo.phr.indivo.service.accesspolicies.IndivoAPService">
 		<property name="phrDocumentDAO">
 			<ref bean="phrDocumentDAO" />
 		</property>
@@ -30,12 +30,12 @@
 			<ref bean="phrActionDAO" />
 		</property>
 	</bean>
-	<bean id="phrDocumentDAO" class="org.oscarehr.phr.dao.hibernate.PHRDocumentDAOHibernate">
+	<bean id="phrDocumentDAO" class="ca.openosp.openo.phr.dao.hibernate.PHRDocumentDAOHibernate">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>
 	</bean>
-	<bean id="phrActionDAO" class="org.oscarehr.phr.dao.PHRActionDAO">
+	<bean id="phrActionDAO" class="ca.openosp.openo.phr.dao.PHRActionDAO">
 		<property name="sessionFactory">
 			<ref bean="sessionFactory" />
 		</property>

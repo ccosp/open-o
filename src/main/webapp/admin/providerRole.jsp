@@ -30,22 +30,23 @@
 <%@ page import="oscar.*" %>
 <%@ page import="oscar.log.*" %>
 <%@ page import="org.springframework.util.StringUtils" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
-<%@ page import="org.oscarehr.common.model.SecRole" %>
-<%@ page import="org.oscarehr.common.dao.SecRoleDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProgramProviderDAO" %>
+<%@ page import="ca.openosp.openo.common.model.SecRole" %>
+<%@ page import="ca.openosp.openo.common.dao.SecRoleDao" %>
 <%@ page import="com.quatro.model.security.Secuserrole" %>
 <%@ page import="com.quatro.dao.security.SecuserroleDao" %>
-<%@ page import="org.oscarehr.common.model.RecycleBin" %>
-<%@ page import="org.oscarehr.common.dao.RecycleBinDao" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="ca.openosp.openo.common.model.RecycleBin" %>
+<%@ page import="ca.openosp.openo.common.dao.RecycleBinDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
     ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);
@@ -83,7 +84,7 @@
     ArrayList<String> users = (ArrayList<String>) session.getServletContext().getAttribute("CaseMgmtUsers");
     boolean newCaseManagement = false;
 
-    if (!org.oscarehr.common.IsPropertiesOn.isCaisiEnable()) {
+    if (!IsPropertiesOn.isCaisiEnable()) {
         //This should only temporarily apply to oscar, not caisi.
         //You cannot assign provider to one program "OSCAR" here if you have caisi enabled.
         //If there is no program called "OSCAR", it will only assign empty program to the provider which is not acceptable.

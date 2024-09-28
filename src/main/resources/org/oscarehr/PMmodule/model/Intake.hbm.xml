@@ -17,7 +17,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="Intake" table="intake">
+	<class name="ca.openosp.openo.PMmodule.model.Intake" table="intake">
 		<meta attribute="sync-DAO">false</meta>
 
 		<id name="id" type="integer" column="intake_id">
@@ -37,13 +37,13 @@
 		<property name="facilityId" column="facility_id" type="integer"
 			not-null="false" length="11" />
 
-		<many-to-one name="node" column="intake_node_id" class="IntakeNode"
+		<many-to-one name="node" column="intake_node_id" class="ca.openosp.openo.PMmodule.model.IntakeNode"
 			not-null="true" />
 
 		<set name="answers" inverse="true" cascade="save-update" sort="natural"
 			lazy="false">
 			<key column="intake_id" />
-			<one-to-many class="IntakeAnswer" />
+			<one-to-many class="ca.openosp.openo.PMmodule.model.IntakeAnswer" />
 		</set>
 	</class>
 </hibernate-mapping>

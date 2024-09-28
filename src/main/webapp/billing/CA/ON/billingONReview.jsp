@@ -18,14 +18,14 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
-<%@page import="org.oscarehr.common.model.Dxresearch" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.DxresearchDAO" %>
+<%@page import="ca.openosp.openo.common.model.Dxresearch" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -41,10 +41,10 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.DiagnosticCode" %>
-<%@ page import="org.oscarehr.common.dao.DiagnosticCodeDao" %>
-<%@ page import="org.oscarehr.common.dao.BillingONCHeader1Dao, org.oscarehr.common.model.BillingONCHeader1" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.DiagnosticCode" %>
+<%@ page import="ca.openosp.openo.common.dao.DiagnosticCodeDao" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao, ca.openosp.openo.common.model.BillingONCHeader1" %>
 
 
 <%
@@ -268,9 +268,9 @@
 <c:set var="demographicNo" value="${param.demographic_no}" scope="request"/>
 
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
 <%@ page import="ca.openosp.openo.appt.ApptUtil" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingReviewCodeItem" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingReviewPercItem" %>
@@ -287,6 +287,7 @@
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <head>
     <title>OscarBilling</title>
 

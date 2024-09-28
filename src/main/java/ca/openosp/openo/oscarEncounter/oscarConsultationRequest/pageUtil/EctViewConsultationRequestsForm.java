@@ -27,7 +27,7 @@
 package ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.common.dao.ConsultationRequestDaoImpl;
+import ca.openosp.openo.common.dao.ConsultationRequestDaoImpl;
 
 public final class EctViewConsultationRequestsForm extends ActionForm {
 

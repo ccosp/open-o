@@ -24,20 +24,20 @@
 
 --%>
 <%@page import="javax.swing.Spring"%>
-<%@page import="org.oscarehr.common.dao.DrugDao"%>
-<%@page import="org.oscarehr.common.model.Drug"%>
-<%@page import="org.oscarehr.common.model.DrugReason"%>
-<%@page import="org.oscarehr.common.dao.DrugReasonDao"%>
+<%@page import="ca.openosp.openo.common.dao.DrugDao"%>
+<%@page import="ca.openosp.openo.common.model.Drug"%>
+<%@page import="ca.openosp.openo.common.model.DrugReason"%>
+<%@page import="ca.openosp.openo.common.dao.DrugReasonDao"%>
 <%@page import="org.apache.commons.lang3.StringUtils"%>
-<%@page import="org.oscarehr.util.SpringUtils"%>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils"%>
 <%long startTime = System.currentTimeMillis();%>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPatientData"%>
 <%@page  import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*,java.net.*"%>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.log.*"%>
 <%@page import="org.springframework.web.context.WebApplicationContext,oscar.oscarResearch.oscarDxResearch.bean.*"%>
-<%@page import="org.oscarehr.common.dao.FlowSheetCustomizationDao,org.oscarehr.common.model.FlowSheetCustomization"%>
-<%@page import="org.oscarehr.common.dao.FlowSheetDrugDao,org.oscarehr.common.dao.FlowSheetDxDao,org.oscarehr.common.model.FlowSheetDrug,org.oscarehr.util.MiscUtils"%>
-<%@page import="org.oscarehr.caisi_integrator.ws.CachedMeasurement,org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager,org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao,ca.openosp.openo.common.model.FlowSheetCustomization"%>
+<%@page import="ca.openosp.openo.common.dao.FlowSheetDrugDao,ca.openosp.openo.common.dao.FlowSheetDxDao,ca.openosp.openo.common.model.FlowSheetDrug,ca.openosp.openo.ehrutil.MiscUtils"%>
+<%@page import="org.oscarehr.caisi_integrator.ws.CachedMeasurement,ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager,ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -59,6 +59,7 @@
 <%@ page import="ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.PreventionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.common.model.Allergy" %>
 
 <%
 	if(session.getValue("user") == null) response.sendRedirect("${ pageContext.request.contextPath }/logout.jsp");
@@ -627,11 +628,11 @@ div.recommendations ul{
             <div class="wrapper" id="allergFullListing"  >
 
                 <%
-			org.oscarehr.common.model.Allergy[] allergies;
+			Allergy[] allergies;
                     allergies = RxPatientData.getPatient(loggedInInfo, Integer.parseInt(demographic_no)).getActiveAllergies();
 
-// oscar.oscarRx.data.RxPatientData.Patient.Allergy[] allergies;
-//                    allergies = oscar.oscarRx.data.RxPatientData().getPatient(Integer.parseInt(demographic_no)).getAllergies();
+// oscar.ehroscarRx.data.RxPatientData.Patient.Allergy[] allergies;
+//                    allergies = oscar.ehroscarRx.data.RxPatientData().getPatient(Integer.parseInt(demographic_no)).getAllergies();
 
                     if (allergies.length > 0){%>
                 <ul>

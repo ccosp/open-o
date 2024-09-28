@@ -43,7 +43,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillRecipient;

@@ -32,10 +32,10 @@
 
 <%@ page import="oscar.login.*" %>
 <%@ page import="oscar.log.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.SecRole" %>
-<%@ page import="org.oscarehr.common.dao.SecRoleDao" %>
-<%@ page import="org.oscarehr.PMmodule.utility.RoleCache" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.SecRole" %>
+<%@ page import="ca.openosp.openo.common.dao.SecRoleDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.utility.RoleCache" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>

@@ -37,9 +37,9 @@
 <jsp:useBean id="risks" class="ca.openosp.openo.decision.DesAntenatalPlannerRisks_99_12" scope="page"/>
 <jsp:useBean id="checklist" class="ca.openosp.openo.decision.DesAntenatalPlannerChecklist_99_12" scope="page"/>
 <%@ include file="../../admin/dbconnection.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Desaprisk" %>
-<%@page import="org.oscarehr.common.dao.DesapriskDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Desaprisk" %>
+<%@page import="ca.openosp.openo.common.dao.DesapriskDao" %>
 <%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%

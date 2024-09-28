@@ -91,13 +91,13 @@ oscarApp.controller('SummaryCtrl', function ($rootScope, $scope, $http, $locatio
 
     $scope.openRx = function (demoNo) {
         win = "Rx" + demoNo;
-        var url = "../oscarRx/choosePatient.do?demographicNo=" + demoNo;
+        var url = "../ehroscarRx/choosePatient.do?demographicNo=" + demoNo;
         window.open(url, win, "scrollbars=yes, location=no, width=900, height=600", "");
     }
 
     $scope.openAllergies = function (demoNo) {
         win = "Allergy" + demoNo;
-        var url = "../oscarRx/showAllergy.do?demographicNo=" + demoNo;
+        var url = "../ehroscarRx/showAllergy.do?demographicNo=" + demoNo;
         window.open(url, win, "scrollbars=yes, location=no, width=900, height=600", "");
         return false;
     }

@@ -38,15 +38,15 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.DrugDao;
-import org.oscarehr.common.dao.FavoriteDao;
-import org.oscarehr.common.dao.IndivoDocsDao;
-import org.oscarehr.common.dao.PrescriptionDao;
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.common.model.IndivoDocs;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DrugDao;
+import ca.openosp.openo.common.dao.FavoriteDao;
+import ca.openosp.openo.common.dao.IndivoDocsDao;
+import ca.openosp.openo.common.dao.PrescriptionDao;
+import ca.openosp.openo.common.model.Drug;
+import ca.openosp.openo.common.model.IndivoDocs;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarProvider.data.ProSignatureData;
 import ca.openosp.openo.oscarRx.util.RxUtil;
@@ -359,14 +359,14 @@ public class RxPrescriptionData {
         DrugDao dao = SpringUtils.getBean(DrugDao.class);
         for (Object[] pair : dao.findDrugsAndPrescriptions(demographicNo)) {
             Drug drug = (Drug) pair[0];
-            org.oscarehr.common.model.Prescription rx = (org.oscarehr.common.model.Prescription) pair[1];
+            ca.openosp.openo.common.model.Prescription rx = (ca.openosp.openo.common.model.Prescription) pair[1];
             MiscUtils.getLogger().debug("Looking at drug " + drug + " and rx " + rx);
             lst.add(toPrescription(demographicNo, drug, rx));
         }
         return lst.toArray(new Prescription[lst.size()]);
     }
 
-    private Prescription toPrescription(int demographicNo, Drug drug, org.oscarehr.common.model.Prescription rx) {
+    private Prescription toPrescription(int demographicNo, Drug drug, ca.openosp.openo.common.model.Prescription rx) {
         Prescription prescription = toPrescription(drug, demographicNo);
         if (!rx.isReprinted()) prescription.setNumPrints(1);
         else prescription.setNumPrints(rx.getReprintCount() + 1);
@@ -381,7 +381,7 @@ public class RxPrescriptionData {
         DrugDao dao = SpringUtils.getBean(DrugDao.class);
         for (Object[] pair : dao.findDrugsAndPrescriptionsByScriptNumber(script_no)) {
             Drug drug = (Drug) pair[0];
-            org.oscarehr.common.model.Prescription rx = (org.oscarehr.common.model.Prescription) pair[1];
+            ca.openosp.openo.common.model.Prescription rx = (ca.openosp.openo.common.model.Prescription) pair[1];
 
             lst.add(toPrescription(demographicNo, drug, rx));
         }
@@ -491,20 +491,20 @@ public class RxPrescriptionData {
 
         List<Favorite> result = new ArrayList<Favorite>();
 
-        for (org.oscarehr.common.model.Favorite f : dao.findByProviderNo(providerNo))
+        for (ca.openosp.openo.common.model.Favorite f : dao.findByProviderNo(providerNo))
             result.add(toFavorite(f));
 
         return result.toArray(new Favorite[result.size()]);
     }
 
-    private Favorite toFavorite(org.oscarehr.common.model.Favorite f) {
+    private Favorite toFavorite(ca.openosp.openo.common.model.Favorite f) {
         Favorite result = new Favorite(f.getId(), f.getProviderNo(), f.getName(), f.getBn(), (int) f.getGcnSeqno(), f.getCustomName(), f.getTakeMin(), f.getTakeMax(), f.getFrequencyCode(), f.getDuration(), f.getDurationUnit(), f.getQuantity(), f.getRepeat(), f.isNosubs(), f.isPrn(), f.getSpecial(), f.getGn(), f.getAtc(), f.getRegionalIdentifier(), f.getUnit(), f.getUnitName(), f.getMethod(), f.getRoute(), f.getDrugForm(), f.isCustomInstructions(), f.getDosage());
         return result;
     }
 
     public Favorite getFavorite(int favoriteId) {
         FavoriteDao dao = SpringUtils.getBean(FavoriteDao.class);
-        org.oscarehr.common.model.Favorite result = dao.find(favoriteId);
+        ca.openosp.openo.common.model.Favorite result = dao.find(favoriteId);
         if (result == null) return null;
         return toFavorite(result);
     }
@@ -517,7 +517,7 @@ public class RxPrescriptionData {
     /**
      * This function is used to save a set of prescribed drugs to as one prescription. This is for historical purposes
      *
-     * @param bean This is the oscarRx session bean
+     * @param bean This is the ehroscarRx session bean
      * @return This returns the insert id of the script to be included the drugs table
      */
     public String saveScript(LoggedInInfo loggedInInfo, RxSessionBean bean) {
@@ -528,7 +528,7 @@ public class RxPrescriptionData {
         int demographic_no = bean.getDemographicNo();
 
         Date today = RxUtil.Today();
-        //String date_prescribed = ca.openosp.openo.util.oscarRx.RxUtil.DateToString(today, "yyyy/MM/dd");
+        //String date_prescribed = ca.openosp.openo.ehrutil.ehroscarRx.RxUtil.DateToString(today, "yyyy/MM/dd");
         //String date_printed = date_prescribed;
 
         StringBuilder textView = new StringBuilder();
@@ -578,7 +578,7 @@ public class RxPrescriptionData {
         }
         // textView.append();
 
-        org.oscarehr.common.model.Prescription rx = new org.oscarehr.common.model.Prescription();
+        ca.openosp.openo.common.model.Prescription rx = new ca.openosp.openo.common.model.Prescription();
         rx.setProviderNo(provider_no);
         rx.setDemographicId(demographic_no);
         rx.setDatePrescribed(today);
@@ -597,7 +597,7 @@ public class RxPrescriptionData {
 
     public String getScriptComment(String scriptNo) {
         PrescriptionDao dao = SpringUtils.getBean(PrescriptionDao.class);
-        org.oscarehr.common.model.Prescription p = dao.find(ConversionUtils.fromIntString(scriptNo));
+        ca.openosp.openo.common.model.Prescription p = dao.find(ConversionUtils.fromIntString(scriptNo));
         if (p == null) return null;
 
         return p.getComments();
@@ -1601,7 +1601,7 @@ public class RxPrescriptionData {
 
         public boolean Print(LoggedInInfo loggedInInfo) {
             PrescriptionDao dao = SpringUtils.getBean(PrescriptionDao.class);
-            org.oscarehr.common.model.Prescription p = dao.find(ConversionUtils.fromIntString(getScript_no()));
+            ca.openosp.openo.common.model.Prescription p = dao.find(ConversionUtils.fromIntString(getScript_no()));
             String providerNo = loggedInInfo.getLoggedInProviderNo();
 
             if (p == null) return false;
@@ -2194,7 +2194,7 @@ public class RxPrescriptionData {
             }
 
             FavoriteDao dao = SpringUtils.getBean(FavoriteDao.class);
-            org.oscarehr.common.model.Favorite favorite = dao.findByEverything(this.getProviderNo(), this.getFavoriteName(), this.getBN(), this.getGCN_SEQNO(), this.getCustomName(), this.getTakeMin(), this.getTakeMax(), this.getFrequencyCode(), this.getDuration(), this.getDurationUnit(), this.getQuantity(), this.getRepeat(), this.getNosubs(), this.getPrn(), parsedSpecial, this.getGN(), this.getUnitName(), this.getCustomInstr());
+            ca.openosp.openo.common.model.Favorite favorite = dao.findByEverything(this.getProviderNo(), this.getFavoriteName(), this.getBN(), this.getGCN_SEQNO(), this.getCustomName(), this.getTakeMin(), this.getTakeMax(), this.getFrequencyCode(), this.getDuration(), this.getDurationUnit(), this.getQuantity(), this.getRepeat(), this.getNosubs(), this.getPrn(), parsedSpecial, this.getGN(), this.getUnitName(), this.getCustomInstr());
 
             if (this.getFavoriteId() == 0) {
 
@@ -2203,7 +2203,7 @@ public class RxPrescriptionData {
                 b = true;
 
                 if (this.getFavoriteId() == 0) {
-                    favorite = new org.oscarehr.common.model.Favorite();
+                    favorite = new ca.openosp.openo.common.model.Favorite();
                     favorite = syncFavorite(favorite);
 
                     dao.persist(favorite);
@@ -2226,7 +2226,7 @@ public class RxPrescriptionData {
             return b;
         }
 
-        private org.oscarehr.common.model.Favorite syncFavorite(org.oscarehr.common.model.Favorite f) {
+        private ca.openosp.openo.common.model.Favorite syncFavorite(ca.openosp.openo.common.model.Favorite f) {
             f.setProviderNo(this.getProviderNo());
             f.setName(this.getFavoriteName());
             f.setBn(this.getBN());

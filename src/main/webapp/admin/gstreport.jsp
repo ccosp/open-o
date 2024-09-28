@@ -18,7 +18,7 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
         import="java.math.*, java.util.*, oscar.util.*, oscar.oscarBilling.ca.on.administration.*, oscar.oscarBilling.ca.on.data.*" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>

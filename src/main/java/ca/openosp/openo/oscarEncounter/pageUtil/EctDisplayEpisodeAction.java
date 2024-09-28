@@ -31,10 +31,10 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.dao.EpisodeDao;
-import org.oscarehr.common.model.Episode;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EpisodeDao;
+import ca.openosp.openo.common.model.Episode;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 import ca.openosp.openo.util.StringUtils;

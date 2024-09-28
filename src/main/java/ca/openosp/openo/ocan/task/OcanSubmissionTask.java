@@ -36,17 +36,17 @@ import java.util.TimerTask;
 import javax.xml.bind.JAXBException;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.service.GenericIntakeManager;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.ShutdownException;
+import ca.openosp.openo.PMmodule.service.GenericIntakeManager;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.ShutdownException;
 
 import ca.openosp.openo.ocan.service.OcanDataProcessor;
 import ca.openosp.openo.ocan.service.OcanDataProcessor.OcanProcess;
 
 public class OcanSubmissionTask extends TimerTask {
 
-    private static final Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger logger = MiscUtils.getLogger();
 
     private GenericIntakeManager genericIntakeManager;
     private OcanDataProcessor ocanDataProcessor;

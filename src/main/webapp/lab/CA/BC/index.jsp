@@ -40,14 +40,14 @@
 %>
 
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obr" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Pid" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Obr" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Pid" %>
 <%@page import="java.util.List" %>
 <%@page import="java.sql.ResultSet" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.billing.CA.BC.dao.Hl7LinkDao" %>
-<%@page import="org.oscarehr.billing.CA.BC.model.Hl7Link" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.dao.Hl7LinkDao" %>
+<%@page import="ca.openosp.openo.billing.CA.BC.model.Hl7Link" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 
 <%

@@ -24,9 +24,9 @@
 %>
 
 <%@page contentType="text/html" %>
-<%@page import="java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,org.oscarehr.util.SpringUtils,org.oscarehr.common.dao.QueueDao, ca.openosp.openo.oscarMDS.data.ProviderData" %>
+<%@page import="java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.common.dao.QueueDao, ca.openosp.openo.oscarMDS.data.ProviderData" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.common.model.Provider" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
     ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);

@@ -33,13 +33,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.OscarAppointmentDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONItem;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.OscarAppointmentDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONItem;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

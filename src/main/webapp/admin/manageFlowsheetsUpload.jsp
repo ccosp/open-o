@@ -55,9 +55,9 @@
 <%@ page import="java.io.StringWriter" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
-<%@ page import="org.oscarehr.common.model.Flowsheet" %>
-<%@ page import="org.oscarehr.common.dao.FlowsheetDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Flowsheet" %>
+<%@ page import="ca.openosp.openo.common.dao.FlowsheetDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <%
     boolean isMultipart = FileUpload.isMultipartContent(request);

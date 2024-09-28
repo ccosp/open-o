@@ -27,13 +27,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page
-        import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager, org.oscarehr.util.LoggedInInfo, org.oscarehr.common.model.Facility" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+        import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager, ca.openosp.openo.ehrutil.LoggedInInfo, ca.openosp.openo.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.managers.DemographicManager" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

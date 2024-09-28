@@ -24,7 +24,8 @@
 --%>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.ProgramManagerViewFormBean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <html:form action="/PMmodule/ProgramManagerView">
 
@@ -203,9 +204,9 @@
     <jsp:include page="/common/messages.jsp"/>
     <% if (selectedSubtab != null && !selectedSubtab.trim().equals("") && !selectedTab.equals(selectedSubtab)) { %>
     <jsp:include
-            page='<%="/PMmodule/Admin/ProgramView/" + selectedSubtab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
+            page='<%="/ca/openosp/openo/PMmodule/Admin/ProgramView/" + selectedSubtab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
     <% } else { %>
     <jsp:include
-            page='<%="/PMmodule/Admin/ProgramView/" + selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
+            page='<%="/ca/openosp/openo/PMmodule/Admin/ProgramView/" + selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
     <%}%>
 </html:form>

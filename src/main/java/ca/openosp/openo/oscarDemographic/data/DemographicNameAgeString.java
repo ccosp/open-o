@@ -28,7 +28,7 @@ package ca.openosp.openo.oscarDemographic.data;
 
 import java.util.Hashtable;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 /**
  * @author Jay Gallagher

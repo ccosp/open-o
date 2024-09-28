@@ -38,9 +38,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;
@@ -126,7 +127,7 @@ public class ChildImmunizationReport implements PreventionReport {
             log.debug("prev1 " + prevs1.size() + " prevs2 " + prevs2.size() + " prev4 " + prevs4.size());
 
             DemographicData dd = new DemographicData();
-            org.oscarehr.common.model.Demographic demoData = dd.getDemographic(loggedInInfo, demo.toString());
+            Demographic demoData = dd.getDemographic(loggedInInfo, demo.toString());
             // This a kludge to get by conformance testing in ontario -- needs to be done in a smarter way
             int totalImmunizations = numDtap + /*numHib +*/ numMMR;
             int recommTotal = 5; //9;NOT SURE HOW HIB WORKS

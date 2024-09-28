@@ -23,14 +23,15 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.dao.ConsentDao,org.oscarehr.common.model.Consent,org.oscarehr.util.SpringUtils,java.util.*,org.oscarehr.managers.AppManager,org.oscarehr.common.model.AppDefinition,org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.ConsentDao,ca.openosp.openo.common.model.Consent,ca.openosp.openo.ehrutil.SpringUtils,java.util.*,ca.openosp.openo.managers.AppManager,ca.openosp.openo.common.model.AppDefinition,ca.openosp.openo.common.model.Provider" %>
 
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="java.util.Enumeration" %>
 <%@ page import="ca.openosp.openo.util.DateUtils" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao,ca.openosp.openo.util.UtilDateUtilities" %>
-<%@ page import="org.oscarehr.phr.util.MyOscarServerRelationManager,org.oscarehr.phr.util.MyOscarUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao,ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.phr.util.MyOscarServerRelationManager,ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -64,7 +65,7 @@
     AppManager appManager = SpringUtils.getBean(AppManager.class);
     ConsentDao consentDao = SpringUtils.getBean(ConsentDao.class);
 
-    org.oscarehr.common.model.Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
+    Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
     String myOscarUserName = demo.getMyOscarUserName();
     String providerName = "N/A";
     AppDefinition appDef = appManager.getAppDefinition(LoggedInInfo.getLoggedInInfoFromSession(request), "PHR");

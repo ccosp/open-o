@@ -31,7 +31,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import ca.openosp.openo.Misc;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarDB.DBHandler;
 

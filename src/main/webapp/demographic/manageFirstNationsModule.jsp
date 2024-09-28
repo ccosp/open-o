@@ -41,11 +41,11 @@
 %>
 
 <%@page import="java.util.*" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.managers.LookupListManager" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.common.model.LookupList" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.managers.LookupListManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
 <%

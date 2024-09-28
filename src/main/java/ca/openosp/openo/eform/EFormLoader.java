@@ -30,7 +30,7 @@ import ca.openosp.openo.OscarProperties;
 import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.eform.data.DatabaseAP;
 import ca.openosp.openo.eform.data.EForm;
 

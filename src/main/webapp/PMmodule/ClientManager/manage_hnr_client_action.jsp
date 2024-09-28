@@ -22,18 +22,18 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.ConnectException_Exception" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DuplicateHinExceptionException" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.InvalidHinExceptionException" %>
 <%@page import="org.apache.log4j.LogManager" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageHnrClientAction" %>
-<%@page import="org.oscarehr.common.model.Facility" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageHnrClientAction" %>
+<%@page import="ca.openosp.openo.common.model.Facility" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 

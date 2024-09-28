@@ -34,12 +34,12 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.InstitutitionDepartmentDao;
-import org.oscarehr.common.model.InstitutionDepartment;
-import org.oscarehr.common.model.InstitutionDepartmentPK;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.InstitutitionDepartmentDao;
+import ca.openosp.openo.common.model.InstitutionDepartment;
+import ca.openosp.openo.common.model.InstitutionDepartmentPK;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctConDisplayInstitutionAction extends Action {
 

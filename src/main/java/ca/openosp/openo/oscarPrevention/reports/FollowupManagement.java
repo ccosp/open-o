@@ -31,7 +31,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.util.WriteNewMeasurements;
 import ca.openosp.openo.util.UtilDateUtilities;

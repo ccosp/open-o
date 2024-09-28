@@ -31,8 +31,8 @@
 %>
 <%@page import="java.util.*" %>
 <%@page import="org.apache.struts.action.*" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="org.owasp.encoder.Encode" %>
 <%@page import="oscar.oscarWaitingList.bean.*" %>
 <%@page import="oscar.util.*" %>

@@ -31,7 +31,7 @@ import java.util.Date;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-import org.oscarehr.common.model.Measurement;
+import ca.openosp.openo.common.model.Measurement;
 
 import ca.openosp.openo.util.ConversionUtils;
 

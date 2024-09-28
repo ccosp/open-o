@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     if (session.getValue("user") == null)
         response.sendRedirect("../logout.jsp");
@@ -56,12 +56,13 @@
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingBillingManager" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingViewBean" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%
 
     String color = "", colorflag = "";
     BillingViewBean bean = (BillingViewBean) pageContext.findAttribute("billingViewBean");
     DemographicData demoData = new DemographicData();
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+    Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
 
     List<BillingBillingManager.BillingItem> billItem = bean.getBillItem();
     BillingFormData billform = new BillingFormData();

@@ -39,20 +39,21 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page
-        import="oscar.oscarEncounter.pageUtil.*,oscar.oscarEncounter.data.*,java.util.List,org.oscarehr.eyeform.model.EyeformSpecsHistory" %>
+        import="oscar.oscarEncounter.pageUtil.*,oscar.oscarEncounter.data.*,java.util.List,ca.openosp.openo.eyeform.model.EyeformSpecsHistory" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 <%
     String demo = request.getParameter("demographicNo");
     String proNo = (String) session.getAttribute("user");
     DemographicData demoData = null;
-    org.oscarehr.common.model.Demographic demographic = null;
+    Demographic demographic = null;
 
     ProviderData pdata = new ProviderData(proNo);
     String team = pdata.getTeam();

@@ -20,12 +20,12 @@
 
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="java.util.Date" %>
-<%@page import="org.oscarehr.util.DateRange" %>
+<%@page import="ca.openosp.openo.ehrutil.DateRange" %>
 <%@ page import="java.math.*, java.util.*, java.sql.*, oscar.*, oscar.oscarBilling.ca.on.OHIP.*, java.net.*"
          errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.OHIP.ExtractBean" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 

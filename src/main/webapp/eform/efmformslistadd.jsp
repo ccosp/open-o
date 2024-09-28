@@ -38,11 +38,11 @@
 %>
 
 <%@ page import="java.util.*, java.sql.*, oscar.eform.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO, ca.openosp.openo.common.model.UserProperty" %>
 <%
     String user = (String) session.getAttribute("user");
     if (session.getAttribute("userrole") == null) response.sendRedirect("../logout.jsp");
@@ -67,7 +67,7 @@
 %>
 
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
 <html:html lang="en">
 

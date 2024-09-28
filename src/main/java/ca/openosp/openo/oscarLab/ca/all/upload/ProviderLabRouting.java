@@ -42,10 +42,11 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.ForwardingRules;
@@ -56,7 +57,7 @@ import ca.openosp.openo.util.ConversionUtils;
  */
 public class ProviderLabRouting {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
     private ProviderLabRoutingDao providerLabRoutingDao = SpringUtils.getBean(ProviderLabRoutingDao.class);
 
     public ProviderLabRouting() {

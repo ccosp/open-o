@@ -23,19 +23,20 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.PharmacyInfo" %>
+<%@page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscarProp" %>
 <%@ page import="oscar.oscarRx.data.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="java.util.ArrayList,oscar.util.*,java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.common.dao.*" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="java.util.ArrayList,oscar.util.*,java.util.*,ca.openosp.openo.common.model.Drug,org.oscarehr.common.dao.*" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.common.dao.DrugDao" %>
 <logic:notPresent name="RxSessionBean" scope="session">
     <logic:redirect href="error.html"/>
 </logic:notPresent>

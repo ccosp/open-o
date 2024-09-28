@@ -8,19 +8,19 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <% long startTime = System.currentTimeMillis(); %>
 <%@page contentType="text/html" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*,java.net.*, oscar.oscarRx.util.*" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.log.*" %>
 <%@page import="org.springframework.web.context.WebApplicationContext,oscar.oscarResearch.oscarDxResearch.bean.*" %>
-<%@page import="org.oscarehr.common.dao.FlowSheetCustomizationDao,org.oscarehr.common.model.FlowSheetCustomization" %>
-<%@page import="org.oscarehr.common.dao.FlowSheetDrugDao,org.oscarehr.common.model.FlowSheetDrug" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO,org.oscarehr.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.dao.FlowSheetCustomizationDao,ca.openosp.openo.common.model.FlowSheetCustomization" %>
+<%@page import="ca.openosp.openo.common.dao.FlowSheetDrugDao,ca.openosp.openo.common.model.FlowSheetDrug" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO,ca.openosp.openo.common.model.UserProperty" %>
 
-<%@page import="org.oscarehr.common.dao.AllergyDao" %>
-<%@page import="org.oscarehr.common.model.Allergy" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.AllergyDao" %>
+<%@page import="ca.openosp.openo.common.model.Allergy" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>

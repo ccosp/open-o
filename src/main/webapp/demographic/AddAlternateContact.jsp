@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
 
     //int demographic_no = Integer.parseInt(request.getParameter("demographic_no"));
@@ -58,11 +58,13 @@
 
 <%@page import="oscar.oscarDemographic.data.*,java.util.*" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.common.dao.CtlRelationshipsDao" %>
-<%@page import="org.oscarehr.common.model.CtlRelationships" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.CtlRelationshipsDao" %>
+<%@page import="ca.openosp.openo.common.model.CtlRelationships" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicRelationship" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -119,7 +121,7 @@
         </tr>
         <tr>
             <td class="MainTableLeftColumn" valign="top">&nbsp;
-                <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable()) { %>
+                <%if (IsPropertiesOn.isCaisiEnable()) { %>
 
                 <a href="<%=request.getContextPath()%>/PMmodule/ClientManager.do?id=<%=creatorDemo%>">Back to PMM </a>
 
@@ -255,7 +257,7 @@
                                 HashMap h = (HashMap) list.get(i);
                                 String relatedDemo = (String) h.get("demographic_no");
                                 DemographicData dd = new DemographicData();
-                                org.oscarehr.common.model.Demographic demographic = dd.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), relatedDemo); %>
+                                Demographic demographic = dd.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), relatedDemo); %>
                         <tr>
                             <td><%=demographic.getLastName() + ", " + demographic.getFirstName()%>
                             </td>

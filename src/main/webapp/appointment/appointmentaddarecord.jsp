@@ -40,22 +40,23 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
-        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, oscar.oscarDemographic.data.*, org.oscarehr.common.OtherIdManager, java.text.SimpleDateFormat"
+        import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, oscar.oscarDemographic.data.*, ca.openosp.openo.common.OtherIdManager, java.text.SimpleDateFormat"
         errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.common.model.Demographic,ca.openosp.openo.appt.AppointmentMailer, org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.dao.WaitingListDao" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic,ca.openosp.openo.appt.AppointmentMailer, ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.dao.WaitingListDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
-<%@ page import="org.oscarehr.event.EventService" %>
-<%@page import="org.oscarehr.managers.DemographicManager" %>
+<%@ page import="ca.openosp.openo.event.EventService" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
 <%@ page import="ca.openosp.openo.oscarWaitingList.WaitingList" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.model.WaitingListName" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:html lang="en">
@@ -86,7 +87,7 @@
             param[3] = MyDateFormat.getTimeXX_XX_XX(request.getParameter("end_time"));
 
 //the keyword(name) must match the demographic_no if it has been changed
-            org.oscarehr.common.model.Demographic demo = null;
+            Demographic demo = null;
             if (request.getParameter("demographic_no") != null && !(request.getParameter("demographic_no").equals(""))) {
                 DemographicMerged dmDAO = new DemographicMerged();
                 param[16] = dmDAO.getHead(request.getParameter("demographic_no"));
@@ -202,8 +203,8 @@
 
                             List<Object[]> wl = waitingListDao.findByDemographic(Integer.parseInt(demographicNo));
                             if (wl.size() > 0) {
-                                org.oscarehr.common.model.WaitingListName wln = (org.oscarehr.common.model.WaitingListName) wl.get(0)[0];
-                                org.oscarehr.common.model.WaitingList wl1 = (org.oscarehr.common.model.WaitingList) wl.get(0)[1];
+                                WaitingListName wln = (WaitingListName) wl.get(0)[0];
+                                ca.openosp.openo.common.model.WaitingList wl1 = (ca.openosp.openo.common.model.WaitingList) wl.get(0)[1];
 
         %>
         <form name="updateWLFrm"

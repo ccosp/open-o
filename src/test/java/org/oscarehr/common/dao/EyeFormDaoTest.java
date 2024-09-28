@@ -30,9 +30,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.eyeform.dao.EyeFormDao;
-import org.oscarehr.eyeform.model.EyeForm;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.eyeform.dao.EyeFormDao;
+import ca.openosp.openo.eyeform.model.EyeForm;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EyeFormDaoTest extends DaoTestFixtures {
 

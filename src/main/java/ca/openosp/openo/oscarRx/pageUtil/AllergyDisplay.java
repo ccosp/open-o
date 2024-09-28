@@ -26,7 +26,7 @@
 
 package ca.openosp.openo.oscarRx.pageUtil;
 
-import org.oscarehr.common.model.Allergy;
+import ca.openosp.openo.common.model.Allergy;
 
 public final class AllergyDisplay {
     private Integer id;

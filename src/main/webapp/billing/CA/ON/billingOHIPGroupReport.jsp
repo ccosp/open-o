@@ -22,13 +22,13 @@
 %>
 
 <%@ page import="java.util.*, java.sql.*, oscar.*, java.net.*" errorPage="/errorpage.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.BillCenter" %>
-<%@page import="org.oscarehr.common.dao.BillCenterDao" %>
-<%@page import="org.oscarehr.billing.CA.model.BillActivity" %>
-<%@page import="org.oscarehr.billing.CA.dao.BillActivityDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.BillCenter" %>
+<%@page import="ca.openosp.openo.common.dao.BillCenterDao" %>
+<%@page import="ca.openosp.openo.billing.CA.model.BillActivity" %>
+<%@page import="ca.openosp.openo.billing.CA.dao.BillActivityDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>

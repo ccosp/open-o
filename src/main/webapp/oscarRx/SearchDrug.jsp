@@ -34,8 +34,8 @@
         import="oscar.oscarRx.data.*,ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData,ca.openosp.openo.oscarDemographic.data.DemographicData,ca.openosp.openo.OscarProperties,oscar.log.*" %>
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
 
 
 <%
@@ -80,7 +80,7 @@
     if (drugref_route == null) drugref_route = "";
     String[] d_route = ("Oral," + drugref_route).split(",");
 
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
+    String annotation_display = CaseManagementNoteLink.DISP_PRESCRIP;
 
     //This checks if the provider has the ExternalPresriber feature enabled, if so then a link appear for the provider to access the ExternalPrescriber
     ProviderPreference providerPreference = ProviderPreferencesUIBean.getProviderPreference(loggedInInfo.getLoggedInProviderNo());
@@ -104,16 +104,19 @@
     }
 
 %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.casemgmt.web.PrescriptDrug" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.casemgmt.web.PrescriptDrug" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@ page import="ca.openosp.openo.common.model.Drug" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>

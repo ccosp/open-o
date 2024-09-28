@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ca.openosp.openo.eyeform.model.EyeForm" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -271,7 +271,7 @@ function saveFlags() {
 
 <tr><td>&nbsp;</td></tr>
 <%
-	org.oscarehr.eyeform.model.EyeForm eyeform = (org.oscarehr.eyeform.model.EyeForm)request.getAttribute("eyeform");
+	EyeForm eyeform = (EyeForm)request.getAttribute("eyeform");
 	String a1c = (eyeform!=null&&eyeform.getDischarge()!=null&&eyeform.getDischarge().equals("true"))?"checked":"";
 	String a2c = (eyeform!=null&&eyeform.getStat() != null&&eyeform.getStat().equals("true"))?"checked":"";
 	String a3c = (eyeform!=null&&eyeform.getOpt() != null&&eyeform.getOpt().equals("true"))?"checked":"";	

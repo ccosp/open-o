@@ -36,7 +36,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <jsp:useBean id="myTempBean" class="ca.openosp.openo.ScheduleTemplateBean" scope="page"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplate" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplatePrimaryKey" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateDao" %>
@@ -73,7 +73,7 @@
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
         <title><bean:message key="schedule.scheduleedittemplate.title"/></title>
-        <!--link rel="stylesheet" href="../web.css" /-->
+        <!--link rel="stylesheet" href="../ehrweb.css" /-->
 
         <script language="JavaScript">
             <!--

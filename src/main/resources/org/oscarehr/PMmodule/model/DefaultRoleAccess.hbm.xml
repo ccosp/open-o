@@ -20,7 +20,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="DefaultRoleAccess" table="default_role_access">
+	<class name="ca.openosp.openo.PMmodule.model.DefaultRoleAccess" table="default_role_access">
 		<id column="id" name="id" type="java.lang.Long">
 			<generator class="native" />
 		</id>
@@ -32,7 +32,7 @@
 		-->
 		<many-to-one name="caisi_role" class="com.quatro.model.security.Secrole"
 			column="role_id" update="false" insert="false" lazy="false" />			
-		<many-to-one name="access_type" class="org.oscarehr.PMmodule.model.AccessType"
+		<many-to-one name="access_type" class="ca.openosp.openo.PMmodule.model.AccessType"
 			column="access_id" update="false" insert="false" lazy="false" />
 	</class>
 </hibernate-mapping>

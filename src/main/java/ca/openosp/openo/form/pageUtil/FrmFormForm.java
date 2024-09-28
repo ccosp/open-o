@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /*
  * @Author: Ivy Chan

@@ -26,10 +26,10 @@
 
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.survey.web.formbean.SurveyExecuteDataBean" %>
+<%@ page import="ca.openosp.openo.survey.web.formbean.SurveyExecuteDataBean" %>
 <%@ page import="org.apache.struts.validator.DynaValidatorForm" %>
 <%@ page import="org.oscarehr.surveymodel.*" %>
-<%@ page import="org.oscarehr.PMmodule.web.forms.SurveyExecuteAction" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.forms.SurveyExecuteAction" %>
 
 <c:set var="id" scope="page">
     <c:out value="${question.id}"/>

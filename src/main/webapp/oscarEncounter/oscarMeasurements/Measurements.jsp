@@ -36,8 +36,8 @@
 <%@ page
         import="ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasuringInstructionBeanHandler, ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasuringInstructionBean" %>
 <%@ page import="java.util.Vector" %>
-<%@ page import="org.oscarehr.managers.MeasurementManager" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.managers.MeasurementManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%
     String demo = (String) request.getAttribute("demographicNo"); //bean.getDemographicNo();
 

@@ -25,10 +25,10 @@
 --%>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="ca.openosp.openo.oscarEncounter.pageUtil.EctDisplayLabAction2" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@page import="java.net.URLEncoder" %>
 <%@page import="ca.openosp.openo.oscarLab.ca.all.web.LabDisplayHelper" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="java.util.*" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 <%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*" %>

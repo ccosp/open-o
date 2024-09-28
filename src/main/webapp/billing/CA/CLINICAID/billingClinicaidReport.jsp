@@ -18,10 +18,10 @@
 
 --%>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 <%
     String user_no = (String) session.getAttribute("user");
@@ -30,10 +30,10 @@
 %>
 
 <%@ page import="java.util.*, oscar.login.*, oscar.*, java.net.*" errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.ReportProvider" %>
-<%@ page import="org.oscarehr.common.dao.ReportProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@ page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 
 
 <%
@@ -173,10 +173,10 @@
     }
 %>
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <html>
 <head>

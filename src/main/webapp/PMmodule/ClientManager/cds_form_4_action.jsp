@@ -22,12 +22,12 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.Date" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.common.model.CdsClientForm" %>
-<%@page import="org.oscarehr.PMmodule.web.CdsForm4Action" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.common.model.CdsClientForm" %>
+<%@page import="ca.openosp.openo.PMmodule.web.CdsForm4Action" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.Map" %>
@@ -73,5 +73,5 @@
         }
     }
 
-    response.sendRedirect(request.getContextPath() + "/PMmodule/ClientManager.do?id=" + clientId);
+    response.sendRedirect(request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager.do?id=" + clientId);
 %>

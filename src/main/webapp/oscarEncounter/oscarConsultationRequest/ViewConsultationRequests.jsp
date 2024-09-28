@@ -39,22 +39,23 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.dao.ConsultationRequestDao" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.ConsultationRequestDao" %>
 
 <%@ page import="oscar.oscarEncounter.pageUtil.*,java.text.*,java.util.*" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page
-        import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty, org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+        import="ca.openosp.openo.common.dao.UserPropertyDAO, ca.openosp.openo.common.model.UserProperty, org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
 
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsUtil" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -66,7 +67,7 @@
 
     boolean isSiteAccessPrivacy = false;
     boolean isTeamAccessPrivacy = false;
-    boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+    boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
     List<String> mgrSite = new ArrayList<String>();
 
     ProviderDataDao providerDataDao = SpringUtils.getBean(ProviderDataDao.class);

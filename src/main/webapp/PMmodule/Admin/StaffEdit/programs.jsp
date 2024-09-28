@@ -28,6 +28,9 @@
 <%@ page import="org.oscarehr.PMmodule.model.*" %>
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.StaffEditProgramContainer" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
 <script>
     function assignTeam(id, selectBox) {
         var team_id = selectBox.options[selectBox.selectedIndex].value;

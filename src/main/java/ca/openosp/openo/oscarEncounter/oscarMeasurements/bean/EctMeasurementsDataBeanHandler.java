@@ -36,19 +36,19 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
-import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.caisi_integrator.ws.CachedMeasurement;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.dao.ValidationsDao;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.common.model.MeasurementType;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Validations;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.dao.ValidationsDao;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.common.model.MeasurementType;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Validations;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.data.MeasurementTypes;
 import ca.openosp.openo.util.ConversionUtils;
 

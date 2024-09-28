@@ -28,18 +28,20 @@
 <%@ include file="/casemgmt/taglibs.jsp" %>
 
 <%@page import="java.util.Enumeration, org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.casemgmt.web.formbeans.*, org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO, ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.provider.web.CppPreferencesUIBean" %>
-<%@page import="org.oscarehr.casemgmt.common.Colour" %>
-<%@page import="org.oscarehr.common.dao.ProviderDataDao" %>
-<%@page import="org.oscarehr.common.model.ProviderData" %>
+<%@page import="org.oscarehr.casemgmt.web.formbeans.*, ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO, ca.openosp.openo.OscarProperties" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.provider.web.CppPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.casemgmt.common.Colour" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
+<%@page import="ca.openosp.openo.common.model.ProviderData" %>
 <%@page import="org.owasp.encoder.Encode" %>
 <%@page import="java.util.List, java.util.Random" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteExt" %>
+<%@ page import="ca.openosp.openo.casemgmt.web.formbeans.CaseManagementEntryFormBean" %>
 
 
 <%
@@ -53,7 +55,7 @@
     pageContext.setAttribute("providerNo", request.getParameter("providerNo"), PageContext.PAGE_SCOPE);
     pageContext.setAttribute("demographicNo", request.getParameter("demographicNo"), PageContext.PAGE_SCOPE);
 
-    org.oscarehr.casemgmt.model.CaseManagementNoteExt cme = new org.oscarehr.casemgmt.model.CaseManagementNoteExt();
+    CaseManagementNoteExt cme = new CaseManagementNoteExt();
 
     String frmName = "caseManagementEntryForm" + request.getParameter("demographicNo");
     CaseManagementEntryFormBean cform = (CaseManagementEntryFormBean) session.getAttribute(frmName);

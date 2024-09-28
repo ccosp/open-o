@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -64,6 +64,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
@@ -520,7 +521,7 @@
                     <bean:message key="admin.admin.frmGroups"/>
                 </html:link></li>
 
-                <% if (org.oscarehr.common.IsPropertiesOn.isIndivicaRichTextLetterEnable()) { %>
+                <% if (IsPropertiesOn.isIndivicaRichTextLetterEnable()) { %>
                 <li><html:link page="/admin/../eform/efmformrtl_config.jsp"><bean:message
                         key="admin.admin.richTextLetter"/></html:link></li>
                 <% } %>
@@ -886,7 +887,7 @@
                                    page="/admin/ManageClinic.do"/>&quot;);return false;'><bean:message
                             key="admin.admin.clinicAdmin"/></a></li>
                     <%
-                        if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+                        if (IsPropertiesOn.isMultisitesEnable()) {
                     %>
                     <li><a href="#"
                            onclick='popupPage(550,800,&quot;<html:rewrite

@@ -31,7 +31,7 @@ package ca.openosp.openo.oscarReport.reportByTemplate;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.util.StringUtils;
 

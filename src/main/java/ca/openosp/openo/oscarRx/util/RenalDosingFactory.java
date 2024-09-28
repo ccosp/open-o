@@ -34,7 +34,7 @@ import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * Parses xml file, creating DosingRecomendation Objects storing them in a hashtable with the ATC code as the key

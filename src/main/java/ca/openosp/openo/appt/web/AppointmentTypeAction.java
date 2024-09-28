@@ -31,17 +31,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.common.IsPropertiesOn;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.LabelValueBean;
-import org.oscarehr.common.dao.AppointmentTypeDao;
-import org.oscarehr.common.dao.SiteDao;
-import org.oscarehr.common.model.AppointmentType;
-import org.oscarehr.common.model.Site;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.AppointmentTypeDao;
+import ca.openosp.openo.common.dao.SiteDao;
+import ca.openosp.openo.common.model.AppointmentType;
+import ca.openosp.openo.common.model.Site;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarAction;
 
@@ -142,7 +143,7 @@ public class AppointmentTypeAction extends OscarAction {
 
         }
 
-        if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+        if (IsPropertiesOn.isMultisitesEnable()) {
             List<LabelValueBean> locations = new ArrayList<LabelValueBean>();
             SiteDao siteDao = (SiteDao) SpringUtils.getBean(SiteDao.class);
             List<Site> sites = siteDao.getAllActiveSites();

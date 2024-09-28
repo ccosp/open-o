@@ -29,7 +29,7 @@ package ca.openosp.openo.oscarDemographic.data;
 import java.util.Date;
 
 import ca.openosp.openo.oscarEncounter.data.EctPatientData;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 @Deprecated
 /**

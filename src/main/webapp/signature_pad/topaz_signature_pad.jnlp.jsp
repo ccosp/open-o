@@ -22,7 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
 <%@page contentType="application/x-java-jnlp-file" %>
 <%
     // This jsp expects a "signatureRequestId" parameter which helps distinguish what page is making this request, that way multple open pages etc won't clash. Just use a random number or something unique.

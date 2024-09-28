@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import noNamespace.HsfoHbpsDataDocument;
 
 import org.apache.logging.log4j.Logger;
@@ -38,12 +39,12 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
 
 public class TransferHSFOXmlAction extends Action {
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     /**
      * @param args
@@ -95,7 +96,7 @@ public class TransferHSFOXmlAction extends Action {
             }
             String rs = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                     + doc.xmlText();
-            // send to hsfo web
+            // send to hsfo ehrweb
 
             try {
                 message = tfutil.soapHttpCall(tfutil.getSiteID().intValue(), tfutil.getUserId(),

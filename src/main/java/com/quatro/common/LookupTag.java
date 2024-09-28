@@ -34,7 +34,7 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.taglib.html.BaseInputTag;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.Misc;
 

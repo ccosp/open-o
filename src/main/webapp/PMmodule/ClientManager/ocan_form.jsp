@@ -22,18 +22,19 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.OcanStaffFormData" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.common.model.Admission" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffFormData" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.common.model.Admission" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanForm" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.dao.AdmissionDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.dao.AdmissionDao" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
+<%@ page import="ca.openosp.openo.common.model.OcanFormOption" %>
 <%@include file="/layouts/caisi_html_top-jquery.jspf" %>
 
 
@@ -708,7 +709,7 @@ Client date of birth : <%=ocanStaffForm.getClientDateOfBirth()%>
                 <select name="reasonForAssessment" id="reasonForAssessment" class="{validate: {required:true}}">
                     <option value="">Select an answer</option>
                     <%
-                        for (org.oscarehr.common.model.OcanFormOption option : OcanForm.getOcanFormOptions("Reason for OCAN")) {
+                        for (OcanFormOption option : OcanForm.getOcanFormOptions("Reason for OCAN")) {
                             String selected = "";
 
                             if (ocanStaffForm.getReasonForAssessment() != null && ocanStaffForm.getReasonForAssessment().equals(option.getOcanDataCategoryValue()))

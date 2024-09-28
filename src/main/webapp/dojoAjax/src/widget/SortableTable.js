@@ -16,7 +16,7 @@ dojo.require("dojo.lang.common");
 dojo.require("dojo.date.format");
 dojo.require("dojo.html.*");
 dojo.require("dojo.html.selection");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 dojo.require("dojo.html.style");
 dojo.require("dojo.event.*");
 dojo.require("dojo.widget.*");

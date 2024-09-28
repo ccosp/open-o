@@ -107,7 +107,7 @@
 </head>
 <body>
 <!-- <div class="show">
-       <img class="logo" src="web/img/kai.png"/>
+       <img class="logo" src="ehrweb/img/kai.png"/>
 </div> -->
 <div class="greyBox">
     <div class="center">

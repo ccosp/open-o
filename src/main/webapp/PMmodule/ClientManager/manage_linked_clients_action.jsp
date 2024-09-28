@@ -22,17 +22,17 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.common.model.Facility" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageLinkedClientsAction" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.model.Facility" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageLinkedClientsAction" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@page import="java.util.Arrays" %>
-<%@page import="org.oscarehr.common.model.FacilityDemographicPrimaryKey" %>
+<%@page import="ca.openosp.openo.common.model.FacilityDemographicPrimaryKey" %>
 <%@page import="java.util.HashSet" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageLinkedClients" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageLinkedClients" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 <%
     int currentDemographicId = Integer.parseInt(request.getParameter("demographicId"));

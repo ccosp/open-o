@@ -33,10 +33,10 @@ import java.util.List;
 
 import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.EncounterFormDao;
-import org.oscarehr.common.model.EncounterForm;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EncounterFormDao;
+import ca.openosp.openo.common.model.EncounterForm;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDB.DBHandler;
 import ca.openosp.openo.util.UtilDateUtilities;

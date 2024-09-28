@@ -40,6 +40,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.oscarehr.hospitalReportManager.xsd.DateFullOrPartial;
 import org.oscarehr.hospitalReportManager.xsd.OmdCds;
 import org.oscarehr.hospitalReportManager.xsd.PatientRecord;
@@ -84,7 +85,7 @@ public class ReadHRMFile {
             transactionInformation = pr.getTransactionInformation();
 
         } catch (JAXBException ex) {
-            org.oscarehr.util.MiscUtils.getLogger();
+            MiscUtils.getLogger();
         }
     }
 

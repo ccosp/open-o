@@ -58,9 +58,9 @@
 <%@ page
         import="java.math.*, java.util.*, java.sql.*, oscar.*, java.net.*" %>
 <%@ include file="../admin/dbconnection.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%
     DemographicDao demographicDao = SpringUtils
             .getBean(DemographicDao.class);

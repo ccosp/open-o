@@ -26,11 +26,12 @@
 
 package ca.openosp.openo.oscarBilling.ca.bc.pageUtil;
 
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.*;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ca.openosp.openo.OscarProperties;
@@ -77,7 +78,7 @@ public class BillingCreateBillingAction extends Action {
         String other_service3_unit = frm.getXml_other3_unit();
 
         BillingSessionBean bean = (BillingSessionBean) request.getSession().getAttribute("billingSessionBean");
-        org.oscarehr.common.model.Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
+        Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
         this.patientDX = vldt.getPatientDxCodes(demo.getDemographicNo().toString());
         ArrayList<BillingItem> billItem = bmanager.getDups2(service, other_service1,
                 other_service2, other_service3,
@@ -321,7 +322,7 @@ public class BillingCreateBillingAction extends Action {
      * @param errors ActionMessages
      */
     private void validateServiceCodeList(ArrayList<BillingItem> billItems,
-                                         org.oscarehr.common.model.Demographic demo,
+                                         Demographic demo,
                                          ActionMessages errors) {
         BillingAssociationPersistence per = new BillingAssociationPersistence();
         for (int i = 0; i < billItems.size(); i++) {
@@ -359,7 +360,7 @@ public class BillingCreateBillingAction extends Action {
     }
 
     private void validate00120(ActionMessages errors,
-                               org.oscarehr.common.model.Demographic demo,
+                               Demographic demo,
                                ArrayList<BillingItem> billItem, String serviceDate) {
         for (Iterator<BillingItem> iter = billItem.iterator(); iter.hasNext(); ) {
             BillingItem item = iter.next();
@@ -387,7 +388,7 @@ public class BillingCreateBillingAction extends Action {
      * @return boolean -  true if the specified service is billable
      */
     private void validatePatientManagementCodes(ActionMessages errors,
-                                                org.oscarehr.common.model.Demographic demo,
+                                                Demographic demo,
                                                 ArrayList<BillingItem> billItem,
                                                 String serviceDate) {
         HashMap<String, Double> mgmCodeCount = new HashMap<String, Double>();

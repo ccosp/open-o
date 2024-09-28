@@ -21,9 +21,9 @@ package ca.openosp.openo.oscarBilling.ca.on.data;
 
 import java.util.Date;
 
-import org.oscarehr.billing.CA.ON.dao.BillingONProcDao;
-import org.oscarehr.billing.CA.ON.model.BillingONProc;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.ON.dao.BillingONProcDao;
+import ca.openosp.openo.billing.CA.ON.model.BillingONProc;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class JdbcBillingLog {
 

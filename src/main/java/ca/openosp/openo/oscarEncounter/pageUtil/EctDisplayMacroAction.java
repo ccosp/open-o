@@ -34,11 +34,11 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.eyeform.dao.MacroDao;
-import org.oscarehr.eyeform.model.Macro;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.eyeform.dao.MacroDao;
+import ca.openosp.openo.eyeform.model.Macro;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.OscarRoleObjectPrivilege;
 import ca.openosp.openo.util.StringUtils;

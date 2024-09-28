@@ -31,7 +31,7 @@
 		<property name="password" value="${born_sftp_password}"/>
 	</bean>
 
-	<bean id="bornScheduledTask" class="org.oscarehr.common.service.BORNSchedulerJob" />
+	<bean id="bornScheduledTask" class="ca.openosp.openo.common.service.BORNSchedulerJob" />
 
     <!-- Define the scheduled executor factory bean -->
     <bean id="schedulerBorn" class="org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean">

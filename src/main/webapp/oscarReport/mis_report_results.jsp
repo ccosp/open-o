@@ -38,13 +38,13 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.HashMap" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.web.MisReportUIBean" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.web.MisReportUIBean.DataRow" %>
+<%@page import="ca.openosp.openo.ehrweb.MisReportUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrweb.MisReportUIBean.DataRow" %>
 <%@page import="java.util.GregorianCalendar" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

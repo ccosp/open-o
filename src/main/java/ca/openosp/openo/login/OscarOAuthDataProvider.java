@@ -30,8 +30,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.oscarehr.common.dao.ServiceRequestTokenDaoImpl;
-
 import org.apache.cxf.rs.security.oauth.data.AccessToken;
 import org.apache.cxf.rs.security.oauth.data.AccessTokenRegistration;
 import org.apache.cxf.rs.security.oauth.data.AuthorizationInput;
@@ -44,17 +42,15 @@ import org.apache.cxf.rs.security.oauth.data.UserSubject;
 import org.apache.cxf.rs.security.oauth.provider.OAuthDataProvider;
 import org.apache.cxf.rs.security.oauth.provider.OAuthServiceException;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.ServiceAccessTokenDao;
-import org.oscarehr.common.dao.ServiceClientDao;
-import org.oscarehr.common.dao.ServiceRequestTokenDao;
-import org.oscarehr.common.model.ServiceAccessToken;
-import org.oscarehr.common.model.ServiceClient;
-import org.oscarehr.common.model.ServiceRequestToken;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.dao.ServiceAccessTokenDao;
+import ca.openosp.openo.common.dao.ServiceClientDao;
+import ca.openosp.openo.common.dao.ServiceRequestTokenDao;
+import ca.openosp.openo.common.model.ServiceAccessToken;
+import ca.openosp.openo.common.model.ServiceClient;
+import ca.openosp.openo.common.model.ServiceRequestToken;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 // import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 

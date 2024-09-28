@@ -30,8 +30,9 @@ package ca.openosp.openo.util;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
 import ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData;
@@ -69,7 +70,7 @@ public class indivoCheck extends TagSupport {
         try {
             if (ProviderMyOscarIdData.idIsSet(providerNo)) {
                 if (demoNo != null) {
-                    org.oscarehr.common.model.Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(this.pageContext.getSession()), demoNo);
+                    Demographic demo = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(this.pageContext.getSession()), demoNo);
                     String myOscarUserName = demo.getMyOscarUserName();
                     if (myOscarUserName != null)
                         conditionMet = true;

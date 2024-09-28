@@ -41,7 +41,7 @@
 %>
 
 <%@ page import=" oscar.form.*, oscar.form.data.*, java.util.Properties" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>

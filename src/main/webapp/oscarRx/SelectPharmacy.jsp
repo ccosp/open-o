@@ -29,6 +29,7 @@
 <%@ page import="oscar.oscarRx.data.*,java.util.*" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -114,7 +115,7 @@
                     <tr>
                         <td>
                             <% RxPharmacyData pharmacy = new RxPharmacyData();
-                                List<org.oscarehr.common.model.PharmacyInfo> pharList = pharmacy.getAllPharmacies();
+                                List<PharmacyInfo> pharList = pharmacy.getAllPharmacies();
                             %>
 
                             <div style=" width:860px; height:460px; overflow:auto;">
@@ -129,7 +130,7 @@
                                         <td>&nbsp;</td>
                                     </tr>
                                     <% for (int i = 0; i < pharList.size(); i++) {
-                                        org.oscarehr.common.model.PharmacyInfo ph = pharList.get(i);
+                                        PharmacyInfo ph = pharList.get(i);
                                     %>
                                     <tr>
                                         <td><a

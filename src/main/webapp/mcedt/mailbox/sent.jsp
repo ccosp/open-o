@@ -38,7 +38,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="java.math.BigInteger,java.util.*,org.oscarehr.integration.mcedt.mailbox.DetailDataCustom,ca.ontario.health.edt.TypeListData, org.oscarehr.integration.mcedt.mailbox.ActionUtils" %>
+        import="java.math.BigInteger,java.util.*,ca.openosp.openo.integration.mcedt.mailbox.DetailDataCustom,ca.ontario.health.edt.TypeListData, ca.openosp.openo.integration.mcedt.mailbox.ActionUtils" %>
 
 <html>
 <head>

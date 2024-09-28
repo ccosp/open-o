@@ -34,7 +34,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="java.util.*,org.oscarehr.integration.mcedt.mailbox.ActionUtils" %>
+<%@ page import="java.util.*,ca.openosp.openo.integration.mcedt.mailbox.ActionUtils" %>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -186,7 +186,7 @@
         </ul>
     </div>
     <!-- <div class="show">
-        <img class="logo" src="web/img/kai.png"/>
+        <img class="logo" src="ehrweb/img/kai.png"/>
     </div> -->
     <div id="first"
          class="greyBox" <%=((tab == null || tab.equals("first")) ? "style='display:block;'" : "style='display:none;'") %> >

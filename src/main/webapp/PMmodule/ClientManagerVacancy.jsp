@@ -26,21 +26,22 @@
 
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
-<%@page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.web.utils.UserRoleUtils" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
 <%@page
         import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.PMmodule.service.ClientManager" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.DemographicExt" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ClientManager" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.DemographicExt" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="ca.openosp.openo.util.OscarRoleObjectPrivilege" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Properties" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.ClientManagerFormBean" %>
 
 <html:form action="/PMmodule/ClientManager.do">
 
@@ -109,5 +110,5 @@
     %>
     <%@ include file="/common/messages.jsp" %>
     <jsp:include
-            page='<%="/PMmodule/ClientManager/referVacancy.jsp"%>'/>
+            page='<%="/ca/openosp/openo/PMmodule/ClientManager/referVacancy.jsp"%>'/>
 </html:form>

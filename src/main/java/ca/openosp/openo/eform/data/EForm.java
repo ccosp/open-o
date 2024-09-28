@@ -34,14 +34,14 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionMessages;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.oscarehr.common.OtherIdManager;
-import org.oscarehr.common.dao.EFormDataDao;
-import org.oscarehr.common.model.EFormData;
-import org.oscarehr.documentManager.ConvertToEdoc;
-import org.oscarehr.ui.servlet.ImageRenderingServlet;
-import org.oscarehr.util.DigitalSignatureUtils;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.OtherIdManager;
+import ca.openosp.openo.common.dao.EFormDataDao;
+import ca.openosp.openo.common.model.EFormData;
+import documentManager.ConvertToEdoc;
+import ca.openosp.openo.ui.servlet.ImageRenderingServlet;
+import ca.openosp.openo.ehrutil.DigitalSignatureUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.owasp.encoder.Encode;
 import ca.openosp.openo.eform.EFormLoader;
 import ca.openosp.openo.eform.EFormUtil;
@@ -757,10 +757,10 @@ public class EForm extends EFormBase {
         Matcher matcher = p.matcher(html);
         if (matcher.find(from)) {
             int start = matcher.start();
-            //org.oscarehr.util.MiscUtils.getLogger().info("New code shows: " + start);
+            //ca.openosp.openo.ehrutil.MiscUtils.getLogger().info("New code shows: " + start);
             return start;
         } else {
-            //org.oscarehr.util.MiscUtils.getLogger().info("New code shows: " + -1);
+            //ca.openosp.openo.ehrutil.MiscUtils.getLogger().info("New code shows: " + -1);
 
             return -1;
         }

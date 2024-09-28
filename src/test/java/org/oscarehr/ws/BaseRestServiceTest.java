@@ -39,6 +39,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.cxf.jaxrs.client.Client;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
@@ -50,12 +51,12 @@ import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
-import org.oscarehr.ws.rest.to.model.DemographicExtTo1;
-import org.oscarehr.ws.rest.to.model.DemographicMergedTo1;
-import org.oscarehr.ws.rest.to.model.DemographicTo1;
-import org.oscarehr.ws.rest.to.model.PharmacyInfoTo1;
-import org.oscarehr.ws.rest.to.model.ProviderTo1;
-import org.oscarehr.ws.rest.to.model.Sex1;
+import ca.openosp.openo.ws.rest.to.model.DemographicExtTo1;
+import ca.openosp.openo.ws.rest.to.model.DemographicMergedTo1;
+import ca.openosp.openo.ws.rest.to.model.DemographicTo1;
+import ca.openosp.openo.ws.rest.to.model.PharmacyInfoTo1;
+import ca.openosp.openo.ws.rest.to.model.ProviderTo1;
+import ca.openosp.openo.ws.rest.to.model.Sex1;
 
 /**
  * Base class for restful tests. While running these tests, it's assumed that a running version of OSCAR is available.
@@ -105,7 +106,7 @@ public abstract class BaseRestServiceTest {
     protected static Cookie session;
     protected static String mediaType = MediaType.APPLICATION_XML;
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
 
     /**
      * Initializes base restful settings.

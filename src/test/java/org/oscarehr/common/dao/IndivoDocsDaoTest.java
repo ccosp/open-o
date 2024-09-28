@@ -26,7 +26,7 @@ package org.oscarehr.common.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class IndivoDocsDaoTest extends DaoTestFixtures {
 

@@ -29,7 +29,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class ConfigUtils {
     private static final Logger logger = MiscUtils.getLogger();

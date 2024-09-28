@@ -23,12 +23,12 @@
     Ontario, Canada
 
 --%>
-<%@ page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.util.*" %>
 

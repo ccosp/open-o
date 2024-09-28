@@ -40,16 +40,16 @@
 
 <!DOCTYPE HTML>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedProvider" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.FacilityIdStringCompositePk" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@page import="org.oscarehr.common.dao.OscarLogDao" %>
+<%@page import="ca.openosp.openo.common.dao.OscarLogDao" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicTransfer" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicTransferScore" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -74,13 +74,13 @@
 
 
 <%@ page import="java.util.*, java.sql.*, java.net.URLEncoder, oscar.*, oscar.util.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@ page import="org.oscarehr.common.model.DemographicExt" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExt" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>

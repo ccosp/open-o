@@ -29,21 +29,21 @@ import java.util.List;
 import java.util.Vector;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.BillingONEAReportDao;
-import org.oscarehr.common.dao.BillingONExtDao;
-import org.oscarehr.common.dao.BillingONItemDao;
-import org.oscarehr.common.dao.BillingOnItemPaymentDao;
-import org.oscarehr.common.dao.BillingOnTransactionDao;
-import org.oscarehr.common.dao.RaDetailDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONEAReport;
-import org.oscarehr.common.model.BillingONExt;
-import org.oscarehr.common.model.BillingONItem;
-import org.oscarehr.common.model.BillingOnItemPayment;
-import org.oscarehr.common.model.BillingOnTransaction;
-import org.oscarehr.common.model.RaDetail;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.BillingONEAReportDao;
+import ca.openosp.openo.common.dao.BillingONExtDao;
+import ca.openosp.openo.common.dao.BillingONItemDao;
+import ca.openosp.openo.common.dao.BillingOnItemPaymentDao;
+import ca.openosp.openo.common.dao.BillingOnTransactionDao;
+import ca.openosp.openo.common.dao.RaDetailDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONEAReport;
+import ca.openosp.openo.common.model.BillingONExt;
+import ca.openosp.openo.common.model.BillingONItem;
+import ca.openosp.openo.common.model.BillingOnItemPayment;
+import ca.openosp.openo.common.model.BillingOnTransaction;
+import ca.openosp.openo.common.model.RaDetail;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 
 public class JdbcBillingCorrection {

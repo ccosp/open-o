@@ -18,7 +18,7 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -29,25 +29,25 @@
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@page import="ca.openosp.openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
-<%@page import="org.oscarehr.common.dao.CSSStylesDAO, org.oscarehr.common.model.ProviderPreference, org.oscarehr.common.model.CssStyle" %>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao, org.oscarehr.common.model.BillingService" %>
-<%@page import="org.oscarehr.common.dao.ClinicNbrDao, org.oscarehr.common.model.ClinicNbr" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingTypeDao, org.oscarehr.common.model.CtlBillingType" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingServiceDao, org.oscarehr.common.model.CtlBillingService" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingServicePremiumDao, org.oscarehr.common.model.CtlBillingServicePremium" %>
-<%@page import="org.oscarehr.common.dao.DiagnosticCodeDao, org.oscarehr.common.model.CtlDiagCode, org.oscarehr.common.model.DiagnosticCode" %>
-<%@page import="org.oscarehr.common.dao.DxresearchDAO, org.oscarehr.common.model.Dxresearch" %>
-<%@page import="org.oscarehr.common.dao.MyGroupDao, org.oscarehr.common.model.MyGroup" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao, org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao, org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.ProviderPreference" %>
-<%@page import="org.oscarehr.decisionSupport.model.DSConsequence" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.CSSStylesDAO, ca.openosp.openo.common.model.ProviderPreference, ca.openosp.openo.common.model.CssStyle" %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao, ca.openosp.openo.common.model.BillingService" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicNbrDao, ca.openosp.openo.common.model.ClinicNbr" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingTypeDao, ca.openosp.openo.common.model.CtlBillingType" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServiceDao, ca.openosp.openo.common.model.CtlBillingService" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServicePremiumDao, ca.openosp.openo.common.model.CtlBillingServicePremium" %>
+<%@page import="ca.openosp.openo.common.dao.DiagnosticCodeDao, ca.openosp.openo.common.model.CtlDiagCode, ca.openosp.openo.common.model.DiagnosticCode" %>
+<%@page import="ca.openosp.openo.common.dao.DxresearchDAO, ca.openosp.openo.common.model.Dxresearch" %>
+<%@page import="ca.openosp.openo.common.dao.MyGroupDao, ca.openosp.openo.common.model.MyGroup" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao, ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.dao.ProfessionalSpecialistDao, ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO, ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.decisionSupport.model.DSConsequence" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.managers.DemographicManager,org.oscarehr.billing.CA.filters.CodeFilterManager" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager,ca.openosp.openo.billing.CA.filters.CodeFilterManager" %>
 
 <%
     ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
@@ -537,14 +537,14 @@
 %>
 
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.common.dao.ProviderPreferenceDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderPreferenceDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <html>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.appt.JdbcApptImpl" %>
@@ -559,6 +559,7 @@
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <head>
     <title>Ontario Billing</title>
 
@@ -1441,7 +1442,7 @@
                                     <td style="white-space:nowrap; width: 30%"><b>Billing
                                         Physician</b></td>
                                     <td style="width: 20%">
-                                        <% if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) { // multisite start ==========================================
+                                        <% if (IsPropertiesOn.isMultisitesEnable()) { // multisite start ==========================================
                                             SiteDao siteDao = (SiteDao) SpringUtils.getBean(SiteDao.class);
                                             List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
 
@@ -1763,7 +1764,7 @@
                                                value="<%=ctlBillForm%>"/></td>
                                 </tr>
                                 <%
-                                    if (!org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+                                    if (!IsPropertiesOn.isMultisitesEnable()) {
                                         OscarProperties props = OscarProperties.getInstance();
                                         boolean bMoreAddr = props.getProperty("scheduleSiteID", "").equals("") ? false : true;
                                         if (bMoreAddr) {

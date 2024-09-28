@@ -28,7 +28,7 @@ package ca.openosp.openo.util;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * <p>Title:BeanUtil </p>

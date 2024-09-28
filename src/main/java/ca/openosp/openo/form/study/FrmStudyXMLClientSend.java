@@ -71,10 +71,10 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
 import ca.openosp.openo.Misc;
-import org.oscarehr.common.dao.StudyDataDao;
-import org.oscarehr.common.model.StudyData;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.StudyDataDao;
+import ca.openosp.openo.common.model.StudyData;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDB.DBHandler;
 

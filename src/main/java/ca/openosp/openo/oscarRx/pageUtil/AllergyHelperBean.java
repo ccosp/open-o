@@ -31,15 +31,15 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
+import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicAllergy;
-import org.oscarehr.common.dao.PartialDateDao;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.PartialDate;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.PartialDateDao;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.common.model.PartialDate;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarRx.data.RxPatientData;
 import ca.openosp.openo.oscarRx.data.RxPatientData.Patient;

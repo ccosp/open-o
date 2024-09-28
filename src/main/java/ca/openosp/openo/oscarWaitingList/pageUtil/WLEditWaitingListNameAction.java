@@ -30,9 +30,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.LazyValidatorForm;
-import org.oscarehr.common.model.ProviderPreference;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SessionConstants;
+import ca.openosp.openo.common.model.ProviderPreference;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SessionConstants;
 
 import ca.openosp.openo.oscarWaitingList.bean.WLWaitingListNameBeanHandler;
 import ca.openosp.openo.oscarWaitingList.util.WLWaitingListNameUtil;

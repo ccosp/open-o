@@ -36,12 +36,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.Hsfo2PatientDao;
-import org.oscarehr.common.dao.Hsfo2VisitDao;
-import org.oscarehr.common.model.Hsfo2Patient;
-import org.oscarehr.common.model.Hsfo2Visit;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.Hsfo2PatientDao;
+import ca.openosp.openo.common.dao.Hsfo2VisitDao;
+import ca.openosp.openo.common.model.Hsfo2Patient;
+import ca.openosp.openo.common.model.Hsfo2Visit;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.form.study.hsfo2.HSFODAO;
 

@@ -24,16 +24,17 @@
 --%>
 
 
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.net.URLEncoder" %>
 
-<%@page import="org.oscarehr.common.model.Property" %>
-<%@page import="org.oscarehr.common.dao.PropertyDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Property" %>
+<%@page import="ca.openosp.openo.common.dao.PropertyDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 <%@ include file="/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -81,7 +82,7 @@
     String newticklerwarningwindow = null;
     String tklerProviderNo = null;
     String default_pmm = null;
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         newticklerwarningwindow = (String) session.getAttribute("newticklerwarningwindow");
         tklerProviderNo = (String) session.getAttribute("tklerProviderNo");
         default_pmm = (String) session.getAttribute("default_pmm");

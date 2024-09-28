@@ -9,12 +9,12 @@
 
 --%>
 <%@page contentType="text/html" %>
-<%@page import="java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,org.oscarehr.util.SpringUtils,org.oscarehr.common.dao.QueueDao, ca.openosp.openo.oscarMDS.data.ProviderData" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
+<%@page import="java.util.*,ca.openosp.openo.oscarLab.ca.on.CommonLabResultData,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.common.dao.QueueDao, ca.openosp.openo.oscarMDS.data.ProviderData" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao, ca.openosp.openo.common.model.Provider" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

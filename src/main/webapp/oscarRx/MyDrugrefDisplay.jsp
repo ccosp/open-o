@@ -37,7 +37,7 @@
  created_by 3 java.lang.Integer
  body May increase cardiovascular morbidity in high risk patients  java.lang.String
  type Warning java.lang.String
- updated_at Thu Nov 15 10:18:22 EST 2007 java.util.Date
+ updated_at Thu Nov 15 10:18:22 EST 2007 java.ehrutil.Date
  significance 3 java.lang.String
 //
 trusted truejava.lang.Boolean ? i think
@@ -187,7 +187,7 @@ trusted truejava.lang.Boolean ? i think
 
     String getCommentDisplay(Hashtable h) {
         StringBuffer ret = new StringBuffer();
-        //key:comments val [{created_at=Fri Apr 04 14:35:10 EDT 2008, name=Re: APO-WARFARIN 10MG, id=4053, post_id=133, author=Guest, goat=true, created_by=7, body=i disagree , updated_at=Fri Apr 04 14:35:10 EDT 2008}]  class : java.util.Vector
+        //key:comments val [{created_at=Fri Apr 04 14:35:10 EDT 2008, name=Re: APO-WARFARIN 10MG, id=4053, post_id=133, author=Guest, goat=true, created_by=7, body=i disagree , updated_at=Fri Apr 04 14:35:10 EDT 2008}]  class : java.ehrutil.Vector
 //key:type val Warning  class : java.lang.String
         if (h != null) {
             Boolean thumbs = (Boolean) h.get("goat");

@@ -26,15 +26,15 @@
 
 <%-- Updated by Eugene Petruhin on 05 feb 2009 while fixing #2493970 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.utils.UserRoleUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
@@ -65,7 +65,7 @@
 
     //get current program, to check for OCAN
     boolean programEnableOcan = false;
-    String currentProgram = (String) session.getAttribute(org.oscarehr.util.SessionConstants.CURRENT_PROGRAM_ID);
+    String currentProgram = (String) session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
     if (currentProgram != null) {
         ProgramManager pm = SpringUtils.getBean(ProgramManager.class);
         Program program = pm.getProgram(currentProgram);

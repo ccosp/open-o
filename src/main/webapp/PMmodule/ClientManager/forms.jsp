@@ -27,15 +27,16 @@
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%@page import="org.oscarehr.PMmodule.web.ClientManagerAction" %>
-<%@page import="org.oscarehr.common.model.CdsClientForm" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="org.oscarehr.common.model.OcanClientForm" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ClientManagerAction" %>
+<%@page import="ca.openosp.openo.common.model.CdsClientForm" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.common.model.OcanClientForm" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@page import="java.util.Enumeration" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 <input type="hidden" name="clientId" value=""/>
 <input type="hidden" name="formId" value=""/>
@@ -45,7 +46,7 @@
     Demographic currentDemographic = (Demographic) request.getAttribute("client");
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean programEnableOcan = false;
-    String currentProgram = (String) session.getAttribute(org.oscarehr.util.SessionConstants.CURRENT_PROGRAM_ID);
+    String currentProgram = (String) session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
     if (currentProgram != null) {
         ProgramManager pm = SpringUtils.getBean(ProgramManager.class);
         Program program = pm.getProgram(currentProgram);

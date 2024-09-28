@@ -27,8 +27,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
-<%@ page import="org.oscarehr.common.model.PreventionsLotNrs" %>
-<%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
+<%@ page import="ca.openosp.openo.common.model.PreventionsLotNrs" %>
+<%@ page import="ca.openosp.openo.common.dao.PreventionsLotNrsDao" %>
 
 <%
     String curProvider_no = (String) session.getAttribute("user");

@@ -28,10 +28,10 @@ package ca.openosp.openo.oscarBilling.ca.bc.pageUtil;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.*;
-import org.oscarehr.billing.Clinicaid.util.ClinicaidCommunication;
-import org.oscarehr.decisionSupport.model.DSConsequence;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.billing.Clinicaid.util.ClinicaidCommunication;
+import ca.openosp.openo.decisionSupport.model.DSConsequence;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines;
 import ca.openosp.openo.util.plugin.OscarProperties;
 
@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-//import ca.openosp.openo.util.SqlUtils;
+//import ca.openosp.openo.ehrutil.SqlUtils;
 
 public final class BillingAction extends Action {
     private static Logger _log = MiscUtils.getLogger();

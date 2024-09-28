@@ -36,8 +36,8 @@ import java.util.Map.Entry;
 
 import org.drools.RuleBase;
 import org.drools.io.RuleBaseLoader;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;

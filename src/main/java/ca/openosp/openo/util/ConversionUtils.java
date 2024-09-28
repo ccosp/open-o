@@ -155,7 +155,7 @@ public class ConversionUtils {
     }
 
     /**
-     * Java SQL Timestamp to Java util date string
+     * Java SQL Timestamp to Java ehrutil date string
      *
      * @param timestamp java.sql.Timestamp
      * @return String given java.sql.Timestamp in string format

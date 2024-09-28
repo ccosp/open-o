@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
 
 import ca.openosp.openo.oscarBilling.ca.bc.data.BillingFormData.BillingVisit;
 import ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean;

@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.oscarehr.common.model.BillingPaymentType" %>
+<%@ page import="ca.openosp.openo.common.model.BillingPaymentType" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <html>

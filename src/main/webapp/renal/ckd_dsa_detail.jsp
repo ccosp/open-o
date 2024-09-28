@@ -49,12 +49,12 @@
 
 
 <%@ page import="java.util.*, java.text.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Measurement" %>
-<%@page import="org.oscarehr.common.dao.MeasurementDao" %>
-<%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
-<%@page import="org.oscarehr.common.model.Dxresearch" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Measurement" %>
+<%@page import="ca.openosp.openo.common.dao.MeasurementDao" %>
+<%@page import="ca.openosp.openo.common.dao.DxresearchDAO" %>
+<%@page import="ca.openosp.openo.common.model.Dxresearch" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
     MeasurementDao measurementDao = SpringUtils.getBean(MeasurementDao.class);

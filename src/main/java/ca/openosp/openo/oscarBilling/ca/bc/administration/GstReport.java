@@ -2,17 +2,17 @@
 package ca.openosp.openo.oscarBilling.ca.bc.administration;
 
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.BillingDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.BillingService;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.BillingDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.BillingService;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.entities.Billingmaster;
 import ca.openosp.openo.util.ConversionUtils;
 

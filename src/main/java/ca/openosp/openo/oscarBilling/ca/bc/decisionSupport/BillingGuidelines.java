@@ -34,12 +34,12 @@ import java.util.Map;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.decisionSupport.model.DSConsequence;
-import org.oscarehr.decisionSupport.model.DSGuideline;
-import org.oscarehr.decisionSupport.model.DSGuidelineFactory;
-import org.oscarehr.decisionSupport.model.DecisionSupportException;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.decisionSupport.model.DSConsequence;
+import ca.openosp.openo.decisionSupport.model.DSGuideline;
+import ca.openosp.openo.decisionSupport.model.DSGuidelineFactory;
+import ca.openosp.openo.decisionSupport.model.DecisionSupportException;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import java.io.InputStream;
 import java.io.FileInputStream;

@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import ca.openosp.openo.oscarLab.ca.all.spireHapiExt.v23.message.ORU_R01;
@@ -260,7 +261,7 @@ class Lines {
 public class SpireHandler implements MessageHandler {
 
     ORU_R01 msg = null;
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     /**
      * Creates a new instance of SpireHandler

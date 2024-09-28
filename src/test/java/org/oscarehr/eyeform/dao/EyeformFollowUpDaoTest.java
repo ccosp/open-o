@@ -25,13 +25,14 @@ package org.oscarehr.eyeform.dao;
 
 import static org.junit.Assert.assertNotNull;
 
+import ca.openosp.openo.eyeform.dao.EyeformFollowUpDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.eyeform.model.EyeformFollowUp;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.eyeform.model.EyeformFollowUp;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EyeformFollowUpDaoTest extends DaoTestFixtures {
 

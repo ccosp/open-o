@@ -32,6 +32,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
@@ -39,16 +40,16 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.oscarehr.PMmodule.utility.Utility;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.BillingONItemDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONItem;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.utility.Utility;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.BillingONItemDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONItem;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarAction;
 import ca.openosp.openo.OscarDocumentCreator;
@@ -58,7 +59,7 @@ import ca.openosp.openo.OscarDocumentCreator;
  */
 public class PatientEndYearStatementAction extends OscarAction {
 
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
     private static final String RES_SUCCESS = "success";
     private static final String RES_FAILURE = "failure";
 

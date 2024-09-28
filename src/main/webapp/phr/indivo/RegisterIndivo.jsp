@@ -33,13 +33,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.phr.RegistrationHelper" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.phr.RegistrationHelper" %>
 <%@page import="org.oscarehr.myoscar_server.ws.PersonTransfer3" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -48,12 +48,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="org.oscarehr.common.model.DemographicExt" %>
-<%@ page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExt" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderMyOscarIdData" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.util.*" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 
 <%
@@ -62,7 +63,7 @@
     String demographicNo = request.getParameter("demographicNo");
     int demographicId = Integer.parseInt(demographicNo);
 
-    org.oscarehr.common.model.Demographic demographic = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
+    Demographic demographic = new DemographicData().getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographicNo);
     request.setAttribute("demographic", demographic);
 
     String hPhoneExt = demographicExtDao.getValueForDemoKey(Integer.parseInt(demographicNo), "hPhoneExt");

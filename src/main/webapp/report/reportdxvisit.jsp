@@ -18,8 +18,8 @@
 <%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
 <%@page import="org.oscarehr.common.model.Ichppccode" %>
 <%@page import="org.oscarehr.common.dao.IchppccodeDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%
     //reportdxvisit.jsp?sdate=2003-04-01&edate=2003-12-31
     //
@@ -35,7 +35,7 @@
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
     <title>PATIENT LIST</title>
     <meta http-equiv=Expires content=-1>
-    <!--link rel="stylesheet" href="../web.css" -->
+    <!--link rel="stylesheet" href="../ehrweb.css" -->
     <script language="JavaScript">
         <!--
         function setfocus() {

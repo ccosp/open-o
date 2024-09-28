@@ -31,15 +31,15 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.app.OAuth1Utils;
-import org.oscarehr.common.dao.AppDefinitionDao;
-import org.oscarehr.common.dao.AppUserDao;
-import org.oscarehr.common.model.AppDefinition;
-import org.oscarehr.common.model.AppUser;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.ws.rest.to.model.RssItem;
+import ca.openosp.openo.app.OAuth1Utils;
+import ca.openosp.openo.common.dao.AppDefinitionDao;
+import ca.openosp.openo.common.dao.AppUserDao;
+import ca.openosp.openo.common.model.AppDefinition;
+import ca.openosp.openo.common.model.AppUser;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.ws.rest.to.model.RssItem;
 
 import ca.openosp.openo.oscarReport.reportByTemplate.ReportManager;
 

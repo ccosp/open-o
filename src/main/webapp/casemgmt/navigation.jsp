@@ -26,7 +26,7 @@
 
 <%-- Updated by Eugene Petruhin on 11 dec 2008 while fixing #2356548 & #2393547 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <% long loadPage = System.currentTimeMillis(); %>
 <%@ include file="/casemgmt/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
@@ -240,14 +240,14 @@
 
                     <tr>
                         <td><a href="javascript:void(0)"
-                               onClick="popupPage('<%=bsurl%>/oscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;">Prescriptions</a>
+                               onClick="popupPage('<%=bsurl%>/ehroscarRx/choosePatient.do?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;">Prescriptions</a>
                         </td>
                     </tr>
 
                 </caisirole:SecurityAccess>
 
                 <!-- allergies -->
-                <!-- tr><td><a href="javascript:void(0)" onClick="popupPage('<%=bsurl%>/oscarRx/ShowAllergies.jsp?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;">Allergies</a></td></tr -->
+                <!-- tr><td><a href="javascript:void(0)" onClick="popupPage('<%=bsurl%>/ehroscarRx/ShowAllergies.jsp?providerNo=<%=bean.providerNo%>&demographicNo=<%=bean.demographicNo%>');return false;">Allergies</a></td></tr -->
 
 
                 <!-- Consultations -->
@@ -342,7 +342,7 @@
                                 onMouseOver="javascript:window.status='View any of <%=bean.patientLastName+","+bean.patientFirstName%>\'s current forms.';return true;">
                             <option value="null" selected>-current forms-</option>
                             <nested:iterate id="cf" name="casemgmt_newFormBeans"
-                                            type="org.oscarehr.common.model.EncounterForm">
+                                            type="ca.openosp.openo.common.model.EncounterForm">
                                 <%
                                     String table = cf.getFormTable();
                                     if (!table.equalsIgnoreCase("")) {
@@ -371,7 +371,7 @@
                                 onMouseOver="javascript:window.status='View <%=bean.patientLastName+","+bean.patientFirstName%>\'s new forms list.';return true;">
                             <option value="null" selected>-add new form-</option>
                             <nested:iterate id="cf" name="casemgmt_newFormBeans"
-                                            type="org.oscarehr.common.model.EncounterForm">
+                                            type="ca.openosp.openo.common.model.EncounterForm">
                                 <% if (cf.isHidden()) {
                                     String value = session.getAttribute("casemgmt_oscar_baseurl") + "/appointment/"
                                             + cf.getFormValue() + bean.demographicNo + "&formId=0&provNo=" + bean.providerNo;

@@ -36,7 +36,7 @@
     if (treatment == null || treatment.trim().equals("")) {
 %>
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <div style="background-color:white;margin:100px;padding:40px;border:2px solid grey">
     <a href="javascript: function myFunction() {return false; }" onclick="$('treatmentsMyD').toggle();">NOTHING

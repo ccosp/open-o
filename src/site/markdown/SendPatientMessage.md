@@ -23,7 +23,7 @@ Click "Send Message to PHR".
 ##### 4. Send Message (/phr/PhrMessage.do?method=sendPatient)
 
 Oscar:
-1. Invokes /phr/PhrMessage bean -> calls sendPatient() on org.oscarehr.phr.web.PHRMessageAction 
+1. Invokes /phr/PhrMessage bean -> calls sendPatient() on ca.openosp.openo.web.phr.PHRMessageAction 
 
 This is the integration point:
 

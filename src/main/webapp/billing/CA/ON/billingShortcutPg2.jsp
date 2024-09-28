@@ -17,14 +17,14 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%@page import="org.oscarehr.billing.CA.ON.model.BillingPercLimit" %>
-<%@page import="org.oscarehr.billing.CA.ON.dao.BillingPercLimitDao" %>
-<%@page import="org.oscarehr.common.model.BillingService" %>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.billing.CA.ON.model.BillingPercLimit" %>
+<%@page import="ca.openosp.openo.billing.CA.ON.dao.BillingPercLimitDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingService" %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("../../../logout.jsp");
@@ -48,11 +48,11 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Billing" %>
-<%@ page import="org.oscarehr.common.dao.BillingDao" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Billing" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingDetail" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingDetailDao" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingSavePrep" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>

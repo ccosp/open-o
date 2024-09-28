@@ -41,9 +41,9 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.util.DbConnectionFilter" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.DbConnectionFilter" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarDB.DBHandler" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

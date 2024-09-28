@@ -27,6 +27,7 @@
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.common.model.BillingService" %>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("../../logout.jsp");

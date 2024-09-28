@@ -24,46 +24,46 @@
 
 --%>
 <!DOCTYPE html>
-<%@ page import="org.oscarehr.common.model.Appointment.BookingSource" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupAccessRestrictionDao" %>
-<%@ page import="org.oscarehr.common.dao.DemographicStudyDao" %>
-<%@ page import="org.oscarehr.common.dao.StudyDao" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@ page import="org.oscarehr.common.model.MyGroup" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleDateDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleDate" %>
-<%@ page import="org.oscarehr.common.dao.ProviderSiteDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleTemplate" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.common.model.Tickler" %>
-<%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@ page import="org.oscarehr.common.model.LookupList" %>
-<%@ page import="org.oscarehr.common.model.LookupListItem" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment.BookingSource" %>
+<%@ page import="ca.openosp.openo.common.dao.MyGroupAccessRestrictionDao" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicStudyDao" %>
+<%@ page import="ca.openosp.openo.common.dao.StudyDao" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.dao.MyGroupDao" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroup" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleTemplateCodeDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleTemplateCode" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleDateDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleDate" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderSiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleTemplate" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.Tickler" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
+<%@ page import="ca.openosp.openo.common.model.LookupListItem" %>
 
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="oscar.util.*" %>
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
-<%@page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
+<%@page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <%@ page import="org.oscarehr.managers.*" %>
 <%@ page import="java.util.*,java.text.*,java.net.*,oscar.*,oscar.util.*" %>
 <%@ page import="org.apache.commons.lang.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.oscarehr.common.model.*" %>
-<%@ page import="org.oscarehr.managers.PreventionManager" %>
+<%@ page import="ca.openosp.openo.managers.PreventionManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
@@ -71,6 +71,20 @@
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.model.Dashboard" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroupAccessRestriction" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.model.Study" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicStudy" %>
+<%@ page import="ca.openosp.openo.managers.SecurityInfoManager" %>
+<%@ page import="ca.openosp.openo.managers.LookupListManager" %>
+<%@ page import="ca.openosp.openo.managers.ProgramManager2" %>
+<%@ page import="ca.openosp.openo.managers.TicklerManager" %>
+<%@ page import="ca.openosp.openo.managers.DashboardManager" %>
+<%@ page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@ page import="ca.openosp.openo.managers.AppManager" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
@@ -170,7 +184,7 @@
 %>
 <%!
     //multisite starts =====================
-    private boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+    private boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
     private List<Site> sites = new ArrayList<Site>();
     private List<Site> curUserSites = new ArrayList<Site>();
     private List<String> siteProviderNos = new ArrayList<String>();
@@ -329,7 +343,7 @@
     UserProperty oldEchartLink = userPropertyDao.getProp(loggedInInfo1.getLoggedInProviderNo(), UserProperty.HIDE_OLD_ECHART_LINK_IN_APPT);
     if (oldEchartLink != null && "Y".equals(oldEchartLink.getValue())) showOldEchartLink = false;
 
-    if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {
+    if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()) {
         newticklerwarningwindow = (String) session.getAttribute("newticklerwarningwindow");
         default_pmm = (String) session.getAttribute("default_pmm");
 
@@ -539,7 +553,7 @@
                 } else {
                     newGroupNo = s.options[s.selectedIndex].value;
                 }
-                <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
+                <%if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()){%>
                 //Disable schedule view associated with the program
                 //Made the default program id "0";
                 //var programId = document.getElementById("bedprogram_no").value;
@@ -614,7 +628,7 @@
         <script src="${pageContext.request.contextPath}/csrfguard"></script>
     </head>
     <%
-        if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable()) {
+        if (IsPropertiesOn.isCaisiEnable()) {
     %>
     <body onload="load();">
     <%
@@ -1084,7 +1098,7 @@
                             <security:oscarSec roleName="<%=roleName$%>" objectName="_dashboardDisplay" rights="r">
                                 <%
                                     DashboardManager dashboardManager = SpringUtils.getBean(DashboardManager.class);
-                                    List<org.oscarehr.common.model.Dashboard> dashboards = dashboardManager.getActiveDashboards(loggedInInfo1);
+                                    List<Dashboard> dashboards = dashboardManager.getActiveDashboards(loggedInInfo1);
                                     pageContext.setAttribute("dashboards", dashboards);
                                 %>
 
@@ -1406,7 +1420,7 @@
                                                 sel.style.backgroundColor = sel.options[sel.selectedIndex].style.backgroundColor;
                                                 var siteName = sel.options[sel.selectedIndex].value;
                                                 var newGroupNo = "<%=(mygroupno == null ? ".default" : mygroupno)%>";
-                                                <%if (org.oscarehr.common.IsPropertiesOn.isCaisiEnable() && org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()){%>
+                                                <%if (IsPropertiesOn.isCaisiEnable() && IsPropertiesOn.isTicklerPlusEnable()){%>
                                                 popupPage(10, 10, "providercontrol.jsp?provider_no=<%=loggedInInfo1.getLoggedInProviderNo()%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&new_tickler_warning_window=<%=newticklerwarningwindow%>&default_pmm=<%=default_pmm%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
                                                 <%}else {%>
                                                 popupPage(10, 10, "providercontrol.jsp?provider_no=<%=loggedInInfo1.getLoggedInProviderNo()%>&start_hour=<%=startHour%>&end_hour=<%=endHour%>&every_min=<%=everyMin%>&color_template=deepblue&dboperation=updatepreference&displaymode=updatepreference&mygroup_no=" + newGroupNo + "&site=" + siteName);
@@ -2202,7 +2216,7 @@
                                                         <% if (!isWeekView) { %>
                                                         <% if (OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) {
 
-                                                            newUxUrl = "../web/#/record/" + demographic_no + "/";
+                                                            newUxUrl = "../ehrweb/#/record/" + demographic_no + "/";
 
                                                             if (String.valueOf(demographic_no).equals(record) && !module.equals("summary")) {
                                                                 newUxUrl = newUxUrl + module;
@@ -2303,7 +2317,7 @@
 
                                                         <c:if test="${doctorLinkRights}">
                                                             &#124; <a href=#
-                                                                      onClick="popupWithApptNo(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=loggedInInfo1.getLoggedInProviderNo()%>&demographicNo=<%=demographic_no%>','rx',<%=appointment.getId()%>)"
+                                                                      onClick="popupWithApptNo(700,1027,'../ehroscarRx/choosePatient.do?providerNo=<%=loggedInInfo1.getLoggedInProviderNo()%>&demographicNo=<%=demographic_no%>','rx',<%=appointment.getId()%>)"
                                                                       title="<bean:message key="global.prescriptions"/>"><bean:message
                                                                 key="global.rx"/>
                                                         </a>

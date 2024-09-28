@@ -27,7 +27,7 @@
 <%@page
         import="ca.openosp.openo.OscarProperties,java.net.InetAddress,java.io.*,java.util.List,java.util.*,javax.net.ssl.*,java.security.*,java.security.cert.*" %>
 <%@page
-        import="org.oscarehr.util.DbConnectionFilter,java.sql.*,org.oscarehr.util.SpringUtils,org.oscarehr.util.LoggedInInfo" %>
+        import="ca.openosp.openo.ehrutil.DbConnectionFilter,java.sql.*,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     if (session.getAttribute("userrole") == null) {

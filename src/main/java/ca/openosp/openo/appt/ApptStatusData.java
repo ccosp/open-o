@@ -34,7 +34,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import ca.openosp.openo.OscarProperties;
-import org.oscarehr.common.model.AppointmentStatus;
+import ca.openosp.openo.common.model.AppointmentStatus;
 
 import ca.openosp.openo.appt.status.service.impl.AppointmentStatusMgrImpl;
 

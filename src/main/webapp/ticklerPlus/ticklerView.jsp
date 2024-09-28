@@ -48,10 +48,11 @@
 <%@ include file="messages.jsp" %>
 
 <br/>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
 <script>
     function reassign_tickler() {
         document.ticklerForm.id.value =<c:out value="${tickler.id}"/>;

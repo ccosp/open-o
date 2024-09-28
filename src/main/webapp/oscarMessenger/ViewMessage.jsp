@@ -24,14 +24,14 @@
 
 --%>
 
-<%@page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@page import="org.oscarehr.casemgmt.dao.CaseManagementNoteDAO" %>
+<%@page import="ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
+<%@page import="ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO" %>
 <%@page import="java.util.Set" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.HashMap" %>
-<%@page import="org.oscarehr.common.model.ResidentOscarMsg" %>
-<%@page import="org.oscarehr.common.dao.ResidentOscarMsgDao" %>
-<%@page import="org.oscarehr.common.model.OscarMsgType" %>
+<%@page import="ca.openosp.openo.common.model.ResidentOscarMsg" %>
+<%@page import="ca.openosp.openo.common.dao.ResidentOscarMsgDao" %>
+<%@page import="ca.openosp.openo.common.model.OscarMsgType" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String providerNo = (String) request.getAttribute("providerNo");
@@ -49,11 +49,11 @@
         return;
     }
 %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 
 <%
@@ -65,6 +65,7 @@
         import="oscar.oscarDemographic.data.*, java.util.Enumeration" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -509,7 +510,7 @@
 
                                                 String demographic_no = request.getParameter("demographic_no");
                                                 DemographicData demoData = new DemographicData();
-                                                org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographic_no);
+                                                Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demographic_no);
                                                 String demoName = "";
                                                 String demoLastName = "";
                                                 String demoFirstName = "";
@@ -642,7 +643,7 @@
                                                                    <%=params%>');return false;">E</a>
                                                         <%} %>
 
-                                                        <a href="javascript:popupViewAttach(700,960,'../oscarRx/choosePatient.do?providerNo=<%=request.getAttribute("providerNo")%>&demographicNo=${ demographic.key }')">Rx</a>
+                                                        <a href="javascript:popupViewAttach(700,960,'../ehroscarRx/choosePatient.do?providerNo=<%=request.getAttribute("providerNo")%>&demographicNo=${ demographic.key }')">Rx</a>
 
                                                         <phr:indivoRegistered provider="<%=providerNo%>"
                                                                               demographic="${ demographic.key }">

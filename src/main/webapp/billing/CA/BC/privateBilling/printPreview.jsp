@@ -3,21 +3,21 @@
   Company: WELL Health Technologies Corp.
   Date: December 6, 2018
  --%>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.common.dao.PropertyDao" %>
-<%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
+<%@ page import="ca.openosp.openo.common.dao.PropertyDao" %>
+<%@ page import="ca.openosp.openo.common.dao.SystemPreferencesDao" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.data.BillingPreference" %>
-<%@ page import="org.oscarehr.common.model.Property" %>
+<%@ page import="ca.openosp.openo.common.model.Property" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ca.openosp.openo.oscarClinic.ClinicData" %>
 <%@ page import="java.util.StringTokenizer" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
-<%@ page import="org.oscarehr.common.model.SystemPreferences" %>
+<%@ page import="ca.openosp.openo.common.model.SystemPreferences" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

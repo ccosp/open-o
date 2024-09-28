@@ -38,7 +38,7 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.util.StringUtils;
 

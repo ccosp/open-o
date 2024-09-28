@@ -24,6 +24,9 @@
 
 package org.oscarehr.managers;
 
+import ca.openosp.openo.managers.PrescriptionManagerImpl;
+import ca.openosp.openo.managers.RxManager;
+import ca.openosp.openo.managers.RxManagerImpl;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,7 +37,7 @@ import org.oscarehr.common.exception.AccessDeniedException;
 import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Drug;
 import org.oscarehr.common.model.Prescription;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import java.util.ArrayList;
 import java.util.Date;

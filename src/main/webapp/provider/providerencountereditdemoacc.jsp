@@ -31,9 +31,9 @@
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*,java.net.*"
          errorPage="/errorpage.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.DemographicAccessoryDao" %>
-<%@page import="org.oscarehr.common.model.DemographicAccessory" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicAccessoryDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicAccessory" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
 %>

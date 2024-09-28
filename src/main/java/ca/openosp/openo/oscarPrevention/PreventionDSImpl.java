@@ -42,10 +42,10 @@ import org.apache.logging.log4j.Logger;
 import org.drools.RuleBase;
 import org.drools.WorkingMemory;
 import org.drools.io.RuleBaseLoader;
-import org.oscarehr.common.dao.ResourceStorageDao;
-import org.oscarehr.common.model.ResourceStorage;
-import org.oscarehr.decisionSupport.prevention.DSPreventionDrools;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.dao.ResourceStorageDao;
+import ca.openosp.openo.common.model.ResourceStorage;
+import ca.openosp.openo.decisionSupport.prevention.DSPreventionDrools;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

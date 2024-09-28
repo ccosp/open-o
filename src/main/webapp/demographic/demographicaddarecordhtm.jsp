@@ -25,7 +25,7 @@
 --%>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Date" %>
-<%@page import="org.oscarehr.managers.LookupListManager" %>
+<%@page import="ca.openosp.openo.managers.LookupListManager" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -41,8 +41,8 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%
     String curUser_no = (String) session.getAttribute("user");
     String str = null;
@@ -57,30 +57,39 @@
         import="java.util.*, oscar.*, ca.openosp.openo.oscarDemographic.data.ProvinceNames, ca.openosp.openo.oscarDemographic.pageUtil.Util, ca.openosp.openo.oscarWaitingList.WaitingList" %>
 <%@ page
         import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.WaitingListName" %>
-<%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.common.dao.WaitingListNameDao" %>
-<%@page import="org.oscarehr.common.dao.EFormDao" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@page import="org.oscarehr.common.model.Facility" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.dao.ProfessionalSpecialistDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.WaitingListName" %>
+<%@page import="ca.openosp.openo.PMmodule.web.GenericIntakeEditAction" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.common.dao.WaitingListNameDao" %>
+<%@page import="ca.openosp.openo.common.dao.EFormDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.common.model.Facility" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.managers.ProgramManager2" %>
-<%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
+<%@page import="ca.openosp.openo.managers.ProgramManager2" %>
+<%@page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
 
-<%@page import="org.oscarehr.managers.PatientConsentManager" %>
+<%@page import="ca.openosp.openo.managers.PatientConsentManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.Misc" %>
+<%@ page import="ca.openosp.openo.common.Gender" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.common.model.LookupListItem" %>
+<%@ page import="ca.openosp.openo.common.model.CountryCode" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
+<%@ page import="ca.openosp.openo.common.model.EForm" %>
+<%@ page import="ca.openosp.openo.common.dao.CountryCodeDao" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 
 <jsp:useBean id="apptMainBean" class="ca.openosp.openo.AppointmentMainBean" scope="session"/>
 <%!
@@ -1641,7 +1650,7 @@ if("true".equals(OscarProperties.getInstance().getProperty("iso3166.2.enabled","
 
                                 <select name="sex" id="sex">
                                     <option value=""></option>
-                                    <% for (org.oscarehr.common.Gender gn : org.oscarehr.common.Gender.values()) { %>
+                                    <% for (Gender gn : Gender.values()) { %>
                                     <option value="<%=gn.name()%>" <%=((sex.toUpperCase().equals(gn.name())) ? "selected=\"selected\"" : "") %>><%=gn.getText()%>
                                     </option>
                                     <% } %>

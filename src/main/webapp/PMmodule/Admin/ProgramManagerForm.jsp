@@ -25,9 +25,10 @@
 <%@ include file="/taglibs.jsp" %>
 
 <%@ page import="org.oscarehr.PMmodule.web.formbean.*" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
 <%@ page import="org.apache.struts.validator.DynaValidatorForm" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.web.formbean.ProgramManagerViewFormBean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
 <html:form action="/PMmodule/ProgramManager">
@@ -228,10 +229,10 @@
                 if (selectedSubtab != null && selectedSubtab != "" && !selectedTab.equals(selectedSubtab)) {
             %>
             <jsp:include
-                    page='<%="/PMmodule/Admin/ProgramEdit/" + selectedSubtab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
+                    page='<%="/ca/openosp/openo/PMmodule/Admin/ProgramEdit/" + selectedSubtab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
             <% } else { %>
             <jsp:include
-                    page='<%="/PMmodule/Admin/ProgramEdit/" + selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
+                    page='<%="/ca/openosp/openo/PMmodule/Admin/ProgramEdit/" + selectedTab.toLowerCase().replaceAll(" ","_") + ".jsp"%>'/>
             <%
                     }
                 }

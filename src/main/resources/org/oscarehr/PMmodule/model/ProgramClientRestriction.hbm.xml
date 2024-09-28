@@ -20,7 +20,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.PMmodule.model">
-	<class name="ProgramClientRestriction" table="program_client_restriction">
+	<class name="ca.openosp.openo.PMmodule.model.ProgramClientRestriction" table="program_client_restriction">
 		<meta attribute="sync-DAO">false</meta>
 		<id name="id" type="integer" column="id" unsaved-value="0">
 			<generator class="native" />

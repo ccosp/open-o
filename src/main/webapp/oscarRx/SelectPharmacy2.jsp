@@ -33,6 +33,7 @@
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -95,7 +96,7 @@
             (function ($) {
                 $(function () {
                     var demo = $("#demographicNo").val();
-                    $.get("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo="%>" + demo,
+                    $.get("<%=request.getContextPath() + "/ehroscarRx/managePharmacy.do?method=getPharmacyFromDemographic&demographicNo="%>" + demo,
                         function (data) {
                             if (data && data.length && data.length > 0) {
                                 $("#preferredList").html("");
@@ -311,7 +312,7 @@
 
                         var data = "pharmId=" + pharmId + "&demographicNo=" + demo + "&preferredOrder=" + ($("#preferredList div").length + 1);
                         ShowSpin(true);
-                        $.post("<%=request.getContextPath() + "/oscarRx/managePharmacy.do?method=setPreferred"%>", data, function (data) {
+                        $.post("<%=request.getContextPath() + "/ehroscarRx/managePharmacy.do?method=setPreferred"%>", data, function (data) {
                             if (data.id) {
                                 $("html, body").animate({scrollTop: 0}, 1000);
                                 window.location.reload(false);
@@ -365,7 +366,7 @@
 
             function addPharmacy() {
                 myLightWindow.activateWindow({
-                    href: "<%= request.getContextPath() %>/oscarRx/ManagePharmacy2.jsp?type=Add",
+                    href: "<%= request.getContextPath() %>/ehroscarRx/ManagePharmacy2.jsp?type=Add",
                     width: 400,
                     height: 500
                 });
@@ -373,7 +374,7 @@
 
             function editPharmacy(id) {
                 myLightWindow.activateWindow({
-                    href: "<%= request.getContextPath() %>/oscarRx/ManagePharmacy2.jsp?type=Edit&ID=" + id,
+                    href: "<%= request.getContextPath() %>/ehroscarRx/ManagePharmacy2.jsp?type=Edit&ID=" + id,
                     width: 400,
                     height: 500
                 });
@@ -382,7 +383,7 @@
 
             function viewPharmacy(id) {
                 myLightWindow.activateWindow({
-                    href: "<%= request.getContextPath() %>/oscarRx/ViewPharmacy.jsp?type=View&ID=" + id,
+                    href: "<%= request.getContextPath() %>/ehroscarRx/ViewPharmacy.jsp?type=View&ID=" + id,
                     width: 400,
                     height: 500
                 });
@@ -548,7 +549,7 @@
                                 <td id="pharmacyListWindow">
 
                                     <% RxPharmacyData pharmacy = new RxPharmacyData();
-                                        List<org.oscarehr.common.model.PharmacyInfo> pharList = pharmacy.getAllPharmacies();
+                                        List<PharmacyInfo> pharList = pharmacy.getAllPharmacies();
                                     %>
                                     <table id="pharmacyList" class="table-condensed table-striped"
                                            style="margin-top:5px;width:100%">
@@ -563,7 +564,7 @@
                                             <th></th>
                                         </tr>
                                         <% for (int i = 0; i < pharList.size(); i++) {
-                                            org.oscarehr.common.model.PharmacyInfo ph = pharList.get(i);
+                                            PharmacyInfo ph = pharList.get(i);
                                             if (ph.getName() != null && !ph.getName().isEmpty()) {
                                         %>
                                         <tr class="pharmacyItem" pharmId="<%=ph.getId()%>">

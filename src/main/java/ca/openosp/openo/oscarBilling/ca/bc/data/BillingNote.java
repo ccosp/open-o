@@ -34,9 +34,9 @@ package ca.openosp.openo.oscarBilling.ca.bc.data;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.billing.CA.BC.dao.BillingNoteDao;
-import org.oscarehr.billing.CA.BC.model.BillingNotes;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.BillingNoteDao;
+import ca.openosp.openo.billing.CA.BC.model.BillingNotes;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.entities.Billingmaster;

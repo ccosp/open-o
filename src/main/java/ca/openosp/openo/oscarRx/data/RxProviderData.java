@@ -29,12 +29,12 @@ package ca.openosp.openo.oscarRx.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.UserProperty;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.ClinicDAO;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.Clinic;
+import ca.openosp.openo.common.model.UserProperty;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.SxmlMisc;
 
@@ -45,9 +45,9 @@ public class RxProviderData {
     private ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
 
     public List<Provider> getAllProviders() {
-        List<org.oscarehr.common.model.Provider> providers = providerDao.getActiveProviders();
+        List<ca.openosp.openo.common.model.Provider> providers = providerDao.getActiveProviders();
         ArrayList<Provider> results = new ArrayList<Provider>();
-        for (org.oscarehr.common.model.Provider p : providers) {
+        for (ca.openosp.openo.common.model.Provider p : providers) {
             results.add(convertProvider(p));
         }
         return results;
@@ -57,7 +57,7 @@ public class RxProviderData {
         return convertProvider(providerDao.getProvider(providerNo));
     }
 
-    public Provider convertProvider(org.oscarehr.common.model.Provider p) {
+    public Provider convertProvider(ca.openosp.openo.common.model.Provider p) {
         String surname = null, firstName = null, clinicName = null, clinicAddress = null, clinicCity = null, clinicPostal = null, clinicPhone = null, clinicFax = null, clinicProvince = null, practitionerNo = null;
         String practitionerNoType = null;
         boolean useFullAddress = true;

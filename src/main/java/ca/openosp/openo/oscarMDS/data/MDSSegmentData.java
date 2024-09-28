@@ -33,32 +33,33 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.MdsMSHDao;
-import org.oscarehr.common.dao.MdsNTEDao;
-import org.oscarehr.common.dao.MdsOBRDao;
-import org.oscarehr.common.dao.MdsOBXDao;
-import org.oscarehr.common.dao.MdsPV1Dao;
-import org.oscarehr.common.dao.MdsZLBDao;
-import org.oscarehr.common.dao.MdsZMCDao;
-import org.oscarehr.common.dao.MdsZMNDao;
-import org.oscarehr.common.dao.MdsZRGDao;
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.MdsNTE;
-import org.oscarehr.common.model.MdsOBX;
-import org.oscarehr.common.model.MdsPV1;
-import org.oscarehr.common.model.MdsZLB;
-import org.oscarehr.common.model.MdsZMC;
-import org.oscarehr.common.model.MdsZMN;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MdsMSHDao;
+import ca.openosp.openo.common.dao.MdsNTEDao;
+import ca.openosp.openo.common.dao.MdsOBRDao;
+import ca.openosp.openo.common.dao.MdsOBXDao;
+import ca.openosp.openo.common.dao.MdsPV1Dao;
+import ca.openosp.openo.common.dao.MdsZLBDao;
+import ca.openosp.openo.common.dao.MdsZMCDao;
+import ca.openosp.openo.common.dao.MdsZMNDao;
+import ca.openosp.openo.common.dao.MdsZRGDao;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.model.MdsNTE;
+import ca.openosp.openo.common.model.MdsOBX;
+import ca.openosp.openo.common.model.MdsPV1;
+import ca.openosp.openo.common.model.MdsZLB;
+import ca.openosp.openo.common.model.MdsZMC;
+import ca.openosp.openo.common.model.MdsZMN;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 
 public class MDSSegmentData {
 
-    static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    static Logger logger = MiscUtils.getLogger();
 
     public String segmentID;
     public String reportDate;

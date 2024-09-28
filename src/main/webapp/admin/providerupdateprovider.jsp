@@ -23,10 +23,10 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.LookupListItem" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.LookupList" %>
-<%@page import="org.oscarehr.managers.LookupListManager" %>
+<%@page import="ca.openosp.openo.common.model.LookupListItem" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.LookupList" %>
+<%@page import="ca.openosp.openo.managers.LookupListManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
@@ -50,17 +50,17 @@
         import="java.sql.*, java.util.*, ca.openosp.openo.SxmlMisc, ca.openosp.openo.oscarProvider.data.ProviderBillCenter"
         errorPage="/errorpage.jsp" %>
 <%@ page import="ca.openosp.openo.log.LogAction,ca.openosp.openo.log.LogConst" %>
-<%@ page import="org.oscarehr.common.model.ClinicNbr" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
-<%@ page import="org.oscarehr.common.dao.SecurityDao" %>
-<%@ page import="org.oscarehr.common.model.Security" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.ClinicNbr" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.ClinicNbrDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
+<%@ page import="ca.openosp.openo.common.dao.SecurityDao" %>
+<%@ page import="ca.openosp.openo.common.model.Security" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.common.Gender" %>
+<%@page import="ca.openosp.openo.common.Gender" %>
 
 <%
     java.util.Locale vLocale = (java.util.Locale) session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
@@ -68,16 +68,17 @@
 %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
 <%@page import="oscar.login.*,org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <html:html lang="en">
-    <%@page import="org.oscarehr.common.model.ProviderSite" %>
-    <%@page import="org.oscarehr.common.model.ProviderSitePK" %>
-    <%@page import="org.oscarehr.common.dao.ProviderSiteDao" %>
+    <%@page import="ca.openosp.openo.common.model.ProviderSite" %>
+    <%@page import="ca.openosp.openo.common.model.ProviderSitePK" %>
+    <%@page import="ca.openosp.openo.common.dao.ProviderSiteDao" %>
     <%@ page import="ca.openosp.openo.MyDateFormat" %>
+    <%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 
 
     <head>
@@ -222,7 +223,7 @@
                 </tr>
 
 
-                <% if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) { %>
+                <% if (IsPropertiesOn.isMultisitesEnable()) { %>
                 <tr>
                     <td>
                         <div align="right"><bean:message key="admin.provider.sitesAssigned"/><font color="red">:</font>

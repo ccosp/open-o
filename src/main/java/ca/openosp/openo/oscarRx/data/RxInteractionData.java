@@ -29,7 +29,7 @@ package ca.openosp.openo.oscarRx.data;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * @author Jay Gallagher

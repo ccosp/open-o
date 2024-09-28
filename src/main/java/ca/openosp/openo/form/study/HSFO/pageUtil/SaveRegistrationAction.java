@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.form.study.HSFO.HSFODAO;
 import ca.openosp.openo.form.study.HSFO.PatientData;
@@ -127,7 +127,7 @@ public class SaveRegistrationAction extends DispatchAction {
 //        String datestring = BirthDate_year + "-" + BirthDate_month +"-" + BirthDate_day;
 //
 //        try {
-//            java.util.Date parsedDate = formater.parse(datestring);
+//            java.ehrutil.Date parsedDate = formater.parse(datestring);
 //            java.sql.Date result = new java.sql.Date(parsedDate.getTime());
 //            BirthDate = result;
 //        } catch (ParseException pe) {
@@ -169,7 +169,7 @@ public class SaveRegistrationAction extends DispatchAction {
 //
 //        String visitdatestring = VisitDate_Id_year + "-" + VisitDate_Id_month +"-" + VisitDate_Id_day;
 //        try {
-//            java.util.Date parsedDate = formater.parse(visitdatestring);
+//            java.ehrutil.Date parsedDate = formater.parse(visitdatestring);
 //            java.sql.Date result = new java.sql.Date(parsedDate.getTime());
 //            VisitDate_Id = result;
 //        } catch (ParseException pe) {

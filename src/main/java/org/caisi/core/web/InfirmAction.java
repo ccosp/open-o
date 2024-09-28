@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ca.openosp.openo.PMmodule.model.Program;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,13 +41,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.util.LabelValueBean;
 import org.caisi.service.InfirmBedProgramManager;
-import org.oscarehr.PMmodule.service.AdmissionManager;
-import org.oscarehr.PMmodule.service.ProgramManager;
-import org.oscarehr.common.model.Admission;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SessionConstants;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.service.AdmissionManager;
+import ca.openosp.openo.PMmodule.service.ProgramManager;
+import ca.openosp.openo.common.model.Admission;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SessionConstants;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 
@@ -168,7 +169,7 @@ public class InfirmAction extends DispatchAction {
         }
 
         //lets not load the demographic beans when in appointment view..no point
-        org.oscarehr.PMmodule.model.Program p = this.pm.getProgram(programId);
+        Program p = this.pm.getProgram(programId);
         if (p != null) {
             String exclusiveView = p.getExclusiveView();
 

@@ -39,13 +39,13 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@ page
         import="oscar.form.*, ca.openosp.openo.OscarProperties, java.util.Date, ca.openosp.openo.util.UtilDateUtilities" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.common.dao.FrmLabReqPreSetDao, org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.common.dao.FrmLabReqPreSetDao, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
 <%@ page import="ca.openosp.openo.form.FrmLabReq07Record" %>
 <%@ page import="ca.openosp.openo.form.FrmRecord" %>

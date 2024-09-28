@@ -33,12 +33,11 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.hibernate.SessionFactory;
 
-import com.quatro.dao.security.SecobjprivilegeDao;
 import com.quatro.model.security.Secobjprivilege;
 
 public class SecobjprivilegeDaoImpl extends HibernateDaoSupport implements SecobjprivilegeDao {

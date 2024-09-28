@@ -26,10 +26,10 @@
 
 <%@ include file="/taglibs.jsp" %>
 
-<%@page import="org.oscarehr.eyeform.model.EyeformFollowUp" %>
-<%@page import="org.oscarehr.eyeform.model.EyeformProcedureBook" %>
-<%@page import="org.oscarehr.eyeform.model.EyeformTestBook" %>
-<%@page import="org.oscarehr.eyeform.web.PlanAction" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformFollowUp" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformProcedureBook" %>
+<%@page import="ca.openosp.openo.eyeform.model.EyeformTestBook" %>
+<%@page import="ca.openosp.openo.eyeform.web.PlanAction" %>
 
 
 <html>

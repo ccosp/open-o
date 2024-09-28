@@ -25,7 +25,7 @@
 --%>
 <!DOCTYPE html>
 
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -41,8 +41,8 @@
     }
 %>
 
-<%@page import="org.oscarehr.common.dao.ProviderDataDao" %>
-<%@page import="org.oscarehr.managers.DemographicManager" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager" %>
 
 <%@page import="ca.openosp.openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
 <%
@@ -62,42 +62,47 @@
 <%@ page import="oscar.util.*" %>
 <%@ page import="ca.openosp.openo.appt.status.service.AppointmentStatusMgr" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.common.OtherIdManager" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.OtherIdManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="org.oscarehr.common.model.AppointmentStatus" %>
-<%@ page import="org.oscarehr.common.dao.BillingONCHeader1Dao" %>
-<%@ page import="org.oscarehr.common.model.BillingONCHeader1" %>
-<%@ page import="org.oscarehr.common.model.DemographicCust" %>
-<%@ page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@ page import="org.oscarehr.common.model.EncounterForm" %>
-<%@ page import="org.oscarehr.common.dao.EncounterFormDao" %>
-<%@ page import="org.oscarehr.common.model.ProviderPreference" %>
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.model.Appointment" %>
-<%@ page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.BillingONExtDao" %>
-<%@ page import="org.oscarehr.PMmodule.model.Program" %>
-<%@ page import="org.oscarehr.common.model.Facility" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.managers.LookupListManager" %>
-<%@ page import="org.oscarehr.common.model.LookupList" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.common.model.AppointmentStatus" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
+<%@ page import="ca.openosp.openo.common.model.BillingONCHeader1" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@ page import="ca.openosp.openo.common.model.EncounterForm" %>
+<%@ page import="ca.openosp.openo.common.dao.EncounterFormDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.dao.BillingONExtDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@ page import="ca.openosp.openo.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProviderManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.managers.LookupListManager" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
-<%@ page import="org.oscarehr.common.dao.AppointmentTypeDao" %>
+<%@ page import="ca.openosp.openo.common.dao.AppointmentTypeDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.appt.ApptData" %>
 <%@ page import="ca.openosp.openo.appt.ApptUtil" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.AppointmentType" %>
 
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -172,12 +177,12 @@
     boolean caisiEnabled = moduleNames != null && org.apache.commons.lang.StringUtils.containsIgnoreCase(moduleNames, "Caisi");
     boolean locationEnabled = caisiEnabled && (useProgramLocation != null && useProgramLocation.equals("true"));
 
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_APPOINTMENT;
+    String annotation_display = CaseManagementNoteLink.DISP_APPOINTMENT;
     CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
 
 
     boolean isSiteSelected = false;
-    boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable();
+    boolean bMultisites = IsPropertiesOn.isMultisitesEnable();
     List<Site> sites = siteDao.getActiveSitesByProviderNo((String) session.getAttribute("user"));
 
 
@@ -867,7 +872,7 @@
         //Else how did we get here?
         if (bFirstDisp) {
             DemographicData dd = new DemographicData();
-            org.oscarehr.common.model.Demographic demo = dd.getDemographic(loggedInInfo, String.valueOf(appt.getDemographicNo()));
+            Demographic demo = dd.getDemographic(loggedInInfo, String.valueOf(appt.getDemographicNo()));
             doctorNo = demo != null ? (demo.getProviderNo()) : "";
         } else if (!request.getParameter("doctor_no").equals("")) {
             doctorNo = request.getParameter("doctor_no");
@@ -1499,14 +1504,14 @@
         <%--        // Format date to be more readable--%>
         <%--        java.text.SimpleDateFormat inform = new java.text.SimpleDateFormat ("yyyy-MM-dd");--%>
         <%--        String strDate = bFirstDisp ? ConversionUtils.toDateString(appt.getAppointmentDate()) : request.getParameter("appointment_date");--%>
-        <%--        java.util.Date d = inform.parse(strDate);--%>
+        <%--        java.ehrutil.Date d = inform.parse(strDate);--%>
         <%--        String formatDate = "";--%>
         <%--        try { // attempt to change string format--%>
-        <%--        java.util.ResourceBundle prop = ResourceBundle.getBundle("oscarResources", request.getLocale());--%>
-        <%--        formatDate = oscar.util.UtilDateUtilities.DateToString(d, prop.getString("date.EEEyyyyMMdd"));--%>
+        <%--        java.ehrutil.ResourceBundle prop = ResourceBundle.getBundle("oscarResources", request.getLocale());--%>
+        <%--        formatDate = oscar.ehrutil.UtilDateUtilities.DateToString(d, prop.getString("date.EEEyyyyMMdd"));--%>
         <%--        } catch (Exception e) {--%>
-        <%--            org.oscarehr.util.MiscUtils.getLogger().error("Error", e);--%>
-        <%--            formatDate = oscar.util.UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");--%>
+        <%--            org.oscarehr.ehrutiltil.MiscUtils.getLogger().error("Error", e);--%>
+        <%--            formatDate = oscar.ehrutil.UtilDateUtilities.DateToString(inform.parse(strDate), "EEE, yyyy-MM-dd");--%>
         <%--        }--%>
         <%--    %>--%>
         <%--    <div class="header">--%>

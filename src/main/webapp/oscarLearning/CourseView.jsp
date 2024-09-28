@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%
     if (session.getValue("user") == null) response.sendRedirect("../logout.jsp");
 %>
@@ -32,13 +32,13 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@page import="java.util.*,org.oscarehr.learning.web.CourseManagerAction,org.oscarehr.common.model.SecRole,org.oscarehr.PMmodule.model.Program" %>
+<%@page import="java.util.*,ca.openosp.openo.learning.web.CourseManagerAction,ca.openosp.openo.common.model.SecRole,ca.openosp.openo.PMmodule.model.Program" %>
 
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     //get list of courses for the drop down
-    List<Program> courses = org.oscarehr.learning.web.CourseManagerAction.getCoursesByModerator(loggedInInfo.getLoggedInProviderNo());
+    List<Program> courses = CourseManagerAction.getCoursesByModerator(loggedInInfo.getLoggedInProviderNo());
 %>
 <html:html lang="en">
 
@@ -118,7 +118,7 @@
                     var name = data[x].name;
                     var eURL = "../oscarEncounter/IncomingEncounter.do?demographicNo=" + data[x].demographicNo;
                     var mURL = "../demographic/demographiccontrol.jsp?demographic_no=" + data[x].demographicNo + "&displaymode=edit&dboperation=search_detail";
-                    var rxURL = "../oscarRx/choosePatient.do?providerNo="+<%=session.getAttribute("user")%>+
+                    var rxURL = "../ehroscarRx/choosePatient.do?providerNo="+<%=session.getAttribute("user")%>+
                     "&demographicNo=" + data[x].demographicNo;
 
                     html += "<tr><td><a href=\"#\">" + data[x].name + "</a>&nbsp;<a href=\"" + eURL + "\">E</a>&nbsp;<a href=\"" + mURL + "\">M</a>&nbsp;<a href=\"#\" onclick=\"popupOscarRx(700,1027," + rxURL + ")\">Rx</a></td><td>" + data[x].providerName + "</td></tr>";

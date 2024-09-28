@@ -22,10 +22,11 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*,org.oscarehr.common.model.*,org.apache.commons.lang.time.*"
         errorPage="../appointment/errorpage.jsp" %>
+<%@ page import="ca.openosp.openo.ehrweb.admin.ProviderPreferencesUIBean" %>
 <jsp:useBean id="daySheetBean" class="ca.openosp.openo.AppointmentMainBean" scope="page"/>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 <%
-    org.oscarehr.common.model.ProviderPreference providerPreference = org.oscarehr.web.admin.ProviderPreferencesUIBean.updateOrCreateProviderPreferences(request);
+    org.oscarehr.common.model.ProviderPreference providerPreference = ProviderPreferencesUIBean.updateOrCreateProviderPreferences(request);
     int endHour = providerPreference.getEndHour();
     int startHour = providerPreference.getStartHour();
 

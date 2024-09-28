@@ -36,10 +36,10 @@ import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult;
-import org.oscarehr.common.dao.OscarLogDao;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarLogDao;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.w3c.dom.Document;
 
 import ca.openosp.openo.OscarProperties;

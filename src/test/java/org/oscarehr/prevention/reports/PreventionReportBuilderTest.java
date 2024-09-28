@@ -25,15 +25,17 @@ package org.oscarehr.prevention.reports;
 
 import static org.junit.Assert.assertEquals;
 
+import ca.openosp.openo.prevention.reports.Report;
+import ca.openosp.openo.prevention.reports.ReportBuilder;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.DaoTestFixtures;
 import org.oscarehr.common.dao.utils.AuthUtils;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.ws.rest.to.model.PreventionSearchTo1;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ws.rest.to.model.PreventionSearchTo1;
 
 public class PreventionReportBuilderTest extends DaoTestFixtures {
     private static Logger logger = MiscUtils.getLogger();

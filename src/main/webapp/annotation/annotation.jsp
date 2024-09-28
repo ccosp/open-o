@@ -43,17 +43,17 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="org.springframework.web.context.WebApplicationContext,
                 org.springframework.web.context.support.WebApplicationContextUtils,
-                org.oscarehr.casemgmt.model.CaseManagementNote,
-                org.oscarehr.casemgmt.model.CaseManagementNoteLink,
-                org.oscarehr.casemgmt.service.CaseManagementManager,
-                org.oscarehr.common.dao.SecRoleDao,
-                org.oscarehr.common.model.SecRole,
-                org.oscarehr.util.SpringUtils,
+                ca.openosp.openo.casemgmt.model.CaseManagementNote,
+                ca.openosp.openo.casemgmt.model.CaseManagementNoteLink,
+                ca.openosp.openo.casemgmt.service.CaseManagementManager,
+                ca.openosp.openo.common.dao.SecRoleDao,
+                ca.openosp.openo.common.model.SecRole,
+                ca.openosp.openo.ehrutil.SpringUtils,
                 ca.openosp.openo.oscarEncounter.data.EctProgram,
                 java.util.Date,
                 java.util.List" %>
 <%@page import="ca.openosp.openo.log.LogAction, ca.openosp.openo.log.LogConst" %>
-<%@page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@page import="documentManager.EDocUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

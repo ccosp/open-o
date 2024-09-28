@@ -25,16 +25,17 @@
 --%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarPrevention.pageUtil.*,java.net.*,oscar.eform.*" %>
-<%@page import="ca.openosp.openo.OscarProperties, org.oscarehr.util.SpringUtils, org.oscarehr.common.dao.BillingONCHeader1Dao" %>
+<%@page import="ca.openosp.openo.OscarProperties, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicNameAgeString" %>
 <%@ page import="ca.openosp.openo.oscarReport.data.RptSearchData" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.pageUtil.PreventionReportDisplay" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -579,7 +580,7 @@
                         setBill = false;
                         PreventionReportDisplay dis = (PreventionReportDisplay) list.get(i);
                         Hashtable h = deName.getNameAgeSexHashtable(LoggedInInfo.getLoggedInInfoFromSession(request), dis.demographicNo.toString());
-                        org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), dis.demographicNo.toString());
+                        Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), dis.demographicNo.toString());
 
                         if (dis.nextSuggestedProcedure != null) {
                             if (dis.nextSuggestedProcedure.equals("L1")) {
@@ -645,7 +646,7 @@
 
 
                     <% } else {
-                        org.oscarehr.common.model.Demographic demoSDM = demoData.getSubstituteDecisionMaker(LoggedInInfo.getLoggedInInfoFromSession(request), dis.demographicNo.toString());%>
+                        Demographic demoSDM = demoData.getSubstituteDecisionMaker(LoggedInInfo.getLoggedInInfoFromSession(request), dis.demographicNo.toString());%>
                     <td><%=demo.getAgeAsOf(asDate)%>
                     </td>
                     <td><%=Encode.forHtml(h.get("sex"))%>

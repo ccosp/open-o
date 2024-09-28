@@ -1,5 +1,5 @@
-<%@ page import="org.oscarehr.managers.TicklerManager" %>
-<%@ page import="org.oscarehr.common.model.Tickler" %>
+<%@ page import="ca.openosp.openo.managers.TicklerManager" %>
+<%@ page import="ca.openosp.openo.common.model.Tickler" %>
 
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -7,9 +7,12 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
-<%@ page import="oscar.*, org.oscarehr.util.*,oscar.util.*,java.net.URLEncoder"%>
+<%@ page import="oscar.*, org.oscarehr.ehrutil.*,oscar.util.*,java.net.URLEncoder"%>
 <%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <logic:equal name="infirmaryView_isOscar" value="false">
 
@@ -173,7 +176,7 @@ if ((k/2)*2==k){ %>
 					<security:oscarSec roleName="<%=roleName$%>"
 						objectName="_appointment.doctorLink" rights="r">
 						<a href=#
-							onClick="popupOscarRx(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&demographicNo=<%=demographic_no%>')">|<bean:message
+							onClick="popupOscarRx(700,1027,'../ehroscarRx/choosePatient.do?providerNo=<%=loggedInInfo.getLoggedInProviderNo()%>&demographicNo=<%=demographic_no%>')">|<bean:message
 							key="global.rx" /></a>
 						<oscar:oscarPropertiesCheck property="SHOW_APPT_REASON"
 							value="yes">| <b><%=reason%></b>

@@ -23,17 +23,17 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
-<%@page import="org.oscarehr.common.model.Dxresearch" %>
+<%@page import="ca.openosp.openo.common.dao.DxresearchDAO" %>
+<%@page import="ca.openosp.openo.common.model.Dxresearch" %>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPatientData" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.managers.CodingSystemManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.managers.CodingSystemManager" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@page import="org.oscarehr.casemgmt.model.Issue" %>
-<%@page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.casemgmt.model.Issue" %>
+<%@page import="ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
 <%@page import="java.util.List" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -43,7 +43,7 @@
 <%
     RxSessionBean bean2 = (RxSessionBean) request.getSession().getAttribute("RxSessionBean");
 
-    org.oscarehr.common.model.Allergy[] allergies = RxPatientData.getPatient(LoggedInInfo.getLoggedInInfoFromSession(request), bean2.getDemographicNo()).getActiveAllergies();
+    Allergy[] allergies = RxPatientData.getPatient(LoggedInInfo.getLoggedInInfoFromSession(request), bean2.getDemographicNo()).getActiveAllergies();
     String alle = "";
     if (allergies.length > 0) {
         alle = "Red";
@@ -132,7 +132,7 @@
 
     <p class="PropSheetLevel1CurrentItem"><bean:message key="oscarRx.sideLinks.msgFavorites"/>
         <a href="EditFavorites2.jsp">edit</a>
-        <a href="CopyFavorites2.jsp">copy</a> <%-- <bean:message key="oscarRx.sideLinks.msgCopyFavorites"/> --%>
+        <a href="CopyFavorites2.jsp">copy</a> <%-- <bean:message key="ehroscarRx.sideLinks.msgCopyFavorites"/> --%>
     </p>
     <p class="PropSheetMenuItemLevel1">
             <%

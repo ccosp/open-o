@@ -15,10 +15,10 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="org.oscarehr.util.MiscUtils,org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.apache.logging.log4j.Logger,org.oscarehr.common.dao.OscarLogDao,org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
-<%@ page import="org.oscarehr.common.model.SystemPreferences" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils,org.apache.commons.lang.StringEscapeUtils" %>
+<%@page import="org.apache.logging.log4j.Logger,ca.openosp.openo.common.dao.OscarLogDao,ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.SystemPreferencesDao" %>
+<%@ page import="ca.openosp.openo.common.model.SystemPreferences" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 
 <%

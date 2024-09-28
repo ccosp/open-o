@@ -10,23 +10,24 @@
 
 package ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil;
 
+import ca.openosp.openo.common.IsPropertiesOn;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.DigitalSignatureDao;
-import org.oscarehr.common.dao.DocumentDao;
-import org.oscarehr.common.dao.SiteDao;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DigitalSignature;
-import org.oscarehr.common.model.ProfessionalSpecialist;
-import org.oscarehr.common.model.Site;
-import org.oscarehr.fax.core.FaxRecipient;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProgramDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.DigitalSignatureDao;
+import ca.openosp.openo.common.dao.DocumentDao;
+import ca.openosp.openo.common.dao.SiteDao;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DigitalSignature;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.Site;
+import ca.openosp.openo.fax.core.FaxRecipient;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarClinic.ClinicData;
 import ca.openosp.openo.oscarRx.data.RxProviderData;
@@ -288,7 +289,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
     }
 
     /**
-     * @deprecated use the createLogo method in the ClinicLogoUtility at org.oscarehr.util
+     * @deprecated use the createLogo method in the ClinicLogoUtility at org.oscarehr.ehrutil
      */
     private PdfPTable createLogoHeader() {
 
@@ -301,7 +302,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
             Site site = siteDao.getById(Integer.valueOf(reqFrm.siteName));
             if (site != null) {
                 if (site.getSiteLogoId() != null) {
-                    org.oscarehr.common.model.Document d = documentDao.getDocument(String.valueOf(site.getSiteLogoId()));
+                    ca.openosp.openo.common.model.Document d = documentDao.getDocument(String.valueOf(site.getSiteLogoId()));
                     String dir = props.getProperty("DOCUMENT_DIR");
                     filename = dir.concat(d.getDocfilename());
                 } else {
@@ -367,7 +368,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
         // If not set to Patient Will Book then maybe a Custom Appointment Instruction is used.
         else if (OscarProperties.getInstance().getBooleanProperty("CONSULTATION_APPOINTMENT_INSTRUCTIONS_LOOKUP", "true")) {
             cell.setPhrase(new Phrase(reqFrm.getAppointmentInstructionsLabel(), boldFontHeading));
-        } else if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+        } else if (IsPropertiesOn.isMultisitesEnable()) {
             cell.setPhrase(new Phrase("Please reply", boldFontHeading));
         } else {
             cell.setPhrase(new Phrase(
@@ -696,7 +697,7 @@ public class ConsultationPDFCreator extends PdfPageEventHelper {
 
     private PdfPTable createReferringPracAndMRPDetailTable(LoggedInInfo loggedInInfo) {
         ProviderDao proDAO = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
-        org.oscarehr.common.model.Provider pro = proDAO.getProvider(reqFrm.providerNo);
+        ca.openosp.openo.common.model.Provider pro = proDAO.getProvider(reqFrm.providerNo);
         DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
         Demographic demo = demographicManager.getDemographic(loggedInInfo, Integer.parseInt(reqFrm.demoNo));
         String ohipNo = pro.getOhipNo();

@@ -24,11 +24,11 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%
     if (session.getValue("user") == null) response.sendRedirect("../../logout.jsp");
 %>

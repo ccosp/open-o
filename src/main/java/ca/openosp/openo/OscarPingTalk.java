@@ -47,7 +47,7 @@ import org.chip.ping.xml.cddm.CddmType;
 import org.chip.ping.xml.cddm.DataType;
 import org.chip.ping.xml.talk.AddCddmResultType;
 import org.chip.ping.xml.talk.AuthenticateResultType;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.w3c.dom.Document;
 
 /*

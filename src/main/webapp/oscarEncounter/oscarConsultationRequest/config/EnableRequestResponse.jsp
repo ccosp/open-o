@@ -40,9 +40,9 @@
 %>
 
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.PropertyDao, org.oscarehr.common.model.Property" %>
-<%@ page import="org.oscarehr.managers.ConsultationManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.PropertyDao, ca.openosp.openo.common.model.Property" %>
+<%@ page import="ca.openosp.openo.managers.ConsultationManager" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

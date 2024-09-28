@@ -9,7 +9,7 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.oscarehr.common.model">
-	<class name="Provider" table="provider">
+	<class name="ca.openosp.openo.common.model.Provider" table="provider">
 		<id column="provider_no" name="ProviderNo" type="string">
 			<generator class="assigned" />
 		</id>

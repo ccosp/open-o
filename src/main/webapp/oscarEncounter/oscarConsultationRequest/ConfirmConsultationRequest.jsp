@@ -24,7 +24,7 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -45,7 +45,7 @@
 %>
 
 
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <html:html lang="en">
 
     <head>

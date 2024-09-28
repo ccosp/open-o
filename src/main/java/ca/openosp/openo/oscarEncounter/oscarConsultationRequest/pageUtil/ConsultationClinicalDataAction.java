@@ -36,17 +36,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.casemgmt.model.CaseManagementNote;
-import org.oscarehr.casemgmt.model.Issue;
-import org.oscarehr.casemgmt.service.CaseManagementManager;
-import org.oscarehr.casemgmt.service.CaseManagementManager.IssueType;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.Drug;
-import org.oscarehr.managers.AllergyManager;
-import org.oscarehr.managers.PrescriptionManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.casemgmt.model.CaseManagementNote;
+import ca.openosp.openo.casemgmt.model.Issue;
+import ca.openosp.openo.casemgmt.service.CaseManagementManager;
+import ca.openosp.openo.casemgmt.service.CaseManagementManager.IssueType;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.common.model.Drug;
+import ca.openosp.openo.managers.AllergyManager;
+import ca.openosp.openo.managers.PrescriptionManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import net.sf.json.JSONObject;
 

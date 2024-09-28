@@ -37,7 +37,7 @@ import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.BillingONCHeader1;
 import org.oscarehr.common.model.BillingONExt;
 import org.oscarehr.common.model.BillingONPayment;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingONExtDaoTest extends DaoTestFixtures {
 

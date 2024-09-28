@@ -34,8 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.Billing;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingDaoTest extends DaoTestFixtures {
 

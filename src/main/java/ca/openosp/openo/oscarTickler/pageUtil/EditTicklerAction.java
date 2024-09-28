@@ -38,16 +38,16 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
-import org.oscarehr.common.dao.TicklerTextSuggestDao;
-import org.oscarehr.common.model.Tickler;
-import org.oscarehr.common.model.TicklerComment;
-import org.oscarehr.common.model.TicklerTextSuggest;
-import org.oscarehr.common.model.TicklerUpdate;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.managers.TicklerManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.TicklerTextSuggestDao;
+import ca.openosp.openo.common.model.Tickler;
+import ca.openosp.openo.common.model.TicklerComment;
+import ca.openosp.openo.common.model.TicklerTextSuggest;
+import ca.openosp.openo.common.model.TicklerUpdate;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.managers.TicklerManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.DateUtils;
 

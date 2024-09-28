@@ -42,14 +42,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.LazyValidatorForm;
 import org.caisi.dao.ProviderDAO;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.SecurityDao;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.Security;
-import org.oscarehr.util.DbConnectionFilter;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.SecurityDao;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.Security;
+import ca.openosp.openo.ehrutil.DbConnectionFilter;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -61,7 +61,7 @@ import ca.openosp.openo.form.study.HSFO.RecommitSchedule;
 
 public class RecommitHSFOAction extends DispatchActionSupport {
 
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     public ActionForward showSchedule(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
         LazyValidatorForm sform = (LazyValidatorForm) form;
@@ -209,7 +209,7 @@ public class RecommitHSFOAction extends DispatchActionSupport {
                         return;
                     }
                     String rstr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + doc.xmlText();
-                    // send to hsfo web
+                    // send to hsfo ehrweb
 
                     try {
                         message = tfutil.soapHttpCall(tfutil.getSiteID().intValue(), tfutil.getUserId(), tfutil.getLoginPasswd(), rstr);

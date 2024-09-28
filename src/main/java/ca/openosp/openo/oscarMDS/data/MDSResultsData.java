@@ -31,24 +31,25 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.ConsultDocsDao;
-import org.oscarehr.common.dao.ConsultResponseDocDao;
-import org.oscarehr.common.dao.EFormDocsDao;
-import org.oscarehr.common.dao.LabPatientPhysicianInfoDao;
-import org.oscarehr.common.dao.LabTestResultsDao;
-import org.oscarehr.common.dao.MdsMSHDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.dao.ProviderLabRoutingDao;
-import org.oscarehr.common.model.ConsultDocs;
-import org.oscarehr.common.model.ConsultResponseDoc;
-import org.oscarehr.common.model.EFormDocs;
-import org.oscarehr.common.model.LabPatientPhysicianInfo;
-import org.oscarehr.common.model.MdsMSH;
-import org.oscarehr.common.model.MdsZRG;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.common.model.ProviderLabRoutingModel;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConsultDocsDao;
+import ca.openosp.openo.common.dao.ConsultResponseDocDao;
+import ca.openosp.openo.common.dao.EFormDocsDao;
+import ca.openosp.openo.common.dao.LabPatientPhysicianInfoDao;
+import ca.openosp.openo.common.dao.LabTestResultsDao;
+import ca.openosp.openo.common.dao.MdsMSHDao;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.dao.ProviderLabRoutingDao;
+import ca.openosp.openo.common.model.ConsultDocs;
+import ca.openosp.openo.common.model.ConsultResponseDoc;
+import ca.openosp.openo.common.model.EFormDocs;
+import ca.openosp.openo.common.model.LabPatientPhysicianInfo;
+import ca.openosp.openo.common.model.MdsMSH;
+import ca.openosp.openo.common.model.MdsZRG;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.common.model.ProviderLabRoutingModel;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 import ca.openosp.openo.util.ConversionUtils;
@@ -62,7 +63,7 @@ public class MDSResultsData {
     private PatientLabRoutingDao PLRDao = SpringUtils.getBean(PatientLabRoutingDao.class);
     private EFormDocsDao eformDocsDao = SpringUtils.getBean(EFormDocsDao.class);
 
-    static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    static Logger logger = MiscUtils.getLogger();
 
     public ArrayList<String> segmentID;
     public ArrayList<String> acknowledgedStatus;

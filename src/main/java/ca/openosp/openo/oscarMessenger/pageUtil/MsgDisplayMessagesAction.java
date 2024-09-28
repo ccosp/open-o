@@ -35,14 +35,14 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.MessageListDao;
-import org.oscarehr.common.model.MessageList;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.managers.ProviderManager2;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MessageListDao;
+import ca.openosp.openo.common.model.MessageList;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.managers.ProviderManager2;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

@@ -36,13 +36,13 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.ServiceSpecialistsDao;
-import org.oscarehr.common.model.ServiceSpecialists;
-import org.oscarehr.common.model.ServiceSpecialistsPK;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ServiceSpecialistsDao;
+import ca.openosp.openo.common.model.ServiceSpecialists;
+import ca.openosp.openo.common.model.ServiceSpecialistsPK;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctConDisplayServiceAction extends Action {
 

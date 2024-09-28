@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import ca.openosp.openo.integration.mcedt.DelegateFactory;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
@@ -28,8 +29,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.oscarehr.integration.ebs.client.EdtClientBuilder;
 import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
-import org.oscarehr.integration.mcedt.mailbox.CidPrefixResourceResolver;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.integration.mcedt.mailbox.CidPrefixResourceResolver;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.ontario.health.edt.Detail;
 import ca.ontario.health.edt.DetailData;

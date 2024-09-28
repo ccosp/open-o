@@ -23,29 +23,30 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.common.model.LookupListItem" %>
-<%@page import="org.oscarehr.common.model.LookupList" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.managers.LookupListManager" %>
+<%@page import="ca.openosp.openo.common.model.LookupListItem" %>
+<%@page import="ca.openosp.openo.common.model.LookupList" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.managers.LookupListManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%@ page import="org.oscarehr.common.model.ClinicNbr" %>
-<%@ page import="org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.ClinicNbr" %>
+<%@ page import="ca.openosp.openo.common.dao.ClinicNbrDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.*,oscar.oscarProvider.data.*" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@ page import="org.oscarehr.common.dao.SiteDao" %>
-<%@ page import="org.oscarehr.common.model.Site" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
-<%@page import="org.oscarehr.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.SiteDao" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
+<%@page import="ca.openosp.openo.common.model.ProviderData" %>
 
 
-<%@page import="org.oscarehr.common.Gender" %>
+<%@page import="ca.openosp.openo.common.Gender" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderBillCenter" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <%
 
     String curProvider_no, userfirstname, userlastname;
@@ -209,7 +210,7 @@
                 </tr>
 
                 <%
-                    if (org.oscarehr.common.IsPropertiesOn.isMultisitesEnable()) {
+                    if (IsPropertiesOn.isMultisitesEnable()) {
                 %>
                 <tr>
                     <td>

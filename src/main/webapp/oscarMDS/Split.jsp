@@ -9,10 +9,10 @@
 
 --%>
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils, org.oscarehr.common.model.Document" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.model.Document" %>
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="org.oscarehr.common.dao.DocumentDao" %>
+<%@ page import="ca.openosp.openo.common.dao.DocumentDao" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

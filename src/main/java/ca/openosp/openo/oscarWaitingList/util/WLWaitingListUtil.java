@@ -28,10 +28,10 @@ package ca.openosp.openo.oscarWaitingList.util;
 import java.util.Date;
 import java.util.List;
 
-import org.oscarehr.common.dao.WaitingListDao;
-import org.oscarehr.common.model.WaitingList;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.WaitingListDao;
+import ca.openosp.openo.common.model.WaitingList;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

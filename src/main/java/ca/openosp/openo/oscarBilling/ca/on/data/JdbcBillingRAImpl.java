@@ -31,22 +31,22 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.RaDetailDao;
-import org.oscarehr.common.dao.RaHeaderDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.common.model.RaDetail;
-import org.oscarehr.common.model.RaHeader;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.RaDetailDao;
+import ca.openosp.openo.common.dao.RaHeaderDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.common.model.RaDetail;
+import ca.openosp.openo.common.model.RaHeader;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 import ca.openosp.openo.util.UtilDateUtilities;
 
 public class JdbcBillingRAImpl {
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
 
     private RaDetailDao raDetailDao = SpringUtils.getBean(RaDetailDao.class);
     private RaHeaderDao raHeaderDao = SpringUtils.getBean(RaHeaderDao.class);

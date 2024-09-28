@@ -41,16 +41,16 @@ import javax.mail.internet.InternetAddress;
 
 import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.utility.DateUtils;
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.dao.OscarAppointmentDao;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.model.Appointment;
-import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.utility.DateUtils;
+import ca.openosp.openo.common.dao.ClinicDAO;
+import ca.openosp.openo.common.dao.OscarAppointmentDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.model.Appointment;
+import ca.openosp.openo.common.model.Clinic;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 

@@ -36,9 +36,9 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.ConfigImmunizationDao;
-import org.oscarehr.common.model.ConfigImmunization;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConfigImmunizationDao;
+import ca.openosp.openo.common.model.ConfigImmunization;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctImmDeleteImmunizationSetAction extends Action {
 

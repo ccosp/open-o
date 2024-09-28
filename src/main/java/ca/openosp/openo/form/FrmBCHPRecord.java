@@ -31,7 +31,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Properties;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.login.DBHelp;
 import ca.openosp.openo.oscarDB.DBHandler;

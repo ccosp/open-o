@@ -29,12 +29,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.oscarehr.billing.CA.BC.dao.CtlServiceCodesDxCodesDao;
-import org.oscarehr.billing.CA.BC.model.CtlServiceCodesDxCodes;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.dao.DiagnosticCodeDao;
-import org.oscarehr.common.model.DiagnosticCode;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.CtlServiceCodesDxCodesDao;
+import ca.openosp.openo.billing.CA.BC.model.CtlServiceCodesDxCodes;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.dao.DiagnosticCodeDao;
+import ca.openosp.openo.common.model.DiagnosticCode;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 /**
  * <p>Title: BillingAssociationPersistence</p>

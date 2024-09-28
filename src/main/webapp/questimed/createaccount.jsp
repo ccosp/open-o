@@ -26,11 +26,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
 <%@page import="java.util.Locale" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -49,7 +49,7 @@
 %>
 
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.ws.rest.util.QuestimedUtil" %>
+<%@ page import="ca.openosp.openo.ws.rest.util.QuestimedUtil" %>
 
 
 <link rel="stylesheet" type="text/css"

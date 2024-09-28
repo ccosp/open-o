@@ -27,10 +27,10 @@ package ca.openosp.openo.oscarEncounter.data;
 
 import java.util.ArrayList;
 
-import org.oscarehr.common.dao.OscarCommLocationsDao;
-import org.oscarehr.common.dao.RemoteAttachmentsDao;
-import org.oscarehr.common.model.RemoteAttachments;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarCommLocationsDao;
+import ca.openosp.openo.common.dao.RemoteAttachmentsDao;
+import ca.openosp.openo.common.model.RemoteAttachments;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

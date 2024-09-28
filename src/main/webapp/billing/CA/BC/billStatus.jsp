@@ -44,10 +44,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.ReportProviderDao" %>
-<%@page import="org.oscarehr.common.model.ReportProvider" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 
 
 <%
@@ -101,7 +101,7 @@
 </security:oscarSec>
 
 
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
 <%@ page import="ca.openosp.openo.util.DateUtils" %>
 <!DOCTYPE HTML>

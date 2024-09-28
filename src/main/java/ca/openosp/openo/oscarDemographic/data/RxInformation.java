@@ -27,8 +27,8 @@
 package ca.openosp.openo.oscarDemographic.data;
 
 import ca.openosp.openo.oscarRx.data.RxPrescriptionData;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarRx.data.RxPatientData;
 

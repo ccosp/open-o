@@ -33,10 +33,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.oscarehr.common.dao.ConsultationRequestDao;
-import org.oscarehr.common.dao.UserPropertyDAO;
-import org.oscarehr.common.model.UserProperty;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.dao.ConsultationRequestDao;
+import ca.openosp.openo.common.dao.UserPropertyDAO;
+import ca.openosp.openo.common.model.UserProperty;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 

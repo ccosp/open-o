@@ -19,11 +19,11 @@
 --%>
 
 <%@ page import="java.util.*, java.sql.*, oscar.login.*, oscar.*" errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.ReportProvider" %>
-<%@ page import="org.oscarehr.common.dao.ReportProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.ReportProvider" %>
+<%@ page import="ca.openosp.openo.common.dao.ReportProviderDao" %>
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
     ReportProviderDao reportProviderDao = SpringUtils.getBean(ReportProviderDao.class);

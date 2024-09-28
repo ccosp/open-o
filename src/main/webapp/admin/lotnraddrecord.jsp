@@ -48,12 +48,12 @@
 <%@ page import="ca.openosp.openo.log.LogAction,ca.openosp.openo.log.LogConst" %>
 <%@ page import="oscar.log.*, oscar.oscarDB.*" %>
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.PreventionsLotNrs" %>
-<%@ page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.PreventionsLotNrs" %>
+<%@ page import="ca.openosp.openo.common.dao.PreventionsLotNrsDao" %>
 <%
     PreventionsLotNrsDao PreventionsLotNrsDao = (PreventionsLotNrsDao) SpringUtils.getBean(PreventionsLotNrsDao.class);
 %>

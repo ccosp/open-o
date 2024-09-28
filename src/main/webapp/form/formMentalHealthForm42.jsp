@@ -40,8 +40,8 @@
 
 <%@ page
         import="oscar.form.*, ca.openosp.openo.OscarProperties, java.util.Date, ca.openosp.openo.util.UtilDateUtilities" %>
-<%@page import="org.oscarehr.common.dao.FrmLabReqPreSetDao, org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.dao.FrmLabReqPreSetDao, ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.form.FrmMentalHealthForm42Record" %>
 <%@ page import="ca.openosp.openo.form.FrmRecordFactory" %>
 <%@ page import="ca.openosp.openo.form.FrmRecord" %>

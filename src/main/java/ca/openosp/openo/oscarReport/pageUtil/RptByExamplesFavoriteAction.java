@@ -37,10 +37,10 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.common.dao.ReportByExamplesFavoriteDao;
-import org.oscarehr.common.model.ReportByExamplesFavorite;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ReportByExamplesFavoriteDao;
+import ca.openosp.openo.common.model.ReportByExamplesFavorite;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarReport.bean.RptByExampleQueryBeanHandler;
 

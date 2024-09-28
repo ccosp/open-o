@@ -29,7 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.casemgmt.dao.CaseManagementNoteDAO;
 import org.oscarehr.common.dao.utils.SchemaUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class CaseManagementNoteDaoTest extends DaoTestFixtures {
 

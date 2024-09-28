@@ -32,11 +32,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.model.MessageTbl;
-import org.oscarehr.common.model.OscarMsgType;
-import org.oscarehr.managers.MessagingManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.MessageTbl;
+import ca.openosp.openo.common.model.OscarMsgType;
+import ca.openosp.openo.managers.MessagingManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.util.StringUtils;
 
 public class EctDisplayMsgAction extends EctDisplayAction {

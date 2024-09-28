@@ -5,8 +5,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi"%>
-<%@ page import="org.oscarehr.util.*"%>
+<%@ page import="org.oscarehr.ehrutil.*"%>
 <%@ page import="ca.openosp.openo.caisi.CaisiUtil" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 <%
 String questr=(String)session.getAttribute("infirmaryView_OscarQue"); 

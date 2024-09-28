@@ -10,7 +10,7 @@
 
 package com.indivica.olis;
 
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 
 import com.indivica.olis.queries.Query;
 import com.indivica.olis.segments.DSCSegment;

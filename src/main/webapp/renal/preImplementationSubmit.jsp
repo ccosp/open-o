@@ -26,14 +26,14 @@
 
 <%@page import="java.util.List" %>
 <%@page import="java.text.DecimalFormat" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.renal.ReportHelper" %>
-<%@page import="org.oscarehr.renal.ReportDataContainer" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.renal.ReportHelper" %>
+<%@page import="ca.openosp.openo.renal.ReportDataContainer" %>
 <%@page import="org.oscarehr.common.model.ORNPreImplementationReportLog" %>
 <%@page import="org.oscarehr.common.dao.ORNPreImplementationReportLogDao" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 
 <%@ include file="/taglibs.jsp" %>
 

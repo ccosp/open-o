@@ -25,7 +25,7 @@
 --%>
 
 <%@ include file="/taglibs.jsp" %>
-<%@page import="org.oscarehr.eyeform.web.EyeformAction" %>
+<%@page import="ca.openosp.openo.eyeform.web.EyeformAction" %>
 <%
     request.setAttribute("sections", EyeformAction.getMeasurementSections());
     request.setAttribute("headers", EyeformAction.getMeasurementHeaders());

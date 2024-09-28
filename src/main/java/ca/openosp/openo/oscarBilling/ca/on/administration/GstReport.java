@@ -31,14 +31,14 @@ package ca.openosp.openo.oscarBilling.ca.on.administration;
 import java.util.Properties;
 import java.util.Vector;
 
-import org.oscarehr.common.dao.BillingONExtDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.model.BillingONExt;
-import org.oscarehr.common.model.BillingService;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.BillingONExtDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.model.BillingONExt;
+import ca.openosp.openo.common.model.BillingService;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.form.FrmRecordHelp;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 import ca.openosp.openo.oscarDB.DBHandler;
 import ca.openosp.openo.util.UtilDateUtilities;

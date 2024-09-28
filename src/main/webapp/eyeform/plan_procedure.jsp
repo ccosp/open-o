@@ -25,8 +25,8 @@
 --%>
 
 <%@ include file="/taglibs.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%
     String id = request.getParameter("id");
     ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);

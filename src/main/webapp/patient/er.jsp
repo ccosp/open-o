@@ -31,13 +31,13 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*,java.net.*"
          errorPage="../errorpage.jsp" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.DemographicAccessoryDao" %>
-<%@page import="org.oscarehr.common.model.DemographicAccessory" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.EncounterDao" %>
-<%@page import="org.oscarehr.common.model.Encounter" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicAccessoryDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicAccessory" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.EncounterDao" %>
+<%@page import="ca.openosp.openo.common.model.Encounter" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%

@@ -37,13 +37,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.FacilityDao;
-import org.oscarehr.common.dao.IntegratorControlDao;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SessionConstants;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.util.WebUtils;
+import ca.openosp.openo.common.dao.FacilityDao;
+import ca.openosp.openo.common.dao.IntegratorControlDao;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SessionConstants;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.ehrutil.WebUtils;
 
 public class FacilityManagerAction extends DispatchAction {
 

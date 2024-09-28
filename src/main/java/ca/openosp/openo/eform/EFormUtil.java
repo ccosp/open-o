@@ -25,6 +25,23 @@
 
 package ca.openosp.openo.eform;
 
+import ca.openosp.openo.common.dao.ConsultationRequestDao;
+import ca.openosp.openo.common.dao.EFormDao;
+import ca.openosp.openo.common.dao.EFormDataDao;
+import ca.openosp.openo.common.dao.EFormGroupDao;
+import ca.openosp.openo.common.dao.EFormValueDao;
+import ca.openosp.openo.common.dao.ProfessionalSpecialistDao;
+import ca.openosp.openo.common.dao.SecRoleDao;
+import ca.openosp.openo.common.dao.TicklerDao;
+import ca.openosp.openo.common.model.ConsultationRequest;
+import ca.openosp.openo.common.model.EFormData;
+import ca.openosp.openo.common.model.EFormGroup;
+import ca.openosp.openo.common.model.EFormValue;
+import ca.openosp.openo.common.model.OscarMsgType;
+import ca.openosp.openo.common.model.Prevention;
+import ca.openosp.openo.common.model.ProfessionalSpecialist;
+import ca.openosp.openo.common.model.SecRole;
+import ca.openosp.openo.common.model.Tickler;
 import com.quatro.model.security.Secobjprivilege;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -33,26 +50,25 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.model.ProgramProvider;
-import org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAO;
-import org.oscarehr.casemgmt.model.CaseManagementIssue;
-import org.oscarehr.casemgmt.model.CaseManagementNote;
-import org.oscarehr.casemgmt.model.CaseManagementNoteLink;
-import org.oscarehr.casemgmt.model.Issue;
-import org.oscarehr.casemgmt.service.CaseManagementManager;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.model.ProgramProvider;
+import ca.openosp.openo.casemgmt.dao.CaseManagementNoteLinkDAO;
+import ca.openosp.openo.casemgmt.model.CaseManagementIssue;
+import ca.openosp.openo.casemgmt.model.CaseManagementNote;
+import ca.openosp.openo.casemgmt.model.CaseManagementNoteLink;
+import ca.openosp.openo.casemgmt.model.Issue;
+import ca.openosp.openo.casemgmt.service.CaseManagementManager;
 import org.oscarehr.common.dao.*;
-import org.oscarehr.common.dao.EFormDao.EFormSortOrder;
-import org.oscarehr.common.model.*;
-import org.oscarehr.documentManager.EDoc;
-import org.oscarehr.documentManager.EDocUtil;
-import org.oscarehr.managers.MessagingManager;
-import org.oscarehr.managers.PreventionManager;
-import org.oscarehr.managers.ProgramManager2;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EFormDao.EFormSortOrder;
+import documentManager.EDoc;
+import documentManager.EDocUtil;
+import ca.openosp.openo.managers.MessagingManager;
+import ca.openosp.openo.managers.PreventionManager;
+import ca.openosp.openo.managers.ProgramManager2;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.eform.actions.DisplayImageAction;
 import ca.openosp.openo.eform.data.EForm;
@@ -119,7 +135,7 @@ public class EFormUtil {
     public static String saveEForm(String formName, String formSubject, String fileName, String htmlStr, String creator, boolean showLatestFormOnly, boolean patientIndependent, String roleType) {
         // called by the upload action, puts the uploaded form into DB
 
-        org.oscarehr.common.model.EForm eform = new org.oscarehr.common.model.EForm();
+        ca.openosp.openo.common.model.EForm eform = new ca.openosp.openo.common.model.EForm();
         eform.setFormName(formName);
         eform.setFileName(fileName);
         eform.setSubject(formSubject);
@@ -139,7 +155,7 @@ public class EFormUtil {
 
         // sends back a list of forms that were uploaded (those that can be added to the patient)
 
-        List<org.oscarehr.common.model.EForm> eforms = null;
+        List<ca.openosp.openo.common.model.EForm> eforms = null;
         Boolean status = null;
         if (deleted.equals("deleted")) {
             status = false;
@@ -158,7 +174,7 @@ public class EFormUtil {
         eforms = eformDao.findByStatus(status, sortOrder);
 
         ArrayList<HashMap<String, ? extends Object>> results = new ArrayList<HashMap<String, ? extends Object>>();
-        for (org.oscarehr.common.model.EForm eform : eforms) {
+        for (ca.openosp.openo.common.model.EForm eform : eforms) {
             HashMap<String, Object> curht = new HashMap<String, Object>();
             curht.put("fid", eform.getId().toString());
             curht.put("formName", eform.getFormName());
@@ -425,7 +441,7 @@ public class EFormUtil {
     public static HashMap<String, Object> loadEForm(String fid) {
 
         Integer id = Integer.valueOf(fid);
-        org.oscarehr.common.model.EForm eform = eformDao.find(id);
+        ca.openosp.openo.common.model.EForm eform = eformDao.find(id);
         HashMap<String, Object> curht = new HashMap<String, Object>();
         if (eform == null) {
             logger.error("Unable to find EForm with ID = " + fid);
@@ -454,7 +470,7 @@ public class EFormUtil {
         // Updates the form - used by editForm
 
 
-        org.oscarehr.common.model.EForm eform = eformDao.find(Integer.parseInt(updatedForm.getFid()));
+        ca.openosp.openo.common.model.EForm eform = eformDao.find(Integer.parseInt(updatedForm.getFid()));
         if (eform == null) {
             logger.error("Unable to find eform for update: " + updatedForm);
             return;
@@ -491,7 +507,7 @@ public class EFormUtil {
 
     public static String getEFormParameter(String fid, String fieldName) {
 
-        org.oscarehr.common.model.EForm eform = eformDao.find(ConversionUtils.fromIntString(fid));
+        ca.openosp.openo.common.model.EForm eform = eformDao.find(ConversionUtils.fromIntString(fid));
         if (eform == null) {
             logger.error("Unable to find EForm for ID = " + fid);
             return "";
@@ -630,7 +646,7 @@ public class EFormUtil {
 
     public static boolean formExistsInDB(String eFormName) {
 
-        org.oscarehr.common.model.EForm eform = eformDao.findByName(eFormName);
+        ca.openosp.openo.common.model.EForm eform = eformDao.findByName(eFormName);
         return eform != null;
     }
 
@@ -1253,7 +1269,7 @@ public class EFormUtil {
 
     private static void setFormStatus(String fid, boolean status) {
 
-        org.oscarehr.common.model.EForm eform = eformDao.find(ConversionUtils.fromIntString(fid));
+        ca.openosp.openo.common.model.EForm eform = eformDao.find(ConversionUtils.fromIntString(fid));
         if (eform == null) {
             logger.error("Unable to find EForm for " + fid);
             return;
@@ -1595,7 +1611,7 @@ public class EFormUtil {
      * developed eForms that are imported from external sources.
      */
     public static void logError(int formId, String error) {
-        org.oscarehr.common.model.EForm eform = eformDao.findById(formId);
+        ca.openosp.openo.common.model.EForm eform = eformDao.findById(formId);
 
         /*
          * DEFAULT is always stable = true

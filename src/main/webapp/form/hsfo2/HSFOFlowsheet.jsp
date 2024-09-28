@@ -43,8 +43,8 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="org.oscarehr.common.model.Hsfo2Patient" %>
-<%@page import="org.oscarehr.common.model.Hsfo2Visit" %>
+<%@page import="ca.openosp.openo.common.model.Hsfo2Patient" %>
+<%@page import="ca.openosp.openo.common.model.Hsfo2Visit" %>
 <html:html>
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>

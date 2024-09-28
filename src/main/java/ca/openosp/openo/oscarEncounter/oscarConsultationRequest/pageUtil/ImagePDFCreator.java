@@ -15,7 +15,7 @@ import java.io.OutputStream;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

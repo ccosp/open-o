@@ -18,20 +18,20 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Provider,org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.BillingONPremium, org.oscarehr.common.dao.BillingONPremiumDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Provider,ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPremium, ca.openosp.openo.common.dao.BillingONPremiumDao" %>
 
 <%@ page import="java.io.*, java.util.*, java.sql.*, oscar.*, java.net.*" errorPage="/errorpage.jsp" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
 
-<%@page import="org.oscarehr.common.model.RaHeader" %>
-<%@page import="org.oscarehr.common.dao.RaHeaderDao" %>
+<%@page import="ca.openosp.openo.common.model.RaHeader" %>
+<%@page import="ca.openosp.openo.common.dao.RaHeaderDao" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);

@@ -18,9 +18,9 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.util.DateRange" %>
+<%@page import="ca.openosp.openo.ehrutil.DateRange" %>
 <%@ page import="java.math.*,java.util.*,java.sql.*,oscar.*,oscar.oscarBilling.ca.on.OHIP.*,java.net.*"
          errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
@@ -28,10 +28,10 @@
 
 <jsp:useBean id="apptMainBean" class="ca.openosp.openo.AppointmentMainBean"
              scope="session"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingCreateBillingFile" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingProviderData" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingDiskCreatePrep" %>

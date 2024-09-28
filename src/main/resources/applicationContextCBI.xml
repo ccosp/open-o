@@ -10,7 +10,7 @@
             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
       
-    <bean id="propertyConfigurer" class="org.oscarehr.common.OscarPropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="ca.openosp.openo.common.OscarPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:oscar_mcmaster.properties</value>

@@ -28,8 +28,8 @@ package ca.openosp.openo.oscarDxResearch.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.common.dao.DxDao;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DxDao;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class dxCodeSearchBeanHandler {
 

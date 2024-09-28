@@ -103,7 +103,7 @@ $(document).ready(function () {
 
     // --> set the indicator dashboard
     $("#libraryTable  tbody").on('change', '.assignDashboard', function () {
-        var url = "/web/dashboard/admin/DashboardManager.do";
+        var url = "/ehrweb/dashboard/admin/DashboardManager.do";
         var data = new Object();
         data.indicatorId = (this.id).split("_")[1];
         data.method = (this.id).split("_")[0];
@@ -113,7 +113,7 @@ $(document).ready(function () {
 
     // --> set the indicator active status
     $("#libraryTable tbody").on('change', ".toggleActive", function () {
-        var url = "/web/dashboard/admin/DashboardManager.do";
+        var url = "/ehrweb/dashboard/admin/DashboardManager.do";
         var data = new Object();
         data.objectId = (this.id).split("_")[1];
         data.method = (this.id).split("_")[0];
@@ -128,7 +128,7 @@ $(document).ready(function () {
     // Back to dashboard button
     $(".backtoDashboardBtn").on('click', function (event) {
         event.preventDefault();
-        var url = "/web/dashboard/display/DashboardDisplay.do";
+        var url = "/ehrweb/dashboard/display/DashboardDisplay.do";
         var data = new Object();
         data.dashboardId = (this.id).split("_")[1];
         data.method = (this.id).split("_")[0];

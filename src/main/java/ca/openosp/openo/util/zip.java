@@ -37,7 +37,7 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 
@@ -133,10 +133,10 @@ public class zip {
             File dir = new File(dirName + "unzip_archive/");
             Boolean success = afile.renameTo(new File(dir, afile.getName()));
             if (!success) {
-                logger.error("ca.openosp.openo.util.zip.unzipXML: the zip file " + fullpath + " was not archived");
+                logger.error("ca.openosp.openo.ehrutil.zip.unzipXML: the zip file " + fullpath + " was not archived");
             }
         } catch (Exception e) {
-            logger.error("ca.openosp.openo.util.zip.unzipXML Unhandled exception:", e);
+            logger.error("ca.openosp.openo.ehrutil.zip.unzipXML Unhandled exception:", e);
             return result;
         }
         result = true;

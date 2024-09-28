@@ -1,11 +1,11 @@
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.PropertyDao" %>
-<%@ page import="org.oscarehr.common.model.Property" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.PropertyDao" %>
+<%@ page import="ca.openosp.openo.common.model.Property" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ taglib prefix="security" uri="/oscarSecuritytag" %>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean-el" %>
 

@@ -24,11 +24,11 @@
 --%>
 
 
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.model.RemoteReferral" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.model.RemoteReferral" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ page import="org.oscarehr.PMmodule.model.*" %>
 <%@ page import="java.util.*" %>
@@ -39,7 +39,7 @@
 %>
 
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <script>
 
 

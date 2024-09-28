@@ -28,15 +28,15 @@ package ca.openosp.openo.oscarBilling.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.BillingBCDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.dao.CtlBillingServiceDao;
-import org.oscarehr.common.dao.DiagnosticCodeDao;
-import org.oscarehr.common.model.CtlBillingService;
-import org.oscarehr.common.model.DiagnosticCode;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.BillingBCDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.dao.CtlBillingServiceDao;
+import ca.openosp.openo.common.dao.DiagnosticCodeDao;
+import ca.openosp.openo.common.model.CtlBillingService;
+import ca.openosp.openo.common.model.DiagnosticCode;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class BillingFormData {
 
@@ -55,7 +55,7 @@ public class BillingFormData {
     public BillingService[] getServiceList(String serviceGroup, String serviceType, String billRegion) {
         List<BillingService> lst = new ArrayList<BillingService>();
         BillingServiceDao dao = SpringUtils.getBean(BillingServiceDao.class);
-        for (org.oscarehr.common.model.BillingService bs : dao.findByRegionGroupAndType(billRegion, serviceGroup, serviceType)) {
+        for (ca.openosp.openo.common.model.BillingService bs : dao.findByRegionGroupAndType(billRegion, serviceGroup, serviceType)) {
             BillingService billingservice = new BillingService(bs.getServiceCode(), bs.getDescription(), bs.getValue(), bs.getPercentage());
             lst.add(billingservice);
         }
@@ -281,7 +281,7 @@ public class BillingFormData {
     public String getServiceDesc(String code, String reg) {
         String codeDesc = "";
         BillingServiceDao dao = SpringUtils.getBean(BillingServiceDao.class);
-        for (org.oscarehr.common.model.BillingService bs : dao.findBillingCodesByCode(code, reg)) {
+        for (ca.openosp.openo.common.model.BillingService bs : dao.findBillingCodesByCode(code, reg)) {
             codeDesc = bs.getDescription();
         }
         return codeDesc;

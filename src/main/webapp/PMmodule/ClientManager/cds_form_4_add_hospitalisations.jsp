@@ -22,11 +22,11 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="java.util.Calendar" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="org.oscarehr.PMmodule.web.CdsForm4" %>
+<%@page import="ca.openosp.openo.PMmodule.web.CdsForm4" %>
 
 <%
     Integer clientId = Integer.parseInt(request.getParameter("clientId"));

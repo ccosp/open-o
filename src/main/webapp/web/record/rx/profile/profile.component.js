@@ -7,7 +7,7 @@ const RxProfileComponent = {
         addFavorite: '&'
 
     },
-    templateUrl: '../web/record/rx/profile/profile.template.jsp',
+    templateUrl: '../ehrweb/record/rx/profile/profile.template.jsp',
     controller: ['$stateParams', '$state', '$log', '$timeout', 'summaryService', 'rxService', '$filter', '$window', '$uibModal', function ($stateParams, $state, $log, $timeout, summaryService, rxService, $filter, $window, $uibModal) {
         rxProfileComp = this;
 
@@ -179,7 +179,7 @@ const RxProfileComponent = {
 
             var top = winY + 70;
             var left = winX + 110;
-            var url = "../web/record/rx/print/PrintDrugProfile2.jsp?demographicNo=" + $stateParams.demographicNo;
+            var url = "../ehrweb/record/rx/print/PrintDrugProfile2.jsp?demographicNo=" + $stateParams.demographicNo;
             windowName = 'windowNameProfilePrint' + $stateParams.demographicNo;
 
             windowprops = "height=575,width=650,location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes,screenX=0,screenY=0,top=" + top + ",left=" + left;
@@ -309,7 +309,7 @@ const RxProfileComponent = {
 
             var top = winY + 70;
             var left = winX + 110;
-            var url = "../oscarRx/SelectReason.jsp?demographicNo=" + drug.demographicNo + "&drugId=" + drug.drugId;
+            var url = "../ehroscarRx/SelectReason.jsp?demographicNo=" + drug.demographicNo + "&drugId=" + drug.drugId;
             windowName = 'windowNameRxReason' + drug.demographicNo;
 
             windowprops = "height=575,width=650,location=no,scrollbars=yes,menubars=no,toolbars=no,resizable=yes,screenX=0,screenY=0,top=" + top + ",left=" + left;
@@ -371,7 +371,7 @@ const RxProfileComponent = {
             /*
              function(event) {
             var val = $('hidecpp_242').checked;
-            new Ajax.Request('/oscar/oscarRx/hideCpp.do?method=update&prescriptId=242&value=' + val, {
+            new Ajax.Request('/oscar/ehroscarRx/hideCpp.do?method=update&prescriptId=242&value=' + val, {
               method: 'get',
               onSuccess: function(transport) {}
             });

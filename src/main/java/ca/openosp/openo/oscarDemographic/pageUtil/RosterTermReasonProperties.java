@@ -36,7 +36,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class RosterTermReasonProperties extends Properties {
     private static RosterTermReasonProperties rosterTermReasonProperties = new RosterTermReasonProperties();

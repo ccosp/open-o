@@ -36,16 +36,16 @@ import java.util.HashMap;
 
 import ca.openosp.openo.Misc;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.LabPatientPhysicianInfoDao;
-import org.oscarehr.common.dao.LabReportInformationDao;
-import org.oscarehr.common.dao.LabTestResultsDao;
-import org.oscarehr.common.dao.PatientLabRoutingDao;
-import org.oscarehr.common.model.LabPatientPhysicianInfo;
-import org.oscarehr.common.model.LabReportInformation;
-import org.oscarehr.common.model.LabTestResults;
-import org.oscarehr.common.model.PatientLabRouting;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.LabPatientPhysicianInfoDao;
+import ca.openosp.openo.common.dao.LabReportInformationDao;
+import ca.openosp.openo.common.dao.LabTestResultsDao;
+import ca.openosp.openo.common.dao.PatientLabRoutingDao;
+import ca.openosp.openo.common.model.LabPatientPhysicianInfo;
+import ca.openosp.openo.common.model.LabReportInformation;
+import ca.openosp.openo.common.model.LabTestResults;
+import ca.openosp.openo.common.model.PatientLabRouting;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.ca.all.upload.ProviderLabRouting;
@@ -54,7 +54,7 @@ import ca.openosp.openo.oscarLab.ca.all.upload.ProviderLabRouting;
  * @author root
  */
 public class ABCDParser {
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     Atype reportFile = null;
     ArrayList<Atype> atypes = new ArrayList<Atype>();

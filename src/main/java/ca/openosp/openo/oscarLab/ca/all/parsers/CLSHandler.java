@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import ca.openosp.openo.util.ConversionUtils;
@@ -57,7 +58,7 @@ public class CLSHandler implements MessageHandler {
         FIRST, MIDDLE, LAST;
     }
 
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
 
     private ORU_R01 msg;
 

@@ -24,7 +24,7 @@ import ca.openosp.openo.appt.JdbcApptImpl;
 
 public class BillingSiteIdPrep {
     private final String NO_SITE = "NONE";
-    //private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    //private static final Logger _logger = ca.openosp.openo.ehrutil.MiscUtils.getLogger();
     JdbcApptImpl dbObj = new JdbcApptImpl();
 
     public String[] getSiteList() {

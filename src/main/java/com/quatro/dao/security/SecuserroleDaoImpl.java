@@ -35,11 +35,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
-import org.oscarehr.PMmodule.web.formbean.StaffForm;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.PMmodule.web.formbean.StaffForm;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import com.quatro.model.security.Secuserrole;
 import org.springframework.transaction.annotation.Transactional;

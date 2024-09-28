@@ -34,7 +34,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
 <jsp:useBean id="dataBean" class="java.util.Properties" scope="page"/>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>

@@ -28,14 +28,14 @@
 <%@page import="net.sf.json.JSONSerializer" %>
 <%@page import="net.sf.json.JSONArray" %>
 <%@page import="net.sf.json.JSONObject" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao" %>
-<%@ page import="org.oscarehr.common.model.PatientLabRouting" %>
-<%@ page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@ page import="ca.openosp.openo.common.dao.PatientLabRoutingDao" %>
+<%@ page import="ca.openosp.openo.common.model.PatientLabRouting" %>
+<%@ page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="org.apache.commons.lang.builder.ReflectionToStringBuilder" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="org.w3c.dom.Document" %>
 <%@ page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.web.LabDisplayHelper" %>
@@ -48,16 +48,16 @@
                  ca.openosp.openo.oscarMDS.data.ReportStatus,
                  oscar.log.*,
                  ca.openosp.openo.OscarProperties" %>
-<%@ page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
-<%@ page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.dao.UserPropertyDAO, org.oscarehr.common.model.UserProperty" %>
-<%@ page import="org.oscarehr.common.model.MeasurementMap, org.oscarehr.common.dao.MeasurementMapDao" %>
-<%@ page import="org.oscarehr.common.model.Tickler" %>
-<%@ page import="org.oscarehr.managers.TicklerManager" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNote" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO, ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.MeasurementMap, ca.openosp.openo.common.dao.MeasurementMapDao" %>
+<%@ page import="ca.openosp.openo.common.model.Tickler" %>
+<%@ page import="ca.openosp.openo.managers.TicklerManager" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page
-        import="org.oscarehr.casemgmt.service.CaseManagementManager, org.oscarehr.common.dao.Hl7TextMessageDao, org.oscarehr.common.model.Hl7TextMessage,org.oscarehr.common.dao.Hl7TextInfoDao,org.oscarehr.common.model.Hl7TextInfo" %>
+        import="ca.openosp.openo.casemgmt.service.CaseManagementManager, ca.openosp.openo.common.dao.Hl7TextMessageDao, ca.openosp.openo.common.model.Hl7TextMessage,ca.openosp.openo.common.dao.Hl7TextInfoDao,ca.openosp.openo.common.model.Hl7TextInfo" %>
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session"/>
 <%@    page import="javax.swing.text.rtf.RTFEditorKit" %>
 <%@    page import="java.io.ByteArrayInputStream" %>
@@ -262,7 +262,7 @@
     }
 
 
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_LABTEST;
+    String annotation_display = CaseManagementNoteLink.DISP_LABTEST;
     CaseManagementManager caseManagementManager = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
 
 %>

@@ -22,16 +22,16 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageConsentAction" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageConsentAction" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -52,5 +52,5 @@
     }
 
     manageConsentAction.storeAllConsents();
-    response.sendRedirect(request.getContextPath() + "/PMmodule/ClientManager.do?id=" + currentDemographicId);
+    response.sendRedirect(request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager.do?id=" + currentDemographicId);
 %>

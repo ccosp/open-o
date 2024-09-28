@@ -38,12 +38,12 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="java.util.HashMap" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="java.io.PrintWriter" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="org.oscarehr.web.OcanReportUIBean" %>
+<%@page import="ca.openosp.openo.ehrweb.OcanReportUIBean" %>
 <%@page contentType="application/octet-stream" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

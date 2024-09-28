@@ -28,8 +28,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import ca.openosp.openo.util.DateUtils;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 /**
  * @author kimleanhoffman

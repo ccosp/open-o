@@ -29,15 +29,15 @@ import java.util.Properties;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.oscarehr.billing.CA.ON.model.Billing3rdPartyAddress;
-import org.oscarehr.common.dao.Billing3rdPartyAddressDao;
-import org.oscarehr.common.dao.BillingONExtDao;
-import org.oscarehr.common.dao.BillingPaymentTypeDao;
-import org.oscarehr.common.model.BillingONExt;
-import org.oscarehr.common.model.BillingPaymentType;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.model.Clinic;
+import ca.openosp.openo.billing.CA.ON.model.Billing3rdPartyAddress;
+import ca.openosp.openo.common.dao.Billing3rdPartyAddressDao;
+import ca.openosp.openo.common.dao.BillingONExtDao;
+import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
+import ca.openosp.openo.common.model.BillingONExt;
+import ca.openosp.openo.common.model.BillingPaymentType;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.common.dao.ClinicDAO;
+import ca.openosp.openo.common.model.Clinic;
 
 public class JdbcBilling3rdPartImpl {
 

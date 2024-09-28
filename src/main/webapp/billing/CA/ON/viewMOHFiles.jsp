@@ -23,7 +23,7 @@
     <%response.sendRedirect("/oscar/logout.jsp");%>
 </security:oscarSec>
 <%@ page
-        import="java.util.*,oscar.*,java.io.*,java.net.*,oscar.util.*,org.apache.commons.io.FileUtils,java.text.SimpleDateFormat,org.oscarehr.billing.CA.ON.util.EDTFolder,org.oscarehr.util.MiscUtils"
+        import="java.util.*,oscar.*,java.io.*,java.net.*,oscar.util.*,org.apache.commons.io.FileUtils,java.text.SimpleDateFormat,ca.openosp.openo.billing.CA.ON.util.EDTFolder,ca.openosp.openo.ehrutil.MiscUtils"
         errorPage="/errorpage.jsp" %>
 <%@ page import="ca.openosp.openo.util.FileSortByDate" %>
 <%@ page import="ca.openosp.openo.util.zip" %>

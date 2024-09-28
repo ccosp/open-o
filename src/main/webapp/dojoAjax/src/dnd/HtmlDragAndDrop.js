@@ -15,7 +15,7 @@ dojo.require("dojo.dnd.DragAndDrop");
 
 dojo.require("dojo.html.*");
 dojo.require("dojo.html.display");
-dojo.require("dojo.html.util");
+dojo.require("dojo.html.ehrutil");
 dojo.require("dojo.html.selection");
 dojo.require("dojo.html.iframe");
 dojo.require("dojo.lang.extras");

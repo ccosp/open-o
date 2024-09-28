@@ -27,7 +27,7 @@
 <%@page import="java.util.Collections" %>
 <%@page import="java.util.Arrays" %>
 <%@page import="java.util.ArrayList" %>
-<%@page import="org.oscarehr.web.eform.EfmpatientformlistSendPhrAction" %>
+<%@page import="ca.openosp.openo.ehrweb.eform.EfmpatientformlistSendPhrAction" %>
 <%
     String[] s = request.getParameterValues("sendToPhr");
     EfmpatientformlistSendPhrAction bean = new EfmpatientformlistSendPhrAction(request);

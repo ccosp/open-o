@@ -37,12 +37,13 @@ import java.util.ListIterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.form.study.HSFO.HSFODAO;
@@ -84,7 +85,7 @@ public class ManageHSFOAction extends Action {
         firstrecord = hsfoDAO.isFirstRecord(id);
 
         DemographicData demoData = new DemographicData();
-        org.oscarehr.common.model.Demographic de = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), id);
+        Demographic de = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), id);
 
         if (firstrecord == true) {//		determine if this is the first record
             isfirstrecord = "true";

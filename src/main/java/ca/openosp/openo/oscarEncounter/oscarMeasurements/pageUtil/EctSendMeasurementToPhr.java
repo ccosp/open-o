@@ -45,11 +45,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.indivo.IndivoException;
-import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
-import org.oscarehr.phr.model.PHRMeasurement;
-import org.oscarehr.phr.service.PHRService;
-import org.oscarehr.phr.util.MyOscarUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.phr.model.PHRMeasurement;
+import ca.openosp.openo.phr.service.PHRService;
+import ca.openosp.openo.phr.util.MyOscarUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.oscarEncounter.data.EctProviderData;
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean;

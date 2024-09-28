@@ -24,6 +24,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data;
@@ -34,7 +35,7 @@ import ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingCodeImpl;
 import ca.openosp.openo.util.UtilDateUtilities;
 
 public class BillingSpecPrep {
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
     JdbcBillingClaimImpl dbObj = new JdbcBillingClaimImpl();
 
     // save a billing record

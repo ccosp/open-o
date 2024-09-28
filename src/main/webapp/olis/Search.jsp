@@ -11,18 +11,18 @@
 <%@page import="org.apache.commons.lang3.StringUtils" %>
 <%@page contentType="text/html" %>
 <%@page import="java.util.*,
-                org.oscarehr.common.dao.DemographicDao,
-                org.oscarehr.common.model.Demographic,
-                org.oscarehr.PMmodule.dao.ProviderDao,
-                org.oscarehr.common.model.Provider,
-                org.oscarehr.olis.dao.OLISRequestNomenclatureDao,
-                org.oscarehr.olis.dao.OLISResultNomenclatureDao,
-                org.oscarehr.olis.model.OLISRequestNomenclature,
-                org.oscarehr.olis.model.OLISResultNomenclature,
-                org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+                ca.openosp.openo.common.dao.DemographicDao,
+                ca.openosp.openo.common.model.Demographic,
+                ca.openosp.openo.PMmodule.dao.ProviderDao,
+                ca.openosp.openo.common.model.Provider,
+                ca.openosp.openo.olis.dao.OLISRequestNomenclatureDao,
+                ca.openosp.openo.olis.dao.OLISResultNomenclatureDao,
+                ca.openosp.openo.olis.model.OLISRequestNomenclature,
+                ca.openosp.openo.olis.model.OLISResultNomenclature,
+                ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>

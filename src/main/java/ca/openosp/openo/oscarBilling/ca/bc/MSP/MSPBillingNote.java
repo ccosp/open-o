@@ -33,10 +33,10 @@ package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
 import java.util.Date;
 
-import org.oscarehr.billing.CA.BC.dao.BillingNoteDao;
-import org.oscarehr.billing.CA.BC.model.BillingNotes;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.BillingNoteDao;
+import ca.openosp.openo.billing.CA.BC.model.BillingNotes;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.Misc;
 import ca.openosp.openo.util.ConversionUtils;

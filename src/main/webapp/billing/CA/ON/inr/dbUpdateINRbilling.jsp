@@ -23,11 +23,11 @@
 
 <%@page import="java.sql.*, java.util.*,java.net.*, ca.openosp.openo.MyDateFormat" errorPage="../../errorpage.jsp" %>
 
-<%@page import="org.oscarehr.billing.CA.model.BillingInr" %>
-<%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
-<%@page import="org.oscarehr.common.model.BillingService" %>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.billing.CA.model.BillingInr" %>
+<%@page import="ca.openosp.openo.billing.CA.dao.BillingInrDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingService" %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
 <%
     BillingInrDao dao = SpringUtils.getBean(BillingInrDao.class);

@@ -31,18 +31,18 @@
 
 <%@ page errorPage="/errorpage.jsp" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="org.apache.struts.util.LabelValueBean" %>
-<%@ page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
-<%@ page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
-<%@ page import="org.oscarehr.appointment.web.NextAppointmentSearchHelper" %>
-<%@ page import="org.oscarehr.appointment.web.NextAppointmentSearchBean" %>
-<%@ page import="org.oscarehr.appointment.web.NextAppointmentSearchResult" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleTemplateCodeDao" %>
+<%@ page import="ca.openosp.openo.common.model.ScheduleTemplateCode" %>
+<%@ page import="ca.openosp.openo.appointment.web.NextAppointmentSearchHelper" %>
+<%@ page import="ca.openosp.openo.appointment.web.NextAppointmentSearchBean" %>
+<%@ page import="ca.openosp.openo.appointment.web.NextAppointmentSearchResult" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
     SimpleDateFormat dayFormatter = new SimpleDateFormat("yyyy-MM-dd");

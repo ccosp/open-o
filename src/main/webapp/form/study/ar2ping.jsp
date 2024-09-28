@@ -1,7 +1,7 @@
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarDB.DBHandler" %>
 <%@ page import="java.lang.reflect.*, java.sql.*" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <jsp:useBean id="studyMapping" class="java.util.Properties" scope="page"/>
 
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscarProp" %>
@@ -10,9 +10,9 @@
 <%@ page import="org.chip.ping.xml.cddm.*" %>
 <%@ page import="ca.openosp.openo.OscarPingTalk" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Desaprisk" %>
-<%@page import="org.oscarehr.common.dao.DesapriskDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Desaprisk" %>
+<%@page import="ca.openosp.openo.common.dao.DesapriskDao" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

@@ -23,16 +23,17 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="ca.openosp.openo.oscarRx.pageUtil.AllergyHelperBean" %>
 <%@page import="ca.openosp.openo.oscarRx.pageUtil.AllergyDisplay" %>
 <%@page import="java.util.List" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -68,7 +69,7 @@
 </logic:present>
 <%
     RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_ALLERGY;
+    String annotation_display = CaseManagementNoteLink.DISP_ALLERGY;
 
     com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
 %>

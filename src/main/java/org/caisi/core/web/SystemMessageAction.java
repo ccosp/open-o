@@ -36,8 +36,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
-import org.oscarehr.common.dao.SystemMessageDao;
-import org.oscarehr.common.model.SystemMessage;
+import ca.openosp.openo.common.dao.SystemMessageDao;
+import ca.openosp.openo.common.model.SystemMessage;
 
 public class SystemMessageAction extends DispatchAction {
 

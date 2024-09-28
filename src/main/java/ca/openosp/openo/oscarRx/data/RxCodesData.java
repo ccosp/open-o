@@ -29,11 +29,11 @@ package ca.openosp.openo.oscarRx.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.common.dao.CtlFrequencyDao;
-import org.oscarehr.common.dao.CtlSpecialInstructionsDao;
-import org.oscarehr.common.model.CtlFrequency;
-import org.oscarehr.common.model.CtlSpecialInstructions;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.CtlFrequencyDao;
+import ca.openosp.openo.common.dao.CtlSpecialInstructionsDao;
+import ca.openosp.openo.common.model.CtlFrequency;
+import ca.openosp.openo.common.model.CtlSpecialInstructions;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class RxCodesData {
 

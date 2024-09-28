@@ -19,12 +19,12 @@
 --%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@page import="org.oscarehr.common.model.BillingOnItemPayment" %>
-<%@page import="org.oscarehr.common.model.BillingONPayment" %>
-<%@page import="org.oscarehr.common.model.BillingPaymentType" %>
-<%@page import="org.oscarehr.common.dao.BillingPaymentTypeDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingOnItemPayment" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPayment" %>
+<%@page import="ca.openosp.openo.common.model.BillingPaymentType" %>
+<%@page import="ca.openosp.openo.common.dao.BillingPaymentTypeDao" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <%
     BillingONPayment billPayment = (BillingONPayment) request.getAttribute("billPayment");

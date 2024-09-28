@@ -22,18 +22,18 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="org.oscarehr.common.dao.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="org.oscarehr.common.model.IntegratorConsent.ConsentStatus" %>
-<%@page import="org.oscarehr.common.model.IntegratorConsent.SignatureStatus" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.PMmodule.web.ManageConsent" %>
+<%@page import="ca.openosp.openo.common.model.IntegratorConsent.ConsentStatus" %>
+<%@page import="ca.openosp.openo.common.model.IntegratorConsent.SignatureStatus" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.PMmodule.web.ManageConsent" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedFacility" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicTransfer" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
 
 <%@include file="/layouts/caisi_html_top2.jspf" %>
 <script>
@@ -220,7 +220,7 @@
                 else
                     imageUrl = request.getContextPath() + "/imageRenderingServlet?source=" + ImageRenderingServlet.Source.signature_stored.name() + "&digitalSignatureId=" + previousDigitalSignatureId;
             }
-            statusUrl = request.getContextPath() + "/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
+            statusUrl = request.getContextPath() + "/ca/openosp/openo/PMmodule/ClientManager/check_signature_status.jsp?" + DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY + "=" + signatureRequestId;
     %>
     <br/>
     <input type="hidden" name="<%=DigitalSignatureUtils.SIGNATURE_REQUEST_ID_KEY%>" value="<%=signatureRequestId%>"/>

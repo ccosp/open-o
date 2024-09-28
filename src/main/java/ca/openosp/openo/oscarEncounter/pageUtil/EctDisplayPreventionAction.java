@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicPrevention;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarPrevention.Prevention;
 import ca.openosp.openo.oscarPrevention.PreventionDS;

@@ -39,11 +39,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-import org.oscarehr.common.dao.BillingONPaymentDao;
-import org.oscarehr.common.dao.BillingPaymentTypeDao;
+import ca.openosp.openo.common.dao.BillingONPaymentDao;
+import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
 
-import org.oscarehr.common.model.BillingPaymentType;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.BillingPaymentType;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class PaymentTypeAction extends DispatchAction {
     private BillingPaymentTypeDao billingPaymentTypeDao;

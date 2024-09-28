@@ -32,7 +32,7 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@page import="java.util.*,org.oscarehr.learning.web.CourseManagerAction,org.oscarehr.common.model.SecRole" %>
+<%@page import="java.util.*,ca.openosp.openo.learning.web.CourseManagerAction,ca.openosp.openo.common.model.SecRole" %>
 
 
 <html:html lang="en">

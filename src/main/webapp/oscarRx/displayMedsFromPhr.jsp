@@ -33,7 +33,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
-        import="java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.phr.model.PHRMedication,ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+        import="java.util.*,ca.openosp.openo.common.model.Drug,ca.openosp.openo.phr.model.PHRMedication,ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

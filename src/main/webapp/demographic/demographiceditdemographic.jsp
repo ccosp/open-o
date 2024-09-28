@@ -24,8 +24,8 @@
 
 --%>
 
-<%@page import="org.oscarehr.common.ISO36612" %>
-<%@page import="org.oscarehr.managers.LookupListManager" %>
+<%@page import="ca.openosp.openo.common.ISO36612" %>
+<%@page import="ca.openosp.openo.managers.LookupListManager" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = session.getAttribute("userrole") + "," + session.getAttribute("user");
@@ -40,28 +40,28 @@
         return;
     }
 %>
-<%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
+<%@page import="ca.openosp.openo.sharingcenter.SharingCenterUtil" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.PMmodule.caisi_integrator.ConformanceTestHelper" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtArchiveDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.PMmodule.caisi_integrator.ConformanceTestHelper" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtArchiveDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
-<%@page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
-<%@page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
-<%@page import="org.oscarehr.common.dao.WaitingListDao" %>
-<%@page import="org.oscarehr.common.dao.WaitingListNameDao" %>
-<%@page import="org.oscarehr.common.model.WaitingListName" %>
+<%@page import="ca.openosp.openo.common.dao.ScheduleTemplateCodeDao" %>
+<%@page import="ca.openosp.openo.common.model.ScheduleTemplateCode" %>
+<%@page import="ca.openosp.openo.common.dao.WaitingListDao" %>
+<%@page import="ca.openosp.openo.common.dao.WaitingListNameDao" %>
+<%@page import="ca.openosp.openo.common.model.WaitingListName" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.Gender" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.managers.ProgramManager2" %>
-<%@page import="org.oscarehr.PMmodule.model.Program" %>
-<%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
-<%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
-<%@page import="org.oscarehr.managers.PatientConsentManager" %>
+<%@page import="ca.openosp.openo.common.Gender" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.managers.ProgramManager2" %>
+<%@page import="ca.openosp.openo.PMmodule.model.Program" %>
+<%@page import="ca.openosp.openo.PMmodule.web.GenericIntakeEditAction" %>
+<%@page import="ca.openosp.openo.PMmodule.model.ProgramProvider" %>
+<%@page import="ca.openosp.openo.managers.PatientConsentManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <jsp:useBean id="apptMainBean" class="ca.openosp.openo.AppointmentMainBean" scope="session"/>
 <%
@@ -89,24 +89,24 @@
 <%@ page import="ca.openosp.openo.oscarDemographic.pageUtil.Util" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*" %>
-<%@ page import="org.oscarehr.common.OtherIdManager" %>
-<%@ page import="org.oscarehr.common.web.ContactAction" %>
-<%@ page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
-<%@ page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
-<%@page import="org.oscarehr.common.model.DemographicCust" %>
-<%@page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.managers.DemographicManager" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.OtherIdManager" %>
+<%@ page import="ca.openosp.openo.common.web.ContactAction" %>
+<%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@ page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.dao.ProfessionalSpecialistDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.managers.DemographicManager" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProgramDao" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 
 <%!
@@ -200,7 +200,7 @@
     boolean isSharingCenterEnabled = SharingCenterUtil.isEnabled();
 
     String currentProgram = "";
-    String programId = (String) session.getAttribute(org.oscarehr.util.SessionConstants.CURRENT_PROGRAM_ID);
+    String programId = (String) session.getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
     if (programId != null && programId.length() > 0) {
         Integer prId = null;
         try {
@@ -245,7 +245,7 @@
 
 %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
@@ -254,6 +254,24 @@
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicRelationship" %>
 <%@ page import="ca.openosp.openo.MyDateFormat" %>
 <%@ page import="ca.openosp.openo.SxmlMisc" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.common.model.LookupListItem" %>
+<%@ page import="ca.openosp.openo.common.model.Admission" %>
+<%@ page import="ca.openosp.openo.common.model.CountryCode" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicArchive" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExtArchive" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicContact" %>
+<%@ page import="ca.openosp.openo.common.model.LookupList" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicContactDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ContactDao" %>
+<%@ page import="ca.openosp.openo.common.dao.ScheduleTemplateDao" %>
+<%@ page import="ca.openosp.openo.common.dao.CountryCodeDao" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@ page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <!DOCTYPE html>
 <html:html lang="en">
 
@@ -1182,7 +1200,7 @@
                         <tr>
                             <td><a
                                     href="javascript: function myFunction() {return false; }"
-                                    onClick="popupOscarRx(700,1027,'../oscarRx/choosePatient.do?providerNo=<%=curProvider_no%>&demographicNo=<%=demographic_no%>')"><bean:message
+                                    onClick="popupOscarRx(700,1027,'../ehroscarRx/choosePatient.do?providerNo=<%=curProvider_no%>&demographicNo=<%=demographic_no%>')"><bean:message
                                     key="global.prescriptions"/></a>
                             </td>
                         </tr>
@@ -1260,7 +1278,7 @@
                         </security:oscarSec>
                         <tr>
                             <td>
-                                <%if (org.oscarehr.common.IsPropertiesOn.isTicklerPlusEnable()) {%>
+                                <%if (IsPropertiesOn.isTicklerPlusEnable()) {%>
                                 <a
                                         href="javascript: function myFunction() {return false; }"
                                         onClick="popupPage(700,1000,'../Tickler.do?filter.demographic_no=<%=demographic_no%>');return false;">
@@ -4981,12 +4999,12 @@
                                                                         <td align="left">
                                                                             <%
 
-                                                                                List<org.oscarehr.common.model.WaitingList> wls = waitingListDao.search_wlstatus(Integer.parseInt(demographic_no));
+                                                                                List<ca.openosp.openo.common.model.WaitingList> wls = waitingListDao.search_wlstatus(Integer.parseInt(demographic_no));
 
                                                                                 String wlId = "", listID = "", wlnote = "";
                                                                                 String wlReferralDate = "";
                                                                                 if (wls.size() > 0) {
-                                                                                    org.oscarehr.common.model.WaitingList wl = wls.get(0);
+                                                                                    ca.openosp.openo.common.model.WaitingList wl = wls.get(0);
                                                                                     wlId = wl.getId().toString();
                                                                                     listID = String.valueOf(wl.getListId());
                                                                                     wlnote = wl.getNote();
@@ -5009,7 +5027,7 @@
                                                                             <%} %>
                                                                             <%
 
-                                                                                List<WaitingListName> wlns = waitingListNameDao.findCurrentByGroup(((org.oscarehr.common.model.ProviderPreference) session.getAttribute(org.oscarehr.util.SessionConstants.LOGGED_IN_PROVIDER_PREFERENCE)).getMyGroupNo());
+                                                                                List<WaitingListName> wlns = waitingListNameDao.findCurrentByGroup(((ProviderPreference) session.getAttribute(SessionConstants.LOGGED_IN_PROVIDER_PREFERENCE)).getMyGroupNo());
                                                                                 for (WaitingListName wln : wlns) {
                                                                             %>
                                                                             <option value="<%=wln.getId()%>"

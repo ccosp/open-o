@@ -8,7 +8,7 @@
     and "gnu.org/licenses/gpl-2.0.html".
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringUtils,oscar.log.*" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
@@ -39,16 +39,34 @@
     HRMProviderConfidentialityStatementDao hrmProviderConfidentialityStatementDao = (HRMProviderConfidentialityStatementDao) SpringUtils.getBean(HRMProviderConfidentialityStatementDao.class);
 %>
 
-<%@page import="org.oscarehr.hospitalReportManager.*, org.oscarehr.hospitalReportManager.model.*, org.oscarehr.util.SpringUtils, org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="org.oscarehr.hospitalReportManager.*, org.oscarehr.hospitalReportManager.model.*, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.apache.logging.log4j.Logger" %>
-<%@ page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="org.oscarehr.hospitalReportManager.dao.*" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.owasp.csrfguard.CsrfGuard" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMCategory" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentToDemographic" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToProviderDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMCategoryDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMSubClassDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentCommentDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentSubClassDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMProviderConfidentialityStatementDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.dao.HRMDocumentToDemographicDao" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.HRMReportParser" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.HRMDisplayReportAction" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMSubClass" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.HRMReport" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentSubClass" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocument" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentToProvider" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentComment" %>
 <!DOCTYPE html>
 
 <%

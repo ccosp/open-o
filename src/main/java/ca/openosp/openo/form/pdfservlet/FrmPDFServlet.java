@@ -36,10 +36,10 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import ca.openosp.openo.OscarProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.printing.FontSettings;
-import org.oscarehr.common.printing.PdfWriterFactory;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.printing.FontSettings;
+import ca.openosp.openo.common.printing.PdfWriterFactory;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.form.FrmRecord;
 import ca.openosp.openo.form.FrmRecordFactory;
@@ -68,7 +68,7 @@ import com.lowagie.text.pdf.PdfWriter;
 public class FrmPDFServlet extends HttpServlet {
 
     public static final String HSFO_RX_DATA_KEY = "hsfo.rx.data";
-    Logger log = org.oscarehr.util.MiscUtils.getLogger();
+    Logger log = MiscUtils.getLogger();
 
     /**
      *

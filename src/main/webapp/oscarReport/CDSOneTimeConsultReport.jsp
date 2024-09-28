@@ -39,9 +39,9 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
-        import="org.apache.commons.lang.StringUtils,org.apache.commons.lang.StringEscapeUtils,java.util.*,oscar.oscarReport.data.*,oscar.util.*,oscar.oscarDB.*,java.sql.*,oscar.oscarDemographic.data.*,oscar.eform.*,org.oscarehr.common.model.Provider,org.oscarehr.managers.ProviderManager2,org.oscarehr.util.SpringUtils" %>
+        import="org.apache.commons.lang.StringUtils,org.apache.commons.lang.StringEscapeUtils,java.util.*,oscar.oscarReport.data.*,oscar.util.*,oscar.oscarDB.*,java.sql.*,oscar.oscarDemographic.data.*,oscar.eform.*,ca.openosp.openo.common.model.Provider,ca.openosp.openo.managers.ProviderManager2,ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.eform.OneTimeConsultUtil" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

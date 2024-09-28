@@ -22,10 +22,10 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@page import="java.io.File" %>
 
 <%

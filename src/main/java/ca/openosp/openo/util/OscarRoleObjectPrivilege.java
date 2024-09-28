@@ -32,9 +32,9 @@ import java.util.Vector;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.lang.StringUtils;
-import org.oscarehr.common.dao.SecObjPrivilegeDao;
-import org.oscarehr.common.model.SecObjPrivilege;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.SecObjPrivilegeDao;
+import ca.openosp.openo.common.model.SecObjPrivilege;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 

@@ -25,6 +25,9 @@
 <%@page import="java.util.List" %>
 <%@page
         import="org.oscarehr.PMmodule.model.*,org.oscarehr.common.model.*" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.PMmodule.model.Program" %>
 <%@ include file="/taglibs.jsp" %>
 
 <div class="h4">

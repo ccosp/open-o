@@ -32,7 +32,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import org.jdom.Element;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * <ruleset>
@@ -92,7 +92,7 @@ public class TargetColour {
         log.debug("ruleName" + ruleName + " cond size " + getTargetConditions().size() + " list size " + list.size());
 
         RuleBaseCreator rcb = new RuleBaseCreator();
-        Element ruleElement = rcb.getRule(ruleName, "ca.openosp.openo.util.oscarMeasurements.oscarEncounter.MeasurementDSHelper", list, consequence);
+        Element ruleElement = rcb.getRule(ruleName, "ca.openosp.openo.ehrutil.oscarMeasurements.oscarEncounter.MeasurementDSHelper", list, consequence);
 
         return ruleElement;
     }

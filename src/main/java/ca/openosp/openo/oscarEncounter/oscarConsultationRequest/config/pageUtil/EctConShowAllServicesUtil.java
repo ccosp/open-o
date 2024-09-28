@@ -29,9 +29,9 @@ package ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.pageUtil
 import java.util.List;
 import java.util.Vector;
 
-import org.oscarehr.common.dao.ConsultationServiceDao;
-import org.oscarehr.common.model.ConsultationServices;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ConsultationServiceDao;
+import ca.openosp.openo.common.model.ConsultationServices;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class EctConShowAllServicesUtil {
 

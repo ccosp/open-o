@@ -40,7 +40,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.AcroFields.Item;
@@ -486,7 +486,7 @@ public class PDFController {
 
                 methodName = method.getName();
 
-                if (returnType.getName().equals("java.util.List")) {
+                if (returnType.getName().equals("java.ehrutil.List")) {
                     _Logger.debug("Found a List: " + returnType.getName());
 
                     genericList = (List<?>) method.invoke(data);

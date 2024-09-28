@@ -27,14 +27,14 @@ package ca.openosp.openo.eform;
 
 import java.util.ArrayList;
 
-import org.oscarehr.common.dao.EFormDataDao;
-import org.oscarehr.common.model.EFormData;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.EFormDataDao;
+import ca.openosp.openo.common.model.EFormData;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
-import org.oscarehr.documentManager.EDoc;
-import org.oscarehr.documentManager.EDocUtil;
+import documentManager.EDoc;
+import documentManager.EDocUtil;
 import ca.openosp.openo.util.ConversionUtils;
 
 /**

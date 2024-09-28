@@ -40,13 +40,13 @@
     }
 %>
 
-<%@page import="org.oscarehr.common.dao.DataExportDao" %>
+<%@page import="ca.openosp.openo.common.dao.DataExportDao" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
 <%@page import="ca.openosp.openo.util.StringUtils" %>
 <%@page import="ca.openosp.openo.oscarReport.data.DemographicSets" %>
 <%@page import="org.apache.struts.validator.DynaValidatorForm" %>
 <%@page import="java.util.ArrayList, java.util.List" %>
-<%@page import="org.oscarehr.common.model.DataExport" %>
+<%@page import="ca.openosp.openo.common.model.DataExport" %>
 <%@include file="/casemgmt/taglibs.jsp" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <%

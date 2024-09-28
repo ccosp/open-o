@@ -28,10 +28,11 @@ package ca.openosp.openo.oscarLab.ca.bc.PathNet.HL7.V2_3;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.billing.CA.BC.dao.Hl7ObrDao;
-import org.oscarehr.billing.CA.BC.model.Hl7Obr;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.Hl7ObrDao;
+import ca.openosp.openo.billing.CA.BC.model.Hl7Obr;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarLab.ca.bc.PathNet.HL7.Node;
 
@@ -42,7 +43,7 @@ import ca.openosp.openo.oscarLab.ca.bc.PathNet.HL7.Node;
  * www.andromedia.ca
  */
 public class OBR extends Node {
-    Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger _logger = MiscUtils.getLogger();
     private static Hl7ObrDao dao = SpringUtils.getBean(Hl7ObrDao.class);
 
     private ArrayList<OBX> obxs;

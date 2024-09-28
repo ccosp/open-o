@@ -39,32 +39,32 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page
-        import="java.util.*, java.net.URLEncoder, oscar.oscarDB.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.WaitingList, org.oscarehr.common.OtherIdManager" %>
+        import="java.util.*, java.net.URLEncoder, oscar.oscarDB.*, ca.openosp.openo.MyDateFormat, ca.openosp.openo.oscarWaitingList.WaitingList, ca.openosp.openo.common.OtherIdManager" %>
 <%@ page import="oscar.log.*" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 
-<%@ page import="org.oscarehr.common.dao.WaitingListDao" %>
+<%@ page import="ca.openosp.openo.common.dao.WaitingListDao" %>
 
-<%@ page import="org.oscarehr.common.model.DemographicExt" %>
-<%@ page import="org.oscarehr.common.dao.DemographicExtDao" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicExt" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicExtDao" %>
 
-<%@ page import="org.oscarehr.common.model.Demographic" %>
-<%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="org.oscarehr.common.model.DemographicCust" %>
-<%@ page import="org.oscarehr.common.dao.DemographicCustDao" %>
-<%@page import="org.oscarehr.PMmodule.web.GenericIntakeEditAction" %>
-<%@page import="org.oscarehr.PMmodule.service.ProgramManager" %>
-<%@page import="org.oscarehr.PMmodule.service.AdmissionManager" %>
+<%@ page import="ca.openosp.openo.common.model.Demographic" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@ page import="ca.openosp.openo.common.model.DemographicCust" %>
+<%@ page import="ca.openosp.openo.common.dao.DemographicCustDao" %>
+<%@page import="ca.openosp.openo.PMmodule.web.GenericIntakeEditAction" %>
+<%@page import="ca.openosp.openo.PMmodule.service.ProgramManager" %>
+<%@page import="ca.openosp.openo.PMmodule.service.AdmissionManager" %>
 
-<%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicExtArchiveDao" %>
-<%@page import="org.oscarehr.common.model.DemographicExtArchive" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicArchiveDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicExtArchiveDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicExtArchive" %>
 
-<%@page import="org.oscarehr.managers.PatientConsentManager" %>
-<%@page import="org.oscarehr.common.model.ConsentType" %>
+<%@page import="ca.openosp.openo.managers.PatientConsentManager" %>
+<%@page import="ca.openosp.openo.common.model.ConsentType" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -394,11 +394,11 @@
                     if (paramWLPosition[0].compareTo("") != 0) {
 
                         List<Long> positionList = new ArrayList<Long>();
-                        List<org.oscarehr.common.model.WaitingList> waitingListList = waitingListDao.findByWaitingListId(new Integer(1));
+                        List<ca.openosp.openo.common.model.WaitingList> waitingListList = waitingListDao.findByWaitingListId(new Integer(1));
 
                         if (waitingListList != null) {
 
-                            for (org.oscarehr.common.model.WaitingList waitingList : waitingListList) {
+                            for (ca.openosp.openo.common.model.WaitingList waitingList : waitingListList) {
                                 positionList.add(waitingList.getPosition());
                             }
                             Long maxPosition = 0L;
@@ -408,7 +408,7 @@
 
                             String listId = request.getParameter("list_id");
                             if (listId != null && !listId.equals("") && !listId.equals("0")) {
-                                org.oscarehr.common.model.WaitingList waitingList = new org.oscarehr.common.model.WaitingList();
+                                ca.openosp.openo.common.model.WaitingList waitingList = new ca.openosp.openo.common.model.WaitingList();
                                 waitingList.setListId(Integer.parseInt(request.getParameter("list_id")));
                                 waitingList.setDemographicNo(demographic.getDemographicNo());
                                 waitingList.setNote(request.getParameter("waiting_list_note"));

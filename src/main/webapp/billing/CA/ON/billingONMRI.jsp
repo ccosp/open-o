@@ -23,15 +23,15 @@
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 
-<%@ page import="org.oscarehr.billing.CA.model.BillActivity" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillActivityDao" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillActivity" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillActivityDao" %>
 
-<%@ page import="org.oscarehr.common.model.ProviderData" %>
-<%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderData" %>
+<%@ page import="ca.openosp.openo.common.dao.ProviderDataDao" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -39,9 +39,9 @@
 <%@ include file="../../../admin/dbconnection.jsp" %>
 
 
-<%@page import="org.oscarehr.common.model.ProviderBillCenter" %>
-<%@page import="org.oscarehr.common.dao.ProviderBillCenterDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProviderBillCenter" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderBillCenterDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDiskNameData" %>

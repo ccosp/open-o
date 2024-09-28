@@ -32,20 +32,20 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
-<%@ page import="org.oscarehr.util.DigitalSignatureUtils" %>
-<%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
-<%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+<%@ page import="ca.openosp.openo.ehrutil.DigitalSignatureUtils" %>
+<%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@ page import="ca.openosp.openo.ui.servlet.ImageRenderingServlet" %>
+<%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
-<%@ page import="org.oscarehr.managers.FaxManager" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
+<%@ page import="ca.openosp.openo.managers.FaxManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.ProviderManager" %>
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -55,6 +55,12 @@
 <%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Appointment" %>
+<%@ page import="ca.openosp.openo.common.model.Site" %>
+<%@ page import="ca.openosp.openo.common.model.FaxConfig" %>
+<%@ page import="ca.openosp.openo.common.model.PharmacyInfo" %>
 
 <%
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
@@ -122,7 +128,7 @@
             String createAnewRx;
             if (reprint.equalsIgnoreCase("true")) {
                 bean = (RxSessionBean) session.getAttribute("tmpBeanRX");
-                createAnewRx = "window.location.href = '" + request.getContextPath() + "/oscarRx/SearchDrug.jsp'";
+                createAnewRx = "window.location.href = '" + request.getContextPath() + "/ehroscarRx/SearchDrug.jsp'";
             } else {
                 createAnewRx = "javascript:clearPending('')";
             }
@@ -237,7 +243,7 @@
 
         <script type="text/javascript">
             function resetStash() {
-                var url = "<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearStash";
+                var url = "<c:out value="${ctx}"/>" + "/ehroscarRx/deleteRx.do?parameterValue=clearStash";
                 var data = "";
                 new Ajax.Request(url, {
                     method: 'post', parameters: data, onSuccess: function (transport) {
@@ -249,7 +255,7 @@
             }
 
             function resetReRxDrugList() {
-                var url = "<c:out value="${ctx}"/>" + "/oscarRx/deleteRx.do?parameterValue=clearReRxDrugList";
+                var url = "<c:out value="${ctx}"/>" + "/ehroscarRx/deleteRx.do?parameterValue=clearReRxDrugList";
                 var data = "";
                 new Ajax.Request(url, {
                     method: 'post', parameters: data, onSuccess: function (transport) {
@@ -433,7 +439,7 @@
 
             function writeToEncounter(print, text) {
                 try {
-                    var url = "<%=request.getContextPath() %>/oscarRx/WriteToEncounter.do";
+                    var url = "<%=request.getContextPath() %>/ehroscarRx/WriteToEncounter.do";
                     var prefPharmacy = "<%=prefPharmacy != null ? prefPharmacy : ""%>";
                     new Ajax.Request(url, {
                         method: 'post',
@@ -717,7 +723,7 @@
                                         }
 
                                         function clearPendingFax() {
-                                            parent.window.location = "../oscarRx/close.html";
+                                            parent.window.location = "../ehroscarRx/close.html";
                                             parent.myLightWindow.deactivate();
                                         }
 
@@ -733,7 +739,7 @@
                                             if (!id) {
                                                 return;
                                             }
-                                            var url = "<c:out value="${ctx}"/>" + "/oscarRx/managePharmacy2.do?";
+                                            var url = "<c:out value="${ctx}"/>" + "/ehroscarRx/managePharmacy2.do?";
                                             var data = "method=getPharmacyInfo&pharmacyId=" + id;
                                             new Ajax.Request(url, {
                                                 method: 'get', parameters: data, onSuccess: function (transport) {
@@ -906,7 +912,7 @@
                                             </td>
                                         </tr>
                                             <%--                                       <%if(prefPharmacy.length()>0 && prefPharmacyId.length()>0){   %>--%>
-                                            <%--                                           <tr><td><span><input id="selectPharmacyButton" type=button value="<bean:message key='oscarRx.printPharmacyInfo.addPharmacyButton'/>" class="ControlPushButton" style="width:150px;"--%>
+                                            <%--                                           <tr><td><span><input id="selectPharmacyButton" type=button value="<bean:message key='ehroscarRx.printPharmacyInfo.addPharmacyButton'/>" class="ControlPushButton" style="width:150px;"--%>
                                             <%--                                                             onclick="printPharmacy('<%=prefPharmacyId%>','<%=prefPharmacy%>');"/>--%>
                                             <%--                                                </span>--%>
 

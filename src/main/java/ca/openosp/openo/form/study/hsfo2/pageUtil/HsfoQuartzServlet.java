@@ -28,10 +28,11 @@ package ca.openosp.openo.form.study.hsfo2.pageUtil;
 import java.io.IOException;
 import java.util.Calendar;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.Hsfo2RecommitScheduleDao;
-import org.oscarehr.common.model.Hsfo2RecommitSchedule;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.Hsfo2RecommitScheduleDao;
+import ca.openosp.openo.common.model.Hsfo2RecommitSchedule;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -49,7 +50,7 @@ import org.quartz.impl.StdSchedulerFactory;
 public class HsfoQuartzServlet implements Servlet {
     public static final String RESUBMIT_JOB = "hsfoResubmitJob";
 
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     public static final String RESUBMIT_TRIGGER = "hsfoResubmitTrigger";
 

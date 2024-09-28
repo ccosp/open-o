@@ -21,13 +21,13 @@
 <%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*, oscar.*, oscar.util.*, ca.openosp.openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.RaHeader" %>
-<%@page import="org.oscarehr.common.dao.RaHeaderDao" %>
-<%@page import="org.oscarehr.common.model.Billing" %>
-<%@page import="org.oscarehr.common.dao.BillingDao" %>
-<%@page import="org.oscarehr.common.model.RaDetail" %>
-<%@page import="org.oscarehr.common.dao.RaDetailDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.RaHeader" %>
+<%@page import="ca.openosp.openo.common.dao.RaHeaderDao" %>
+<%@page import="ca.openosp.openo.common.model.Billing" %>
+<%@page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@page import="ca.openosp.openo.common.model.RaDetail" %>
+<%@page import="ca.openosp.openo.common.dao.RaDetailDao" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);

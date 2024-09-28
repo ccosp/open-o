@@ -25,8 +25,8 @@
 --%>
 
 <%@ page import="java.util.List" %>
-<%@ page import="org.oscarehr.common.model.Contact" %>
-<%@page import="org.oscarehr.common.model.DemographicContact" %>
+<%@ page import="ca.openosp.openo.common.model.Contact" %>
+<%@page import="ca.openosp.openo.common.model.DemographicContact" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%

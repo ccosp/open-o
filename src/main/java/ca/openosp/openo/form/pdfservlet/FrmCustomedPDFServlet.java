@@ -49,19 +49,19 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.FaxConfigDao;
-import org.oscarehr.common.dao.FaxJobDao;
-import org.oscarehr.common.model.FaxConfig;
-import org.oscarehr.common.model.FaxJob;
-import org.oscarehr.common.model.FaxJob.Direction;
-import org.oscarehr.common.model.PharmacyInfo;
-import org.oscarehr.managers.FaxManager;
-import org.oscarehr.managers.FaxManager.TransactionType;
-import org.oscarehr.util.LocaleUtils;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.web.PrescriptionQrCodeUIBean;
+import ca.openosp.openo.common.dao.FaxConfigDao;
+import ca.openosp.openo.common.dao.FaxJobDao;
+import ca.openosp.openo.common.model.FaxConfig;
+import ca.openosp.openo.common.model.FaxJob;
+import ca.openosp.openo.common.model.FaxJob.Direction;
+import ca.openosp.openo.common.model.PharmacyInfo;
+import ca.openosp.openo.managers.FaxManager;
+import ca.openosp.openo.managers.FaxManager.TransactionType;
+import ca.openosp.openo.ehrutil.LocaleUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.ehrweb.PrescriptionQrCodeUIBean;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.log.LogAction;
@@ -429,11 +429,11 @@ public class FrmCustomedPDFServlet extends HttpServlet {
                 patientHeading.append(newline).append(this.patientAddress).append(newline).append(this.patientCityPostal).append(newline).append(this.patientPhone);
 
                 if (patientHIN != null && patientHIN.trim().length() > 0) {
-                    patientHeading.append(newline).append(geti18nTagValue(locale, "ca.openosp.openo.oscarRx.hin")).append(" ").append(patientHIN);
+                    patientHeading.append(newline).append(geti18nTagValue(locale, "ca.openosp.openo.ehroscarRx.hin")).append(" ").append(patientHIN);
                 }
 
                 if (patientChartNo != null && !patientChartNo.isEmpty()) {
-                    String chartNoTitle = geti18nTagValue(locale, "ca.openosp.openo.oscarRx.chartNo");
+                    String chartNoTitle = geti18nTagValue(locale, "ca.openosp.openo.ehroscarRx.chartNo");
                     patientHeading.append(newline).append(chartNoTitle).append(patientChartNo);
                 }
 

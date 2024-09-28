@@ -40,11 +40,11 @@
 %>
 
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.util.*" errorPage="../../errorpage.jsp" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Study" %>
-<%@page import="org.oscarehr.common.dao.StudyDao" %>
-<%@page import="org.oscarehr.common.model.DemographicStudy" %>
-<%@page import="org.oscarehr.common.dao.DemographicStudyDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Study" %>
+<%@page import="ca.openosp.openo.common.dao.StudyDao" %>
+<%@page import="ca.openosp.openo.common.model.DemographicStudy" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicStudyDao" %>
 <%
     StudyDao studyDao = SpringUtils.getBean(StudyDao.class);
     DemographicStudyDao demographicStudyDao = SpringUtils.getBean(DemographicStudy.class);

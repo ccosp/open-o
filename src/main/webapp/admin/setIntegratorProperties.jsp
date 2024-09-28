@@ -26,7 +26,7 @@
 
 <%@page contentType="text/html" %>
 <%@ include file="/casemgmt/taglibs.jsp" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
 
 <%
     String curUser_no;

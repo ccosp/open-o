@@ -1,8 +1,8 @@
 //CHECKSTYLE:OFF
 package org.caisi.service;
 
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.model.Demographic;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.model.Demographic;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

@@ -29,12 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.MeasurementTypeDao;
-import org.oscarehr.common.dao.ValidationsDao;
-import org.oscarehr.common.model.MeasurementType;
-import org.oscarehr.common.model.Validations;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementTypeDao;
+import ca.openosp.openo.common.dao.ValidationsDao;
+import ca.openosp.openo.common.model.MeasurementType;
+import ca.openosp.openo.common.model.Validations;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean;
 import ca.openosp.openo.util.ConversionUtils;

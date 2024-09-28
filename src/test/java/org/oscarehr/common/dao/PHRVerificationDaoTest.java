@@ -48,9 +48,8 @@ import org.junit.Test;
 import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.PHRVerification;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.SpringUtils;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 public class PHRVerificationDaoTest extends DaoTestFixtures {
 

@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.model.v23.datatype.XCN;
@@ -69,7 +70,7 @@ public class MEDITECHHandler implements MessageHandler {
     public static String DATE_FORMAT = "yyyyMMddHHmmss";
     public static String DATE_STRING_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
     protected ORU_R01 msg = null;
     private Terser terser;
 

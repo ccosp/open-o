@@ -25,6 +25,7 @@
 //package ca.openosp.openo.v23.segment;
 package ca.openosp.openo.oscarLab.ca.all.spireHapiExt.v23.segment;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import ca.uhn.hl7v2.HL7Exception;
@@ -44,7 +45,7 @@ import ca.uhn.hl7v2.parser.ModelClassFactory;
  */
 public class ZDS extends AbstractSegment {
 
-    Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    Logger logger = MiscUtils.getLogger();
 
     /**
      * Adding a serial UID is always a good idea, but optional

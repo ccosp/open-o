@@ -9,8 +9,9 @@
 
 --%>
 <!DOCTYPE html>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="java.util.*, org.oscarehr.hospitalReportManager.*,org.oscarehr.hospitalReportManager.model.HRMCategory" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="java.util.*, org.oscarehr.hospitalReportManager.*,ca.openosp.openo.hospitalReportManager.model.HRMCategory" %>
+<%@ page import="ca.openosp.openo.hospitalReportManager.HRMUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

@@ -23,13 +23,13 @@
     Ontario, Canada
 
 --%>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page language="java" import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -37,12 +37,13 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
-<%@page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
-<%@page import="org.oscarehr.common.dao.PartialDateDao" %>
-<%@page import="org.oscarehr.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.casemgmt.service.CaseManagementManager" %>
+<%@page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
+<%@page import="ca.openosp.openo.common.dao.PartialDateDao" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="ca.openosp.openo.common.model.Allergy" %>
 
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -75,7 +76,7 @@
 </logic:present>
 <%
     RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
-    String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_ALLERGY;
+    String annotation_display = CaseManagementNoteLink.DISP_ALLERGY;
 
     com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
 %>
@@ -112,7 +113,7 @@
                     $("#searchResultsContainer div[id $= '_content'] a").bind("click", function (event) {
                         event.preventDefault();
                         // override the old addReaction.do with the new addReaction2.do
-                        var path = "${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do"
+                        var path = "${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do"
                         var param = this.href.split("?")[1];
 
                         sendSearchRequest(path, param, "#addAllergyDialogue");
@@ -128,7 +129,7 @@
                         allergyId = allergyId.split("=")[1].trim()
                         $("#allergy_" + allergyId).addClass("highLightRow");
 
-                        var path = "${ pageContext.servletContext.contextPath }/oscarRx/deleteAllergy2.do";
+                        var path = "${ pageContext.servletContext.contextPath }/ehroscarRx/deleteAllergy2.do";
 
                         if (confirm(action + " this Allergy?")) {
                             sendSearchRequest(path, param, ".Step1Text");
@@ -139,7 +140,7 @@
                     $(".modifyAllergyLink").bind("click", function (event) {
                         var ids = this.id.split("_");
                         var param = ids[1].trim();
-                        sendSearchRequest("${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do",
+                        sendSearchRequest("${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do",
                             param, "#addAllergyDialogue");
                     });
 
@@ -324,7 +325,7 @@
                 if (isEmpty() == true) {
                     name = name.toUpperCase();
                     confirm("Adding custom allergy: " + name);
-                    sendSearchRequest("${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do",
+                    sendSearchRequest("${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do",
                         "ID=0&type=0&name=" + name, "#addAllergyDialogue");
                     $("input[value='Custom Allergy']").addClass("highLightButton");
                 }
@@ -334,7 +335,7 @@
                 $(".highLightButton").removeClass("highLightButton");
                 var param = "ID=44452&name=PENICILLINS&type=10";
 
-                sendSearchRequest("${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do",
+                sendSearchRequest("${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do",
                     param, "#addAllergyDialogue");
                 $("input[value='Penicillin']").addClass("highLightButton");
             }
@@ -343,7 +344,7 @@
                 $(".highLightButton").removeClass("highLightButton");
                 var param = "ID=44159&name=SULFONAMIDES&type=10";
 
-                sendSearchRequest("${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do",
+                sendSearchRequest("${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do",
                     param, "#addAllergyDialogue");
                 $("input[value='Sulfa']").addClass("highLightButton");
             }
@@ -352,7 +353,7 @@
 
             function addCustomNKDA() {
                 $(".highLightButton").removeClass("highLightButton");
-                sendSearchRequest("${ pageContext.servletContext.contextPath }/oscarRx/addReaction2.do",
+                sendSearchRequest("${ pageContext.servletContext.contextPath }/ehroscarRx/addReaction2.do",
                     "ID=0&type=0&" + paramNKDA, "#addAllergyDialogue");
                 $("input[value='NKDA']").addClass("highLightButton");
             }
@@ -522,7 +523,7 @@
                                                 boolean hasDrugAllergy = false;
                                                 int iNKDA = 0;
 
-                                                for (org.oscarehr.common.model.Allergy allergy : patient.getAllergies(LoggedInInfo.getLoggedInInfoFromSession(request))) {
+                                                for (Allergy allergy : patient.getAllergies(LoggedInInfo.getLoggedInInfoFromSession(request))) {
                                                     if (!allergy.getArchived()) {
                                                         if (allergy.getTypeCode() > 0) hasDrugAllergy = true;
                                                         if (allergy.getDescription().equals("No Known Drug Allergies"))
@@ -604,7 +605,7 @@
                                                 <%
                                                     CaseManagementManager cmm = (CaseManagementManager) SpringUtils.getBean(CaseManagementManager.class);
                                                     @SuppressWarnings("unchecked")
-                                                    List<CaseManagementNoteLink> existingAnnots = cmm.getLinkByTableId(org.oscarehr.casemgmt.model.CaseManagementNoteLink.ALLERGIES, Long.valueOf(allergy.getAllergyId()));
+                                                    List<CaseManagementNoteLink> existingAnnots = cmm.getLinkByTableId(CaseManagementNoteLink.ALLERGIES, Long.valueOf(allergy.getAllergyId()));
                                                 %>
                                                 <td>
                                                     <%

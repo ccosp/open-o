@@ -37,13 +37,13 @@
         return;
     }
 %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.common.model.OcanStaffFormData" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffFormData" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
-<%@page import="org.oscarehr.common.model.OcanStaffForm" %>
+<%@page import="ca.openosp.openo.PMmodule.web.OcanForm" %>
+<%@page import="ca.openosp.openo.common.model.OcanStaffForm" %>
 <%@page import="ca.openosp.openo.util.CBIUtil" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
 <%!
     public String getFieldVal(int ocanStaffFormId, String key) {

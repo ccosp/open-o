@@ -36,13 +36,13 @@
         errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="org.oscarehr.billing.CA.ON.dao.*" %>
-<%@page import="org.oscarehr.common.dao.BillingONExtDao" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONExtDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 
-<%@page import="org.oscarehr.common.dao.BillingONPaymentDao" %>
-<%@page import="org.oscarehr.common.model.BillingONPayment" %>
-<%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao" %>
-<%@page import="org.oscarehr.common.model.BillingONCHeader1" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONPaymentDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONPayment" %>
+<%@page import="ca.openosp.openo.common.dao.BillingONCHeader1Dao" %>
+<%@page import="ca.openosp.openo.common.model.BillingONCHeader1" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>

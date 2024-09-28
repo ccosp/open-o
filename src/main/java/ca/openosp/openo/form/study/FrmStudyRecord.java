@@ -29,7 +29,7 @@ package ca.openosp.openo.form.study;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import org.oscarehr.util.LoggedInInfo;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 public abstract class FrmStudyRecord {
     public abstract Properties getFormRecord(LoggedInInfo loggedInInfo, int demographicNo, int existingID) throws SQLException;

@@ -40,7 +40,7 @@
 %>
 
 <%@ page import="java.util.*,oscar.oscarReport.data.*" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
 <%@ page import="ca.openosp.openo.oscarReport.data.RptFluReportData" %>
 
 

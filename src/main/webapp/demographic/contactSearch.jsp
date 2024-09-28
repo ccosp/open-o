@@ -25,8 +25,8 @@
 --%>
 
 <%@ page import="java.util.*,java.sql.*, java.net.*" %>
-<%@ page import="org.oscarehr.common.web.ContactAction" %>
-<%@ page import="org.oscarehr.common.model.Contact" %>
+<%@ page import="ca.openosp.openo.common.web.ContactAction" %>
+<%@ page import="ca.openosp.openo.common.model.Contact" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.apache.commons.lang.WordUtils" %>
 

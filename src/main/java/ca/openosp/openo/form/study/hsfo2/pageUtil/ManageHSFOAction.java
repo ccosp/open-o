@@ -49,11 +49,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Hsfo2Patient;
-import org.oscarehr.common.model.Hsfo2Visit;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Hsfo2Patient;
+import ca.openosp.openo.common.model.Hsfo2Visit;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.form.study.hsfo2.HSFODAO;

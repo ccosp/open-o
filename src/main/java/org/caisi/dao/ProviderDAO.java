@@ -29,7 +29,7 @@ package org.caisi.dao;
 
 import java.util.List;
 
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 /**

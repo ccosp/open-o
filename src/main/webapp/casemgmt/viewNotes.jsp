@@ -26,20 +26,20 @@
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
+<%@page import="ca.openosp.openo.casemgmt.web.NoteDisplay" %>
 <% long start = System.currentTimeMillis(); %>
 <%@include file="/casemgmt/taglibs.jsp" %>
 <%@page
-        import="java.util.List, java.util.Set, java.util.Iterator, org.oscarehr.casemgmt.model.CaseManagementIssue, org.oscarehr.casemgmt.model.CaseManagementNoteExt" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.provider.web.CppPreferencesUIBean" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.common.model.PartialDate" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+        import="java.util.List, java.util.Set, java.util.Iterator, ca.openosp.openo.casemgmt.model.CaseManagementIssue, ca.openosp.openo.casemgmt.model.CaseManagementNoteExt" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.provider.web.CppPreferencesUIBean" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.casemgmt.web.CaseManagementViewAction" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.model.PartialDate" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%
@@ -96,7 +96,7 @@
 <ul>
     <% List<CaseManagementNoteExt> noteExts = (List<CaseManagementNoteExt>) request.getAttribute("NoteExts"); %>
     <nested:iterate indexId="noteIdx" id="note" name="Notes"
-                    type="org.oscarehr.casemgmt.model.CaseManagementNote">
+                    type="ca.openosp.openo.casemgmt.model.CaseManagementNote">
         <input type="hidden" id="<c:out value="${param.cmd}"/><nested:write name="note" property="id"/>"
                value="<nested:write name="noteIdx"/>">
         <% if (noteIdx % 2 == 0) { %>

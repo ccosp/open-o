@@ -23,8 +23,8 @@
     Ontario, Canada
 
 --%>
-<%@ page import="org.oscarehr.common.dao.StudyDao, org.oscarehr.common.model.Study" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.dao.StudyDao, ca.openosp.openo.common.model.Study" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 

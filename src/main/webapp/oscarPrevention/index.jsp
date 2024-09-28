@@ -25,27 +25,27 @@
 --%>
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
-<%@page import="org.oscarehr.common.model.CVCMapping" %>
-<%@page import="org.oscarehr.common.dao.CVCMappingDao" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.CVCMapping" %>
+<%@page import="ca.openosp.openo.common.dao.CVCMappingDao" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
-<%@page import="org.oscarehr.common.model.DHIRSubmissionLog" %>
-<%@page import="org.oscarehr.managers.DHIRSubmissionManager" %>
-<%@page import="org.oscarehr.common.model.Consent" %>
-<%@page import="org.oscarehr.common.dao.ConsentDao" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.common.model.DHIRSubmissionLog" %>
+<%@page import="ca.openosp.openo.managers.DHIRSubmissionManager" %>
+<%@page import="ca.openosp.openo.common.model.Consent" %>
+<%@page import="ca.openosp.openo.common.dao.ConsentDao" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="ca.openosp.openo.OscarProperties" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.LocaleUtils" %>
-<%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="org.oscarehr.managers.PreventionManager" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao, ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.LocaleUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@page import="ca.openosp.openo.managers.PreventionManager" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -74,7 +74,7 @@
     String demographic_no = request.getParameter("demographic_no");
     DemographicData demoData = new DemographicData();
     String nameAge = demoData.getNameAgeString(loggedInInfo, demographic_no);
-    org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, demographic_no);
+    Demographic demo = demoData.getDemographic(loggedInInfo, demographic_no);
     String hin = demo.getHin() + demo.getVer();
     String mrp = demo.getProviderNo();
     PreventionManager preventionManager = SpringUtils.getBean(PreventionManager.class);
@@ -146,7 +146,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 
-<%@page import="org.oscarehr.util.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.PreventionDS" %>
 <%@ page import="ca.openosp.openo.oscarPrevention.PreventionData" %>

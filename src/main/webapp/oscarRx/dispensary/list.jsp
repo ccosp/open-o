@@ -30,20 +30,20 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.DrugDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.DrugDao" %>
 <%@page import="java.util.List" %>
-<%@page import="org.oscarehr.common.model.Drug" %>
+<%@page import="ca.openosp.openo.common.model.Drug" %>
 <%@page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
-<%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
+<%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@page import="ca.openosp.openo.ehroscarRx.StaticScriptBean" %>
 <%@page import="ca.openosp.openo.oscarRx.util.RxUtil" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
 <%@page import="org.apache.struts.util.LabelValueBean" %>
-<%@page import="org.oscarehr.common.model.DrugProduct" %>
-<%@page import="org.oscarehr.common.model.DrugDispensing" %>
+<%@page import="ca.openosp.openo.common.model.DrugProduct" %>
+<%@page import="ca.openosp.openo.common.model.DrugDispensing" %>
 <%@page import="java.util.Map" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 
@@ -355,7 +355,7 @@
 
             function deleteDispensingEvent(id) {
                 if (confirm("Are you sure you want to delete this record?")) {
-                    location.href = "<%=request.getContextPath()%>/oscarRx/Dispense.do?method=delete&eventId=" + id + "&id=" + <%=request.getAttribute("id")%>;
+                    location.href = "<%=request.getContextPath()%>/ehroscarRx/Dispense.do?method=delete&eventId=" + id + "&id=" + <%=request.getAttribute("id")%>;
                 }
             }
         </script>

@@ -43,9 +43,9 @@
     String curUser_no = (String) session.getAttribute("user");
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*,oscar.util.*" errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.common.model.EncounterTemplate" %>
-<%@ page import="org.oscarehr.common.dao.EncounterTemplateDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.common.model.EncounterTemplate" %>
+<%@ page import="ca.openosp.openo.common.dao.EncounterTemplateDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>

@@ -36,33 +36,33 @@ import java.util.Set;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.LabelValueBean;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.billing.CA.ON.dao.BillingPercLimitDao;
-import org.oscarehr.billing.CA.ON.model.BillingPercLimit;
-import org.oscarehr.common.dao.BillingONCHeader1Dao;
-import org.oscarehr.common.dao.BillingONExtDao;
-import org.oscarehr.common.dao.BillingONItemDao;
-import org.oscarehr.common.dao.BillingONPaymentDao;
-import org.oscarehr.common.dao.BillingOnItemPaymentDao;
-import org.oscarehr.common.dao.BillingPaymentTypeDao;
-import org.oscarehr.common.dao.BillingServiceDao;
-import org.oscarehr.common.dao.ClinicLocationDao;
-import org.oscarehr.common.dao.CtlBillingServiceDao;
-import org.oscarehr.common.model.BillingONCHeader1;
-import org.oscarehr.common.model.BillingONExt;
-import org.oscarehr.common.model.BillingONItem;
-import org.oscarehr.common.model.BillingONPayment;
-import org.oscarehr.common.model.BillingOnItemPayment;
-import org.oscarehr.common.model.BillingService;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.DateRange;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.billing.CA.ON.dao.BillingPercLimitDao;
+import ca.openosp.openo.billing.CA.ON.model.BillingPercLimit;
+import ca.openosp.openo.common.dao.BillingONCHeader1Dao;
+import ca.openosp.openo.common.dao.BillingONExtDao;
+import ca.openosp.openo.common.dao.BillingONItemDao;
+import ca.openosp.openo.common.dao.BillingONPaymentDao;
+import ca.openosp.openo.common.dao.BillingOnItemPaymentDao;
+import ca.openosp.openo.common.dao.BillingPaymentTypeDao;
+import ca.openosp.openo.common.dao.BillingServiceDao;
+import ca.openosp.openo.common.dao.ClinicLocationDao;
+import ca.openosp.openo.common.dao.CtlBillingServiceDao;
+import ca.openosp.openo.common.model.BillingONCHeader1;
+import ca.openosp.openo.common.model.BillingONExt;
+import ca.openosp.openo.common.model.BillingONItem;
+import ca.openosp.openo.common.model.BillingONPayment;
+import ca.openosp.openo.common.model.BillingOnItemPayment;
+import ca.openosp.openo.common.model.BillingService;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.DateRange;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 
 public class JdbcBillingReviewImpl {
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
 
     private ClinicLocationDao clinicLocationDao = (ClinicLocationDao) SpringUtils.getBean(ClinicLocationDao.class);
     private BillingONCHeader1Dao dao = SpringUtils.getBean(BillingONCHeader1Dao.class);

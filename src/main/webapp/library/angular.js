@@ -7289,7 +7289,7 @@
                  *
                  * # Security Considerations
                  *
-                 * When designing web applications, consider security threats from:
+                 * When designing ehrweb applications, consider security threats from:
                  *
                  * - {@link http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx
                  *   JSON vulnerability}

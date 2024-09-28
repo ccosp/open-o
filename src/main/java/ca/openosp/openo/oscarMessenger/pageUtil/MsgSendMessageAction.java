@@ -38,15 +38,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessages;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.MessageListDao;
-import org.oscarehr.common.dao.MessageTblDao;
-import org.oscarehr.common.model.MessageList;
-import org.oscarehr.common.model.MessageTbl;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.MessageListDao;
+import ca.openosp.openo.common.dao.MessageTblDao;
+import ca.openosp.openo.common.model.MessageList;
+import ca.openosp.openo.common.model.MessageTbl;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class MsgSendMessageAction extends Action {
 

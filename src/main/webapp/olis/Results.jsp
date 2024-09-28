@@ -9,22 +9,22 @@
 
 --%>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.olis.model.OLISResultNomenclature" %>
-<%@page import="org.oscarehr.olis.dao.OLISResultNomenclatureDao" %>
-<%@page import="org.oscarehr.common.model.OLISResults" %>
-<%@page import="org.oscarehr.common.dao.OLISResultsDao" %>
+<%@page import="ca.openosp.openo.olis.model.OLISResultNomenclature" %>
+<%@page import="ca.openosp.openo.olis.dao.OLISResultNomenclatureDao" %>
+<%@page import="ca.openosp.openo.common.model.OLISResults" %>
+<%@page import="ca.openosp.openo.common.dao.OLISResultsDao" %>
 <%@page import="ca.openosp.openo.log.LogAction" %>
-<%@page import="org.oscarehr.common.model.OscarLog" %>
+<%@page import="ca.openosp.openo.common.model.OscarLog" %>
 <%@page import="java.io.File" %>
-<%@page import="org.oscarehr.olis.OLISUtils" %>
+<%@page import="ca.openosp.openo.olis.OLISUtils" %>
 <%@page import="ca.openosp.openo.oscarLab.FileUploadCheck" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@page import="ca.openosp.openo.oscarLab.ca.all.upload.MessageUploader" %>
-<%@page import="org.oscarehr.olis.model.OLISRequestNomenclature" %>
-<%@page import="org.oscarehr.olis.dao.OLISRequestNomenclatureDao" %>
+<%@page import="ca.openosp.openo.olis.model.OLISRequestNomenclature" %>
+<%@page import="ca.openosp.openo.olis.dao.OLISRequestNomenclatureDao" %>
 <%@ page language="java" contentType="text/html;" %>
-<%@page import="com.indivica.olis.queries.*,org.oscarehr.olis.OLISSearchAction,java.util.*,ca.openosp.openo.oscarLab.ca.all.parsers.Factory, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler.OLISError, org.oscarehr.olis.OLISResultsAction, org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.util.MiscUtils" %>
+<%@page import="com.indivica.olis.queries.*,ca.openosp.openo.olis.OLISSearchAction,java.util.*,ca.openosp.openo.oscarLab.ca.all.parsers.Factory, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler, ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler.OLISError, ca.openosp.openo.olis.OLISResultsAction, ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.Misc" %>
 
 <%

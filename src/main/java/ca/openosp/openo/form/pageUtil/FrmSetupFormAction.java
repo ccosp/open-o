@@ -49,13 +49,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.xmlrpc.XmlRpcClient;
 import org.apache.xmlrpc.XmlRpcException;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.model.Allergy;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.model.Allergy;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.form.data.FrmVTData;
@@ -253,7 +253,7 @@ public final class FrmSetupFormAction extends Action {
 		} */ catch (IOException e) {
             MiscUtils.getLogger().debug("IO error.");
             MiscUtils.getLogger().debug("Error, file " + formName + ".xml not found.");
-            MiscUtils.getLogger().debug("This file must be placed at web/form");
+            MiscUtils.getLogger().debug("This file must be placed at ehrweb/form");
             MiscUtils.getLogger().error("Error", e);
         }
         return (new ActionForward("/form/form" + formName + ".jsp"));

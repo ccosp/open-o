@@ -42,21 +42,22 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%! boolean bMultisites = org.oscarehr.common.IsPropertiesOn.isMultisitesEnable(); %>
+<%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 
-<%@page import="org.oscarehr.common.dao.SiteDao" %>
+<%@page import="ca.openosp.openo.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.Appointment" %>
-<%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
+<%@page import="ca.openosp.openo.common.model.Site" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.Appointment" %>
+<%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
 <%@ page import="ca.openosp.openo.form.study.HSFO.HSFODAO" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProSignatureData" %>
 <%@ page import="ca.openosp.openo.oscarRx.pageUtil.RxSessionBean" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxProviderData" %>
 <%@ page import="ca.openosp.openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="ca.openosp.openo.common.IsPropertiesOn" %>
 <%
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
 %>
@@ -86,7 +87,7 @@
             String createAnewRx;
             if (reprint.equalsIgnoreCase("true")) {
                 bean = (RxSessionBean) session.getAttribute("tmpBeanRX");
-                createAnewRx = "window.location.href = '" + request.getContextPath() + "/oscarRx/SearchDrug.jsp'";
+                createAnewRx = "window.location.href = '" + request.getContextPath() + "/ehroscarRx/SearchDrug.jsp'";
             } else
                 createAnewRx = "javascript:clearPending('')";
 

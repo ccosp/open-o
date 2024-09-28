@@ -30,9 +30,10 @@ import java.util.Date;
 import java.util.List;
 
 import ca.openosp.openo.Misc;
+import ca.openosp.openo.common.model.Demographic;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.MyDateFormat;
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
@@ -688,7 +689,7 @@ public class TeleplanCorrectionFormWCB
         MiscUtils.getLogger().debug("reseting wcb with bill amount " + billamt);
 
         DemographicData demoData = new DemographicData();
-        org.oscarehr.common.model.Demographic demo = demoData.getDemographic(loggedInInfo, this.demographicNumber);
+        Demographic demo = demoData.getDemographic(loggedInInfo, this.demographicNumber);
 
         return new String[]{
                 Misc.mysqlEscape(this.w_reportype),

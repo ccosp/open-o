@@ -24,8 +24,10 @@
 
 --%>
 
-<%@page import="org.springframework.web.context.support.WebApplicationContextUtils,org.oscarehr.util.OntarioMD,java.util.Hashtable" %>
+<%@page import="org.springframework.web.context.support.WebApplicationContextUtils,ca.openosp.openo.ehrutil.OntarioMD,java.util.Hashtable" %>
 <%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*" %>
+<%@ page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@ page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 <%
 
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());

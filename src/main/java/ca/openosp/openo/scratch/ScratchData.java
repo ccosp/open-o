@@ -30,9 +30,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.oscarehr.common.dao.ScratchPadDao;
-import org.oscarehr.common.model.ScratchPad;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ScratchPadDao;
+import ca.openosp.openo.common.model.ScratchPad;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.ConversionUtils;
 

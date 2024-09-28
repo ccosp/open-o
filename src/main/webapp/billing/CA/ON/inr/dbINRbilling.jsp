@@ -25,9 +25,9 @@
 %>
 <%@ page import="java.sql.*, java.util.*,java.net.*, ca.openosp.openo.MyDateFormat" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.billing.CA.model.BillingInr" %>
-<%@ page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.billing.CA.model.BillingInr" %>
+<%@ page import="ca.openosp.openo.billing.CA.dao.BillingInrDao" %>
 <%
     BillingInrDao billingInrDao = SpringUtils.getBean(BillingInrDao.class);
 %>

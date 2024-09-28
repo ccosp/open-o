@@ -10,7 +10,7 @@
 
 package com.indivica.olis.segments;
 
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.common.model.Provider;
 
 public class ZSHSegment implements Segment {
 

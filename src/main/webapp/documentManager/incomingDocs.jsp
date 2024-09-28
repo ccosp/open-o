@@ -39,9 +39,9 @@
 %>
 
 
-<%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
+<%@page import="ca.openosp.openo.common.model.UserProperty" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.dao.UserPropertyDAO" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="java.io.File" %>
 <%@ page import="java.util.*" %>
@@ -53,14 +53,14 @@
 
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
-<%@page import="org.oscarehr.common.dao.ProviderLabRoutingDao,org.oscarehr.common.dao.DemographicDao, org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="org.oscarehr.common.dao.CtlDocClassDao,org.oscarehr.common.dao.QueueDao" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="org.oscarehr.common.model.ProviderLabRoutingModel" %>
+<%@page import="ca.openosp.openo.common.dao.ProviderLabRoutingDao,ca.openosp.openo.common.dao.DemographicDao, ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.common.dao.CtlDocClassDao,ca.openosp.openo.common.dao.QueueDao" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.ProviderLabRoutingModel" %>
 
-<%@page import="org.oscarehr.documentManager.IncomingDocUtil" %>
-<%@ page import="org.oscarehr.documentManager.EDocUtil" %>
+<%@page import="documentManager.IncomingDocUtil" %>
+<%@ page import="documentManager.EDocUtil" %>
 
 <jsp:useBean id="LastPatientsBean" class="java.util.ArrayList" scope="session"/>
 

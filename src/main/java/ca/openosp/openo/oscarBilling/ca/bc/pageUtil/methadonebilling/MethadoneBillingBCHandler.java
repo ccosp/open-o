@@ -33,16 +33,16 @@ import java.util.Properties;
 
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.common.dao.DemographicDao;
-import org.oscarehr.common.dao.DiagnosticCodeDao;
-import org.oscarehr.common.model.Billing;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.DiagnosticCode;
-import org.oscarehr.common.model.Provider;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.common.dao.DemographicDao;
+import ca.openosp.openo.common.dao.DiagnosticCodeDao;
+import ca.openosp.openo.common.model.Billing;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.DiagnosticCode;
+import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.util.UtilDateUtilities;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import net.sf.json.JSONObject;
 import ca.openosp.openo.OscarProperties;

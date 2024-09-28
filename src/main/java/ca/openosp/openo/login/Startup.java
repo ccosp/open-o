@@ -28,7 +28,7 @@ package ca.openosp.openo.login;
 
 import ca.openosp.openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

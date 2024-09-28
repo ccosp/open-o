@@ -38,16 +38,16 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.caisi.service.FacilityMessageManager;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.PMmodule.model.ProgramProvider;
-import org.oscarehr.PMmodule.service.ProgramManager;
-import org.oscarehr.common.dao.FacilityDao;
-import org.oscarehr.common.dao.FacilityMessageDao;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.model.FacilityMessage;
-import org.oscarehr.managers.ProgramManager2;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.PMmodule.model.ProgramProvider;
+import ca.openosp.openo.PMmodule.service.ProgramManager;
+import ca.openosp.openo.common.dao.FacilityDao;
+import ca.openosp.openo.common.dao.FacilityMessageDao;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.model.FacilityMessage;
+import ca.openosp.openo.managers.ProgramManager2;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class FacilityMessageAction extends DispatchAction {
 

@@ -40,7 +40,7 @@
 %>
 
 <%@ page import="java.util.*" %>
-<%@ page import="org.oscarehr.ws.rest.util.QuestimedUtil" %>
+<%@ page import="ca.openosp.openo.ws.rest.util.QuestimedUtil" %>
 
 <%
     String username = request.getParameter("serviceUsername");

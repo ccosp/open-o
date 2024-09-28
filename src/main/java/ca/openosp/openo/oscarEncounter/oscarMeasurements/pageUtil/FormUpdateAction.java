@@ -29,15 +29,15 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.oscarehr.common.dao.FlowSheetCustomizationDao;
-import org.oscarehr.common.dao.MeasurementDao;
-import org.oscarehr.common.model.FlowSheetCustomization;
-import org.oscarehr.common.model.Measurement;
-import org.oscarehr.common.model.Validations;
-import org.oscarehr.managers.SecurityInfoManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.FlowSheetCustomizationDao;
+import ca.openosp.openo.common.dao.MeasurementDao;
+import ca.openosp.openo.common.model.FlowSheetCustomization;
+import ca.openosp.openo.common.model.Measurement;
+import ca.openosp.openo.common.model.Validations;
+import ca.openosp.openo.managers.SecurityInfoManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -48,13 +48,13 @@ import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementType
 import ca.openosp.openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean;
 import ca.openosp.openo.util.ConversionUtils;
 
-import org.oscarehr.common.dao.SecRoleDao;
-import org.oscarehr.common.model.SecRole;
+import ca.openosp.openo.common.dao.SecRoleDao;
+import ca.openosp.openo.common.model.SecRole;
 
 import ca.openosp.openo.oscarEncounter.data.EctProgram;
 
-import org.oscarehr.casemgmt.model.CaseManagementNote;
-import org.oscarehr.casemgmt.service.CaseManagementManager;
+import ca.openosp.openo.casemgmt.model.CaseManagementNote;
+import ca.openosp.openo.casemgmt.service.CaseManagementManager;
 import org.apache.logging.log4j.Logger;
 
 public class FormUpdateAction extends Action {

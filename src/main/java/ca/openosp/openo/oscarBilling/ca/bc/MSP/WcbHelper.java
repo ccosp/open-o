@@ -28,9 +28,9 @@ package ca.openosp.openo.oscarBilling.ca.bc.MSP;
 
 import java.util.ArrayList;
 
-import org.oscarehr.billing.CA.BC.dao.WcbDao;
-import org.oscarehr.billing.CA.BC.model.Wcb;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.billing.CA.BC.dao.WcbDao;
+import ca.openosp.openo.billing.CA.BC.model.Wcb;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.util.ConversionUtils;
 
 /**

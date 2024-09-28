@@ -27,7 +27,7 @@
 package ca.openosp.openo.oscarReport.pageUtil;
 
 import org.apache.struts.action.ActionForm;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 /**
  * @author Jay Gallagher

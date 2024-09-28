@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="oscar.util.*, oscar.form.*, oscar.form.data.*" %>
 <%@ page import="ca.openosp.openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="ca.openosp.openo.form.FrmRourke2009Record" %>

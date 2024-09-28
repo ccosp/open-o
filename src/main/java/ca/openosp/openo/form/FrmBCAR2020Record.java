@@ -26,15 +26,15 @@ package ca.openosp.openo.form;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.model.Provider;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.model.Provider;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.owasp.encoder.Encode;
 import ca.openosp.openo.SxmlMisc;
 
-import org.oscarehr.common.dao.forms.FormBCAR2020DataDao;
-import org.oscarehr.common.dao.forms.FormBCAR2020TextDao;
+import ca.openosp.openo.common.dao.forms.FormBCAR2020DataDao;
+import ca.openosp.openo.common.dao.forms.FormBCAR2020TextDao;
 import ca.openosp.openo.form.model.FormBCAR2020Data;
 import ca.openosp.openo.form.model.FormBCAR2020Text;
 import ca.openosp.openo.util.UtilDateUtilities;

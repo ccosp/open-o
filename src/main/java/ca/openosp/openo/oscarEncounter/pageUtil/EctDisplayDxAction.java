@@ -35,11 +35,11 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.util.MessageResources;
-import org.oscarehr.common.dao.PartialDateDao;
-import org.oscarehr.common.model.PartialDate;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.PartialDateDao;
+import ca.openosp.openo.common.model.PartialDate;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.oscarDxResearch.bean.dxResearchBean;
 import ca.openosp.openo.oscarDxResearch.bean.dxResearchBeanHandler;

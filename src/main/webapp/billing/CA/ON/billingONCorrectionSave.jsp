@@ -24,9 +24,9 @@
          import="java.util.*,java.math.*,java.net.*,java.sql.*,oscar.util.*,oscar.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<%@page import="org.oscarehr.managers.SecurityInfoManager" %>
-<%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
+<%@page import="ca.openosp.openo.managers.SecurityInfoManager" %>
+<%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.pageUtil.BillingCorrectionPrep" %>
 

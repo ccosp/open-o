@@ -39,7 +39,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.util.MiscUtils;
+import ca.openosp.openo.ehrutil.MiscUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.ca.bc.PathNet.HL7.Message;

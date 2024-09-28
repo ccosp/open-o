@@ -32,12 +32,12 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.common.dao.OscarKeyDao;
-import org.oscarehr.common.dao.PublicKeyDao;
-import org.oscarehr.common.model.OscarKey;
-import org.oscarehr.common.model.PublicKey;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.OscarKeyDao;
+import ca.openosp.openo.common.dao.PublicKeyDao;
+import ca.openosp.openo.common.model.OscarKey;
+import ca.openosp.openo.common.model.PublicKey;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public final class KeyPairGen {
 

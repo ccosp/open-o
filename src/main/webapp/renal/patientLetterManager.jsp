@@ -25,7 +25,7 @@
 
 --%>
 
-<%@page import="java.util.*, java.io.*, org.oscarehr.util.MiscUtils" %>
+<%@page import="java.util.*, java.io.*, ca.openosp.openo.ehrutil.MiscUtils" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

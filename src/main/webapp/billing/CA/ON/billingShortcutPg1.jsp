@@ -17,24 +17,24 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%@page import="org.oscarehr.common.model.DiagnosticCode" %>
-<%@page import="org.oscarehr.common.dao.DiagnosticCodeDao" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingServiceDao" %>
-<%@page import="org.oscarehr.common.model.CtlBillingServicePremium" %>
-<%@page import="org.oscarehr.common.dao.CtlBillingServicePremiumDao" %>
+<%@page import="ca.openosp.openo.common.model.DiagnosticCode" %>
+<%@page import="ca.openosp.openo.common.dao.DiagnosticCodeDao" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.CtlBillingServicePremium" %>
+<%@page import="ca.openosp.openo.common.dao.CtlBillingServicePremiumDao" %>
 <%@page import="java.util.Date" %>
-<%@page import="org.oscarehr.common.model.BillingService" %>
-<%@page import="org.oscarehr.common.model.CtlBillingService" %>
-<%@page import="org.oscarehr.common.dao.BillingServiceDao" %>
-<%@page import="org.oscarehr.common.model.ClinicLocation" %>
-<%@page import="org.oscarehr.common.dao.ClinicLocationDao" %>
-<%@page import="org.oscarehr.billing.CA.model.BillingDetail" %>
-<%@page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
+<%@page import="ca.openosp.openo.common.model.BillingService" %>
+<%@page import="ca.openosp.openo.common.model.CtlBillingService" %>
+<%@page import="ca.openosp.openo.common.dao.BillingServiceDao" %>
+<%@page import="ca.openosp.openo.common.model.ClinicLocation" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicLocationDao" %>
+<%@page import="ca.openosp.openo.billing.CA.model.BillingDetail" %>
+<%@page import="ca.openosp.openo.billing.CA.dao.BillingDetailDao" %>
 <%@page import="ca.openosp.openo.util.ConversionUtils" %>
-<%@page import="org.oscarehr.common.model.Billing" %>
-<%@page import="org.oscarehr.common.dao.BillingDao" %>
-<%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="org.oscarehr.common.model.Demographic" %>
+<%@page import="ca.openosp.openo.common.model.Billing" %>
+<%@page import="ca.openosp.openo.common.dao.BillingDao" %>
+<%@page import="ca.openosp.openo.common.dao.DemographicDao" %>
+<%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("../../../logout.jsp");
@@ -56,18 +56,18 @@
 <%@ page errorPage="/errorpage.jsp" %>
 <%@ page import="java.util.*,java.net.*, java.sql.*, oscar.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ClinicNbr" %>
-<%@page import="org.oscarehr.common.model.Provider" %>
-<%@page import="org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ClinicNbr" %>
+<%@page import="ca.openosp.openo.common.model.Provider" %>
+<%@page import="ca.openosp.openo.common.dao.ClinicNbrDao" %>
+<%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <jsp:useBean id="providerBean" class="java.util.Properties"
              scope="session"/>
-<%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="org.oscarehr.common.model.ProfessionalSpecialist" %>
-<%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
+<%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@page import="ca.openosp.openo.common.model.ProfessionalSpecialist" %>
+<%@page import="ca.openosp.openo.common.dao.ProfessionalSpecialistDao" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
 <%@ page import="ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>

@@ -28,11 +28,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Properties;
 
-import org.oscarehr.common.dao.ClinicDAO;
-import org.oscarehr.common.model.Clinic;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ClinicDAO;
+import ca.openosp.openo.common.model.Clinic;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.util.UtilDateUtilities;
 

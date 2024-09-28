@@ -40,10 +40,10 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
-import org.oscarehr.common.dao.ResourceStorageDao;
-import org.oscarehr.common.model.ResourceStorage;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.ResourceStorageDao;
+import ca.openosp.openo.common.model.ResourceStorage;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 

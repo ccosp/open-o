@@ -33,7 +33,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="java.math.BigInteger,java.util.*,org.oscarehr.integration.mcedt.mailbox.DetailDataCustom" %>
+<%@ page import="java.math.BigInteger,java.util.*,ca.openosp.openo.integration.mcedt.mailbox.DetailDataCustom" %>
 
 <%
     BigInteger resourceIDBig = (BigInteger) session.getAttribute("resourceID");

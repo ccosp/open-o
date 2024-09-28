@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Vector;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
 
 import ca.openosp.openo.oscarBilling.ca.on.data.BillingBatchHeaderData;
@@ -36,7 +37,7 @@ import ca.openosp.openo.oscarBilling.ca.on.data.JdbcBillingPageUtil;
 import ca.openosp.openo.util.UtilDateUtilities;
 
 public class BillingDiskCreatePrep {
-    private static final Logger _logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static final Logger _logger = MiscUtils.getLogger();
     JdbcBillingClaimImpl dbObj = new JdbcBillingClaimImpl();
     Properties propProOHIP = null;
 

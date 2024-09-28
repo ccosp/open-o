@@ -153,7 +153,7 @@ function initList(s) {//normals,abnormals
     }
 }
 
-/********************global data util methods *****************************/
+/********************global data ehrutil methods *****************************/
 function getDocLabFromCat(cat) {
     if (cat.length > 0) {
         return typeDocLab[cat];

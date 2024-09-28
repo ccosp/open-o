@@ -4,7 +4,7 @@ const DrughistoryComponent = {
         dismiss: '&',
         resolve: '<',
     },
-    templateUrl: '../web/record/rx/history/history.template.jsp',
+    templateUrl: '../ehrweb/record/rx/history/history.template.jsp',
     controller: ['$stateParams', '$state', '$uibModal', '$log', 'rxService', function ($stateParams, $state, $uibModal, $log, rxService) {
 
         drugHistoryComp = this;

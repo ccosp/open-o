@@ -30,9 +30,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.oscarehr.common.dao.WaitingListNameDao;
-import org.oscarehr.common.model.WaitingListName;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.WaitingListNameDao;
+import ca.openosp.openo.common.model.WaitingListName;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 public class WLWaitingListNameBeanHandler {
 

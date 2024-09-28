@@ -24,22 +24,22 @@
 
 --%>
 
-<%@page import="org.oscarehr.util.WebUtils" %>
+<%@page import="ca.openosp.openo.ehrutil.WebUtils" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.AccountManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
 <%@page import="org.oscarehr.myoscar.client.ws_manager.MessageManager" %>
-<%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
+<%@page import="ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
-<%@page import="org.oscarehr.phr.util.MyOscarServerRelationManager" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarUtils" %>
+<%@page import="ca.openosp.openo.phr.util.MyOscarServerRelationManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.w3c.dom.*" %>
 <%@ page
-        import="oscar.oscarDemographic.data.*,org.oscarehr.common.model.Demographic,org.oscarehr.common.dao.DemographicDao,org.oscarehr.util.SpringUtils" %>
+        import="oscar.oscarDemographic.data.*,ca.openosp.openo.common.model.Demographic,ca.openosp.openo.common.dao.DemographicDao,ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="javax.servlet.http.HttpServletRequest.*" %>
 <%@ page import="java.util.Iterator.*" %>
 <%@ page import="java.util.Enumeration.*" %>

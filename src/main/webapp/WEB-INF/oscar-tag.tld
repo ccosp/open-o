@@ -113,7 +113,7 @@
 
 <tag>
   <name>phrverification</name>
-  <tagclass>org.oscarehr.phr.util.PHRVerificationTag</tagclass>
+  <tagclass>ca.openosp.openo.phr.util.PHRVerificationTag</tagclass>
   <bodycontent>jsp</bodycontent>
   <attribute>
     <name>demographicNo</name>
@@ -151,7 +151,7 @@
 
 <tag>
   <name>help</name>
-  <tagclass>org.oscarehr.util.HelpTag</tagclass>
+  <tagclass>ca.openosp.openo.ehrutil.HelpTag</tagclass>
   <bodycontent>empty</bodycontent>
   <attribute>
     <name>keywords</name>
@@ -182,7 +182,7 @@
 
 <tag>
   <name>customInterface</name>
-  <tagclass>org.oscarehr.util.CustomInterfaceTag</tagclass>
+  <tagclass>ca.openosp.openo.ehrutil.CustomInterfaceTag</tagclass>
   <bodycontent>empty</bodycontent>
   <attribute>
     <name>section</name>

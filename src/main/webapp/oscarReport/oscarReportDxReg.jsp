@@ -17,8 +17,8 @@
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 --%>
-<%@ page import="org.oscarehr.util.SessionConstants" %>
-<%@ page import="org.oscarehr.common.model.ProviderPreference" %>
+<%@ page import="ca.openosp.openo.ehrutil.SessionConstants" %>
+<%@ page import="ca.openosp.openo.common.model.ProviderPreference" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -37,16 +37,16 @@
     }
 %>
 
-<%@ page import="org.oscarehr.common.dao.DxresearchDAO" %>
-<%@ page import="org.oscarehr.common.model.Dxresearch" %>
+<%@ page import="ca.openosp.openo.common.dao.DxresearchDAO" %>
+<%@ page import="ca.openosp.openo.common.model.Dxresearch" %>
 <%@ page import="oscar.oscarResearch.oscarDxResearch.util.*" %>
 <%@ page import="java.util.*, java.sql.*" %>
 
-<%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
-<%@ page import="org.oscarehr.common.model.MyGroup" %>
+<%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
+<%@ page import="ca.openosp.openo.common.model.Provider" %>
+<%@ page import="ca.openosp.openo.common.dao.MyGroupDao" %>
+<%@ page import="ca.openosp.openo.common.model.MyGroup" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

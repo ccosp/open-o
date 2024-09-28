@@ -45,9 +45,9 @@
 
 package ca.openosp.openo.oscarReport.data;
 
-import org.oscarehr.common.dao.DemographicQueryFavouritesDao;
-import org.oscarehr.common.model.DemographicQueryFavourite;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.dao.DemographicQueryFavouritesDao;
+import ca.openosp.openo.common.model.DemographicQueryFavourite;
+import ca.openosp.openo.ehrutil.SpringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

@@ -24,8 +24,9 @@
 --%>
 <%@ include file="/taglibs.jsp" %>
 <%@page
-        import="java.util.*,org.oscarehr.PMmodule.service.*,org.oscarehr.util.SpringUtils,org.oscarehr.common.model.Facility, org.springframework.web.context.support.*,org.springframework.web.context.*" %>
-<%@page import="org.oscarehr.common.dao.FacilityDao" %>
+        import="java.util.*,org.oscarehr.PMmodule.service.*,ca.openosp.openo.ehrutil.SpringUtils,ca.openosp.openo.common.model.Facility, org.springframework.web.context.support.*,org.springframework.web.context.*" %>
+<%@page import="ca.openosp.openo.common.dao.FacilityDao" %>
+<%@ page import="ca.openosp.openo.PMmodule.service.GenericIntakeManager" %>
 <%
     WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
     GenericIntakeManager genericIntakeManager = (GenericIntakeManager) ctx.getBean(GenericIntakeManager.class);

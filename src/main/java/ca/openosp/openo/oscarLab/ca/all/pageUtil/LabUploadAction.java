@@ -62,14 +62,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
-import org.oscarehr.common.OtherIdManager;
-import org.oscarehr.common.dao.OscarKeyDao;
-import org.oscarehr.common.dao.PublicKeyDao;
-import org.oscarehr.common.model.OscarKey;
-import org.oscarehr.common.model.OtherId;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.common.OtherIdManager;
+import ca.openosp.openo.common.dao.OscarKeyDao;
+import ca.openosp.openo.common.dao.PublicKeyDao;
+import ca.openosp.openo.common.model.OscarKey;
+import ca.openosp.openo.common.model.OtherId;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.MiscUtils;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.oscarLab.FileUploadCheck;
@@ -79,7 +79,7 @@ import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import ca.openosp.openo.oscarLab.ca.all.util.Utilities;
 
 public class LabUploadAction extends Action {
-    protected static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    protected static Logger logger = MiscUtils.getLogger();
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -248,7 +248,7 @@ public class LabUploadAction extends Action {
 
         try {
             PublicKeyDao publicKeyDao = (PublicKeyDao) SpringUtils.getBean(PublicKeyDao.class);
-            org.oscarehr.common.model.PublicKey publicKeyObject = publicKeyDao.find(service);
+            ca.openosp.openo.common.model.PublicKey publicKeyObject = publicKeyDao.find(service);
 
             if (publicKeyObject != null) {
                 keyString = publicKeyObject.getBase64EncodedPublicKey();

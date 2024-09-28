@@ -54,23 +54,24 @@ import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
+import ca.openosp.openo.ehrutil.MiscUtils;
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.PMmodule.dao.OcanSubmissionLogDao;
-import org.oscarehr.PMmodule.dao.ProgramDao;
-import org.oscarehr.PMmodule.dao.ProviderDao;
-import org.oscarehr.PMmodule.model.OcanSubmissionLog;
-import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.dao.AdmissionDao;
-import org.oscarehr.common.dao.FacilityDao;
-import org.oscarehr.common.dao.OcanStaffFormDao;
-import org.oscarehr.common.dao.OcanStaffFormDataDao;
-import org.oscarehr.common.model.Admission;
-import org.oscarehr.common.model.Demographic;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.common.model.OcanStaffForm;
-import org.oscarehr.managers.DemographicManager;
-import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.SpringUtils;
+import ca.openosp.openo.PMmodule.dao.OcanSubmissionLogDao;
+import ca.openosp.openo.PMmodule.dao.ProgramDao;
+import ca.openosp.openo.PMmodule.dao.ProviderDao;
+import ca.openosp.openo.PMmodule.model.OcanSubmissionLog;
+import ca.openosp.openo.PMmodule.model.Program;
+import ca.openosp.openo.common.dao.AdmissionDao;
+import ca.openosp.openo.common.dao.FacilityDao;
+import ca.openosp.openo.common.dao.OcanStaffFormDao;
+import ca.openosp.openo.common.dao.OcanStaffFormDataDao;
+import ca.openosp.openo.common.model.Admission;
+import ca.openosp.openo.common.model.Demographic;
+import ca.openosp.openo.common.model.Facility;
+import ca.openosp.openo.common.model.OcanStaffForm;
+import ca.openosp.openo.managers.DemographicManager;
+import ca.openosp.openo.ehrutil.LoggedInInfo;
+import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
 
@@ -79,10 +80,10 @@ import com.cbi.ws.CbiDataItem;
 import com.cbi.ws.CbiServiceResult;
 
 public class CBIUtil {
-    private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();
+    private static Logger logger = MiscUtils.getLogger();
     private static OscarProperties oscarProperties = OscarProperties.getInstance();
 
-    // submit cbi data to cbi web service
+    // submit cbi data to cbi ehrweb service
     public void submitCBIData(OcanStaffForm ocanStaffForm) throws Exception {
         logger.debug("in CBIUtil : submitCBIData");
         logger.debug("ocanStaffForm = " + ocanStaffForm);
@@ -114,7 +115,7 @@ public class CBIUtil {
     }
 
     private CbiServiceResult invokeWebService(OcanStaffForm ocanStaffForm) throws Exception {
-        logger.debug("invoking CBI web service");
+        logger.debug("invoking CBI ehrweb service");
 
         String CBI_WS_URL = oscarProperties.getProperty("CBI_WS_URL");
         String CBI_WS_USERNAME = oscarProperties.getProperty("CBI_WS_USERNAME");
