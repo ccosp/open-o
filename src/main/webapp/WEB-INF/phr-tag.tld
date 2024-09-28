@@ -42,7 +42,7 @@
             
     <tag>
         <name>indivoRegistered</name>
-        <tag-class>oscar.util.indivoCheck</tag-class>
+        <tag-class>openo.util.indivoCheck</tag-class>
         <body-content>JSP</body-content>
         
         <attribute>
@@ -62,7 +62,7 @@
     
     <tag>
         <name>phrNotRegistered</name>
-        <tag-class>oscar.util.ProviderPHRCheck</tag-class>
+        <tag-class>openo.util.ProviderPHRCheck</tag-class>
         <body-content>JSP</body-content>
         
         <attribute>

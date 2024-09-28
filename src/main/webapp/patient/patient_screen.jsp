@@ -32,7 +32,8 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.MyDateFormat" %>
 
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);

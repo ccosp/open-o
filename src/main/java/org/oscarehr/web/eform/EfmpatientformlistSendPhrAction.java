@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import openo.util.UtilDateUtilities;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.LoggedInInfo;
@@ -148,7 +149,7 @@ public final class EfmpatientformlistSendPhrAction {
     private String uploadToOscarDocuments(File file, String description, String type) throws Exception {
 
         String originalFileName = file.getName();
-        EDoc newDoc = new EDoc(description, type, originalFileName, "", providerNo, "", "", 'A', oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", clientId);
+        EDoc newDoc = new EDoc(description, type, originalFileName, "", providerNo, "", "", 'A', UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", clientId);
         newDoc.setContentType("application/pdf");
         String newFileName = newDoc.getFileName();
 

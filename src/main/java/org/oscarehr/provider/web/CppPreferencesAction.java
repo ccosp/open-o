@@ -38,7 +38,7 @@ import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.model.OscarLog;
 import org.oscarehr.util.LoggedInInfo;
 
-import oscar.log.LogAction;
+import openo.log.LogAction;
 
 public class CppPreferencesAction extends DispatchAction {
 

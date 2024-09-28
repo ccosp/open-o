@@ -40,7 +40,8 @@
 %>
 
 <%@ page
-        import="oscar.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+        import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -51,7 +52,7 @@
     <title>Record Immunization</title>
     <link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"/>
     <%
-        oscar.oscarEncounter.pageUtil.EctSessionBean bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean");
+        EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean");
         String node = request.getParameter("node").toString();
         String immName = "";
         if (request.getParameter("name") != null)

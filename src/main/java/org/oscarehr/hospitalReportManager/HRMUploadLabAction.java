@@ -29,7 +29,7 @@ import java.util.Map;
 import java.io.InputStream;
 import java.io.IOException;
 
-import oscar.oscarLab.ca.all.util.Utilities;
+import openo.oscarLab.ca.all.util.Utilities;
 
 public class HRMUploadLabAction extends DispatchAction {
 

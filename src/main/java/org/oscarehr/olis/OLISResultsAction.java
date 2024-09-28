@@ -21,6 +21,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openo.Misc;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.action.ActionForm;
@@ -42,13 +43,13 @@ import com.indivica.olis.queries.Query;
 import com.indivica.olis.queries.QueryType;
 import com.indivica.olis.queries.Z01Query;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.oscarLab.ca.all.parsers.Factory;
-import oscar.oscarLab.ca.all.parsers.MessageHandler;
-import oscar.oscarLab.ca.all.parsers.OLISHL7Handler;
-import oscar.oscarLab.ca.all.upload.MessageUploader;
-import oscar.oscarLab.ca.all.util.Utilities;
+import openo.OscarProperties;
+import openo.log.LogAction;
+import openo.oscarLab.ca.all.parsers.Factory;
+import openo.oscarLab.ca.all.parsers.MessageHandler;
+import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import openo.oscarLab.ca.all.upload.MessageUploader;
+import openo.oscarLab.ca.all.util.Utilities;
 
 public class OLISResultsAction extends DispatchAction {
 
@@ -70,10 +71,10 @@ public class OLISResultsAction extends DispatchAction {
                 olisResultString = (String) request.getSession().getAttribute("olisResponseContent");
             }
             if (olisResultString == null && "no".equals(OscarProperties.getInstance().getProperty("olis_simulate", "no"))) {
-                olisResultString = oscar.Misc.getStr(request.getParameter("olisResponseContent"), "");
+                olisResultString = Misc.getStr(request.getParameter("olisResponseContent"), "");
                 request.setAttribute("olisResponseContent", olisResultString);
 
-                String olisXmlResponse = oscar.Misc.getStr(request.getParameter("olisXmlResponse"), "");
+                String olisXmlResponse = Misc.getStr(request.getParameter("olisXmlResponse"), "");
                 if (olisResultString.trim().equalsIgnoreCase("")) {
                     if (!olisXmlResponse.trim().equalsIgnoreCase("")) {
                         Driver.readResponseFromXML(LoggedInInfo.getLoggedInInfoFromSession(request), request, olisXmlResponse);

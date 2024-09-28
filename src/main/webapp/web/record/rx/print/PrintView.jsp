@@ -23,12 +23,12 @@
     Ontario, Canada
 
 --%>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="oscar.oscarProvider.data.ProSignatureData, oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData, openo.oscarProvider.data.ProviderData" %>
 <%@ page import="oscar.log.*,oscar.oscarRx.data.*" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.apache.logging.log4j.Logger,java.util.List" %>
@@ -37,7 +37,7 @@
                  java.lang.*,
                  java.util.Date,
                  java.text.SimpleDateFormat,
-                 oscar.oscarRx.util.RxUtil,
+                 openo.oscarRx.util.RxUtil,
                  org.springframework.web.context.WebApplicationContext,
                  org.springframework.web.context.support.WebApplicationContextUtils,
                  org.oscarehr.common.dao.UserPropertyDAO,
@@ -64,6 +64,10 @@
 
 
 <%@page import="org.oscarehr.web.PrescriptionQrCodeUIBean" %>
+<%@ page import="openo.oscarRx.data.RxProviderData" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -126,7 +130,7 @@
     if (rePrint == null) {
         rePrint = "";
     }
-    oscar.oscarRx.data.RxProviderData.Provider provider;
+    RxProviderData.Provider provider;
     String signingProvider = loggedInInfo.getLoggedInProviderNo();
     if (rePrint != null && rePrint.equalsIgnoreCase("true")) {
         //bean = (oscar.oscarRx.pageUtil.RxSessionBean)session.getAttribute("tmpBeanRX");
@@ -137,10 +141,10 @@
 //    String ip = request.getRemoteAddr();
 
     }
-    provider = new oscar.oscarRx.data.RxProviderData().getProvider(signingProvider);
+    provider = new RxProviderData().getProvider(signingProvider);
 
 
-    oscar.oscarRx.data.RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, prescription.getDemographicId());
+    RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, prescription.getDemographicId());
     String patientAddress = patient.getAddress() == null ? "" : patient.getAddress();
     String patientCity = patient.getCity() == null ? "" : patient.getCity();
     String patientProvince = patient.getProvince() == null ? "" : patient.getProvince();
@@ -149,7 +153,7 @@
     String patientHin = patient.getHin() == null ? "" : patient.getHin();
 
 
-    oscar.oscarRx.data.RxPrescriptionData.Prescription rx = null;
+    RxPrescriptionData.Prescription rx = null;
     int i;
     ProSignatureData sig = new ProSignatureData();
     boolean hasSig = sig.hasSignature(signingProvider);
@@ -332,7 +336,7 @@
                                    value="<bean:message key="RxPreview.msgTel"/><%=StringEscapeUtils.escapeHtml(patientPhone) %>"/>
 
                             <input type="hidden" name="rxDate"
-                                   value="<%= StringEscapeUtils.escapeHtml(oscar.oscarRx.util.RxUtil.DateToString(rxDate, "MMMM d, yyyy")) %>"/>
+                                   value="<%= StringEscapeUtils.escapeHtml(RxUtil.DateToString(rxDate, "MMMM d, yyyy")) %>"/>
                             <input type="hidden" name="sigDoctorName"
                                    value="<%= StringEscapeUtils.escapeHtml(doctorName) %>"/>
                             <!--img src="img/rx.gif" border="0"-->
@@ -423,7 +427,7 @@
                                         <% if (props.getProperty("showRxChartNo", "").equalsIgnoreCase("true")) { %>
                                         <bean:message key="oscar.oscarRx.chartNo"/><%=ptChartNo%><% } %></td>
                                     <td align=right valign=top>
-                                        <b><%= oscar.oscarRx.util.RxUtil.DateToString(rxDate, "MMMM d, yyyy", request.getLocale()) %>
+                                        <b><%= RxUtil.DateToString(rxDate, "MMMM d, yyyy", request.getLocale()) %>
                                         </b></td>
                                 </tr>
                             </table>
@@ -472,8 +476,8 @@
                                 </tr>
 
 
-                                <% if (oscar.OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
-                                    out.write(oscar.OscarProperties.getInstance().getProperty("RX_FOOTER"));
+                                <% if (OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
+                                    out.write(OscarProperties.getInstance().getProperty("RX_FOOTER"));
                                 }%>
 
 
@@ -567,11 +571,11 @@
                                     }
 
 
-                                    if (oscar.OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null) {
+                                    if (OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null) {
                                 %>
                                 <tr valign=bottom align="center" style="font-size: 9px">
                                     <td height=25px colspan="2"></br>
-                                        <%= oscar.OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") %>
+                                        <%= OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") %>
                                     </td>
                                 </tr>
                                 <%

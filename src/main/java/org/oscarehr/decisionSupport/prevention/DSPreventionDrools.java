@@ -37,9 +37,9 @@ import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.OscarProperties;
-import oscar.oscarEncounter.oscarMeasurements.util.DSCondition;
-import oscar.oscarEncounter.oscarMeasurements.util.RuleBaseCreator;
+import openo.OscarProperties;
+import openo.oscarEncounter.oscarMeasurements.util.DSCondition;
+import openo.oscarEncounter.oscarMeasurements.util.RuleBaseCreator;
 
 public class DSPreventionDrools {
     private static final Logger logger = MiscUtils.getLogger();

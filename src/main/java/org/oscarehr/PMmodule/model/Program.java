@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.quatro.model.LookupCodeValue;
+import openo.Misc;
 
 /**
  * This is the object class that relates to the program table. Any customizations belong here.
@@ -449,7 +450,7 @@ public class Program implements Serializable {
     }
 
     public String getNameJs() {
-        return oscar.Misc.getStringJs(name);
+        return Misc.getStringJs(name);
     }
 
     /**

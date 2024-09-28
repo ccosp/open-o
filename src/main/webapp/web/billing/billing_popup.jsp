@@ -1,4 +1,4 @@
-<%--
+<%@ page import="openo.OscarProperties" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -25,7 +25,7 @@
 --%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
-    String prov = (oscar.OscarProperties.getInstance().getProperty("billregion", "")).trim().toUpperCase();
+    String prov = (OscarProperties.getInstance().getProperty("billregion", "")).trim().toUpperCase();
 %>
 
 <script>

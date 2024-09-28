@@ -29,11 +29,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.w3c.dom.*" %>
-<%@ page import="oscar.oscarMessenger.util.Msgxml" %>
+<%@ page import="openo.oscarMessenger.util.Msgxml" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
 <%@ page import="org.oscarehr.managers.MessagingManager" %>
 <%@ page import="org.oscarehr.common.model.Groups" %>
-<%@ page import="oscar.oscarMessenger.data.MsgProviderData" %>
+<%@ page import="openo.oscarMessenger.data.MsgProviderData" %>
 <%@ page import="java.util.Map, java.util.List" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -41,6 +41,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed = true;
@@ -61,7 +63,7 @@
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
     <bean:define id="bean"
-                 type="oscar.oscarMessenger.pageUtil.MsgSessionBean"
+                 type="openo.oscarMessenger.pageUtil.MsgSessionBean"
                  name="msgSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>
@@ -84,7 +86,7 @@
     pageContext.setAttribute("messageSubject", request.getAttribute("ReSubject"));
     pageContext.setAttribute("messageBody", request.getAttribute("ReText"));
 
-    oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean) pageContext.findAttribute("bean");
+    MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
 
     String demographic_no = (String) request.getAttribute("demographic_no");
     DemographicData demoData = new DemographicData();

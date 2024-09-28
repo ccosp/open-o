@@ -62,7 +62,6 @@ import org.oscarehr.common.dao.EFormGroupDao;
 import org.oscarehr.common.dao.EpisodeDao;
 import org.oscarehr.common.dao.MeasurementDao;
 import org.oscarehr.common.dao.PregnancyFormsDao;
-import org.oscarehr.common.dao.PregnancyFormsDaoImpl;
 import org.oscarehr.common.dao.PrintResourceLogDao;
 import org.oscarehr.common.model.AbstractCodeSystemModel;
 import org.oscarehr.common.model.Allergy;
@@ -76,16 +75,16 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.form.FrmLabReq07Record;
-import oscar.form.FrmLabReq10Record;
-import oscar.form.FrmONAREnhancedRecord;
-import oscar.form.FrmONARRecord;
-import oscar.form.FrmRecord;
-import oscar.form.FrmRecordFactory;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarEncounter.data.EctFormData;
+import openo.OscarProperties;
+import openo.form.FrmLabReq07Record;
+import openo.form.FrmLabReq10Record;
+import openo.form.FrmONAREnhancedRecord;
+import openo.form.FrmONARRecord;
+import openo.form.FrmRecord;
+import openo.form.FrmRecordFactory;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarEncounter.data.EctFormData;
 
 public class PregnancyAction extends DispatchAction {
 

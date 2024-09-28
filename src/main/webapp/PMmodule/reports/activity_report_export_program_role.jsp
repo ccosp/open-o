@@ -22,8 +22,8 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="oscar.util.DateUtils" %>
-<%@page import="oscar.util.SqlUtils" %>
+<%@page import="openo.util.DateUtils" %>
+<%@page import="openo.util.SqlUtils" %>
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.model.*" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>

@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -40,10 +41,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import org.owasp.encoder.Encode;
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.util.OscarRoleObjectPrivilege;
-import oscar.util.StringUtils;
+import openo.OscarProperties;
+import openo.log.LogAction;
+import openo.util.OscarRoleObjectPrivilege;
+import openo.util.StringUtils;
 
 public class CaseloadContentAction extends DispatchAction {
 
@@ -891,7 +892,7 @@ public class CaseloadContentAction extends DispatchAction {
     }
 
     public boolean patientHasOutstandingPrivateBills(String demographicNo) {
-        oscar.oscarBilling.ca.bc.MSP.MSPReconcile msp = new oscar.oscarBilling.ca.bc.MSP.MSPReconcile();
+        MSPReconcile msp = new MSPReconcile();
         return msp.patientHasOutstandingPrivateBill(demographicNo);
     }
 }

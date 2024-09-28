@@ -20,7 +20,7 @@
 
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@page import="oscar.util.DateUtils,org.oscarehr.util.SpringUtils, org.oscarehr.util.MiscUtils" %>
+<%@page import="openo.util.DateUtils,org.oscarehr.util.SpringUtils, org.oscarehr.util.MiscUtils" %>
 <%@page import="java.util.Properties,java.util.Date,java.util.List,java.util.ArrayList,java.math.BigDecimal" %>
 <%@page import="org.oscarehr.common.dao.BillingONPaymentDao,org.oscarehr.common.model.BillingONPayment" %>
 <%@page import="org.oscarehr.common.dao.BillingServiceDao,org.oscarehr.common.model.BillingService" %>
@@ -34,12 +34,12 @@
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.billing.CA.ON.util.DisplayInvoiceLogo" %>
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="oscar.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
-<%@page import="oscar.oscarBilling.ca.on.administration.GstControlAction" %>
+<%@page import="openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
+<%@page import="openo.oscarBilling.ca.on.administration.GstControlAction" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -87,7 +87,7 @@
 
     ClinicDAO clinicDao = (ClinicDAO) SpringUtils.getBean(ClinicDAO.class);
     Clinic clinic = clinicDao.getClinic();
-    oscar.OscarProperties props = oscar.OscarProperties.getInstance();
+    OscarProperties props = OscarProperties.getInstance();
 
     Properties gstProp = new Properties();
     GstControlAction db = new GstControlAction();
@@ -358,7 +358,7 @@
         <td><%=providerFormattedName%>
         </td>
 
-        <% Properties prop = oscar.OscarProperties.getInstance();
+        <% Properties prop = OscarProperties.getInstance();
             String payee = prop.getProperty("PAYEE", "");
             payee = payee.trim();
             if (payee.length() > 0) {

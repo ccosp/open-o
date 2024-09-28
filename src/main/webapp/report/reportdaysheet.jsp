@@ -51,6 +51,9 @@
 
 <%@ page import="org.oscarehr.common.model.ProviderData" %>
 <%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -58,7 +61,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
-<jsp:useBean id="daySheetBean" class="oscar.AppointmentMainBean" scope="page"/>
+<jsp:useBean id="daySheetBean" class="openo.AppointmentMainBean" scope="page"/>
 <jsp:useBean id="myGroupBean" class="java.util.Properties" scope="page"/>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 
@@ -68,7 +71,7 @@
     String curProvider_no = (String) session.getAttribute("user");
     String orderby = request.getParameter("orderby") != null ? request.getParameter("orderby") : ("start_time");
 
-    java.util.Properties oscarVariables = oscar.OscarProperties.getInstance();
+    java.util.Properties oscarVariables = OscarProperties.getInstance();
     java.util.Locale vLocale = (java.util.Locale) session.getAttribute(org.apache.struts.Globals.LOCALE_KEY);
 
     SimpleDateFormat dayFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -217,7 +220,7 @@
                 } catch (java.text.ParseException e) {
                     org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
-                for (Appointment a : appointmentDao.findByDayAndStatus(oscar.util.ConversionUtils.fromDateString(sdate), "t")) {
+                for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {
                     if (a.getProviderNo().equals(provider_no)) {
                         a.setStatus("T");
                         a.setLastUpdateUser((String) session.getAttribute("user"));
@@ -236,7 +239,7 @@
                 } catch (java.text.ParseException e) {
                     org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
-                for (Appointment a : appointmentDao.findByDayAndStatus(oscar.util.ConversionUtils.fromDateString(sdate), "t")) {
+                for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {
                     a.setStatus("T");
                     a.setLastUpdateUser((String) session.getAttribute("user"));
                     a.setUpdateDateTime(new java.util.Date());

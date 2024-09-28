@@ -43,13 +43,15 @@
 <%@ page import=" oscar.form.*, java.util.Properties" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="oscar.util.UtilMisc" %>
+<%@ page import="openo.util.UtilMisc" %>
 <%@ page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="oscar.util.StringUtils" %>
+<%@ page import="openo.util.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@ page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmBCAR2020Record" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

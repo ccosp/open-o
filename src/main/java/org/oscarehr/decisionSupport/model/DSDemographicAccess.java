@@ -56,16 +56,16 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementInfo;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
-import oscar.oscarResearch.oscarDxResearch.bean.dxResearchBean;
-import oscar.oscarResearch.oscarDxResearch.bean.dxResearchBeanHandler;
-import oscar.oscarRx.data.RxPrescriptionData;
-import oscar.oscarRx.data.RxPrescriptionData.Prescription;
+import openo.OscarProperties;
+import openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import openo.oscarEncounter.oscarMeasurements.MeasurementInfo;
+import openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
+import openo.oscarDxResearch.bean.dxResearchBean;
+import openo.oscarDxResearch.bean.dxResearchBeanHandler;
+import openo.oscarRx.data.RxPrescriptionData;
+import openo.oscarRx.data.RxPrescriptionData.Prescription;
 
 /**
  * @author apavel

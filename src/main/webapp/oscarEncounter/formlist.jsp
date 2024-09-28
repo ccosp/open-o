@@ -42,7 +42,9 @@
 %>
 
 <%@ page
-        import="oscar.util.UtilMisc,oscar.oscarEncounter.data.*,java.net.*,java.util.*" %>
+        import="openo.util.UtilMisc,oscar.oscarEncounter.data.*,java.net.*,java.util.*" %>
+<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     String provNo = request.getParameter("provider_no");
@@ -56,7 +58,7 @@
 
 <%
     EctFormData.Form[] forms = EctFormData.getForms();
-    oscar.util.UtilDateUtilities dateConvert = new oscar.util.UtilDateUtilities();
+    UtilDateUtilities dateConvert = new UtilDateUtilities();
 %>
 <html:html lang="en">
     <head>

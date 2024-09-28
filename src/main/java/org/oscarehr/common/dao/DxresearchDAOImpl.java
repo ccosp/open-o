@@ -44,8 +44,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Repository;
 
-import oscar.oscarResearch.oscarDxResearch.bean.dxCodeSearchBean;
-import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListItemsHandler;
+import openo.oscarDxResearch.bean.dxCodeSearchBean;
+import openo.oscarDxResearch.bean.dxQuickListItemsHandler;
 
 /**
  * @author toby

@@ -45,7 +45,7 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.login.LoginCheckLogin;
+import openo.login.LoginCheckLogin;
 
 public class UnreadTicklerAction extends DispatchAction {
 

@@ -41,6 +41,7 @@ if(!authed) {
 
 <%@page import="org.oscarehr.common.dao.ReportProviderDao" %>
 <%@page import="org.oscarehr.common.model.ReportProvider" %>
+<%@ page import="openo.oscarReport.data.VisitReportData" %>
 
 
 <table class="table table-bordered table-striped table-hover table-condensed" style="font-size:12px;">
@@ -142,7 +143,7 @@ for(Object[] result : reportProviderDao.search_reportprovider("visitreport", ohi
     p_no = provider.getProviderNo();
     team = rp.getTeam();
 
-    oscar.oscarReport.data.VisitReportData vrd = new oscar.oscarReport.data.VisitReportData();
+    VisitReportData vrd = new VisitReportData();
     vrd.setDateBegin(dateBegin);
     vrd.setDateEnd(dateEnd);
     vrd.setProviderNo(p_no);

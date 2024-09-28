@@ -42,11 +42,12 @@
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,oscar.MyDateFormat" %>
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,openo.MyDateFormat" %>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.DocumentDao" %>
 <%@page import="org.oscarehr.common.model.Document" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%
     DocumentDao documentDao = SpringUtils.getBean(DocumentDao.class);
@@ -55,8 +56,8 @@
 
 <%
     String filename = "", filetype = "", doc_no = "";
-    String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
-    String downloadMethod = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DOWNLOAD_METHOD");
+    String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+    String downloadMethod = OscarProperties.getInstance().getProperty("DOCUMENT_DOWNLOAD_METHOD");
     session.setAttribute("docdownload", docdownload);
     if (request.getParameter("document") != null) {
         filename = request.getParameter("document");

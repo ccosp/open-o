@@ -31,11 +31,14 @@
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.FlowSheetCustomization" %>
-<%@ page import="oscar.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
-<%@ page import="oscar.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBeanHandler" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

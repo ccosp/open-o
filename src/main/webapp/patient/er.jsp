@@ -38,6 +38,8 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.EncounterDao" %>
 <%@page import="org.oscarehr.common.model.Encounter" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);

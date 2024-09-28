@@ -1,4 +1,4 @@
-<%--
+<%@ page import="openo.OscarProperties" %><%--
 
 
     Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
@@ -26,7 +26,7 @@
 
 <%
     boolean showMfhExport = false;
-    oscar.OscarProperties pros = oscar.OscarProperties.getInstance();
+    OscarProperties pros = OscarProperties.getInstance();
     String mfhExport = pros.getProperty("MFH_UFC_EXPORT");
     if (mfhExport != null && mfhExport.equalsIgnoreCase("true")) {
         showMfhExport = true;

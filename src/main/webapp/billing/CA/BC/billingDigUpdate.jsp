@@ -39,7 +39,7 @@
     }
 %>
 
-<%@ page import="java.sql.*, java.util.*,java.net.*, oscar.MyDateFormat" %>
+<%@ page import="java.sql.*, java.util.*,java.net.*, openo.MyDateFormat" %>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.DiagnosticCode" %>

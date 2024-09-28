@@ -41,6 +41,8 @@
 <%@ page import="oscar.oscarEncounter.oscarMeasurements.bean.*" %>
 <%@ page import="oscar.oscarEncounter.oscarMeasurements.data.*" %>
 <%@ page import="java.util.Vector" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig" %>
 <%
     EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean");
     MeasurementMapConfig measurementMapConfig = new MeasurementMapConfig();
@@ -84,7 +86,7 @@
             <logic:present name="measurementsData">
                 <logic:iterate id="data" name="measurementsData"
                                property="measurementsDataVector"
-                               type="oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" indexId="ctr">
+                               type="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" indexId="ctr">
                     <tr class="data">
                         <td width="20"><bean:write name="data" property="type"/></td>
                         <td width="200"><bean:write name="data"

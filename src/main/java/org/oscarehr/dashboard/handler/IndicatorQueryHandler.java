@@ -30,9 +30,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.dashboard.display.beans.GraphPlot;
-import org.oscarehr.managers.DashboardManager;
 import org.oscarehr.managers.DashboardManagerImpl;
 import org.oscarehr.util.MiscUtils;
 
@@ -48,7 +48,7 @@ public class IndicatorQueryHandler extends AbstractQueryHandler {
     private static Logger logger = MiscUtils.getLogger();
     private List<GraphPlot[]> graphPlots;
     private static Double DEFAULT_DENOMINATOR = 100.0;
-    private static final boolean showNumbers = oscar.OscarProperties.getInstance().getBooleanProperty("SHOW_INDICATOR_DASHBOARD_NUMBERS", "true");
+    private static final boolean showNumbers = OscarProperties.getInstance().getBooleanProperty("SHOW_INDICATOR_DASHBOARD_NUMBERS", "true");
 
     public IndicatorQueryHandler() {
         if (showNumbers) {

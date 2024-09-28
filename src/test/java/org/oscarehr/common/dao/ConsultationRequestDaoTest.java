@@ -35,7 +35,7 @@ import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.common.model.ConsultationRequest;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.ConversionUtils;
+import openo.util.ConversionUtils;
 
 public class ConsultationRequestDaoTest extends DaoTestFixtures {
 

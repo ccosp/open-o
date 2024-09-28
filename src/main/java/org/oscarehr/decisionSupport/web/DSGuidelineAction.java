@@ -49,7 +49,7 @@ import org.oscarehr.decisionSupport.model.DSGuidelineFactory;
 import org.oscarehr.decisionSupport.service.DSService;
 import org.oscarehr.util.LoggedInInfo;
 
-import oscar.oscarDemographic.data.DemographicData;
+import openo.oscarDemographic.data.DemographicData;
 
 /**
  * @author apavel

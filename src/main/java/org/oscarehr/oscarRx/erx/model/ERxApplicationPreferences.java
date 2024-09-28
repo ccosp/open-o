@@ -26,7 +26,7 @@
 
 package org.oscarehr.oscarRx.erx.model;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * Provides an abstract way to reference the preferences specific to the OSCAR

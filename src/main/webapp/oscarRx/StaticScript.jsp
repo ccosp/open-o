@@ -31,12 +31,13 @@
 <%@page import="org.oscarehr.common.dao.DrugDao" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.Drug" %>
-<%@page import="oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicWs" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
 <%@page import="java.util.ArrayList" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -65,14 +66,14 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean" name="RxSessionBean" scope="session"/>
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean" name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
             </logic:equal>
         </logic:present>
         <%
             LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-            oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+            RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
         %>
 
 
@@ -93,7 +94,7 @@
 
             ArrayList<StaticScriptBean.DrugDisplayData> drugs = StaticScriptBean.getDrugList(loggedInInfo, currentDemographicNo, regionalIdentifier, cn, bn);
 
-            oscar.oscarRx.data.RxPatientData.Patient patient = oscar.oscarRx.data.RxPatientData.getPatient(loggedInInfo, currentDemographicNo);
+            RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, currentDemographicNo);
             String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
         %>
 

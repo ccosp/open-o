@@ -97,9 +97,9 @@ import org.oscarehr.sharingcenter.OidUtil;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.oscarDemographic.pageUtil.Util;
-import oscar.util.DateUtils;
+import openo.OscarProperties;
+import openo.oscarDemographic.pageUtil.Util;
+import openo.util.DateUtils;
 
 /**
  * @description Helper class for creating xPhr & NexJ CDA documents

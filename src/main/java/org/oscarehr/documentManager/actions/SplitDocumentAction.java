@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import openo.OscarProperties;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdfparser.PDFParser;
@@ -53,7 +54,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.oscarLab.ca.all.upload.ProviderLabRouting;
+import openo.oscarLab.ca.all.upload.ProviderLabRouting;
 
 
 public class SplitDocumentAction extends DispatchAction {
@@ -78,7 +79,7 @@ public class SplitDocumentAction extends DispatchAction {
 
         Document doc = documentDao.getDocument(docNum);
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         if (!docdownload.endsWith(File.separator)) {
             docdownload = docdownload + File.separator;
         }
@@ -207,7 +208,7 @@ public class SplitDocumentAction extends DispatchAction {
     public ActionForward rotate180(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Document doc = documentDao.getDocument(request.getParameter("document"));
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         Path filePath = Paths.get(docdownload, doc.getDocfilename());
         File input = filePath.toFile();
         PDFParser parser = new PDFParser(new RandomAccessFile(input, "rw"));
@@ -232,7 +233,7 @@ public class SplitDocumentAction extends DispatchAction {
     public ActionForward rotate90(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Document doc = documentDao.getDocument(request.getParameter("document"));
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         Path filePath = Paths.get(docdownload, doc.getDocfilename());
         File file = filePath.toFile();
 
@@ -257,7 +258,7 @@ public class SplitDocumentAction extends DispatchAction {
     public ActionForward removeFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Document doc = documentDao.getDocument(request.getParameter("document"));
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         Path filePath = Paths.get(docdownload, doc.getDocfilename());
         File file = filePath.toFile();
 

@@ -22,7 +22,7 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*,org.oscarehr.common.model.*,org.apache.commons.lang.time.*"
         errorPage="../appointment/errorpage.jsp" %>
-<jsp:useBean id="daySheetBean" class="oscar.AppointmentMainBean" scope="page"/>
+<jsp:useBean id="daySheetBean" class="openo.AppointmentMainBean" scope="page"/>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 <%
     org.oscarehr.common.model.ProviderPreference providerPreference = org.oscarehr.web.admin.ProviderPreferencesUIBean.updateOrCreateProviderPreferences(request);

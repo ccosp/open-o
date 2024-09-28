@@ -24,7 +24,7 @@
 --%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="java.util.Date" %>
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.oscarehr.common.model.CdsClientForm" %>
 <%@page import="org.oscarehr.PMmodule.web.CdsForm4Action" %>
 <%@page import="org.oscarehr.util.WebUtils" %>

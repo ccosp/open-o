@@ -53,6 +53,12 @@
 <%@ page import="org.oscarehr.common.dao.BillingDao" %>
 <%@ page import="org.oscarehr.billing.CA.model.BillingDetail" %>
 <%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingSavePrep" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 <%
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);
     BillingDetailDao billingDetailDao = SpringUtils.getBean(BillingDetailDao.class);

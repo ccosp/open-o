@@ -26,6 +26,7 @@
 --%>
 
 <%@page import="java.util.*, java.io.*, org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -55,7 +56,7 @@
 
         <%
             if (request.getParameter("action") != null && request.getParameter("action").equals("save")) {
-                String documentDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
+                String documentDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
                 try {
                     File f = new File(documentDir, "orn_patient_letter.txt");
                     PrintWriter pw = new PrintWriter(new FileWriter(f), true);
@@ -71,7 +72,7 @@
         <%
             String currentLetter = "";
 
-            String documentDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
+            String documentDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
             File f = new File(documentDir, "orn_patient_letter.txt");
             if (f.exists()) {
                 try {

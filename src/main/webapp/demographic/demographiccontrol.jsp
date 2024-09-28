@@ -35,8 +35,8 @@
 <%@page import="org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters" %>
 
 
-<%@ page import="oscar.OscarProperties" %>
-<jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session"/>
+<%@ page import="openo.OscarProperties" %>
+<jsp:useBean id="apptMainBean" class="openo.AppointmentMainBean" scope="session"/>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

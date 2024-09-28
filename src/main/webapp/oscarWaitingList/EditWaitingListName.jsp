@@ -36,6 +36,8 @@
 <%@page import="org.owasp.encoder.Encode" %>
 <%@page import="oscar.oscarWaitingList.bean.*" %>
 <%@page import="oscar.util.*" %>
+<%@ page import="openo.oscarWaitingList.bean.WLWaitingListNameBean" %>
+<%@ page import="openo.oscarWaitingList.bean.WLWaitingListNameBeanHandler" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

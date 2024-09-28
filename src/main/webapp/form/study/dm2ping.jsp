@@ -40,8 +40,12 @@
 <%@ page import="org.chip.ping.xml.record.*" %>
 <%@ page import="org.chip.ping.xml.record.impl.*" %>
 <%@ page import="org.chip.ping.xml.cddm.impl.*,org.w3c.dom.*,javax.xml.parsers.*" %>
-<%@ page import="oscar.OscarPingTalk" %>
+<%@ page import="openo.OscarPingTalk" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
+<%@ page import="openo.oscarDB.DBHandler" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.UtilXML" %>
 
 <%@ include file="../../admin/dbconnection.jsp" %>
 
@@ -96,7 +100,7 @@
         }
 
         //take data from form
-        ResultSet rsdemo = oscar.oscarDB.DBHandler.GetSQL("select * from formType2Diabetes where demographic_no= " + demoNo + " order by formEdited desc, ID desc limit 0,1");
+        ResultSet rsdemo = DBHandler.GetSQL("select * from formType2Diabetes where demographic_no= " + demoNo + " order by formEdited desc, ID desc limit 0,1");
         while (rsdemo.next()) {
             form.setProperty("formType2Diabetes.birthDate", rsdemo.getString("birthDate"));
             //get the column number

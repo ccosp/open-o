@@ -25,7 +25,7 @@
 --%>
 <%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
 <%@page import="org.oscarehr.common.model.Dxresearch" %>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.managers.CodingSystemManager" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
@@ -41,7 +41,7 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean2 = (oscar.oscarRx.pageUtil.RxSessionBean) request.getSession().getAttribute("RxSessionBean");
+    RxSessionBean bean2 = (RxSessionBean) request.getSession().getAttribute("RxSessionBean");
 
     org.oscarehr.common.model.Allergy[] allergies = RxPatientData.getPatient(LoggedInInfo.getLoggedInInfoFromSession(request), bean2.getDemographicNo()).getActiveAllergies();
     String alle = "";
@@ -136,8 +136,8 @@
     </p>
     <p class="PropSheetMenuItemLevel1">
             <%
-        oscar.oscarRx.data.RxPrescriptionData.Favorite[] favorites
-            = new oscar.oscarRx.data.RxPrescriptionData().getFavorites(bean2.getProviderNo());
+        RxPrescriptionData.Favorite[] favorites
+            = new RxPrescriptionData().getFavorites(bean2.getProviderNo());
 
         for (int j=0; j<favorites.length; j++){%>
 

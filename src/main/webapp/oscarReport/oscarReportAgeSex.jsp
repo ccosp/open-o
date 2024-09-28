@@ -50,8 +50,10 @@
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@page import="org.oscarehr.common.dao.ReportAgeSexDao" %>
 <%@page import="org.oscarehr.common.model.ReportAgeSex" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     String user_no = (String) session.getAttribute("user");
     int nItems = 0;

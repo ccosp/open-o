@@ -1,4 +1,6 @@
-<!--  
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
+<!--
 /*
  * 
  * Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved. *
@@ -49,7 +51,7 @@ Demographic d =  demographicDao.getDemographic(DemoNo);
      DemoDOB = MyDateFormat.getStandardDate(Integer.parseInt(d.getYearOfBirth()),Integer.parseInt(d.getMonthOfBirth()),Integer.parseInt(d.getDateOfBirth()));
      hin = d.getHin() + d.getVer();
      if (d.getFamilyDoctor() == null){ r_doctor = "N/A"; r_doctor_ohip="000000";}else{
-        r_doctor=SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rd")==null?"":SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rd");
+        r_doctor=SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rd")==null?"": SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rd");
         r_doctor_ohip=SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rdohip")==null?"":SxmlMisc.getXmlContent(d.getFamilyDoctor(),"rdohip");
      }
      HCTYPE = d.getHcType()==null?"ON":d.getHcType();

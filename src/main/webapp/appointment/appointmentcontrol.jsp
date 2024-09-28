@@ -25,6 +25,7 @@
 --%>
 
 <%@ page import="java.util.*, oscar.*, oscar.util.*" %>
+<%@ page import="openo.util.UtilDict" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     if (session.getAttribute("userrole") == null) response.sendRedirect("../logout.jsp");

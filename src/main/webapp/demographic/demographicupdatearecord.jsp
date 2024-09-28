@@ -40,7 +40,7 @@
 
 <%@page import="org.oscarehr.provider.model.PreventionManager" %>
 <%@ page
-        import="java.sql.*, java.util.*, oscar.MyDateFormat, oscar.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" %>
+        import="java.sql.*, java.util.*, openo.MyDateFormat, openo.oscarWaitingList.util.WLWaitingListUtil, oscar.log.*, org.oscarehr.common.OtherIdManager" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
@@ -70,7 +70,10 @@
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.common.model.ConsentType" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.oscarDemographic.data.DemographicNameAgeString" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -78,7 +81,7 @@
 
 
 <%
-    java.util.Properties oscarVariables = oscar.OscarProperties.getInstance();
+    java.util.Properties oscarVariables = OscarProperties.getInstance();
 
     DemographicExtDao demographicExtDao = SpringUtils.getBean(DemographicExtDao.class);
     DemographicExtArchiveDao demographicExtArchiveDao = SpringUtils.getBean(DemographicExtArchiveDao.class);
@@ -364,7 +367,7 @@
             demographicDao.save(demographic);
 
             try {
-                oscar.oscarDemographic.data.DemographicNameAgeString.resetDemographic(request.getParameter("demographic_no"));
+                DemographicNameAgeString.resetDemographic(request.getParameter("demographic_no"));
             } catch (Exception nameAgeEx) {
                 MiscUtils.getLogger().error("ERROR RESETTING NAME AGE", nameAgeEx);
             }
@@ -429,8 +432,8 @@
 
 
             //add to waiting list if the waiting_list parameter in the property file is set to true
-            oscar.oscarWaitingList.WaitingList wL = oscar.oscarWaitingList.WaitingList.getInstance();
-            if (wL.getFound() && oscar.OscarProperties.getInstance().getBooleanProperty("DEMOGRAPHIC_WAITING_LIST", "true")) {
+            openo.oscarWaitingList.WaitingList wL = openo.oscarWaitingList.WaitingList.getInstance();
+            if (wL.getFound() && OscarProperties.getInstance().getBooleanProperty("DEMOGRAPHIC_WAITING_LIST", "true")) {
                 WLWaitingListUtil.updateWaitingListRecord(
                         request.getParameter("list_id"), request.getParameter("waiting_list_note"),
                         request.getParameter("demographic_no"), request.getParameter("waiting_list_referral_date"));

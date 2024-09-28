@@ -52,13 +52,13 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarEncounter.oscarMeasurements.FlowSheetItem;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
-import oscar.oscarEncounter.oscarMeasurements.util.Recommendation;
-import oscar.oscarEncounter.oscarMeasurements.util.RecommendationCondition;
-import oscar.oscarEncounter.oscarMeasurements.util.TargetColour;
-import oscar.oscarEncounter.oscarMeasurements.util.TargetCondition;
+import openo.oscarEncounter.oscarMeasurements.FlowSheetItem;
+import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig;
+import openo.oscarEncounter.oscarMeasurements.util.Recommendation;
+import openo.oscarEncounter.oscarMeasurements.util.RecommendationCondition;
+import openo.oscarEncounter.oscarMeasurements.util.TargetColour;
+import openo.oscarEncounter.oscarMeasurements.util.TargetCondition;
 
 public class FlowSheetCustomAction extends DispatchAction {
     private static final Logger logger = MiscUtils.getLogger();

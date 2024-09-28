@@ -28,8 +28,8 @@ package org.oscarehr.common.dao.forms;
 
 import org.oscarehr.common.dao.AbstractDaoImpl;
 import org.springframework.stereotype.Repository;
-import oscar.form.model.BooleanValueForm;
-import oscar.form.model.FormBooleanValue;
+import openo.form.model.BooleanValueForm;
+import openo.form.model.FormBooleanValue;
 
 import javax.persistence.Query;
 import java.util.HashMap;

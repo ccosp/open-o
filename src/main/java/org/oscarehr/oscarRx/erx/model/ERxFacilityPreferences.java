@@ -30,7 +30,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.GregorianCalendar;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * Provides an abstract way to reference the the External Prescriber preferences specific to a

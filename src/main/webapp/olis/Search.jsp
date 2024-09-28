@@ -23,6 +23,7 @@
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.Misc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 
@@ -630,7 +631,7 @@ opener.refreshView();</script>
 
                                             for (OLISResultNomenclature nomenclature : resultNomenclatureList) {
                                         %>
-                                        <option value="<%=nomenclature.getId() %>"><%=oscar.Misc.getStr(nomenclature.getName(), "").trim()%>
+                                        <option value="<%=nomenclature.getId() %>"><%=Misc.getStr(nomenclature.getName(), "").trim()%>
                                         </option>
                                         <%
                                             }
@@ -643,7 +644,7 @@ opener.refreshView();</script>
 
                                             for (OLISRequestNomenclature nomenclature : requestNomenclatureList) {
                                         %>
-                                        <option value="<%=nomenclature.getId() %>"><%=oscar.Misc.getStr(nomenclature.getName(), "").trim() %>
+                                        <option value="<%=nomenclature.getId() %>"><%=Misc.getStr(nomenclature.getName(), "").trim() %>
                                         </option>
                                         <%
                                             }

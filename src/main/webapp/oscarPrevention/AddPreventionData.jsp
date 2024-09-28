@@ -27,7 +27,7 @@
 <%@page import="java.text.ParseException" %>
 <%@page import="org.oscarehr.common.model.PartialDate" %>
 <%@page import="org.oscarehr.common.dao.PartialDateDao" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.Consent" %>
 <%@page import="org.oscarehr.common.dao.ConsentDao" %>
@@ -39,15 +39,18 @@
 <%@page import="org.oscarehr.common.model.CVCImmunization" %>
 <%@page import="org.oscarehr.managers.CanadianVaccineCatalogueManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.oscarProvider.data.ProviderData" %>
+<%@page import="openo.oscarProvider.data.ProviderData" %>
 <%@ page
-        import="oscar.oscarDemographic.data.DemographicData,java.text.SimpleDateFormat, java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*" %>
+        import="openo.oscarDemographic.data.DemographicData,java.text.SimpleDateFormat, java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*" %>
 <%@ page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
 <%@ page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@page import="org.oscarehr.common.dao.PreventionsLotNrsDao" %>
 <%@page import="org.oscarehr.common.model.PreventionsLotNrs" %>
+<%@ page import="openo.oscarPrevention.PreventionData" %>
+<%@ page import="openo.oscarPrevention.PreventionDisplayConfig" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

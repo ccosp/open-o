@@ -36,7 +36,7 @@ import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.model.ServiceTypeTo;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 @Path("/billing")
 public class BillingService extends AbstractServiceImpl {

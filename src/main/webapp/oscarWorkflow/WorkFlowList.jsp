@@ -28,6 +28,12 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.ClinicalReports.*,oscar.oscarWorkflow.*" %>
+<%@ page import="openo.oscarDemographic.data.DemographicNameAgeString" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.oscarWorkflow.WorkFlowInfo" %>
+<%@ page import="openo.oscarWorkflow.WorkFlow" %>
+<%@ page import="openo.oscarWorkflow.WorkFlowFactory" %>
+<%@ page import="openo.oscarWorkflow.WorkFlowDS" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

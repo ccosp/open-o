@@ -28,6 +28,7 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.StudyLoginDao" %>
 <%@ page import="java.sql.*, oscar.oscarDB.*" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%
     //http://192.168.2.4/PDSsecurity/logindd.asp?DI=PEPPER&UN=yilee18&PW=515750564848564853485353544852485248484851575150
@@ -35,7 +36,7 @@
     String providerNo = (String) session.getAttribute("user");
     String studyId = request.getParameter("study_no");
 
-    oscar.OscarProperties op = oscar.OscarProperties.getInstance();
+    OscarProperties op = OscarProperties.getInstance();
 
     String baseURL = op.getProperty("redirectstudysite_default_baseURL");
     String username = op.getProperty("redirectstudysite_default_username");

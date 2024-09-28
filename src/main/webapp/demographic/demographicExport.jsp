@@ -49,6 +49,11 @@
 <%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page
         import="java.util.*,oscar.oscarDemographic.data.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarPrevention.pageUtil.*,oscar.oscarDemographic.pageUtil.*" %>
+<%@ page import="openo.oscarDemographic.pageUtil.DemographicExportAction4" %>
+<%@ page import="openo.oscarDemographic.pageUtil.Util" %>
+<%@ page import="openo.oscarDemographic.pageUtil.PGPEncrypt" %>
+<%@ page import="openo.oscarReport.data.DemographicSets" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -57,7 +62,7 @@
 
 <%
 
-    oscar.OscarProperties op = oscar.OscarProperties.getInstance();
+    OscarProperties op = OscarProperties.getInstance();
     String tmp_dir = op.getProperty("TMP_DIR");
     boolean tmp_dir_ready = Util.checkDir(tmp_dir);
 

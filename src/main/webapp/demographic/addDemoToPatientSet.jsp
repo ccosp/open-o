@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="oscar.oscarReport.data.DemographicSets,java.util.ArrayList" %>
+<%@page import="openo.oscarReport.data.DemographicSets,java.util.ArrayList" %>
 
 <%
     String demoNo = request.getParameter("demoNo");

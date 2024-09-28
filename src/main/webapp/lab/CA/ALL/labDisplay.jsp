@@ -29,7 +29,7 @@
 <%@page import="net.sf.json.JSONArray" %>
 <%@page import="net.sf.json.JSONObject" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
-<%@ page import="oscar.util.ConversionUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%@ page import="org.oscarehr.common.dao.PatientLabRoutingDao" %>
 <%@ page import="org.oscarehr.common.model.PatientLabRouting" %>
 <%@ page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
@@ -38,16 +38,16 @@
 <%@ page import="org.oscarehr.util.MiscUtils" %>
 <%@ page import="org.w3c.dom.Document" %>
 <%@ page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult" %>
-<%@ page import="oscar.oscarLab.ca.all.web.LabDisplayHelper" %>
+<%@ page import="openo.oscarLab.ca.all.web.LabDisplayHelper" %>
 
 <%@ page import="java.util.*,
-                 oscar.util.UtilDateUtilities,
+                 openo.util.UtilDateUtilities,
                  oscar.oscarLab.ca.all.*,
                  oscar.oscarLab.ca.all.parsers.*,
-                 oscar.oscarLab.LabRequestReportLink,
-                 oscar.oscarMDS.data.ReportStatus,
+                 openo.oscarLab.LabRequestReportLink,
+                 openo.oscarMDS.data.ReportStatus,
                  oscar.log.*,
-                 oscar.OscarProperties" %>
+                 openo.OscarProperties" %>
 <%@ page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
 <%@ page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -62,6 +62,20 @@
 <%@    page import="javax.swing.text.rtf.RTFEditorKit" %>
 <%@    page import="java.io.ByteArrayInputStream" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.CLSHandler" %>
+<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.MessageHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.Factory" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.ExcellerisOntarioHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.GDMLHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.SpireHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.OLISHL7Handler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.AlphaHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.PATHL7Handler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.MEDITECHHandler" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -85,7 +99,7 @@
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    oscar.OscarProperties props = oscar.OscarProperties.getInstance();
+    OscarProperties props = OscarProperties.getInstance();
     String segmentID = request.getParameter("segmentID");
     String providerNo = request.getParameter("providerNo");
     String searchProviderNo = StringUtils.trimToEmpty(request.getParameter("searchProviderNo"));
@@ -2331,7 +2345,7 @@
 
                     <%
                                            		//CLS textual results - use 4 columns.
-                                           		if(handler instanceof CLSHandler && ( (oscar.oscarLab.ca.all.parsers.CLSHandler) handler).isUnstructured()) {
+                                           		if(handler instanceof CLSHandler && ( (CLSHandler) handler).isUnstructured()) {
                                            	%>
                 <td align="left" colspan="4">
                     <%= handler.getOBXResult(j, k) %>

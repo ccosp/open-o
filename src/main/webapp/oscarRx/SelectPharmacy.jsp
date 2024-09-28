@@ -27,6 +27,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarRx.data.*,java.util.*" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -52,7 +54,7 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
@@ -60,12 +62,12 @@
         </logic:present>
 
         <%
-            oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+            RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 
         %>
 
         <bean:define id="patient"
-                     type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+                     type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
         <link rel="stylesheet" type="text/css" href="styles.css">
     </head>

@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import openo.util.DateUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -198,10 +199,10 @@ public class PageMonitoringAction extends DispatchAction {
                     Date endDT = null;
                     Date existingEndDT = null;
 
-                    startDT = oscar.util.DateUtils.parseDateTime(apptDate + " " + startTime + ":00", locale);
-                    existingStartDT = oscar.util.DateUtils.parseDateTime(existingApptDate + " " + existingStartTime + ":00", locale);
-                    endDT = oscar.util.DateUtils.parseDateTime(apptDate + " " + endTime + ":00", locale);
-                    existingEndDT = oscar.util.DateUtils.parseDateTime(existingApptDate + " " + existingEndTime + ":00", locale);
+                    startDT = DateUtils.parseDateTime(apptDate + " " + startTime + ":00", locale);
+                    existingStartDT = DateUtils.parseDateTime(existingApptDate + " " + existingStartTime + ":00", locale);
+                    endDT = DateUtils.parseDateTime(apptDate + " " + endTime + ":00", locale);
+                    existingEndDT = DateUtils.parseDateTime(existingApptDate + " " + existingEndTime + ":00", locale);
 
                     if (startDT.before(existingEndDT) && existingStartDT.before(endDT)) {
                         //overlapping date ranges

@@ -53,7 +53,7 @@ import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 
-import oscar.log.LogAction;
+import openo.log.LogAction;
 
 import com.quatro.service.LookupManager;
 

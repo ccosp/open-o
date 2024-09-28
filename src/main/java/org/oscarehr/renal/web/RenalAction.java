@@ -44,9 +44,9 @@ import org.oscarehr.renal.CkdScreener;
 import org.oscarehr.renal.ORNCkdScreeningReportThread;
 import org.oscarehr.renal.ORNPreImplementationReportThread;
 import org.oscarehr.util.*;
-import oscar.OscarProperties;
-import oscar.form.FrmLabReq07Record;
-import oscar.form.FrmLabReq10Record;
+import openo.OscarProperties;
+import openo.form.FrmLabReq07Record;
+import openo.form.FrmLabReq10Record;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -245,7 +245,7 @@ public class RenalAction extends DispatchAction {
         String demographicNo = request.getParameter("demographic_no");
         response.setContentType("text/html");
         try {
-            String documentDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
+            String documentDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR", "");
             File f = new File(documentDir, "orn_patient_letter.txt");
             String template = IOUtils.toString(new FileInputStream(f));
 
@@ -332,7 +332,7 @@ public class RenalAction extends DispatchAction {
         // if(success) {
 
         // 	try {
-        // 		String documentDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR","");
+        // 		String documentDir = openo.OscarProperties.getInstance().getProperty("DOCUMENT_DIR","");
         // 		File f = new File(documentDir,"orn_patient_letter.txt");
         //         String template=IOUtils.toString(new FileInputStream(f));
 

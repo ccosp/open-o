@@ -31,7 +31,7 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 <%@ page
-        import="oscar.oscarRx.data.*,oscar.oscarProvider.data.ProviderMyOscarIdData,oscar.oscarDemographic.data.DemographicData,oscar.OscarProperties,oscar.log.*" %>
+        import="oscar.oscarRx.data.*,openo.oscarProvider.data.ProviderMyOscarIdData,openo.oscarDemographic.data.DemographicData,openo.OscarProperties,oscar.log.*" %>
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@page import="java.util.Enumeration" %>
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
@@ -56,7 +56,7 @@
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                  name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
@@ -64,7 +64,7 @@
 </logic:present>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     RxPharmacyData pharmacyData = new RxPharmacyData();
@@ -111,6 +111,9 @@
 <%@page import="org.oscarehr.casemgmt.web.PrescriptDrug" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
@@ -253,7 +256,7 @@
         if (request.getParameter("show") != null) if (request.getParameter("show").equals("all")) showall = true;
     %>
 
-    <bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+    <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
     <body topmargin="0" leftmargin="0" vlink="#0000FF" onload="load()">
     <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111"
@@ -330,12 +333,12 @@
                             <div style="height: 100px; overflow: auto; background-color: #DCDCDC; border: thin solid green; display: none;"
                                  id="reprint">
                                 <%
-                                    oscar.oscarRx.data.RxPrescriptionData.Prescription[] prescribedDrugs;
+                                    RxPrescriptionData.Prescription[] prescribedDrugs;
                                     prescribedDrugs = patient.getPrescribedDrugScripts(); //this function only returns drugs which have an entry in prescription and drugs table
                                     String script_no = "";
 
                                     for (int i = 0; i < prescribedDrugs.length; i++) {
-                                        oscar.oscarRx.data.RxPrescriptionData.Prescription drug = prescribedDrugs[i];
+                                        RxPrescriptionData.Prescription drug = prescribedDrugs[i];
                                         if (drug.getScript_no() != null && script_no.equals(drug.getScript_no())) {
                                 %>
                                 <br>
@@ -693,7 +696,7 @@
                                                 <td><a href="javascript:submitPending(<%=i%>, 'edit');"> <bean:write
                                                         name="rx" property="rxDisplay"/> </a></td>
                                                 <td>
-                                                    <a href="javascript:ShowDrugInfo('<%=((oscar.oscarRx.data.RxPrescriptionData.Prescription)rx).getGenericName()%>');"><bean:message
+                                                    <a href="javascript:ShowDrugInfo('<%=((RxPrescriptionData.Prescription)rx).getGenericName()%>');"><bean:message
                                                             key="SearchDrug.msgInfo"/></a></td>
                                             </tr>
                                             <%

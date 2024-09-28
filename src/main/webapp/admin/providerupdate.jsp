@@ -41,7 +41,7 @@
     }
 %>
 <%@ page
-        import="java.sql.*, oscar.login.*, java.util.*,oscar.*,oscar.oscarDB.*,oscar.oscarProvider.data.ProviderBillCenter"
+        import="java.sql.*, oscar.login.*, java.util.*,oscar.*,oscar.oscarDB.*,openo.oscarProvider.data.ProviderBillCenter"
         errorPage="/errorpage.jsp" %>
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
@@ -58,6 +58,10 @@
 <%@page import="org.oscarehr.common.dao.ProviderSiteDao" %>
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="openo.oscarDB.DBPreparedHandler" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
 <%
     ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
     ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);

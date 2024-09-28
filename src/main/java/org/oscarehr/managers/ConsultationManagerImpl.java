@@ -72,7 +72,6 @@ import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.OruR01.ObservationData;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.RefI12;
 import org.oscarehr.common.hl7.v2.oscar_to_oscar.SendingUtils;
-import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Clinic;
 import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.ConsultResponseDoc;
@@ -114,13 +113,13 @@ import ca.uhn.hl7v2.model.v26.message.REF_I12;
 import org.oscarehr.documentManager.DocumentAttachmentManager;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.eform.EFormUtil;
-import oscar.log.LogAction;
-import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCreator;
-import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.LabResultData;
+import openo.eform.EFormUtil;
+import openo.log.LogAction;
+import openo.oscarEncounter.data.EctFormData;
+import openo.oscarEncounter.oscarConsultationRequest.pageUtil.ConsultationPDFCreator;
+import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import openo.oscarLab.ca.on.CommonLabResultData;
+import openo.oscarLab.ca.on.LabResultData;
 
 @Service
 public class ConsultationManagerImpl implements ConsultationManager {

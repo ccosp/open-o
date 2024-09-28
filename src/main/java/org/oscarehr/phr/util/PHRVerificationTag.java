@@ -36,8 +36,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarProvider.data.ProviderMyOscarIdData;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarProvider.data.ProviderMyOscarIdData;
 
 
 public class PHRVerificationTag extends TagSupport {

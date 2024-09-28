@@ -53,12 +53,12 @@ Ontario, Canada
 <%@ page import="java.util.*, java.lang.*, oscar.appt.*" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="oscar.appt.status.service.AppointmentStatusMgr" %>
-<%@ page import="oscar.appt.status.service.impl.AppointmentStatusMgrImpl" %>
-<%@ page import="oscar.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
-<%@ page import="oscar.oscarEncounter.data.EctFormData" %>
-<%@ page import="oscar.util.ConversionUtils" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.appt.status.service.AppointmentStatusMgr" %>
+<%@ page import="openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
+<%@ page import="openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
+<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@ page import="org.oscarehr.common.model.AppointmentStatus" %>
 <%@ page import="org.oscarehr.common.model.DemographicCust" %>
@@ -93,6 +93,9 @@ Ontario, Canada
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.appt.ApptData" %>
+<%@ page import="openo.appt.JdbcApptImpl" %>
+<%@ page import="openo.appt.ApptUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -163,7 +166,7 @@ Ontario, Canada
 
     ApptData apptObj = ApptUtil.getAppointmentFromSession(request);
 
-    oscar.OscarProperties pros = oscar.OscarProperties.getInstance();
+    OscarProperties pros = OscarProperties.getInstance();
     String strEditable = pros.getProperty("ENABLE_EDIT_APPT_STATUS");
     Boolean isMobileOptimized = session.getAttribute("mobileOptimized") != null;
 

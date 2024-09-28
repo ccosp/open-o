@@ -45,9 +45,9 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import oscar.oscarPrevention.Prevention;
-import oscar.oscarPrevention.PreventionDS;
-import oscar.oscarPrevention.PreventionData;
+import openo.oscarPrevention.Prevention;
+import openo.oscarPrevention.PreventionDS;
+import openo.oscarPrevention.PreventionData;
 
 
 /**

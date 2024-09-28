@@ -64,8 +64,8 @@ import org.w3c.dom.Document;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocFactory;
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import oscar.oscarPrevention.pageUtil.PreventionPrintPdf;
+import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import openo.oscarPrevention.pageUtil.PreventionPrintPdf;
 
 /**
  * @author apavel

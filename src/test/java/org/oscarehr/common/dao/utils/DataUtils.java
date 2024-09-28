@@ -35,6 +35,8 @@ import java.util.UUID;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import openo.OscarProperties;
+import openo.util.UtilDateUtilities;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.common.dao.DaoTestFixtures;
@@ -50,9 +52,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.oscarLab.ca.all.upload.HandlerClassFactory;
-import oscar.oscarLab.ca.all.upload.handlers.MessageHandler;
-import oscar.util.ConversionUtils;
+import openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
+import openo.util.ConversionUtils;
 
 public class DataUtils {
 
@@ -122,7 +124,7 @@ public class DataUtils {
                 String fileName = "sample_upload_for_" + user + "_" + i + "_" + System.currentTimeMillis() + ".txt";
                 String source = "";
                 EDoc newDoc = new EDoc("", "", fileName, "", user, user, source, 'A',
-                        oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1", 0);
+                        UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1", 0);
                 newDoc.setDocPublic("0");
                 fileName = newDoc.getFileName();
 
@@ -158,7 +160,7 @@ public class DataUtils {
     }
 
     private static String getCanonicalPath(String fileName) {
-        String docDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         if (docDir == null || docDir.trim().equals("")) {
             // docDir = "/usr/local/OscarDocument/oscar_mcmaster/document";
             // docDir = "d:/Work/OSCAR/documents/";

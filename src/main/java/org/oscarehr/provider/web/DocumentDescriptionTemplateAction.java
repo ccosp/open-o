@@ -40,8 +40,8 @@ import org.oscarehr.common.model.DocumentDescriptionTemplate;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
+import openo.log.LogAction;
+import openo.log.LogConst;
 
 public class DocumentDescriptionTemplateAction extends DispatchAction {
 

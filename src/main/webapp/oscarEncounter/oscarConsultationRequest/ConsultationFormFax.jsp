@@ -43,6 +43,9 @@
 <%@ page
         import="java.util.*, org.w3c.dom.*, oscar.oscarEncounter.oscarConsultationRequest.pageUtil.*" %>
 <%@ page import="oscar.oscarClinic.*" %>
+<%@ page import="openo.oscarClinic.ClinicData" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFaxForm" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -53,8 +56,8 @@
     requestId = (String) request.getAttribute("reqId");
 
     //if (requestId == null) { return "bad"; }
-    oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil reqFrm;
-    reqFrm = new oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil();
+    EctConsultationFormRequestUtil reqFrm;
+    reqFrm = new EctConsultationFormRequestUtil();
     reqFrm.estRequestFromId(LoggedInInfo.getLoggedInInfoFromSession(request), requestId);
     ClinicData clinic = new ClinicData();
 

@@ -37,7 +37,7 @@ import org.oscarehr.hospitalReportManager.model.HRMDocument;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * See bug 4195.

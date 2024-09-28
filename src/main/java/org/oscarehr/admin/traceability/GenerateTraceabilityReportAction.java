@@ -40,8 +40,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.log.LogAction;
-import oscar.log.LogConst;
+import openo.log.LogAction;
+import openo.log.LogConst;
 
 /**
  * Upload 'trace', process it,

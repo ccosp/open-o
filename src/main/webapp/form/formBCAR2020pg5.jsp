@@ -43,7 +43,9 @@
 <%@ page import=" oscar.form.*, oscar.form.data.*, java.util.Properties" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.owasp.encoder.Encode" %>
-<%@ page import="oscar.util.UtilMisc" %>
+<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmBCAR2020Record" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

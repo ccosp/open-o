@@ -49,11 +49,11 @@
 <%@page import="org.oscarehr.myoscar.client.ws_manager.AccountManager" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils,java.net.URLEncoder" %>
 <%@page import="org.oscarehr.phr.web.MyOscarMessagesHelper" %>
 <%@page import="oscar.oscarDemographic.data.*, java.util.Enumeration" %>
-<%@page import="oscar.util.UtilDateUtilities,java.util.*" %>
+<%@page import="openo.util.UtilDateUtilities,java.util.*" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.common.model.Demographic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

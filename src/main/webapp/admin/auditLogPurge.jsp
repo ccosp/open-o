@@ -25,7 +25,7 @@
 
 --%>
 
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.text.ParseException" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -43,7 +43,7 @@
     }
 %>
 
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page
         import="java.util.*,oscar.oscarDemographic.data.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarPrevention.pageUtil.*,oscar.oscarDemographic.pageUtil.*" %>

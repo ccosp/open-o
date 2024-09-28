@@ -26,7 +26,7 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<%@ page import="java.util.*,java.io.*,oscar.oscarLab.ca.all.util.KeyPairGen" %>
+<%@ page import="java.util.*,java.io.*,openo.oscarLab.ca.all.util.KeyPairGen" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + ","

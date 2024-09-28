@@ -25,6 +25,9 @@
 <%@ page
         import="java.util.*,oscar.*,java.io.*,java.net.*,oscar.util.*,org.apache.commons.io.FileUtils,java.text.SimpleDateFormat,org.oscarehr.billing.CA.ON.util.EDTFolder,org.oscarehr.util.MiscUtils"
         errorPage="/errorpage.jsp" %>
+<%@ page import="openo.util.FileSortByDate" %>
+<%@ page import="openo.util.zip" %>
+<%@ page import="openo.OscarProperties" %>
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="session"/>
 <html>
 <head>

@@ -26,7 +26,7 @@ package org.oscarehr.common.model;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import oscar.util.DateUtils;
+import openo.util.DateUtils;
 
 import javax.persistence.*;
 import java.util.Date;

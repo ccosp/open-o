@@ -1,4 +1,4 @@
-<%--
+<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -51,14 +51,14 @@
         </logic:notPresent>
         <logic:present name="msgSessionBean" scope="session">
             <bean:define id="bean"
-                         type="oscar.oscarMessenger.pageUtil.MsgSessionBean"
+                         type="openo.oscarMessenger.pageUtil.MsgSessionBean"
                          name="msgSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="index.jsp"/>
             </logic:equal>
         </logic:present>
         <%
-            oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean) pageContext.findAttribute("bean");
+            MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
         %>
 
         <title><bean:message key="oscarMessenger.SentMessage.title"/></title>

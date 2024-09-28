@@ -46,6 +46,11 @@
 
 <%@ page
         import="java.math.*, java.util.*, java.sql.*, java.net.*, oscar.oscarResearch.oscarDxResearch.bean.*" %>
+<%@ page import="openo.oscarDxResearch.bean.dxQuickListBean" %>
+<%@ page import="openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
+<%@ page import="openo.oscarDxResearch.bean.dxCodeSearchBean" %>
+<%@ page import="openo.oscarDxResearch.bean.dxQuickListBeanHandler" %>
+<%@ page import="openo.oscarDxResearch.bean.dxQuickListItemsHandler" %>
 <%
     String demoNO = request.getParameter("demographicNo");
 

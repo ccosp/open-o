@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -81,13 +82,12 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.MyDateFormat;
-import oscar.OscarProperties;
-import oscar.oscarLab.ca.all.AcknowledgementData;
-import oscar.oscarMDS.data.ReportStatus;
-import oscar.util.ConversionUtils;
-import oscar.util.DateUtils;
-import oscar.util.UtilDateUtilities;
+import openo.MyDateFormat;
+import openo.oscarLab.ca.all.AcknowledgementData;
+import openo.oscarMDS.data.ReportStatus;
+import openo.util.ConversionUtils;
+import openo.util.DateUtils;
+import openo.util.UtilDateUtilities;
 
 // all SQL statements here
 public final class EDocUtil {
@@ -840,7 +840,7 @@ public final class EDocUtil {
 
     public static void refileDocument(String documentNo, String queueId) throws Exception {
 
-        String sourceDocDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String sourceDocDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         Document d = documentDao.find(ConversionUtils.fromIntString(documentNo));
         File sourceFile = new File(sourceDocDir, d.getDocfilename());
 

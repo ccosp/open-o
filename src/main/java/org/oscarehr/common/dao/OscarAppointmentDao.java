@@ -27,30 +27,13 @@
 
 package org.oscarehr.common.dao;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Formatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.persistence.Query;
-
 import org.oscarehr.PMmodule.model.Program;
-import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Appointment;
 import org.oscarehr.common.model.AppointmentArchive;
-import org.oscarehr.common.model.Facility;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Repository;
-
-import org.apache.commons.lang.StringUtils;
-import oscar.util.UtilDateUtilities;
 
 public interface OscarAppointmentDao extends AbstractDao<Appointment> {
 

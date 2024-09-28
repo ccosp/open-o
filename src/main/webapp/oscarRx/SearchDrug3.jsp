@@ -40,7 +40,7 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 <%@ page
-        import="oscar.oscarRx.data.*,oscar.oscarProvider.data.ProviderMyOscarIdData,oscar.oscarDemographic.data.DemographicData,oscar.OscarProperties,oscar.log.*" %>
+        import="oscar.oscarRx.data.*,openo.oscarProvider.data.ProviderMyOscarIdData,openo.oscarDemographic.data.DemographicData,openo.OscarProperties,oscar.log.*" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.*" %>
@@ -51,14 +51,16 @@
 <%@page import="org.oscarehr.casemgmt.web.PrescriptDrug" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="java.util.ArrayList,oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="java.util.ArrayList,openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@page import="org.oscarehr.web.admin.ProviderPreferencesUIBean" %>
 <%@page import="org.oscarehr.study.StudyFactory, org.oscarehr.study.Study, org.oscarehr.study.types.MyMedsStudy" %>
-<bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+<bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager" %>
 <%@page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
 <%@page import="org.oscarehr.casemgmt.model.Issue" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 
 <%
     String rx_enhance = OscarProperties.getInstance().getProperty("rx_enhance");
@@ -97,7 +99,7 @@
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                  name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
@@ -105,7 +107,7 @@
 </logic:present>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 
     String usefav = request.getParameter("usefav");
     String favid = request.getParameter("favid");
@@ -173,7 +175,7 @@
 
     String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
 
-    oscar.oscarRx.data.RxPrescriptionData.Prescription[] prescribedDrugs;
+    RxPrescriptionData.Prescription[] prescribedDrugs;
     prescribedDrugs = patient.getPrescribedDrugScripts(); //this function only returns drugs which have an entry in prescription and drugs table
     String script_no = "";
 
@@ -1028,7 +1030,7 @@
 
 
                                                     for (int i = 0; i < prescribedDrugs.length; i++) {
-                                                        oscar.oscarRx.data.RxPrescriptionData.Prescription drug = prescribedDrugs[i];
+                                                        RxPrescriptionData.Prescription drug = prescribedDrugs[i];
                                                         if (drug.getScript_no() != null && script_no.equals(drug.getScript_no())) {
                                                 %>
                                                 <br>

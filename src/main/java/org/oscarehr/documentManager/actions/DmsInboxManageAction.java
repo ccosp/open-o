@@ -50,12 +50,12 @@ import org.oscarehr.managers.DemographicManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.oscarLab.ca.all.Hl7textResultsData;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.HRMResultsData;
-import oscar.oscarLab.ca.on.LabResultData;
-import oscar.oscarMDS.data.CategoryData;
-import oscar.util.OscarRoleObjectPrivilege;
+import openo.oscarLab.ca.all.Hl7textResultsData;
+import openo.oscarLab.ca.on.CommonLabResultData;
+import openo.oscarLab.ca.on.HRMResultsData;
+import openo.oscarLab.ca.on.LabResultData;
+import openo.oscarMDS.data.CategoryData;
+import openo.util.OscarRoleObjectPrivilege;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

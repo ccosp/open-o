@@ -32,6 +32,13 @@
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.oscarRx.pageUtil.RxWriteScriptForm" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxCodesData" %>
+<%@ page import="openo.oscarRx.data.RxDrugData" %>
+<%@ page import="openo.oscarRx.util.LimitedUseLookup" %>
+<%@ page import="openo.oscarRx.util.LimitedUseCode" %>
+<%@ page import="openo.oscarRx.util.RxUtil" %>
 
 <%long start = System.currentTimeMillis();%>
 
@@ -64,7 +71,7 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>

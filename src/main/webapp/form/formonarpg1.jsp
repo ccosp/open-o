@@ -13,13 +13,18 @@
     }
 %>
 
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@ page import="oscar.util.*, oscar.form.*, oscar.form.data.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <!--add for con report-->
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmONARRecord" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.util.UtilMisc" %>
 
 
 <%

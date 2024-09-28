@@ -45,7 +45,7 @@
 <%@page import="org.oscarehr.common.model.OcanStaffForm" %>
 <%@page import="org.oscarehr.PMmodule.model.OcanSubmissionLog" %>
 <%@page import="java.util.List" %>
-<%@page import="oscar.util.CBIUtil" %>
+<%@page import="openo.util.CBIUtil" %>
 <%@page import="java.util.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.text.DateFormat" %>

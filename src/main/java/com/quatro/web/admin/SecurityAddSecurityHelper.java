@@ -36,9 +36,9 @@ import org.oscarehr.common.model.Security;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.MyDateFormat;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
+import openo.MyDateFormat;
+import openo.log.LogAction;
+import openo.log.LogConst;
 
 
 /**

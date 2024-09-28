@@ -32,7 +32,7 @@ package org.oscarehr.casemgmt.common;
 
 import org.oscarehr.util.MiscUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * @author jackson

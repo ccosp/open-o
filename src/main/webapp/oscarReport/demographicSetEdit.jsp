@@ -44,6 +44,8 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page
         import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarPrevention.pageUtil.*" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarReport.data.DemographicSets" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -197,7 +199,7 @@
                                 </td>
                                 <td><%=demo.getLastName()%>, <%=demo.getFirstName()%>
                                 </td>
-                                <td><%=oscar.oscarDemographic.data.DemographicData.getDob(demo, "-")%>
+                                <td><%=DemographicData.getDob(demo, "-")%>
                                 </td>
                                 <td><%=demo.getAge()%>
                                 </td>

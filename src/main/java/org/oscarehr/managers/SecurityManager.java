@@ -37,8 +37,8 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
+import openo.OscarProperties;
+import openo.log.LogAction;
 
 @Service
 public class SecurityManager {

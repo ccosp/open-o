@@ -47,7 +47,7 @@ import org.oscarehr.common.model.SystemPreferences;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.stereotype.Repository;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 
 @Repository

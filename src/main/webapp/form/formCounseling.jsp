@@ -44,8 +44,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
-<%@ page import="oscar.form.FrmRecord" %>
-<%@ page import="oscar.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
 <%@ page import="org.oscarehr.util.LocaleUtils" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>

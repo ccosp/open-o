@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import org.oscarehr.util.LoggedInInfo;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * the NioFileManager handles all file input and output of all OscarDocument files

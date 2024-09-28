@@ -25,7 +25,7 @@
 --%>
 
 <%@page
-        import="oscar.oscarDemographic.data.*,java.util.*,java.sql.Connection,oscar.oscarPrevention.*,oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*,oscar.oscarLab.ca.all.util.CumulativeLabValuesComparator,org.jdom.*,oscar.oscarDB.*,org.jdom.input.*,java.io.InputStream" %>
+        import="oscar.oscarDemographic.data.*,java.util.*,java.sql.Connection,oscar.oscarPrevention.*,oscar.oscarLab.ca.on.*,oscar.util.*,oscar.oscarLab.*,openo.oscarLab.ca.all.util.CumulativeLabValuesComparator,org.jdom.*,oscar.oscarDB.*,org.jdom.input.*,java.io.InputStream" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -143,6 +143,10 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabTestValues" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="openo.util.StringUtils" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <html:html lang="en">
 
     <head>

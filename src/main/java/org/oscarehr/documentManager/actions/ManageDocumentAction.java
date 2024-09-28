@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import net.sf.json.JSONObject;
+import openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.io.RandomAccessFile;
@@ -68,13 +69,12 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarEncounter.data.EctProgram;
-import oscar.oscarLab.ca.on.LabResultData;
-import oscar.util.UtilDateUtilities;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarEncounter.data.EctProgram;
+import openo.oscarLab.ca.on.LabResultData;
+import openo.util.UtilDateUtilities;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -479,7 +479,7 @@ public class ManageDocumentAction extends DispatchAction {
      */
     public File createCacheVersion(Document d) throws Exception {
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         File documentDir = new File(docdownload);
         File documentCacheDir = getDocumentCacheDir(docdownload);
         log.debug("Document Dir is a dir" + documentDir.isDirectory());
@@ -613,7 +613,7 @@ public class ManageDocumentAction extends DispatchAction {
 
         LogAction.addLog((String) request.getSession().getAttribute("user"), LogConst.READ, LogConst.CON_DOCUMENT, doc_no, request.getRemoteAddr());
 
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         File documentDir = new File(docdownload);
         log.debug("Document Dir is a dir" + documentDir.isDirectory());
 
@@ -665,7 +665,7 @@ public class ManageDocumentAction extends DispatchAction {
         }
 
         String doc_no = request.getParameter("doc_no");
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         // File documentDir = new File(docdownload);
         Document d = documentDao.getDocument(doc_no);
         String filePath = docdownload + d.getDocfilename();
@@ -914,7 +914,7 @@ public class ManageDocumentAction extends DispatchAction {
             throw new SecurityException("missing required security object (_edoc)");
         }
 
-        String savePath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String savePath = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         if (!savePath.endsWith(File.separator)) {
             savePath += File.separator;
         }
@@ -1045,7 +1045,7 @@ public class ManageDocumentAction extends DispatchAction {
 
     public int countNumOfPages(String fileName) { // count number of pages in a pdf file
         int numOfPage = 0;
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
 
         if (!docdownload.endsWith(File.separator)) {
             docdownload += File.separator;

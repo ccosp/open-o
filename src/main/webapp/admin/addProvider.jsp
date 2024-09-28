@@ -42,7 +42,7 @@
     }
 %>
 
-<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>

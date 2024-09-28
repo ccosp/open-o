@@ -36,7 +36,7 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.Logger;
 
-import oscar.util.SqlUtils;
+import openo.util.SqlUtils;
 
 public class DbConnectionFilter implements javax.servlet.Filter {
     private static final Logger logger = MiscUtils.getLogger();

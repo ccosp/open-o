@@ -45,7 +45,12 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<%@ page import="openo.form.FrmMentalHealthRecord" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.oscarEncounter.util.EctFileUtil" %>
+<%@ page import="openo.OscarProperties" %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html:html lang="en">
     <head>
@@ -69,7 +74,7 @@
                 if ( formId ==0 ){
                     props = ((FrmMentalHealthRecord) rec).getFormCustRecord(props, provNo);
                 }
-                oscar.oscarEncounter.util.EctFileUtil list = new oscar.oscarEncounter.util.EctFileUtil();
+                EctFileUtil list = new EctFileUtil();
                 props.setProperty("c_lastVisited", "referral");
 
                 String projecthome = oscarVariables.getProperty("project_home");

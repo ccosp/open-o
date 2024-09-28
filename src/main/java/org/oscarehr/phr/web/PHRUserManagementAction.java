@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -77,11 +78,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.util.UtilDateUtilities;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarDemographic.data.DemographicData;
+import openo.util.UtilDateUtilities;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -223,7 +223,7 @@ public class PHRUserManagementAction extends DispatchAction {
             document.open();
 
             // create a reader for a certain document
-            String propFilename = oscar.OscarProperties.getInstance().getProperty("pdfFORMDIR", "") + "/" + template;
+            String propFilename = OscarProperties.getInstance().getProperty("pdfFORMDIR", "") + "/" + template;
             PdfReader reader = null;
             try {
                 reader = new PdfReader(propFilename);

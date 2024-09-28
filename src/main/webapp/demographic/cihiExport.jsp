@@ -42,8 +42,8 @@
 
 <%@page import="org.oscarehr.common.dao.DataExportDao" %>
 <%@page import="org.apache.commons.lang.time.DateFormatUtils" %>
-<%@page import="oscar.util.StringUtils" %>
-<%@page import="oscar.oscarReport.data.DemographicSets" %>
+<%@page import="openo.util.StringUtils" %>
+<%@page import="openo.oscarReport.data.DemographicSets" %>
 <%@page import="org.apache.struts.validator.DynaValidatorForm" %>
 <%@page import="java.util.ArrayList, java.util.List" %>
 <%@page import="org.oscarehr.common.model.DataExport" %>

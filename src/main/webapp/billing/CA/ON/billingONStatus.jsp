@@ -29,10 +29,18 @@
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.owasp.encoder.Encode" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@page import="oscar.util.*" %>
+<%@ page import="openo.oscarBilling.ca.on.data.RAData" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingErrorRepData" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingErrorRepImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingProviderData" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingStatusPrep" %>
+<%@ page import="openo.util.DateUtils" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

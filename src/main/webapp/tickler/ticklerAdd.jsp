@@ -159,6 +159,8 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProgramProviderDAO" %>
 <%@ page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.MyDateFormat" %>
 <!DOCTYPE html>
 <html:html lang="en">
     <head>

@@ -74,7 +74,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.BeanUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class ContactAction extends DispatchAction {
 

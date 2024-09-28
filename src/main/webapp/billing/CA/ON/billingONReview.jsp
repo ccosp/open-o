@@ -271,6 +271,22 @@
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.common.model.Site" %>
+<%@ page import="openo.appt.ApptUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingReviewCodeItem" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingReviewPercItem" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingSortComparator" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingCodeImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
+<%@ page import="openo.oscarBilling.ca.on.administration.GstReport" %>
+<%@ page import="openo.oscarBilling.ca.on.administration.GstControlAction" %>
+<%@ page import="openo.oscarRx.data.RxProviderData" %>
+<%@ page import="openo.util.DateUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 <head>
     <title>OscarBilling</title>
 
@@ -695,7 +711,7 @@
                 Calendar serviceDateCal = Calendar.getInstance();
                 java.util.Date serviceDate = null;
                 try {
-                    serviceDate = oscar.util.DateUtils.parseDate(request.getParameter("service_date"),request.getLocale());
+                    serviceDate = DateUtils.parseDate(request.getParameter("service_date"),request.getLocale());
                     serviceDateCal.setTime(serviceDate);
                 } catch (java.text.ParseException e) {}
 
@@ -1066,7 +1082,7 @@
                     List al = pObj.getPaymentType();
 
                     Billing3rdPartPrep privateObj = new Billing3rdPartPrep();
-                    oscar.oscarRx.data.RxProviderData.Provider provider = new oscar.oscarRx.data.RxProviderData().getProvider((String) session.getAttribute("user"));
+                    RxProviderData.Provider provider = new RxProviderData().getProvider((String) session.getAttribute("user"));
 
                 /*
                 = propClinic.getProperty("clinic_name", "") + "\n"
@@ -1163,7 +1179,7 @@
                                         fname = p.getFirstName();
                                         payeename = fname + " " + lname;
 
-                                        Properties prop = oscar.OscarProperties.getInstance();
+                                        Properties prop = OscarProperties.getInstance();
                                         String payee = prop.getProperty("PAYEE", "");
                                         payee = payee.trim();
                                         if (payee.length() > 0) {

@@ -23,7 +23,7 @@
     Ontario, Canada
 
 --%>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -32,6 +32,15 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="oscar.*,java.lang.*" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.study.HSFO.HSFODAO" %>
+<%@ page import="openo.form.pdfservlet.FrmPDFServlet" %>
+<%@ page import="openo.form.pdfservlet.HsfoRxDataHolder" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxProviderData" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.util.RxUtil" %>
+<%@ page import="openo.OscarProperties" %>
 
 <html:html lang="en">
     <head>
@@ -43,7 +52,7 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
@@ -57,7 +66,7 @@
                 //var ret = checkAllDates();
                 //if(ret==true) {
                 // params are set in session at the page bottom
-                document.forms[0].action = "../form/createpdf?__title=<%= oscar.form.pdfservlet.FrmPDFServlet.HSFO_RX_DATA_KEY %>";
+                document.forms[0].action = "../form/createpdf?__title=<%= FrmPDFServlet.HSFO_RX_DATA_KEY %>";
                 document.forms[0].target = "_blank";
                 //}
                 return ret;
@@ -69,10 +78,10 @@
 
     <%
 
-        oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
-        oscar.oscarRx.data.RxPatientData.Patient patient = RxPatientData.getPatient(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getDemographicNo());
-        oscar.oscarRx.data.RxProviderData.Provider provider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
-        oscar.oscarRx.data.RxPrescriptionData.Prescription rx;
+        RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
+        RxPatientData.Patient patient = RxPatientData.getPatient(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getDemographicNo());
+        RxProviderData.Provider provider = new RxProviderData().getProvider(bean.getProviderNo());
+        RxPrescriptionData.Prescription rx;
         int i;
         ProSignatureData sig = new ProSignatureData();
         boolean hasSig = sig.hasSignature(bean.getProviderNo());
@@ -128,7 +137,7 @@
                            value="<%= "Tel: " + StringEscapeUtils.escapeHtml(patient.getPhone()) %>"/>
 
                     <input type="hidden" name="rxDate"
-                           value="<%= StringEscapeUtils.escapeHtml(oscar.oscarRx.util.RxUtil.DateToString(oscar.oscarRx.util.RxUtil.Today(), "MMMM d, yyyy")) %>"/>
+                           value="<%= StringEscapeUtils.escapeHtml(RxUtil.DateToString(RxUtil.Today(), "MMMM d, yyyy")) %>"/>
                     <input type="hidden" name="sigDoctorName"
                            value="<%= StringEscapeUtils.escapeHtml(doctorName) %>"/>
                     <!--img src="img/rx.gif" border="0"-->
@@ -166,7 +175,7 @@
                                     <bean:message key="oscar.oscarRx.hin"/><%= patient.getHin() %> <% } %>
                                 </b></td>
                             <td align=right valign=top>
-                                <b><%= oscar.oscarRx.util.RxUtil.DateToString(oscar.oscarRx.util.RxUtil.Today(), "MMMM d, yyyy") %>
+                                <b><%= RxUtil.DateToString(RxUtil.Today(), "MMMM d, yyyy") %>
                                 </b></td>
                         </tr>
                     </table>
@@ -180,7 +189,7 @@
                                 <%
                                     int dx = Integer.parseInt(request.getParameter("dxCode"), 10);
                                     // persist dx code to DB
-                                    oscar.form.study.HSFO.HSFODAO hsfoDAO = new oscar.form.study.HSFO.HSFODAO();
+                                    HSFODAO hsfoDAO = new HSFODAO();
                                     hsfoDAO.updatePatientDx(String.valueOf(bean.getDemographicNo()), dx);
 
                                     java.util.HashMap params = new java.util.HashMap();
@@ -190,7 +199,7 @@
                                     params.put("clinicZip", provider.getClinicPostal());
                                     params.put("clinicPhone", provider.getClinicPhone());
                                     params.put("clinicFax", provider.getClinicFax());
-                                    params.put("rxDate", oscar.oscarRx.util.RxUtil.Today());
+                                    params.put("rxDate", RxUtil.Today());
                                     params.put("patientName", patient.getFirstName() + " " + patient.getSurname());
                                     params.put("patientAddress", patient.getAddress());
                                     params.put("patientCity", patient.getCity());
@@ -200,7 +209,7 @@
                                     params.put("doctorName", doctorName);
                                     params.put("dxCode", dx);
 
-                                    oscar.form.pdfservlet.HsfoRxDataHolder rdh = new oscar.form.pdfservlet.HsfoRxDataHolder();
+                                    HsfoRxDataHolder rdh = new HsfoRxDataHolder();
                                     rdh.setParams(params);
                                     rdh.setOutlines(new java.util.ArrayList());
 
@@ -209,7 +218,7 @@
                                     for (i = 0; i < bean.getStashSize(); i++) {
                                         rx = bean.getStashItem(i);
                                         // added by vic, hsfo
-                                        rdh.getOutlines().add(new oscar.form.pdfservlet.HsfoRxDataHolder.ValueBean(rx.getFullOutLine().replaceAll(";", "\n")));
+                                        rdh.getOutlines().add(new HsfoRxDataHolder.ValueBean(rx.getFullOutLine().replaceAll(";", "\n")));
 
                                 %>
                                 <hr>
@@ -220,7 +229,7 @@
 
                                 // added by vic, hsfo
                                 // set the data to session in case user wants to generate PDF
-                                session.setAttribute(oscar.form.pdfservlet.FrmPDFServlet.HSFO_RX_DATA_KEY, rdh);
+                                session.setAttribute(FrmPDFServlet.HSFO_RX_DATA_KEY, rdh);
                             %> <input type="hidden" name="rx"
                                       value="<%= StringEscapeUtils.escapeHtml(strRx.replaceAll(";","\\\n")) %>"/>
                                 <input type="hidden" name="rx_no_newlines"
@@ -259,8 +268,8 @@
                             </td>
                         </tr>
 
-                        <% if (oscar.OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
-                            out.write(oscar.OscarProperties.getInstance().getProperty("RX_FOOTER"));
+                        <% if (OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
+                            out.write(OscarProperties.getInstance().getProperty("RX_FOOTER"));
                         }%>
 
                         <tr valign=bottom>

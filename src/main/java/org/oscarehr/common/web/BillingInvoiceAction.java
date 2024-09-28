@@ -33,10 +33,10 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openo.OscarProperties;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.common.service.PdfRecordPrinter;
 import org.oscarehr.managers.BillingONManager;
@@ -45,8 +45,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.ConcatPDF;
-import oscar.util.UtilDateUtilities;
+import openo.util.ConcatPDF;
+import openo.util.UtilDateUtilities;
 
 /**
  * @author mweston4
@@ -92,7 +92,7 @@ public class BillingInvoiceAction extends DispatchAction {
                 try {
                     Integer invoiceNo = Integer.parseInt(invoiceNoStr);
                     String filename = "BillingInvoice" + invoiceNo + "_" + UtilDateUtilities.getToday("yyyy-MM-dd.hh.mm.ss") + ".pdf";
-                    String savePath = oscar.OscarProperties.getInstance().getProperty("INVOICE_DIR") + "/" + filename;
+                    String savePath = OscarProperties.getInstance().getProperty("INVOICE_DIR") + "/" + filename;
                     fos = new FileOutputStream(savePath);
                     processPrintPDF(invoiceNo, request.getLocale(), fos);
                     fileList.add(savePath);

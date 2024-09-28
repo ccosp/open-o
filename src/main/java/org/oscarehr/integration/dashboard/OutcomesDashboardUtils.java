@@ -61,7 +61,7 @@ import org.w3c.dom.NodeList;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class OutcomesDashboardUtils {
 

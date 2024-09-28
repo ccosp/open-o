@@ -24,8 +24,8 @@
 %>
 
 <%@page contentType="text/html" %>
-<%@page import="java.util.*,oscar.oscarLab.ca.on.CommonLabResultData,org.oscarehr.util.SpringUtils,org.oscarehr.common.dao.QueueDao, oscar.oscarMDS.data.ProviderData" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="java.util.*,openo.oscarLab.ca.on.CommonLabResultData,org.oscarehr.util.SpringUtils,org.oscarehr.common.dao.QueueDao, openo.oscarMDS.data.ProviderData" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%

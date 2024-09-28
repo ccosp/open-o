@@ -27,6 +27,7 @@ import com.quatro.model.security.Secrole;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsDateJsonBeanProcessor;
+import openo.OscarProperties;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.logging.log4j.Logger;
@@ -60,15 +61,14 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.WebApplicationContext;
-import oscar.OscarProperties;
-import oscar.appt.ApptStatusData;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarBilling.ca.on.pageUtil.BillingSavePrep;
-import oscar.oscarEncounter.data.EctProgram;
-import oscar.oscarEncounter.pageUtil.EctSessionBean;
-import oscar.oscarSurveillance.SurveillanceMaster;
-import oscar.util.UtilDateUtilities;
+import openo.appt.ApptStatusData;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarBilling.ca.on.pageUtil.BillingSavePrep;
+import openo.oscarEncounter.data.EctProgram;
+import openo.oscarEncounter.pageUtil.EctSessionBean;
+import openo.oscarSurveillance.SurveillanceMaster;
+import openo.util.UtilDateUtilities;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -219,7 +219,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
 
         logger.debug("NoteId " + nId);
 
-        String maxTmpSave = oscar.OscarProperties.getInstance().getProperty("maxTmpSave", "off");
+        String maxTmpSave = OscarProperties.getInstance().getProperty("maxTmpSave", "off");
         logger.debug("maxTmpSave " + maxTmpSave);
         // set date 2 weeks in past so we retrieve more recent saved notes
         Calendar cal = Calendar.getInstance();
@@ -1983,7 +1983,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
             } else {
                 providerview = loggedInInfo.getLoggedInProviderNo();
             }
-            String defaultView = oscar.OscarProperties.getInstance().getProperty("default_view", "");
+            String defaultView = OscarProperties.getInstance().getProperty("default_view", "");
 
             Set setIssues = cform.getCaseNote().getIssues();
             Iterator iter = setIssues.iterator();
@@ -3054,7 +3054,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                 mockReq.addParameter("xml_location", macro.getBillingVisitLocation()); // visit location
                 mockReq.addParameter("m_review", "N"); // manual review, always No
                 // as it's automated
-                mockReq.addParameter("clinic_no", oscar.OscarProperties.getInstance().getProperty("clinic_no", "").trim());
+                mockReq.addParameter("clinic_no", OscarProperties.getInstance().getProperty("clinic_no", "").trim());
                 // clinic_location
                 mockReq.addParameter("demographic_no", cform.getDemographicNo());
                 mockReq.addParameter("service_date", serviceDate);
@@ -3083,7 +3083,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
                 if (ret) {
                     if (!cform.getAppointmentNo().equals("0")) {
                         String apptCurStatus = bObj.getApptStatus(cform.getAppointmentNo());
-                        oscar.appt.ApptStatusData as = new oscar.appt.ApptStatusData();
+                        ApptStatusData as = new ApptStatusData();
                         String billStatus = as.billStatus(apptCurStatus);
                         bObj.updateApptStatus(cform.getAppointmentNo(), billStatus, cform.getProviderNo());
                     }
@@ -3167,7 +3167,7 @@ public class CaseManagementEntryAction extends BaseCaseManagementEntryAction {
         }
 
         if (apptDate == null || apptDate.equals("") || apptDate.equalsIgnoreCase("null")) {
-            encounterText = "\n[" + oscar.util.UtilDateUtilities.DateToString(new Date(), "dd-MMM-yyyy", request.getLocale()) + " .: " + reason + "] \n";
+            encounterText = "\n[" + UtilDateUtilities.DateToString(new Date(), "dd-MMM-yyyy", request.getLocale()) + " .: " + reason + "] \n";
         } else {
             apptDate = convertDateFmt(apptDate, request);
             encounterText = "\n[" + apptDate + " .: " + reason + "]\n";

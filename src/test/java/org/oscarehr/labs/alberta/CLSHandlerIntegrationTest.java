@@ -66,7 +66,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 // 	public static void init() throws Exception {
 // 		SchemaUtils.restoreAllTables();
 
-// 		oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+// 		openo.OscarProperties p = openo.OscarProperties.getInstance();
 // 		p.setProperty("db_name", ConfigUtils.getProperty("db_schema") + ConfigUtils.getProperty("db_schema_properties"));
 // 		p.setProperty("db_username", ConfigUtils.getProperty("db_user"));
 // 		p.setProperty("db_password", ConfigUtils.getProperty("db_password"));

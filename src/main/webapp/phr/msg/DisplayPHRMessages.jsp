@@ -33,7 +33,7 @@
 <%@page import="org.oscarehr.myoscar_server.ws.MinimalPersonTransfer2" %>
 <%@page import="org.oscarehr.myoscar_server.ws.MessageTransfer3" %>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.phr.web.MyOscarMessagesHelper" %>
@@ -51,16 +51,16 @@
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 
-<%@ page import="oscar.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="org.oscarehr.phr.model.PHRAction" %>
-<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 <%@ page import="org.oscarehr.phr.model.PHRMessage" %>
 <%@ page
         import="org.oscarehr.phr.dao.PHRActionDAO, org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="java.util.*" %>
-<%@ page import="oscar.util.StringUtils" %>
+<%@ page import="openo.util.StringUtils" %>
 <%@ page import="org.oscarehr.phr.indivo.service.accesspolicies.IndivoAPService" %>
-<%@ page import="oscar.util.UtilDateUtilities" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);

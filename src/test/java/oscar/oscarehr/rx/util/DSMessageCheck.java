@@ -37,7 +37,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.rest.to.model.RxDsMessageTo1;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import org.oscarehr.common.model.Facility;
 

@@ -37,6 +37,8 @@
 <%@page import="org.oscarehr.common.model.Form" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
     FormDao formDao = SpringUtils.getBean(FormDao.class);

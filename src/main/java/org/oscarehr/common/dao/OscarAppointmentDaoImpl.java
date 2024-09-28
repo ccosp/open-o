@@ -50,7 +50,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
 
 import org.apache.commons.lang.StringUtils;
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 @Repository
 @SuppressWarnings("unchecked")

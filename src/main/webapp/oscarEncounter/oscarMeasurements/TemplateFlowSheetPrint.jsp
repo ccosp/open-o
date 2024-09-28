@@ -32,8 +32,18 @@
 <%@ page import="org.springframework.web.context.WebApplicationContext" %>
 <%@ page import="org.oscarehr.common.dao.FlowSheetCustomizationDao,org.oscarehr.common.model.FlowSheetCustomization" %>
 <%@ page import="org.oscarehr.common.dao.FlowSheetDrugDao,org.oscarehr.common.model.FlowSheetDrug" %>
-<%@ page import="oscar.util.UtilDateUtilities" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementInfo" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.FlowSheetItem" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypeBeanHandler" %>
+<%@ page import="openo.oscarPrevention.PreventionData" %>
+<%@ page import="openo.oscarPrevention.Prevention" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -107,8 +117,8 @@ maybe use jquery/ajax to post this data instead of submitting a form to send ALL
                 Integer in = new Integer(Integer.parseInt(numEle));
                 forPrint.put(toPrint, in);
             } else if (printStyle != null && printStyle.equals("range")) {
-                Date sdate = oscar.util.UtilDateUtilities.StringToDate(request.getParameter("sDate" + toPrint));
-                Date edate = oscar.util.UtilDateUtilities.StringToDate(request.getParameter("eDate" + toPrint));
+                Date sdate = UtilDateUtilities.StringToDate(request.getParameter("sDate" + toPrint));
+                Date edate = UtilDateUtilities.StringToDate(request.getParameter("eDate" + toPrint));
                 Hashtable dates = new Hashtable();
                 dates.put("sdate", sdate);
                 dates.put("edate", edate);
@@ -786,7 +796,7 @@ maybe use jquery/ajax to post this data instead of submitting a form to send ALL
                                     Hashtable dates = (Hashtable) oj;
                                     Date sdate = (Date) dates.get("sdate");
                                     Date edate = (Date) dates.get("edate");
-                                    Date itDate = oscar.util.UtilDateUtilities.StringToDate((String) hdata.get("prevention_date"));
+                                    Date itDate = UtilDateUtilities.StringToDate((String) hdata.get("prevention_date"));
                                     if (itDate.before(sdate) || itDate.after(edate)) {
                                         hider = "style=\"display:none\"";
                                     }
@@ -818,8 +828,8 @@ maybe use jquery/ajax to post this data instead of submitting a form to send ALL
                         }
                     }
 
-                    oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-                    oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+                    RxPrescriptionData prescriptData = new RxPrescriptionData();
+                    RxPrescriptionData.Prescription[] arr = {};
 
                     List<FlowSheetDrug> atcCodes = flowSheetDrugDAO.getFlowSheetDrugs(temp, Integer.parseInt(demographic_no));
                     for (FlowSheetDrug fsd : atcCodes) {
@@ -854,7 +864,7 @@ maybe use jquery/ajax to post this data instead of submitting a form to send ALL
                     <%
                         out.flush();
                         int k = 0;
-                        for (oscar.oscarRx.data.RxPrescriptionData.Prescription pres : arr) {
+                        for (RxPrescriptionData.Prescription pres : arr) {
 
                             String hider = "";
 

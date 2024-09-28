@@ -25,8 +25,8 @@
 
 --%>
 
-<%@page import="oscar.util.DateUtils" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.util.DateUtils" %>
+<%@page import="openo.OscarProperties" %>
 <%
     if (session.getAttribute("user") == null) response.sendRedirect("../../../../logout.jsp");
     String user_no = "";

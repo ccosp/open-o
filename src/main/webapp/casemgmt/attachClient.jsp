@@ -38,7 +38,7 @@
 %>
 
 <%@ include file="/common/messages.jsp" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.PMmodule.web.utils.UserRoleUtils" %>
 <%@page import="java.util.*" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>

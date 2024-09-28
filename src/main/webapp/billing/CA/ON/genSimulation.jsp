@@ -18,7 +18,7 @@
 
 --%>
 
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="java.util.Date" %>
 <%@page import="org.oscarehr.util.DateRange" %>
 <%@ page import="java.math.*, java.util.*, java.sql.*, oscar.*, oscar.oscarBilling.ca.on.OHIP.*, java.net.*"
@@ -26,6 +26,8 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="openo.oscarBilling.ca.on.OHIP.ExtractBean" %>
+<%@ page import="openo.SxmlMisc" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -76,7 +78,7 @@
                 billinggroup_no = "0000";
             }
 
-            oscar.oscarBilling.ca.on.OHIP.ExtractBean extract = new oscar.oscarBilling.ca.on.OHIP.ExtractBean();
+            ExtractBean extract = new ExtractBean();
             //extract.setOscarHome(oscar_home);
             extract.seteFlag("0");
             extract.setDateRange(dateRange);

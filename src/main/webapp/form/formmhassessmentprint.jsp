@@ -42,10 +42,12 @@
 <%@ page import="oscar.form.*, java.util.*" %>
 <%@ page import="java.io.FileInputStream" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.oscarEncounter.util.EctFileUtil" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html:html lang="en">
     <head>
@@ -63,7 +65,7 @@
                 temp = new StringBuffer(e.nextElement().toString());
                 props.setProperty(temp.toString(), request.getParameter(temp.toString()));
             }
-            oscar.oscarEncounter.util.EctFileUtil list = new oscar.oscarEncounter.util.EctFileUtil();
+            EctFileUtil list = new EctFileUtil();
 
             String projecthome = oscarVariables.getProperty("project_home");
             String path = "form/dataFiles";

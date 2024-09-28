@@ -54,7 +54,7 @@
 <%@page import="org.oscarehr.sharingcenter.dao.AffinityDomainDao" %>
 <%@page import="org.oscarehr.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="org.oscarehr.common.model.Document" %>
-<%@page import="oscar.oscarDemographic.pageUtil.DemographicExportAction4" %>
+<%@page import="openo.oscarDemographic.pageUtil.DemographicExportAction4" %>
 <%@page import="org.marc.shic.core.configuration.IheConfiguration" %>
 <%@page import="org.marc.shic.core.configuration.IheAffinityDomainConfiguration" %>
 <%@page import="org.oscarehr.sharingcenter.DocumentType" %>

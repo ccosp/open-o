@@ -1,4 +1,7 @@
-<%--
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxCodesData" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxDrugData" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -41,26 +44,26 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
             </logic:equal>
         </logic:present>
         <%
-            oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+            RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
         %>
         <link rel="stylesheet" type="text/css" href="styles.css">
 
 
         <%
-            oscar.oscarRx.data.RxPrescriptionData rxData = new oscar.oscarRx.data.RxPrescriptionData();
-            oscar.oscarRx.data.RxDrugData drugData = new oscar.oscarRx.data.RxDrugData();
+            RxPrescriptionData rxData = new RxPrescriptionData();
+            RxDrugData drugData = new RxDrugData();
 
-            oscar.oscarRx.data.RxPrescriptionData.Favorite[] favorites = rxData.getFavorites(bean.getProviderNo());
-            oscar.oscarRx.data.RxPrescriptionData.Favorite f;
+            RxPrescriptionData.Favorite[] favorites = rxData.getFavorites(bean.getProviderNo());
+            RxPrescriptionData.Favorite f;
 
-            oscar.oscarRx.data.RxCodesData.FrequencyCode[] freq = new oscar.oscarRx.data.RxCodesData().getFrequencyCodes();
+            RxCodesData.FrequencyCode[] freq = new RxCodesData().getFrequencyCodes();
 
             int i, j;
         %>

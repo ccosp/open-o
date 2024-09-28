@@ -60,6 +60,8 @@
 <%@page import="org.oscarehr.common.model.Facility" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.GetConsentTransfer" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
+<%@ page import="openo.oscarEncounter.data.EctProgram" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     AdmissionDao admissionDao = (AdmissionDao) SpringUtils.getBean(AdmissionDao.class);
     ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);
@@ -100,7 +102,7 @@
 
 
     //--- add to program so the caisi program access filtering doesn't cause a security problem ---
-    oscar.oscarEncounter.data.EctProgram program = new oscar.oscarEncounter.data.EctProgram(request.getSession());
+    EctProgram program = new EctProgram(request.getSession());
     String progId = program.getProgram(providerNo);
     if (progId.equals("0")) {
         Program p = programDao.getProgramByName("OSCAR");
@@ -115,7 +117,7 @@
     admission.setClientId(demographic.getDemographicNo());
     admission.setProgramId(Integer.parseInt(progId));
     admission.setProviderNo(providerNo);
-    admission.setAdmissionDate(oscar.MyDateFormat.getSysDate(admissionDate));
+    admission.setAdmissionDate(MyDateFormat.getSysDate(admissionDate));
     admission.setAdmissionStatus("current");
     admission.setTeamId(null);
     admission.setTemporaryAdmission(false);

@@ -29,11 +29,14 @@
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscarProp" %>
 <%@ page import="oscar.oscarRx.data.*, org.oscarehr.common.model.PharmacyInfo" %>
 <%@page import="java.util.List" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 <logic:notPresent name="RxSessionBean" scope="session">
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                  name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
@@ -56,7 +59,7 @@
 %>
 
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 
     String userfirstname = (String) session.getAttribute("userfirstname");
     String userlastname = (String) session.getAttribute("userlastname");
@@ -91,7 +94,7 @@
     %>
 
     <bean:define id="patient"
-                 type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+                 type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
     <body topmargin="0" leftmargin="0" vlink="#0000FF">
     <table border="0" cellpadding="0" cellspacing="0"
@@ -174,7 +177,7 @@
                                             </tr>
 
                                             <%
-                                                oscar.oscarRx.data.RxPrescriptionData.Prescription[] prescribedDrugs;
+                                                RxPrescriptionData.Prescription[] prescribedDrugs;
 
                                                 if (showall)
                                                     prescribedDrugs = patient.getPrescribedDrugs();
@@ -182,7 +185,7 @@
                                                     prescribedDrugs = patient.getPrescribedDrugsUnique();
 
                                                 for (int i = 0; i < prescribedDrugs.length; i++) {
-                                                    oscar.oscarRx.data.RxPrescriptionData.Prescription drug = prescribedDrugs[i];
+                                                    RxPrescriptionData.Prescription drug = prescribedDrugs[i];
                                                     String styleColor = "";
                                                     if (drug.isCurrent() == true && drug.isArchived()) {
                                                         styleColor = "style=\"color:red;text-decoration: line-through;\"";

@@ -42,8 +42,13 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="oscar.oscarEncounter.immunization.data.*, oscar.util.*, oscar.oscarDemographic.data.*" %>
 <%@ page import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="openo.util.UtilXML" %>
+<%@ page import="openo.util.UtilMisc" %>
 <%
-    oscar.oscarEncounter.pageUtil.EctSessionBean bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean");
+    EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean");
 
     String sDoc = null;
     String demoNo = request.getParameter("demographic_no");

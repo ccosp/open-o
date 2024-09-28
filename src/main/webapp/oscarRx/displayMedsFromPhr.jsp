@@ -33,7 +33,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page
-        import="java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.phr.model.PHRMedication,oscar.oscarRx.data.RxPrescriptionData" %>
+        import="java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.phr.model.PHRMedication,openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -55,7 +57,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%
     Boolean unimportedMed = (Boolean) request.getAttribute("unimportedMed");
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) request.getSession().getAttribute("RxSessionBean");
+    RxSessionBean bean = (RxSessionBean) request.getSession().getAttribute("RxSessionBean");
     HashMap<Long, PHRMedication> phrMeds = new HashMap<Long, PHRMedication>();
     if (unimportedMed != null && unimportedMed) {
         phrMeds = bean.getPairPrevViewedPHRMed();
@@ -147,7 +149,7 @@
                                   onclick="selectDrug(this);"></td>
         <td align="center"><a><%=d.getDrugName()%>
         </a></td>
-        <td align="center"><a><%=oscar.util.UtilDateUtilities.DateToString(d.getRxDate())%>
+        <td align="center"><a><%=UtilDateUtilities.DateToString(d.getRxDate())%>
         </a></td>
         <td align="center"><a><%=d.daysToExpire()%>
         </a></td>

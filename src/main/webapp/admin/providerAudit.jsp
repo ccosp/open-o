@@ -59,7 +59,7 @@
 <%@ page import="org.oscarehr.caisi_integrator.ws.*" %>
 <%@ page import="org.oscarehr.common.model.CachedAppointmentComparator" %>
 
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>

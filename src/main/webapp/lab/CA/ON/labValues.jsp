@@ -43,13 +43,15 @@
 <%@page import="java.io.Serializable" %>
 <%@page import="org.w3c.dom.Document" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult" %>
-<%@page import="oscar.oscarLab.ca.all.web.LabDisplayHelper" %>
+<%@page import="openo.oscarLab.ca.all.web.LabDisplayHelper" %>
 <%@ page
         import="java.util.*,oscar.oscarLab.ca.on.*,oscar.oscarDemographic.data.*" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.managers.DemographicManager" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabTestValues" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

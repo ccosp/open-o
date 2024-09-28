@@ -41,7 +41,7 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page
-        import="java.util.ArrayList, oscar.oscarLab.ca.on.*, oscar.util.StringUtils" %>
+        import="java.util.ArrayList, oscar.oscarLab.ca.on.*, openo.util.StringUtils" %>
 <%@page import="java.util.List" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.hospitalReportManager.dao.HRMDocumentDao" %>
@@ -49,9 +49,11 @@
 <%@ page import="org.oscarehr.hospitalReportManager.model.HRMDocument" %>
 <%@ page import="org.oscarehr.hospitalReportManager.model.HRMDocumentToDemographic" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
-<%@ page import="oscar.eform.EFormUtil" %>
+<%@ page import="openo.eform.EFormUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 

@@ -48,7 +48,7 @@ import org.oscarehr.util.QrCodeUtils.QrCodesOrientation;
 import org.oscarehr.util.SpringUtils;
 import org.oscarehr.web.admin.ProviderPreferencesUIBean;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import ca.uhn.hl7v2.model.v26.message.OMP_O09;
 
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;

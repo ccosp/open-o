@@ -43,6 +43,9 @@
 <%@ page import="org.oscarehr.common.dao.RecycleBinDao" %>
 <%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
     ProgramDao programDao = SpringUtils.getBean(ProgramDao.class);

@@ -42,7 +42,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 
-import oscar.util.OscarRoleObjectPrivilege;
+import openo.util.OscarRoleObjectPrivilege;
 
 /**
  * Utilities for traceability

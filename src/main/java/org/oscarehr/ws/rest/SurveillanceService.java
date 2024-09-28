@@ -65,7 +65,6 @@ import org.oscarehr.common.model.ResourceStorage;
 import org.oscarehr.common.model.SurveillanceData;
 import org.oscarehr.managers.AppManager;
 import org.oscarehr.managers.OscarJobManager;
-import org.oscarehr.managers.OscarJobManagerImpl;
 import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
@@ -73,10 +72,10 @@ import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import oscar.log.LogAction;
-import oscar.oscarSurveillance.ProcessSurveyFile;
-import oscar.oscarSurveillance.SurveillanceMaster;
-import oscar.oscarSurveillance.Survey;
+import openo.log.LogAction;
+import openo.oscarSurveillance.ProcessSurveyFile;
+import openo.oscarSurveillance.SurveillanceMaster;
+import openo.oscarSurveillance.Survey;
 
 
 @Path("/surveillance")

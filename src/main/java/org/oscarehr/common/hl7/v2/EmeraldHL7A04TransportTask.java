@@ -39,7 +39,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * Class HL7A04TransportTask

@@ -59,6 +59,7 @@
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.common.dao.forms.FormsDao" %>
+<%@ page import="openo.util.ConversionUtils" %>
 
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
@@ -183,7 +184,7 @@
                     Integer id = (Integer) result[0];
                     Integer demographicNo = (Integer) result[1];
                     java.util.Date finalEdb1 = (java.util.Date) result[2];
-                    String finalEdb = oscar.util.ConversionUtils.toDateString(finalEdb1);
+                    String finalEdb = ConversionUtils.toDateString(finalEdb1);
                     String name = (String) result[3];
                     String age = (String) result[4];
                     String gravida = (String) result[5];

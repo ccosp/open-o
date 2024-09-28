@@ -41,7 +41,7 @@
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.*, oscar.util.*, oscar.OscarProperties" %>
+<%@ page import="java.util.*, oscar.util.*, openo.OscarProperties" %>
 <!DOCTYPE HTML >
 
 <html>

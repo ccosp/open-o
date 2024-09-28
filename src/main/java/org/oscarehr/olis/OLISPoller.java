@@ -21,6 +21,9 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import openo.Misc;
+import openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.logging.log4j.Logger;
@@ -36,11 +39,10 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarLab.FileUploadCheck;
-import oscar.oscarLab.ca.all.parsers.Factory;
-import oscar.oscarLab.ca.all.parsers.MessageHandler;
-import oscar.oscarLab.ca.all.parsers.OLISHL7Handler;
-import oscar.oscarLab.ca.all.util.Utilities;
+import openo.oscarLab.FileUploadCheck;
+import openo.oscarLab.ca.all.parsers.Factory;
+import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import openo.oscarLab.ca.all.util.Utilities;
 
 import com.indivica.olis.Driver;
 import com.indivica.olis.parameters.OBR22;
@@ -75,8 +77,8 @@ public class OLISPoller {
         OLISProviderPreferencesDao olisProviderPreferencesDao = (OLISProviderPreferencesDao) SpringUtils.getBean(OLISProviderPreferencesDao.class);
         OLISProviderPreferences olisProviderPreferences;
 
-        String defaultStartTime = oscar.Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
-        String defaultEndTime = oscar.Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
+        String defaultStartTime = Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
+        String defaultEndTime = Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
 
         Z04Query providerQuery;
         UserPropertyDAO userPropertyDAO = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
@@ -211,7 +213,7 @@ public class OLISPoller {
 
                     logger.info("message:" + message);
                     // Parse the HL7 string...
-                    MessageHandler h = Factory.getHandler("OLIS_HL7", message);
+                    openo.oscarLab.ca.all.parsers.MessageHandler h = Factory.getHandler("OLIS_HL7", message);
 
                     String resultUuid = UUID.randomUUID().toString();
 
@@ -232,7 +234,7 @@ public class OLISPoller {
 
             String fileLocation = System.getProperty("java.io.tmpdir") + "/olis_" + uuidToAdd + ".response";
             File file = new File(fileLocation);
-            oscar.oscarLab.ca.all.upload.handlers.MessageHandler msgHandler = oscar.oscarLab.ca.all.upload.HandlerClassFactory.getHandler("OLIS_HL7");
+            MessageHandler msgHandler = HandlerClassFactory.getHandler("OLIS_HL7");
 
             try {
                 InputStream is = new FileInputStream(fileLocation);

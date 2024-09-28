@@ -41,7 +41,7 @@
 
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@ include file="/taglibs.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -51,6 +51,8 @@
 <%@page import="org.oscarehr.eyeform.web.EyeformAction" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.DemographicContact" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.OscarProperties" %>
 
 <html:html>
     <head>
@@ -87,8 +89,8 @@
             }
             String presc = "";
 
-            oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-            oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+            RxPrescriptionData prescriptData = new RxPrescriptionData();
+            RxPrescriptionData.Prescription[] arr = {};
             arr = prescriptData.getUniquePrescriptionsByPatient(Integer
                     .parseInt(demographicNo));
             if (arr.length > 0) {
@@ -199,7 +201,7 @@
         con_presc = '<%=StringEscapeUtils.escapeJavaScript(presc) %>';
 
         <%
-            String customCppIssues[] = oscar.OscarProperties.getInstance().getProperty("encounter.custom_cpp_issues", "").split(",");
+            String customCppIssues[] = OscarProperties.getInstance().getProperty("encounter.custom_cpp_issues", "").split(",");
             for(String customCppIssue:customCppIssues) {
                 %>
         con_<%=customCppIssue%> = '<%=request.getAttribute(customCppIssue)%>';

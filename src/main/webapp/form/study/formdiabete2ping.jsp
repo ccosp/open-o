@@ -18,6 +18,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.form.study.*" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="openo.form.study.FrmStudyRecordFactory" %>
+<%@ page import="openo.form.study.FrmStudyRecord" %>
 
 <html:html lang="en">
     <head>
@@ -32,9 +35,9 @@
         String provNo = (String) session.getAttribute("user");
         String demoNo = request.getParameter("demographic_no");
         String studyId = request.getParameter("study_no");
-        oscar.form.data.FrmData.PatientForm pform = (new oscar.form.data.FrmData()).getCurrentPatientForm(demoNo, studyId);
+        FrmData.PatientForm pform = (new FrmData()).getCurrentPatientForm(demoNo, studyId);
         int formId = (pform == null) ? 0 : Integer.parseInt(pform.getFormId());
-        String[] studyNameLink = (new oscar.form.data.FrmData()).getStudyNameLink(studyId);
+        String[] studyNameLink = (new FrmData()).getStudyNameLink(studyId);
         FrmStudyRecord rec = (new FrmStudyRecordFactory()).factory(studyNameLink[0]);
         java.util.Properties props = rec.getFormRecord(LoggedInInfo.getLoggedInInfoFromSession(request), Integer.parseInt(demoNo), formId);
     %>

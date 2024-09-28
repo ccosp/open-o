@@ -61,7 +61,7 @@ import org.oscarehr.util.SpringUtils;
 
 import com.itextpdf.text.pdf.codec.Base64;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 

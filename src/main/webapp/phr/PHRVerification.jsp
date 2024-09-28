@@ -26,10 +26,10 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.common.dao.ConsentDao,org.oscarehr.common.model.Consent,org.oscarehr.util.SpringUtils,java.util.*,org.oscarehr.managers.AppManager,org.oscarehr.common.model.AppDefinition,org.oscarehr.common.model.Provider" %>
 
-<%@ page import="oscar.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="java.util.Enumeration" %>
-<%@ page import="oscar.util.DateUtils" %>
-<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao,oscar.util.UtilDateUtilities" %>
+<%@ page import="openo.util.DateUtils" %>
+<%@ page import="org.oscarehr.PMmodule.dao.ProviderDao,openo.util.UtilDateUtilities" %>
 <%@ page import="org.oscarehr.phr.util.MyOscarServerRelationManager,org.oscarehr.phr.util.MyOscarUtils" %>
 
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>

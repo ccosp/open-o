@@ -40,6 +40,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openo.entities.Provider;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -62,7 +63,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarBilling.ca.bc.MSP.MSPReconcile;
+import openo.oscarBilling.ca.bc.MSP.MSPReconcile;
 
 
 /**
@@ -563,9 +564,9 @@ public class UserPreferenceAction extends DispatchAction {
 
         MSPReconcile rec = new MSPReconcile();
         @SuppressWarnings("unchecked")
-        List<oscar.entities.Provider> providers = rec.getAllProviders();
+        List<Provider> providers = rec.getAllProviders();
 
-        for (oscar.entities.Provider provider : providers) {
+        for (Provider provider : providers) {
             results.add(new LabelValueBean(provider.getLastName() + "," + provider.getFirstName(), provider.getProviderNo()));
         }
 

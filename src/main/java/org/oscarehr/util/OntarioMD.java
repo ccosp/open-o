@@ -41,7 +41,7 @@ import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
 import org.jdom.input.SAXBuilder;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * @author jaygallagher

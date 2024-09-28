@@ -40,7 +40,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
 
-<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 
 <%
     String errorMsg = (String) request.getAttribute("error_msg");

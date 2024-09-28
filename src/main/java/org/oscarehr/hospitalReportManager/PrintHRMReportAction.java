@@ -38,8 +38,8 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.OscarProperties;
-import oscar.util.ConcatPDF;
+import openo.OscarProperties;
+import openo.util.ConcatPDF;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

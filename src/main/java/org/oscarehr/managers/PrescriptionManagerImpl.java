@@ -27,6 +27,7 @@
  */
 package org.oscarehr.managers;
 
+import openo.oscarRx.util.RxUtil;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.caisi_integrator.IntegratorFallBackManager;
@@ -41,11 +42,11 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import oscar.log.LogAction;
-import oscar.oscarProvider.data.ProSignatureData;
-import oscar.oscarRx.data.RxPatientData;
-import oscar.oscarRx.data.RxProviderData;
-import oscar.util.DateUtils;
+import openo.log.LogAction;
+import openo.oscarProvider.data.ProSignatureData;
+import openo.oscarRx.data.RxPatientData;
+import openo.oscarRx.data.RxProviderData;
+import openo.util.DateUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -302,8 +303,8 @@ public class PrescriptionManagerImpl implements PrescriptionManager {
         textView.append(patient.getAddress() + "\n");
         textView.append(patient.getCity() + " " + patient.getPostal() + "\n");
         textView.append(patient.getPhone() + "\n");
-        textView.append(oscar.oscarRx.util.RxUtil.DateToString(
-                oscar.oscarRx.util.RxUtil.Today(), "MMMM d, yyyy") + "\n");
+        textView.append(RxUtil.DateToString(
+                RxUtil.Today(), "MMMM d, yyyy") + "\n");
 
         String drugTxt;
         for (Drug d : drugs) {

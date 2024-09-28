@@ -44,7 +44,7 @@ import org.oscarehr.casemgmt.model.CaseManagementNoteExt;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.DateUtils;
+import openo.util.DateUtils;
 
 public class CaseManagementUtil {
 

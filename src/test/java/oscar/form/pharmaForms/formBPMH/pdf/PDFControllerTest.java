@@ -33,13 +33,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import openo.form.pharmaForms.formBPMH.pdf.PDFController;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.oscarehr.common.model.Demographic;
 
-import oscar.form.pharmaForms.formBPMH.bean.BpmhDrug;
-import oscar.form.pharmaForms.formBPMH.bean.BpmhFormBean;
+import openo.form.pharmaForms.formBPMH.bean.BpmhDrug;
+import openo.form.pharmaForms.formBPMH.bean.BpmhFormBean;
 
 /*
  * Author: Dennis Warren

@@ -1,5 +1,5 @@
-<%@ page import="oscar.oscarReport.data.DoctorList" %>
-<%@ page import="oscar.oscarProvider.bean.ProviderNameBean" %>
+<%@ page import="openo.oscarReport.data.DoctorList" %>
+<%@ page import="openo.oscarProvider.bean.ProviderNameBean" %>
 <%@ page import="java.util.ArrayList" %>
 
 <%@ include file="/taglibs.jsp" %>

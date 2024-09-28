@@ -20,7 +20,7 @@
 <%@page import="org.oscarehr.common.dao.BillingDao" %>
 
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, oscar.MyDateFormat,oscar.oscarDB.*"
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, openo.MyDateFormat,oscar.oscarDB.*"
         errorPage="/errorpage.jsp" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
 
@@ -44,6 +44,9 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.SxmlMisc" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

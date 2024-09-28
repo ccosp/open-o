@@ -30,7 +30,7 @@
 <%@page import="org.oscarehr.util.LocaleUtils" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@ page language="java" import="oscar.OscarProperties" %>
+<%@ page language="java" import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -42,6 +42,7 @@
 <%@page import="org.oscarehr.casemgmt.model.CaseManagementNoteLink" %>
 <%@page import="org.oscarehr.common.dao.PartialDateDao" %>
 <%@page import="org.oscarehr.common.model.PartialDate" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 
 <%
     String roleName2$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -67,13 +68,13 @@
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean" name="RxSessionBean" scope="session"/>
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean" name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
     </logic:equal>
 </logic:present>
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
     String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_ALLERGY;
 
     com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
@@ -359,7 +360,7 @@
         </script>
 
     </head>
-    <bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+    <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 
     <body>
     <%=WebUtils.popErrorAndInfoMessagesAsHtml(session)%>

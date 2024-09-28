@@ -68,6 +68,7 @@
 
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.eform.EFormUtil" %>
 <html:html lang="en">
 
     <head>

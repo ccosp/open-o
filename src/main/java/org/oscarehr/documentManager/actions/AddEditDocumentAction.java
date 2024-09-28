@@ -40,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import openo.OscarProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -72,12 +73,12 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import oscar.MyDateFormat;
+import openo.MyDateFormat;
 import org.oscarehr.documentManager.data.AddEditDocumentForm;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarEncounter.data.EctProgram;
-import oscar.util.UtilDateUtilities;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarEncounter.data.EctProgram;
+import openo.util.UtilDateUtilities;
 
 import com.itextpdf.text.pdf.PdfReader;
 
@@ -98,7 +99,7 @@ public class AddEditDocumentAction extends DispatchAction {
         int numberOfPages = 0;
         String fileName = docFile.getFileName();
         String user = (String) request.getSession().getAttribute("user");
-        EDoc newDoc = new EDoc("", "", fileName, "", user, user, fm.getSource(), 'A', oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1", 0);
+        EDoc newDoc = new EDoc("", "", fileName, "", user, user, fm.getSource(), 'A', UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1", 0);
         newDoc.setDocPublic("0");
         newDoc.setAppointmentNo(Integer.parseInt(fm.getAppointmentNo()));
 
@@ -162,7 +163,7 @@ public class AddEditDocumentAction extends DispatchAction {
     public static int countNumOfPages(String fileName) {// count number of pages in a local pdf file
 
         int numOfPage = 0;
-        String docdownload = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docdownload = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         if (!docdownload.endsWith(File.separator)) {
             docdownload += File.separator;
         }
@@ -190,7 +191,7 @@ public class AddEditDocumentAction extends DispatchAction {
         FormFile docFile = fm.getDocFile();
         String fileName = docFile.getFileName();
         String user = (String) request.getSession().getAttribute("user");
-        EDoc newDoc = new EDoc("", "", fileName, "", user, user, fm.getSource(), 'A', oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1");
+        EDoc newDoc = new EDoc("", "", fileName, "", user, user, fm.getSource(), 'A', UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", "-1");
         newDoc.setDocPublic("0");
         newDoc.setAppointmentNo(Integer.parseInt(fm.getAppointmentNo()));
 
@@ -424,7 +425,7 @@ public class AddEditDocumentAction extends DispatchAction {
             FormFile docFile = fm.getDocFile();
             String fileName = "";
 
-            if (oscar.OscarProperties.getInstance().getBooleanProperty("ALLOW_UPDATE_DOCUMENT_CONTENT", "true")) {
+            if (OscarProperties.getInstance().getBooleanProperty("ALLOW_UPDATE_DOCUMENT_CONTENT", "true")) {
                 fileName = docFile.getFileName();
             }
 
@@ -521,7 +522,7 @@ public class AddEditDocumentAction extends DispatchAction {
         FileOutputStream fos = null;
         File file = null;
         try {
-            String savePath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/" + fileName;
+            String savePath = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/" + fileName;
             file = new File(savePath);
             fos = new FileOutputStream(savePath);
             byte[] buf = new byte[128 * 1024];

@@ -69,7 +69,7 @@ import org.marc.shic.cda.utils.CdaUtils;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Provider;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class BornCDADocument extends Level1Document {
 

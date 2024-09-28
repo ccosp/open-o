@@ -44,7 +44,7 @@
 
 <%@page import="java.util.Date" %>
 <%@page import="java.util.List" %>
-<%@page import="oscar.util.CBIUtil" %>
+<%@page import="openo.util.CBIUtil" %>
 <html style="height: 100% !important;">
 <head>
     <title>CBI Upload Administration Panel</title>

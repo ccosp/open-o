@@ -41,12 +41,14 @@
 
 <%@ page language="java" %>
 <%@ page
-        import="oscar.form.*, oscar.OscarProperties, java.util.Date, oscar.util.UtilDateUtilities" %>
+        import="oscar.form.*, openo.OscarProperties, java.util.Date, openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
 
 <html:html lang="en">
     <% response.setHeader("Cache-Control", "no-cache");%>

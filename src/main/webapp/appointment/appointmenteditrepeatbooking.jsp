@@ -54,6 +54,10 @@
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="java.text.SimpleDateFormat" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);

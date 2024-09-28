@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-import oscar.oscarLab.ca.on.LabResultData;
+import openo.oscarLab.ca.on.LabResultData;
 
 public class InboxManagerResponse {
     private Integer pageNum;

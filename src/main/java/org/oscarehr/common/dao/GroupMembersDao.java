@@ -30,7 +30,7 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.GroupMembers;
-import oscar.oscarMessenger.data.ContactIdentifier;
+import openo.oscarMessenger.data.ContactIdentifier;
 
 import java.util.List;
 

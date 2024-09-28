@@ -14,6 +14,7 @@ import java.util.TimerTask;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openo.Misc;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -43,18 +44,18 @@ public class OLISPreferencesAction extends DispatchAction {
         DateTimeFormatter input = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss Z");
         DateTimeFormatter output = DateTimeFormat.forPattern("YYYYMMddHHmmssZ");
         DateTime date;
-        String startTime = oscar.Misc.getStr(request.getParameter("startTime"), "").trim();
+        String startTime = Misc.getStr(request.getParameter("startTime"), "").trim();
         if (!startTime.equals("")) {
             date = input.parseDateTime(startTime);
             startTime = date.toString(output);
         }
-        String endTime = oscar.Misc.getStr(request.getParameter("endTime"), "").trim();
+        String endTime = Misc.getStr(request.getParameter("endTime"), "").trim();
         if (!endTime.equals("")) {
             date = input.parseDateTime(endTime);
             endTime = date.toString(output);
         }
 
-        Integer pollFrequency = oscar.Misc.getInt(request.getParameter("pollFrequency"), 30);
+        Integer pollFrequency = Misc.getInt(request.getParameter("pollFrequency"), 30);
         String filterPatients = request.getParameter("filter_patients");
         OLISSystemPreferencesDao olisPrefDao = (OLISSystemPreferencesDao) SpringUtils.getBean(OLISSystemPreferencesDao.class);
         ;

@@ -30,6 +30,7 @@
 <%@page import="org.oscarehr.common.dao.DemographicStudyDao" %>
 <%@page import="org.oscarehr.common.model.Study" %>
 <%@page import="org.oscarehr.common.dao.StudyDao" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");

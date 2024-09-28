@@ -40,15 +40,15 @@
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.managers.SecurityManager" %>
 <%@ page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@ page import="oscar.oscarProvider.data.ProviderMyOscarIdData" %>
+<%@ page import="openo.oscarProvider.data.ProviderMyOscarIdData" %>
 <%@ page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     org.oscarehr.managers.SecurityManager securityManager = SpringUtils.getBean(org.oscarehr.managers.SecurityManager.class);
 
 %>
-<%@ page import="oscar.log.LogAction" %>
-<%@ page import="oscar.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.log.LogConst" %>
 
 <%
     SecurityDao securityDao = SpringUtils.getBean(SecurityDao.class);

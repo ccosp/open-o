@@ -26,7 +26,7 @@
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%
     String myOscarExternalLinkUrl = OscarProperties.getInstance().getProperty("myOSCAR.url") + "external_page_view_action.jsp";
     String redirectPage = request.getParameter("redirectPage");

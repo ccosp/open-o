@@ -52,7 +52,7 @@ trusted truejava.lang.Boolean ? i think
 
 --%>
 <%@ page
-        import="java.util.*,oscar.oscarRx.data.*,java.text.DateFormatSymbols,oscar.oscarRx.pageUtil.*,java.io.*,org.apache.xmlrpc.*, oscar.util.StringUtils,java.util.Random" %>
+        import="java.util.*,oscar.oscarRx.data.*,java.text.DateFormatSymbols,oscar.oscarRx.pageUtil.*,java.io.*,org.apache.xmlrpc.*, openo.util.StringUtils,java.util.Random" %>
 
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

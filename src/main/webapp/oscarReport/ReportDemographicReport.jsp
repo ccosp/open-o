@@ -42,7 +42,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="oscar.oscarReport.data.RptSearchData,java.util.*" %>
+<%@ page import="openo.oscarReport.data.RptSearchData,java.util.*" %>
+<%@ page import="openo.oscarReport.pageUtil.RptDemographicReportForm" %>
+<%@ page import="openo.oscarReport.data.RptDemographicColumnNames" %>
 
 
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
@@ -66,7 +68,7 @@
     }
 </script>
 <%
-    oscar.oscarReport.data.RptSearchData searchData = new oscar.oscarReport.data.RptSearchData();
+    RptSearchData searchData = new RptSearchData();
     java.util.ArrayList rosterArray;
     java.util.ArrayList patientArray;
     java.util.ArrayList providerArray;
@@ -216,13 +218,13 @@
 
                 <%
                     if (request.getAttribute("formBean") != null) {
-                        oscar.oscarReport.pageUtil.RptDemographicReportForm thisForm;
-                        thisForm = (oscar.oscarReport.pageUtil.RptDemographicReportForm) request.getAttribute("RptDemographicReportForm");
-                        thisForm.copyConstructor((oscar.oscarReport.pageUtil.RptDemographicReportForm) request.getAttribute("formBean"));
+                        RptDemographicReportForm thisForm;
+                        thisForm = (RptDemographicReportForm) request.getAttribute("RptDemographicReportForm");
+                        thisForm.copyConstructor((RptDemographicReportForm) request.getAttribute("formBean"));
 
                     }
-                    oscar.oscarReport.pageUtil.RptDemographicReportForm thisForm;
-                    thisForm = (oscar.oscarReport.pageUtil.RptDemographicReportForm) request.getAttribute("RptDemographicReportForm");
+                    RptDemographicReportForm thisForm;
+                    thisForm = (RptDemographicReportForm) request.getAttribute("RptDemographicReportForm");
 
 
                     if (thisForm != null || thisForm.getAgeStyle() == null || thisForm.getAgeStyle().equals("2")) {
@@ -721,7 +723,7 @@
         String[] selectArray = (String[]) request.getAttribute("selectArray");
         java.util.ArrayList searchList = (java.util.ArrayList) request.getAttribute("searchedArray");
         if (searchList != null) {
-            oscar.oscarReport.data.RptDemographicColumnNames dcn = new oscar.oscarReport.data.RptDemographicColumnNames();
+            RptDemographicColumnNames dcn = new RptDemographicColumnNames();
     %>
 
     Search Returned : <%=searchList.size()%> Results

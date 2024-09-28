@@ -38,7 +38,7 @@ import javax.persistence.TemporalType;
 
 import org.oscarehr.common.model.AbstractModel;
 
-import oscar.entities.PrivateBillTransaction;
+import openo.entities.PrivateBillTransaction;
 
 @Entity
 @Table(name = "billing_private_transactions")

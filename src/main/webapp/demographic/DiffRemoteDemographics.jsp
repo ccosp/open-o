@@ -94,12 +94,14 @@
            prefix="html-el" %>
 
 <%@ page
-        import="oscar.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+        import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
 <%@ page
-        import="oscar.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
+        import="openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet" %>
 <%@ page import="org.oscarehr.common.model.Flowsheet" %>
 <%@ page import="org.oscarehr.common.dao.FlowsheetDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.util.StringUtils" %>
+<%@ page import="openo.util.DateUtils" %>
 
 <html:html lang="en">
     <head>

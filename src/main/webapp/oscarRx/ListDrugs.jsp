@@ -35,7 +35,7 @@
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@ taglib uri="/WEB-INF/indivo-tag.tld" prefix="indivo" %>
 <%@ page
-        import="oscar.oscarRx.data.*,oscar.oscarProvider.data.ProviderMyOscarIdData,oscar.oscarDemographic.data.DemographicData,oscar.OscarProperties,oscar.log.*" %>
+        import="oscar.oscarRx.data.*,openo.oscarProvider.data.ProviderMyOscarIdData,openo.oscarDemographic.data.DemographicData,openo.OscarProperties,oscar.log.*" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,
                 org.springframework.web.context.WebApplicationContext,
                 org.springframework.web.context.support.WebApplicationContextUtils,
@@ -46,18 +46,21 @@
 <%@page import="java.util.Enumeration" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
-<%@page import="java.util.List,oscar.util.StringUtils" %>
+<%@page import="java.util.List,openo.util.StringUtils" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.util.LoggedInInfo,org.oscarehr.common.dao.DrugReasonDao,org.oscarehr.common.model.DrugReason" %>
 <%@page import="java.util.ArrayList,oscar.util.*,java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.common.dao.*" %>
 <%@page import="org.oscarehr.managers.DrugDispensingManager" %>
 <%@page import="org.oscarehr.managers.CodingSystemManager" %>
-<bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
 <logic:notPresent name="RxSessionBean" scope="session">
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                  name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
@@ -82,7 +85,7 @@
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
     com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
     PartialDateDao partialDateDao = SpringUtils.getBean(PartialDateDao.class);
 
     boolean showall = false;
@@ -208,13 +211,13 @@
         %>
         <tr>
             <td valign="top"><a id="createDate_<%=prescriptIdInt%>"   <%=styleColor%>
-                                href="StaticScript2.jsp?regionalIdentifier=<%=prescriptDrug.getRegionalIdentifier()%>&amp;cn=<%=response.encodeURL(prescriptDrug.getCustomName())%>&amp;bn=<%=response.encodeURL(bn)%>&amp;atc=<%=prescriptDrug.getAtc()%>"><%=oscar.util.UtilDateUtilities.DateToString(prescriptDrug.getCreateDate())%>
+                                href="StaticScript2.jsp?regionalIdentifier=<%=prescriptDrug.getRegionalIdentifier()%>&amp;cn=<%=response.encodeURL(prescriptDrug.getCustomName())%>&amp;bn=<%=response.encodeURL(bn)%>&amp;atc=<%=prescriptDrug.getAtc()%>"><%=UtilDateUtilities.DateToString(prescriptDrug.getCreateDate())%>
             </a></td>
             <td valign="top">
                 <% if (startDateUnknown) { %>
 
                 <% } else {
-                    String startDate = oscar.util.UtilDateUtilities.DateToString(prescriptDrug.getRxDate());
+                    String startDate = UtilDateUtilities.DateToString(prescriptDrug.getRxDate());
                     startDate = partialDateDao.getDatePartial(startDate, PartialDate.DRUGS, prescriptDrug.getId(), PartialDate.DRUGS_STARTDATE);
                 %>
                 <a id="rxDate_<%=prescriptIdInt%>"   <%=styleColor%>

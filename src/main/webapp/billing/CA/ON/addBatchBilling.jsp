@@ -31,7 +31,7 @@
 
 <%@ page import="java.util.*" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao, org.oscarehr.common.model.Provider" %>
-<%@ page import="oscar.SxmlMisc" %>
+<%@ page import="openo.SxmlMisc" %>
 
 <%@include file="../../../casemgmt/taglibs.jsp" %>
 

@@ -48,6 +48,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="openo.OscarProperties" %>
 
 
 <%
@@ -72,9 +77,9 @@
     List<LabelValueBean> cytologyForms = PregnancyAction.getEformsByGroup("Cytology");
     List<LabelValueBean> ultrasoundForms = PregnancyAction.getEformsByGroup("Ultrasound");
 
-    String customEformGroup = oscar.OscarProperties.getInstance().getProperty("prenatal_screening_eform_group");
-    String prenatalScreenName = oscar.OscarProperties.getInstance().getProperty("prenatal_screening_name");
-    String prenatalScreen = oscar.OscarProperties.getInstance().getProperty("prenatal_screening_abbrv");
+    String customEformGroup = OscarProperties.getInstance().getProperty("prenatal_screening_eform_group");
+    String prenatalScreenName = OscarProperties.getInstance().getProperty("prenatal_screening_name");
+    String prenatalScreen = OscarProperties.getInstance().getProperty("prenatal_screening_abbrv");
 
     List<LabelValueBean> customForms = PregnancyAction.getEformsByGroup(customEformGroup);
 
@@ -82,7 +87,7 @@
         props.setProperty("obxhx_num", "0");
     }
 
-    String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
+    String labReqVer = OscarProperties.getInstance().getProperty("onare_labreqver", "07");
     if (labReqVer.equals("")) {
         labReqVer = "07";
     }

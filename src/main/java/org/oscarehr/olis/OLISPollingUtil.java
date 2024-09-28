@@ -33,6 +33,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import openo.Misc;
+import openo.oscarLab.ca.all.upload.HandlerClassFactory;
+import openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.logging.log4j.Logger;
@@ -48,9 +51,9 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.oscarLab.FileUploadCheck;
-import oscar.oscarLab.ca.all.util.Utilities;
+import openo.OscarProperties;
+import openo.oscarLab.FileUploadCheck;
+import openo.oscarLab.ca.all.util.Utilities;
 
 import com.indivica.olis.Driver;
 import com.indivica.olis.parameters.OBR22;
@@ -75,8 +78,8 @@ public class OLISPollingUtil {
 
     public static void requestResults(LoggedInInfo loggedInInfo) {
         OLISSystemPreferences olisSystemPreferences = olisSystemPreferencesDao.getPreferences();
-        String defaultStartTime = oscar.Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
-        String defaultEndTime = oscar.Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
+        String defaultStartTime = Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
+        String defaultEndTime = Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
 
         pollZ04Query(loggedInInfo, defaultStartTime, defaultEndTime);
 
@@ -104,12 +107,12 @@ public class OLISPollingUtil {
         OLISSystemPreferences olisSystemPreferences = olisSystemPreferencesDao.getPreferences();
         OLISProviderPreferences olisProviderPreferences = olisProviderPreferencesDao.findById(providerNo);
 
-        String defaultStartTime = oscar.Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
-        String defaultEndTime = oscar.Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
+        String defaultStartTime = Misc.getStr(olisSystemPreferences.getStartTime(), "").trim();
+        String defaultEndTime = Misc.getStr(olisSystemPreferences.getEndTime(), "").trim();
 
         String providerStartTime = null;
         if (olisProviderPreferences != null) {
-            providerStartTime = oscar.Misc.getStr(olisProviderPreferences.getStartTime(), "").trim();
+            providerStartTime = Misc.getStr(olisProviderPreferences.getStartTime(), "").trim();
         }
 
         if (!StringUtils.isEmpty(providerStartTime)) {
@@ -325,7 +328,7 @@ public class OLISPollingUtil {
         String fileLocation = Utilities.saveFile(new ByteArrayInputStream(responseContent.getBytes("UTF-8")), hl7Filename);
         logger.debug(fileLocation);
         File file = new File(fileLocation);
-        oscar.oscarLab.ca.all.upload.handlers.MessageHandler msgHandler = oscar.oscarLab.ca.all.upload.HandlerClassFactory.getHandler("OLIS_HL7");
+        MessageHandler msgHandler = HandlerClassFactory.getHandler("OLIS_HL7");
         try {
             InputStream is = new FileInputStream(fileLocation);
             int check = FileUploadCheck.addFile(file.getName(), is, "0");

@@ -26,6 +26,7 @@
 
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*,java.net.*" %>
+<%@ page import="openo.DateInMonthTable" %>
 
 <%
     // to prepare calendar display

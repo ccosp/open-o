@@ -38,7 +38,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.util.ConversionUtils;
+import openo.util.ConversionUtils;
 import ca.ontario.health.edt.EDTDelegate;
 import ca.ontario.health.edt.ResourceResult;
 import ca.ontario.health.edt.UploadData;

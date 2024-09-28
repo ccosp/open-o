@@ -33,7 +33,7 @@ import org.oscarehr.common.model.Tickler;
 import org.oscarehr.common.printing.FontSettings;
 import org.oscarehr.common.printing.PdfWriterFactory;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

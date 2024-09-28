@@ -25,7 +25,7 @@
 --%>
 
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
 <% long start = System.currentTimeMillis(); %>
 <%@include file="/casemgmt/taglibs.jsp" %>
@@ -40,6 +40,8 @@
 <%@page import="org.oscarehr.common.model.PartialDate" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.OscarProperties" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
     boolean authed = true;
@@ -119,7 +121,7 @@
                 String htmlNoteTxt = note.getNote() + addlData;
 
                 //single line or 'normal' view.
-                boolean singleLine = Boolean.valueOf(oscar.OscarProperties.getInstance().getProperty("echart.cpp.single_line", "false"));
+                boolean singleLine = Boolean.valueOf(OscarProperties.getInstance().getProperty("echart.cpp.single_line", "false"));
                 UserPropertyDAO userPropertyDao = (UserPropertyDAO) SpringUtils.getBean(UserPropertyDAO.class);
                 UserProperty prop = userPropertyDao.getProp(loggedInInfo.getLoggedInProviderNo(), UserProperty.CPP_SINGLE_LINE);
                 if (prop != null) {
@@ -242,12 +244,12 @@
 
         if (type != null && !type.trim().equals("")) {
             if (type.equals(PartialDate.YEARONLY))
-                val = oscar.util.UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy");
+                val = UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy");
             else if (type.equals(PartialDate.YEARMONTH))
-                val = oscar.util.UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM");
-            else val = oscar.util.UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
+                val = UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM");
+            else val = UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
         } else {
-            val = oscar.util.UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
+            val = UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
         }
         return val;
     }

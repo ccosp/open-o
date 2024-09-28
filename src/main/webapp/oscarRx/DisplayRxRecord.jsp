@@ -121,6 +121,7 @@
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath()%>/js/global.js"></script>
@@ -223,7 +224,7 @@
                 </tr>
                 <tr>
                     <td class="label">Rx Date:</td>
-                    <td><%=partialDateDao.getDatePartial(oscar.util.UtilDateUtilities.DateToString(drug.getRxDate()), PartialDate.DRUGS, drug.getId(), PartialDate.DRUGS_STARTDATE) %>
+                    <td><%=partialDateDao.getDatePartial(UtilDateUtilities.DateToString(drug.getRxDate()), PartialDate.DRUGS, drug.getId(), PartialDate.DRUGS_STARTDATE) %>
                     </td>
                 </tr>
                 <tr>
@@ -233,7 +234,7 @@
                 </tr>
                 <tr>
                     <td class="label">Written Date:</td>
-                    <td><%=partialDateDao.getDatePartial(oscar.util.UtilDateUtilities.DateToString(drug.getWrittenDate()), PartialDate.DRUGS, drug.getId(), PartialDate.DRUGS_WRITTENDATE) %>
+                    <td><%=partialDateDao.getDatePartial(UtilDateUtilities.DateToString(drug.getWrittenDate()), PartialDate.DRUGS, drug.getId(), PartialDate.DRUGS_WRITTENDATE) %>
                     </td>
                 </tr>
                 <tr>

@@ -36,7 +36,7 @@ import javax.persistence.Query;
 import org.oscarehr.common.model.BornTransmissionLog;
 import org.springframework.stereotype.Repository;
 
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 @Repository
 public class BornTransmissionLogDaoImpl extends AbstractDaoImpl<BornTransmissionLog> implements BornTransmissionLogDao {

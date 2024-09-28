@@ -26,7 +26,7 @@ package org.oscarehr.casemgmt.model;
 
 import java.util.Date;
 
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 public class CaseManagementNoteExt {
 

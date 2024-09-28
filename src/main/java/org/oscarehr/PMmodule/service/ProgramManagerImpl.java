@@ -57,7 +57,7 @@ import org.oscarehr.PMmodule.model.ProgramTeam;
 import org.oscarehr.PMmodule.model.VacancyTemplate;
 import org.oscarehr.util.LoggedInInfo;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class ProgramManagerImpl implements ProgramManager {
 

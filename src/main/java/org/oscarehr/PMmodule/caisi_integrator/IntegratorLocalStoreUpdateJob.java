@@ -44,7 +44,7 @@ import org.oscarehr.common.model.Security;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.*;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class IntegratorLocalStoreUpdateJob implements OscarRunnable {
 

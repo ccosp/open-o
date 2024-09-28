@@ -28,8 +28,6 @@
 
 package org.oscarehr.managers;
 
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,9 +49,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
+import openo.log.LogAction;
+import openo.oscarEncounter.oscarMeasurements.MeasurementFlowSheet;
 
 @Service
 public class MeasurementManagerImpl implements MeasurementManager {

@@ -102,7 +102,7 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.form.FrmLabReq07Record;
+import openo.form.FrmLabReq07Record;
 
 
 public class OntarioMDSpec4DataTest extends DaoTestFixtures {

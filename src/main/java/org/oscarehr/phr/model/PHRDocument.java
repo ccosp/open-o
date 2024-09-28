@@ -38,7 +38,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.indivo.xml.phr.contact.ConciseContactInformationType;
 
-import oscar.oscarClinic.ClinicData;
+import openo.oscarClinic.ClinicData;
 
 /**
  * @author jay

@@ -29,14 +29,14 @@
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.billing.CA.model.BillingInr" %>
 <%@ page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
-<%@ page import="oscar.util.ConversionUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
     BillingInrDao billingInrDao = SpringUtils.getBean(BillingInrDao.class);
 
 %>
 
-<jsp:useBean id="SxmlMisc" class="oscar.SxmlMisc" scope="session"/>
+<jsp:useBean id="SxmlMisc" class="openo.SxmlMisc" scope="session"/>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.ClinicLocationDao" %>

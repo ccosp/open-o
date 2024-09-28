@@ -24,7 +24,9 @@
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>
 
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.oscarRx.util.RxUtil" %>
 
 
 <%!

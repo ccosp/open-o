@@ -45,7 +45,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import oscar.oscarReport.reportByTemplate.ReportManager;
+import openo.oscarReport.reportByTemplate.ReportManager;
 
 @Path("/reportByTemplate")
 public class ReportByTemplateService extends AbstractServiceImpl {

@@ -26,10 +26,10 @@
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@page import="oscar.oscarDemographic.data.*" %>
-<%@page import="oscar.util.UtilDateUtilities" %>
+<%@page import="openo.util.UtilDateUtilities" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.oscarehr.common.model.BillingONItem" %>
 <%@page import="org.oscarehr.common.model.BillingONErrorCode, org.oscarehr.common.dao.BillingONErrorCodeDao" %>
 <%@page import="org.oscarehr.common.dao.BillingONEAReportDao, org.oscarehr.common.model.BillingONEAReport" %>
@@ -49,6 +49,12 @@
 <%@page import="java.text.NumberFormat" %>
 
 <%@page import="org.apache.commons.lang.StringUtils" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingRAImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.Billing3rdPartPrep" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -1328,7 +1334,7 @@
                             <a href="#" onclick="search3rdParty('billTo');return false;"><bean:message
                                     key="billing.billingCorrection.msgPayer"/></a><br>
                             <textarea id="billTo" name="billTo" cols="32" rows=4><%=payer%></textarea>
-                            <% String useDemoClinicInfoOnInvoice = oscar.OscarProperties.getInstance().getProperty("useDemoClinicInfoOnInvoice", "");
+                            <% String useDemoClinicInfoOnInvoice = OscarProperties.getInstance().getProperty("useDemoClinicInfoOnInvoice", "");
                                 if (bCh1 != null && !useDemoClinicInfoOnInvoice.isEmpty() && useDemoClinicInfoOnInvoice.equals("true")) {
                                     BillingONExt bExtUseBillTo = bExtDao.getUseBillTo(bCh1);
                                     String selectUseBillTo = "";

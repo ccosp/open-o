@@ -32,7 +32,7 @@
     }
 %>
 
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.util.DateRange" %>
 
 
@@ -42,6 +42,7 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="openo.oscarBilling.ca.bc.MSP.ExtractBean" %>
 
 
 <%
@@ -84,7 +85,7 @@
                 billinggroup_no = "";
             }
 
-            oscar.oscarBilling.ca.bc.MSP.ExtractBean extract = new oscar.oscarBilling.ca.bc.MSP.ExtractBean();
+            ExtractBean extract = new ExtractBean();
             extract.setOscarHome(oscar_home);
             extract.seteFlag("0");
             extract.setDateRange(dateRange);

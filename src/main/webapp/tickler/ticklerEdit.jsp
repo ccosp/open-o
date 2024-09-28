@@ -45,7 +45,7 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.managers.TicklerManager" %>
 <%@page import="org.oscarehr.managers.DemographicManager" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 
 
 <%

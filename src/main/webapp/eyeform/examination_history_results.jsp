@@ -29,7 +29,7 @@
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.common.model.Measurement" %>
 <%@page import="java.util.List" %>
-<%@page import="oscar.util.StringUtils" %>
+<%@page import="openo.util.StringUtils" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%
     String sdate = StringUtils.transformNullInEmptyString((String) request.getAttribute("sdate"));

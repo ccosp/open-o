@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import openo.MyDateFormat;
 import org.oscarehr.PMmodule.model.FieldDefinition;
 import org.oscarehr.util.MiscUtils;
 
@@ -42,7 +43,7 @@ public class Utility {
     }
 
     public static boolean IsDate(String pStr) {
-        java.sql.Date date = oscar.MyDateFormat.getSysDate(pStr);
+        java.sql.Date date = MyDateFormat.getSysDate(pStr);
         return date != null;
     }
 

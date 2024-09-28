@@ -69,7 +69,7 @@
 <%@page import="java.security.NoSuchAlgorithmException" %>
 <%@page import="org.apache.http.client.methods.HttpGet" %>
 <%@page import="javax.servlet.http.Cookie" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.apache.http.client.HttpClient" %>
 <%@page import="org.apache.http.HttpResponse" %>
 <%@page import="org.codehaus.jettison.json.*" %>

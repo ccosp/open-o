@@ -24,7 +24,7 @@
 --%>
 
 
-<%@page import="oscar.eform.EFormUtil" %>
+<%@page import="openo.eform.EFormUtil" %>
 <%@ page import="java.util.*" %>
 <%@ page import="org.oscarehr.PMmodule.model.ProgramQueue" %>
 <%@ page import="org.oscarehr.PMmodule.web.admin.ProgramManagerAction.RemoteQueueEntry" %>

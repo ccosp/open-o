@@ -46,7 +46,8 @@
 %>
 
 <%@ page
-        import="java.util.*, java.sql.*, oscar.util.*,oscar.oscarProvider.data.ProviderData,oscar.oscarBilling.ca.bc.data.*,oscar.entities.*" %>
+        import="java.util.*, java.sql.*, oscar.util.*,openo.oscarProvider.data.ProviderData,oscar.oscarBilling.ca.bc.data.*,oscar.entities.*" %>
+<%@ page import="openo.oscarBilling.ca.bc.data.BillActivityDAO" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %>

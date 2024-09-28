@@ -35,6 +35,9 @@
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="java.util.ArrayList,oscar.util.*,java.util.*,org.oscarehr.common.model.Drug,org.oscarehr.common.dao.*" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPatientData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -51,13 +54,13 @@
 %>
 
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 
     String userfirstname = (String) session.getAttribute("userfirstname");
     String userlastname = (String) session.getAttribute("userlastname");
     String demographicNo = (String) request.getParameter("demographicNo");
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    oscar.oscarRx.data.RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, demographicNo);
+    RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, demographicNo);
     request.setAttribute("patient", patient);
 %>
 

@@ -27,16 +27,16 @@
 <%@page import="org.oscarehr.common.model.ClinicNbr" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.ClinicNbrDao" %>
-<%@page import="oscar.OscarProperties, org.oscarehr.util.LoggedInInfo" %>
+<%@page import="openo.OscarProperties, org.oscarehr.util.LoggedInInfo" %>
 <%@ page
-        import="java.sql.*, java.util.*, oscar.*, oscar.SxmlMisc, oscar.oscarProvider.data.ProviderBillCenter"
+        import="java.sql.*, java.util.*, oscar.*, openo.SxmlMisc, openo.oscarProvider.data.ProviderBillCenter"
         errorPage="/errorpage.jsp" %>
 
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.js"></script>
-        <title>Clinic NBR Management Start Time : <%=oscar.OscarProperties.getInstance().getStartTime()%>
+        <title>Clinic NBR Management Start Time : <%=OscarProperties.getInstance().getStartTime()%>
         </title>
         <script type="text/javascript">
             function toggleButtons(visible) {

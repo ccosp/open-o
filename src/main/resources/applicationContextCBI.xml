@@ -19,7 +19,7 @@
 	</bean>
 	
 	<!-- ========================= SCHEDULED JOBS ========================= -->
-	 <bean id="cbiDataSubmissionJob" class="oscar.util.CBIFormDataSubmissionJob" />
+	 <bean id="cbiDataSubmissionJob" class="openo.util.CBIFormDataSubmissionJob" />
 
     <!-- Define the scheduled executor factory bean -->
     <bean id="schedulerCBI" class="org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean">

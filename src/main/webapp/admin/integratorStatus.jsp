@@ -38,7 +38,7 @@
 <%@page import="org.oscarehr.caisi_integrator.ws.CachedFacility" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="java.util.List" %>
 <%@page contentType="text/html" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>

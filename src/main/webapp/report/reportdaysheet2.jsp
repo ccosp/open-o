@@ -43,7 +43,7 @@
         errorPage="../appointment/errorpage.jsp" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<jsp:useBean id="daySheetBean" class="oscar.AppointmentMainBean" scope="page"/>
+<jsp:useBean id="daySheetBean" class="openo.AppointmentMainBean" scope="page"/>
 <jsp:useBean id="myGroupBean" class="java.util.Properties" scope="page"/>
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
 <%@ include file="../admin/dbconnection.jsp" %>
@@ -54,6 +54,7 @@
 <%@ page import="org.oscarehr.common.model.MyGroup" %>
 <%@ page import="org.oscarehr.common.dao.MyGroupDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%
     AppointmentArchiveDao appointmentArchiveDao = (AppointmentArchiveDao) SpringUtils.getBean(AppointmentArchiveDao.class);
     OscarAppointmentDao appointmentDao = (OscarAppointmentDao) SpringUtils.getBean(OscarAppointmentDao.class);
@@ -165,7 +166,7 @@
                     org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
 
-                for (Appointment a : appointmentDao.findByDayAndStatus(oscar.util.ConversionUtils.fromDateString(sdate), "t")) {
+                for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {
                     if (a.getProviderNo().equals(provider_no)) {
                         a.setStatus("T");
                         a.setLastUpdateUser((String) session.getAttribute("user"));
@@ -185,7 +186,7 @@
                     org.oscarehr.util.MiscUtils.getLogger().error("Cannot archive appt", e);
                 }
 
-                for (Appointment a : appointmentDao.findByDayAndStatus(oscar.util.ConversionUtils.fromDateString(sdate), "t")) {
+                for (Appointment a : appointmentDao.findByDayAndStatus(ConversionUtils.fromDateString(sdate), "t")) {
                     a.setStatus("T");
                     a.setLastUpdateUser((String) session.getAttribute("user"));
                     a.setUpdateDateTime(new java.util.Date());

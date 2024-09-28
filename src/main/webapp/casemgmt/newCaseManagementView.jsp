@@ -24,19 +24,19 @@
 --%>
 
 
-<%@page import="oscar.Misc" %>
-<%@page import="oscar.util.UtilMisc" %>
+<%@page import="openo.Misc" %>
+<%@page import="openo.util.UtilMisc" %>
 <%@include file="/casemgmt/taglibs.jsp" %>
 <%@taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@page import="java.util.Enumeration" %>
-<%@page import="oscar.oscarEncounter.pageUtil.NavBarDisplayDAO" %>
+<%@page import="openo.oscarEncounter.pageUtil.NavBarDisplayDAO" %>
 <%@page import="java.util.Arrays,java.util.Properties,java.util.List,java.util.Set,java.util.ArrayList,java.util.Enumeration,java.util.HashSet,java.util.Iterator,java.text.SimpleDateFormat,java.util.Calendar,java.util.Date,java.text.ParseException" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.UserProperty,org.oscarehr.casemgmt.model.*,org.oscarehr.casemgmt.service.* " %>
 <%@page import="org.oscarehr.casemgmt.web.formbeans.*" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
-<%@page import="oscar.util.DateUtils" %>
+<%@page import="openo.util.DateUtils" %>
 <%@page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
@@ -49,12 +49,12 @@
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplay" %>
 <%@page import="org.oscarehr.casemgmt.web.CaseManagementViewAction" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.casemgmt.dao.CaseManagementNoteLinkDAO" %>
 <%@page import="org.oscarehr.common.dao.ProfessionalSpecialistDao" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
-<%@page import="oscar.util.UtilDateUtilities" %>
+<%@page import="openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.casemgmt.web.NoteDisplayNonNote" %>
 <%@page import="org.oscarehr.common.dao.EncounterTemplateDao" %>
 <%@page import="org.oscarehr.casemgmt.web.CheckBoxBean" %>

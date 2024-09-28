@@ -53,6 +53,7 @@
 <%@page import="org.oscarehr.common.model.InstitutionDepartment" %>
 <%@page import="org.oscarehr.common.model.InstitutionDepartmentPK" %>
 <%@page import="org.oscarehr.common.dao.InstitutitionDepartmentDao" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 <%
     InstitutionDao institutionDao = SpringUtils.getBean(InstitutionDao.class);
     DepartmentDao departmentDao = SpringUtils.getBean(DepartmentDao.class);
@@ -90,7 +91,7 @@
         <tr style="vertical-align: top">
             <td class="MainTableLeftColumn">
                 <%
-                    oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar titlebar = new oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar();
+                    EctConTitlebar titlebar = new EctConTitlebar();
                     out.print(titlebar.estBar(request));
                 %>
             </td>

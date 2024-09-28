@@ -49,13 +49,21 @@
 <%@taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="java.util.*, oscar.oscarDemographic.data.*" %>
 <%@page import="oscar.oscarBilling.ca.bc.data.*,oscar.oscarBilling.ca.bc.pageUtil.*,oscar.*,oscar.oscarClinic.*" %>
-<%@ page import="oscar.util.StringUtils" %>
+<%@ page import="openo.util.StringUtils" %>
 <%@ page import="org.oscarehr.common.dao.PropertyDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.Property" %>
+<%@ page import="openo.entities.BillHistory" %>
+<%@ page import="openo.oscarClinic.ClinicData" %>
+<%@ page import="openo.oscarBilling.ca.bc.data.BillingFormData" %>
+<%@ page import="openo.oscarBilling.ca.bc.data.BillingHistoryDAO" %>
+<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingBillingManager" %>
+<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingViewBean" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     double totalPayments = 0;
@@ -64,7 +72,7 @@
     BillingHistoryDAO dao = new BillingHistoryDAO();
     BillingViewBean bean = (BillingViewBean) pageContext.findAttribute("billingViewBean");
     request.setAttribute("paymentTypes", bean.getPaymentTypes());
-    oscar.oscarDemographic.data.DemographicData demoData = new oscar.oscarDemographic.data.DemographicData();
+    DemographicData demoData = new DemographicData();
     org.oscarehr.common.model.Demographic demo = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), bean.getPatientNo());
     List<BillingBillingManager.BillingItem> billItem = bean.getBillItem();
     BillingFormData billform = new BillingFormData();
@@ -497,7 +505,7 @@
                                                     String num = String.valueOf(bi.getLineNo());
                                                     List trans = dao.getBillHistory(num);
                                                     for (Iterator iter = trans.iterator(); iter.hasNext(); ) {
-                                                        oscar.entities.BillHistory item = (oscar.entities.BillHistory) iter.next();
+                                                        BillHistory item = (BillHistory) iter.next();
                                                         int paymentType = Integer.parseInt(item.getPaymentTypeId());
                                                         if (paymentType != 10) {
                                                             double amtReceived = item.getAmountReceived();

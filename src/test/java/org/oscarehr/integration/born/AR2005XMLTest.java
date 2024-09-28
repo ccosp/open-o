@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import openo.MyDateFormat;
 import org.apache.xmlbeans.XmlOptions;
 import org.junit.Test;
 import org.oscarehr.util.MiscUtils;
@@ -325,9 +326,9 @@ public class AR2005XMLTest {
         pregnancyHistory.setMenCycle("30");
         pregnancyHistory.setMenCycleRegular(getYesNoNullType(null));
         pregnancyHistory.setContraceptiveType("nothing");
-        pregnancyHistory.setContraceptiveLastUsed(createDate(oscar.MyDateFormat.getSysDate("2012-05-15")));
-        pregnancyHistory.setMenstrualEDB(createDate(oscar.MyDateFormat.getSysDate("2012-05-03")));
-        pregnancyHistory.setFinalEDB(createDate(oscar.MyDateFormat.getSysDate("2012-05-15")));
+        pregnancyHistory.setContraceptiveLastUsed(createDate(MyDateFormat.getSysDate("2012-05-15")));
+        pregnancyHistory.setMenstrualEDB(createDate(MyDateFormat.getSysDate("2012-05-03")));
+        pregnancyHistory.setFinalEDB(createDate(MyDateFormat.getSysDate("2012-05-15")));
         DatingMethods datingMethods = pregnancyHistory.addNewDatingMethods();
         datingMethods.setDates(false);
         datingMethods.setT1US(false);
@@ -384,7 +385,7 @@ public class AR2005XMLTest {
         patientInformation.setWorkPhone("666-666-6666");
         patientInformation.setLanguage(PatientInformation.Language.ENG);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(oscar.MyDateFormat.getSysDate("1978-04-26"));
+        cal.setTime(MyDateFormat.getSysDate("1978-04-26"));
         patientInformation.setDob(cal);
         patientInformation.setAge(34);
         PatientInformation.Occupation occ = patientInformation.addNewOccupation();
@@ -424,7 +425,7 @@ public class AR2005XMLTest {
         populateRecommendedImmunoprophylaxis(recommendedImmunoprophylaxis);
 
         SubsequentVisitItemType visit = ar2.addNewSubsequentVisitList();
-        visit.setDate(createDate(oscar.MyDateFormat.getSysDate("2011-12-21")));
+        visit.setDate(createDate(MyDateFormat.getSysDate("2011-12-21")));
         visit.setGa("19w+1");
         visit.setWeight(52);
         visit.setBp("110/70");
@@ -436,7 +437,7 @@ public class AR2005XMLTest {
         visit.setComments("1st visit");
 
         UltrasoundType ultrasound = ar2.addNewUltrasound();
-        ultrasound.setDate(createDate(oscar.MyDateFormat.getSysDate("2012-01-10")));
+        ultrasound.setDate(createDate(MyDateFormat.getSysDate("2012-01-10")));
         ultrasound.setGa("22w+0");
         ultrasound.setResults("12 d difference, plac.post/clear,normal anatomy");
 

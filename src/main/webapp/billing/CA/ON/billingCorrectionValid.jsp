@@ -30,9 +30,15 @@
 <%@ page
         import="java.io.*, java.sql.*, java.util.*,java.net.*, oscar.*, java.math.*"
         errorPage="/errorpage.jsp" %>
+<%@ page import="openo.BillingBean" %>
+<%@ page import="openo.BillingDataBean" %>
+<%@ page import="openo.BillingItemBean" %>
+<%@ page import="openo.BillingPatientDataBean" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <jsp:useBean id="dbBillingDataBean" scope="page"
-             class="oscar.dbBillingData">
+             class="openo.dbBillingData">
     <jsp:setProperty name="dbBillingDataBean" property="*"/>
 </jsp:useBean>
 

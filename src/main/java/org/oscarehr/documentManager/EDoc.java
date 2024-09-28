@@ -38,11 +38,11 @@ import org.oscarehr.common.model.CtlDocumentPK;
 import org.oscarehr.common.model.Document;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.util.MiscUtils;
-import oscar.MyDateFormat;
-import oscar.OscarProperties;
-import oscar.oscarTags.TagObject;
-import oscar.util.ConversionUtils;
-import oscar.util.UtilDateUtilities;
+import openo.MyDateFormat;
+import openo.OscarProperties;
+import openo.oscarTags.TagObject;
+import openo.util.ConversionUtils;
+import openo.util.UtilDateUtilities;
 
 import java.io.*;
 import java.util.Date;

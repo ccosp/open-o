@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import com.quatro.dao.security.UserAccessDao;
 import com.quatro.model.security.UserAccessValue;

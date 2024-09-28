@@ -27,8 +27,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, oscar.util.UtilDateUtilities" %>
+<%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.oscarEncounter.data.EctPatientData" %>
+<%@ page import="openo.oscarEncounter.data.EctProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderColourUpdater" %>
+<%@ page import="openo.SxmlMisc" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -46,8 +51,8 @@
 
 
 <%
-    oscar.oscarEncounter.pageUtil.EctSessionBean bean = null;
-    if ((bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
+    EctSessionBean bean = null;
+    if ((bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
         response.sendRedirect("error.jsp");
         return;
     }
@@ -94,7 +99,7 @@
     String familyDoctorXml = d.getFamilyDoctor();
     String rd = "";
     if (familyDoctorXml != null) {
-        rd = oscar.SxmlMisc.getXmlContent(familyDoctorXml, "rd");
+        rd = SxmlMisc.getXmlContent(familyDoctorXml, "rd");
     }
 
     //appointment reason

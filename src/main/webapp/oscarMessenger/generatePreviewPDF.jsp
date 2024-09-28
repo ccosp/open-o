@@ -28,10 +28,10 @@
         import="oscar.oscarMessenger.docxfer.send.*,
                 oscar.oscarMessenger.docxfer.util.*,
                 oscar.oscarEncounter.data.*,
-                oscar.oscarEncounter.pageUtil.EctSessionBean,
-                oscar.oscarRx.pageUtil.RxSessionBean,
-                oscar.oscarRx.data.RxPatientData,
-                oscar.oscarMessenger.pageUtil.MsgSessionBean,
+                openo.oscarEncounter.pageUtil.EctSessionBean,
+                openo.oscarRx.pageUtil.RxSessionBean,
+                openo.oscarRx.data.RxPatientData,
+                openo.oscarMessenger.pageUtil.MsgSessionBean,
                 oscar.oscarDemographic.data.*" %>
 
 <%@ page import=" java.util.*, org.w3c.dom.*, java.sql.*, oscar.*, java.text.*, java.lang.*,java.net.*"
@@ -63,6 +63,7 @@
 %>
 
 <%@ page import="oscar.util.*" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
 
 
 <%
@@ -87,7 +88,7 @@
     EctSessionBean bean = new EctSessionBean();
     bean.demographicNo = demographic_no;
 
-    oscar.oscarMessenger.pageUtil.MsgSessionBean MsgSessionBean = (oscar.oscarMessenger.pageUtil.MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
+    MsgSessionBean MsgSessionBean = (openo.oscarMessenger.pageUtil.MsgSessionBean) request.getSession().getAttribute("msgSessionBean");
 
     request.getSession().setAttribute("EctSessionBean", bean);
 
@@ -348,7 +349,7 @@
                                             RxSessionBean Rxbean;
 
                                             if (request.getSession().getAttribute("RxSessionBean") != null) {
-                                                Rxbean = (oscar.oscarRx.pageUtil.RxSessionBean) request.getSession().getAttribute("RxSessionBean");
+                                                Rxbean = (RxSessionBean) request.getSession().getAttribute("RxSessionBean");
                                             } else {
                                                 Rxbean = new RxSessionBean();
                                             }

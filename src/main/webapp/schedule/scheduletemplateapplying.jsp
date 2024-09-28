@@ -28,7 +28,7 @@
         import="java.util.*, java.net.*, java.sql.*, oscar.*, oscar.util.*, java.text.*, java.lang.*, org.apache.struts.util.*"
         errorPage="../appointment/errorpage.jsp" %>
 
-<jsp:useBean id="scheduleRscheduleBean" class="oscar.RscheduleBean" scope="session"/>
+<jsp:useBean id="scheduleRscheduleBean" class="openo.RscheduleBean" scope="session"/>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/rewrite-tag.tld" prefix="rewrite" %>
@@ -49,6 +49,11 @@
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.oscarehr.common.model.Site" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.OscarProperties" %>
 <html:html lang="en">
 
     <%

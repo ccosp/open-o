@@ -24,7 +24,8 @@
 
 --%>
 
-<%@page import="oscar.oscarRx.data.RxDrugData,java.util.*,oscar.oscarRx.util.*" %>
+<%@page import="openo.oscarRx.data.RxDrugData,java.util.*,oscar.oscarRx.util.*" %>
+<%@ page import="openo.oscarRx.util.RxDrugRef" %>
 <ul>
     <%
         String searchString = request.getParameter("searchString");

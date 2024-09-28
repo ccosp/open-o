@@ -118,10 +118,10 @@
 	<bean id="clinicDAO" class="org.oscarehr.common.dao.ClinicDAOImpl" autowire="byName" />
 	<bean id="dataExportDAO" class="org.oscarehr.common.dao.DataExportDaoImpl" autowire="byName" />
 	<bean id="siteDao" class="org.oscarehr.common.dao.SiteDaoImpl" autowire="byName" />
-	<bean id="BillingmasterDAO" class="oscar.oscarBilling.ca.bc.data.BillingmasterDAO" autowire="byName" />
-	<bean id="BillingPreferencesDAO" class="oscar.oscarBilling.ca.bc.data.BillingPreferencesDAO" autowire="byName" />
-	<bean id="PrivateBillTransactionDAO" class="oscar.oscarBilling.ca.bc.data.PrivateBillTransactionsDAO" autowire="byName" />
-	<bean id="SupServiceCodeAssocDAO" class="oscar.oscarBilling.ca.bc.data.SupServiceCodeAssocDAO" autowire="byName" />
+	<bean id="BillingmasterDAO" class="openo.oscarBilling.ca.bc.data.BillingmasterDAO" autowire="byName" />
+	<bean id="BillingPreferencesDAO" class="openo.oscarBilling.ca.bc.data.BillingPreferencesDAO" autowire="byName" />
+	<bean id="PrivateBillTransactionDAO" class="openo.oscarBilling.ca.bc.data.PrivateBillTransactionsDAO" autowire="byName" />
+	<bean id="SupServiceCodeAssocDAO" class="openo.oscarBilling.ca.bc.data.SupServiceCodeAssocDAO" autowire="byName" />
 	<bean id="BillingreferralDAO" class="org.oscarehr.common.dao.BillingreferralDaoImpl" autowire="byName" />
 	<bean id="DxresearchDAO" class="org.oscarehr.common.dao.DxresearchDAOImpl" autowire="byName" />
 	<bean id="icd9Dao" class="org.oscarehr.common.dao.Icd9DaoImpl" autowire="byName" />
@@ -155,7 +155,7 @@
 	
 
 	<!-- Dao classes that implement OscarSuperDao -->
-	<bean id="providerSuperDao" class="oscar.dao.ProviderDao" autowire="byName" />
+	<bean id="providerSuperDao" class="openo.dao.ProviderDao" autowire="byName" />
 	
 
 	<bean id="eChartDao" class="org.oscarehr.common.dao.EChartDaoImpl" autowire="byName" />
@@ -169,13 +169,13 @@
 	<bean id="preventionMgr" class="org.oscarehr.provider.model.PreventionManager"></bean>
 
 	<!-- OcanDataProcessor is used to create the OCAN xml submission file based on intake data -->
-	<bean id="ocanDataProcessor" class="oscar.ocan.service.OcanDataProcessor">
+	<bean id="ocanDataProcessor" class="openo.ocan.service.OcanDataProcessor">
 		<property name="serviceOrganizationNumber" value="1001" />
 		<property name="submissionFileLocation" value="C:/TEMP/ocan_test" />
 	</bean>
 
 	<!-- OscarSuperManager manager provides business logic facade for jsp layer -->
-	<bean id="oscarSuperManager" class="oscar.service.OscarSuperManagerImpl" autowire="byName" init-method="init"/>
+	<bean id="oscarSuperManager" class="openo.service.OscarSuperManagerImpl" autowire="byName" init-method="init"/>
 
 	<bean id="lookupManager" class="com.quatro.service.LookupManagerImpl" autowire="byName">
 		<property name="lookupDao" ref="lookupDao" />
@@ -185,7 +185,7 @@
 	</bean>
 
 	<!-- configure the available measurement flow sheets -->
-	<bean id="measurementTemplateFlowSheet" class="oscar.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig">
+	<bean id="measurementTemplateFlowSheet" class="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig">
 		<property name="flowSheets">
 			<list>
 				<!--value>classpath:oscar/oscarEncounter/oscarMeasurements/flowsheets/diabetesFlowsheet.xml</value-->
@@ -366,7 +366,7 @@
         <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" p:corePoolSize="5"
           p:maxPoolSize="10" p:queueCapacity="100" p:waitForTasksToCompleteOnShutdown="true"/>
 
-        <bean id="asyncMailSender" class="oscar.service.AsyncMailSender" autowire="byName">
+        <bean id="asyncMailSender" class="openo.service.AsyncMailSender" autowire="byName">
            <property name="taskExecutor" ref="taskExecutor" />
         </bean>
 

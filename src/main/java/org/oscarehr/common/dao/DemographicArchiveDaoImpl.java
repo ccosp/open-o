@@ -36,8 +36,8 @@ import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicArchive;
 import org.springframework.stereotype.Repository;
 
-import oscar.util.StringUtils;
-import oscar.util.UtilDateUtilities;
+import openo.util.StringUtils;
+import openo.util.UtilDateUtilities;
 
 @Repository
 public class DemographicArchiveDaoImpl extends AbstractDaoImpl<DemographicArchive> implements DemographicArchiveDao {

@@ -27,7 +27,7 @@
 
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="oscar.login.*, oscar.oscarDB.*, oscar.MyDateFormat" %>
+<%@ page import="oscar.login.*, oscar.oscarDB.*, openo.MyDateFormat" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
@@ -90,8 +90,11 @@
     }
 %>
 
-<%@page import="oscar.Misc" %>
+<%@page import="openo.Misc" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.oscarDB.DBPreparedHandler" %>
+<%@ page import="openo.oscarDB.DBPreparedHandlerParam" %>
+<%@ page import="openo.OscarProperties" %>
 <html:html lang="en">
     <script src="${pageContext.request.contextPath}/csrfguard"></script>
     <head>
@@ -212,7 +215,7 @@
 
             String sDate = request.getParameter("startDate");
             String eDate = request.getParameter("endDate");
-            String strDbType = oscar.OscarProperties.getInstance().getProperty("db_type").trim();
+            String strDbType = OscarProperties.getInstance().getProperty("db_type").trim();
             if ("".equals(sDate) || sDate == null) sDate = "1900-01-01";
             if ("".equals(eDate) || eDate == null) eDate = "2999-01-01";
 

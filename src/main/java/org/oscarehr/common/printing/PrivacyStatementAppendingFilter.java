@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 /**
  * Filter class for handling confidentiality note printing. This class works by appending a confidentiality note

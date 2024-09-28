@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import openo.OscarProperties;
+import openo.oscarRx.data.RxPrescriptionData;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.model.CaseManagementNote;
@@ -61,10 +63,9 @@ import org.oscarehr.eyeform.model.EyeformTestBook;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.DateUtils;
-import oscar.OscarProperties;
-import oscar.eform.util.GraphicalCanvasToImage;
-import oscar.eform.APExecute;
+import openo.util.DateUtils;
+import openo.eform.util.GraphicalCanvasToImage;
+import openo.eform.APExecute;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -419,8 +420,8 @@ public class PdfRecordPrinter {
         else
             newPage = true;
         */
-        oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-        oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+        RxPrescriptionData prescriptData = new RxPrescriptionData();
+        RxPrescriptionData.Prescription[] arr = {};
         arr = prescriptData.getUniquePrescriptionsByPatient(Integer.parseInt(demoNo));
 
         if (arr.length == 0) {
@@ -440,7 +441,7 @@ public class PdfRecordPrinter {
 
         Font curFont;
         for (int idx = 0; idx < arr.length; ++idx) {
-            oscar.oscarRx.data.RxPrescriptionData.Prescription drug = arr[idx];
+            RxPrescriptionData.Prescription drug = arr[idx];
             p = new Paragraph();
             p.setAlignment(Paragraph.ALIGN_LEFT);
             if (drug.isCurrent() && !drug.isArchived()) {
@@ -1209,7 +1210,7 @@ public class PdfRecordPrinter {
         for (org.oscarehr.common.model.Document doc : photos) {
             Image img = null;
             try {
-                String location = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR").trim() + doc.getDocfilename();
+                String location = OscarProperties.getInstance().getProperty("DOCUMENT_DIR").trim() + doc.getDocfilename();
                 logger.info("adding image " + location);
                 img = Image.getInstance(location);
             } catch (IOException e) {

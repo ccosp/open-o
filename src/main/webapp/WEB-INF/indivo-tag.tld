@@ -42,7 +42,7 @@
     
     <tag>
         <name>indivoRegistered</name>
-        <tag-class>oscar.util.indivoCheck</tag-class>
+        <tag-class>openo.util.indivoCheck</tag-class>
         <body-content>JSP</body-content>
         
         <attribute>

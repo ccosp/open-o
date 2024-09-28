@@ -42,6 +42,8 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
         import="org.apache.commons.lang.StringUtils,org.apache.commons.lang.StringEscapeUtils,java.util.*,oscar.util.*,oscar.oscarReport.data.*,oscar.oscarDB.*,java.sql.*,oscar.oscarDemographic.data.*,oscar.eform.*,org.oscarehr.common.model.Provider,org.oscarehr.managers.ProviderManager2,org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.eform.OneTimeConsultUtil" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -51,7 +53,7 @@
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 %>
 
-<jsp:useBean id="reportMainBean" class="oscar.AppointmentMainBean"
+<jsp:useBean id="reportMainBean" class="openo.AppointmentMainBean"
              scope="session"/>
 <% if (!reportMainBean.getBDoConfigure()) { %>
 <%@ include file="/report/reportMainBeanConn.jspf" %>

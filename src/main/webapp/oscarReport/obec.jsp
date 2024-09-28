@@ -41,7 +41,8 @@
 %>
 
 <%@ page
-        import="java.math.*, java.util.*, java.sql.*, oscar.*, oscar.util.DateUtils, java.net.*" %>
+        import="java.math.*, java.util.*, java.sql.*, oscar.*, openo.util.DateUtils, java.net.*" %>
+<%@ page import="openo.OscarProperties" %>
 <%
     if (session.getValue("user") == null)
         response.sendRedirect("../logout.jsp");
@@ -61,7 +62,7 @@
     DateUtils dateUtils = new DateUtils();
     String tomorrowDate = dateUtils.NextDay(curDay, curMonth, curYear);
     String clinic = "";
-    Properties proppies = oscar.OscarProperties.getInstance();
+    Properties proppies = OscarProperties.getInstance();
     String homepath = proppies.getProperty("DOCUMENT_DIR");
     session.setAttribute("obecdownload", homepath);
 %>

@@ -28,6 +28,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarProvider.data.*" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
 
 <%
     if (session.getValue("user") == null)

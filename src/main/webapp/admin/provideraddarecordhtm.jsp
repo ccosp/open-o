@@ -36,7 +36,7 @@
 <%@ page import="org.oscarehr.common.dao.ClinicNbrDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="java.util.*,oscar.oscarProvider.data.*" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="org.oscarehr.common.dao.SiteDao" %>
 <%@ page import="org.oscarehr.common.model.Site" %>
@@ -45,6 +45,7 @@
 
 
 <%@page import="org.oscarehr.common.Gender" %>
+<%@ page import="openo.oscarProvider.data.ProviderBillCenter" %>
 <%
 
     String curProvider_no, userfirstname, userlastname;

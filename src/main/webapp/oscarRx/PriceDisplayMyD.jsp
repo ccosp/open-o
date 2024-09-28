@@ -56,6 +56,7 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 <div
         style="background-color:<%=sigColor(""+ht.get("significance"))%>;margin-right:100px;margin-left:20px;margin-top:10px;padding-left:10px;padding-top:10px;padding-bottom:5px;border-bottom: 2px solid gray;border-right: 2px solid #999;border-top: 1px solid #CCC;border-left: 1px solid #CCC;">
     <%=ht.get("name")%>&nbsp;&nbsp;&nbsp;&nbsp;: $ <%=ht.get("cost")%><br/>

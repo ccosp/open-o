@@ -49,13 +49,13 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ page import="java.sql.*, java.util.*, oscar.*" errorPage="/errorpage.jsp" %>
-<%@ page import="oscar.log.LogAction,oscar.log.LogConst" %>
+<%@ page import="openo.log.LogAction,openo.log.LogConst" %>
 <%@ page import="oscar.log.*, oscar.oscarDB.*" %>
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 
-<jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session"/>
+<jsp:useBean id="apptMainBean" class="openo.AppointmentMainBean" scope="session"/>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.PreventionsLotNrs" %>

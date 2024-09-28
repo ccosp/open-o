@@ -29,8 +29,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarLab.ca.on.HRMResultsData;
-import oscar.util.StringUtils;
+import openo.oscarLab.ca.on.HRMResultsData;
+import openo.util.StringUtils;
 
 public class HRMUtil {
 

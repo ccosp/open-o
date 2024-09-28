@@ -32,8 +32,8 @@ import java.util.List;
 
 import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.springframework.stereotype.Repository;
-import oscar.oscarLab.ca.on.LabResultData;
-import oscar.util.ConversionUtils;
+import openo.oscarLab.ca.on.LabResultData;
+import openo.util.ConversionUtils;
 
 @Repository("documentResultsDao")
 public class DocumentResultsMergedDemographicDaoImpl extends DocumentResultsDaoImpl implements DocumentResultsMergedDemographicDao {

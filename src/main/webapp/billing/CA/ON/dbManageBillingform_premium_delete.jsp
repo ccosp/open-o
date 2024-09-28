@@ -19,7 +19,7 @@
 --%>
 
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,oscar.MyDateFormat" %>
+<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,openo.MyDateFormat" %>
 
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>

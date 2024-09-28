@@ -24,7 +24,7 @@
 
 --%>
 <%@ page
-        import="oscar.oscarProvider.data.*, oscar.oscarRx.data.*,oscar.OscarProperties, oscar.oscarClinic.ClinicData, java.util.*" %>
+        import="oscar.oscarProvider.data.*, oscar.oscarRx.data.*,openo.OscarProperties, openo.oscarClinic.ClinicData, java.util.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -47,8 +47,14 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.PMmodule.service.ProviderManager" %>
 <%@ page import="org.oscarehr.common.model.*" %>
-<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="openo.form.study.HSFO.HSFODAO" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxProviderData" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
 
 <%
     OscarAppointmentDao appointmentDao = SpringUtils.getBean(OscarAppointmentDao.class);
@@ -81,7 +87,7 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
@@ -92,7 +98,7 @@
             ProviderManager providerManager = SpringUtils.getBean(ProviderManager.class);
         %>
         <%
-            oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+            RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
             Provider provider = providerManager.getProvider(bean.getProviderNo());
             String providerFax = provider.getWorkPhone();
             if (providerFax == null) {
@@ -115,7 +121,7 @@
 
             String createAnewRx;
             if (reprint.equalsIgnoreCase("true")) {
-                bean = (oscar.oscarRx.pageUtil.RxSessionBean) session.getAttribute("tmpBeanRX");
+                bean = (RxSessionBean) session.getAttribute("tmpBeanRX");
                 createAnewRx = "window.location.href = '" + request.getContextPath() + "/oscarRx/SearchDrug.jsp'";
             } else {
                 createAnewRx = "javascript:clearPending('')";
@@ -135,7 +141,7 @@
                     if (result != null) location = result.getLocation();
                 }
 
-                oscar.oscarRx.data.RxProviderData.Provider rxprovider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
+                RxProviderData.Provider rxprovider = new RxProviderData().getProvider(bean.getProviderNo());
                 ProSignatureData sig = new ProSignatureData();
                 boolean hasSig = sig.hasSignature(bean.getProviderNo());
                 String doctorName = "";
@@ -167,7 +173,7 @@
 
 
             } else if (props.getProperty("clinicSatelliteName") != null) {
-                oscar.oscarRx.data.RxProviderData.Provider rxprovider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
+                RxProviderData.Provider rxprovider = new RxProviderData().getProvider(bean.getProviderNo());
                 ProSignatureData sig = new ProSignatureData();
                 boolean hasSig = sig.hasSignature(bean.getProviderNo());
                 String doctorName = "";
@@ -383,7 +389,7 @@
                             if(prefPharmacy!=null && prefPharmacy.trim()!=""){ %>
                     text += "<%=prefPharmacy%>\n"
                     <% } %>
-                    text += "****<%=Encode.forJavaScript(oscar.oscarProvider.data.ProviderData.getProviderName(bean.getProviderNo()))%>********************************************************************************\n";
+                    text += "****<%=Encode.forJavaScript(ProviderData.getProviderName(bean.getProviderNo()))%>********************************************************************************\n";
                     <% } %>
 
                     //we support pasting into orig encounter and new casemanagement
@@ -619,7 +625,7 @@
     <!-- added by vic, hsfo -->
     <%
         int hsfo_patient_id = bean.getDemographicNo();
-        oscar.form.study.HSFO.HSFODAO hsfoDAO = new oscar.form.study.HSFO.HSFODAO();
+        HSFODAO hsfoDAO = new HSFODAO();
         int dx = hsfoDAO.retrievePatientDx(String.valueOf(hsfo_patient_id));
         if (dx >= 0 && dx < 7) {
             // dx>=0 means patient is enrolled in HSFO program
@@ -951,7 +957,7 @@
                                         </tr>
                                         <%
                                             for (int i = 0; i < bean.getStashSize(); i++) {
-                                                oscar.oscarRx.data.RxPrescriptionData.Prescription rx
+                                                RxPrescriptionData.Prescription rx
                                                         = bean.getStashItem(i);
 
                                                 if (!rx.isCustom()) {

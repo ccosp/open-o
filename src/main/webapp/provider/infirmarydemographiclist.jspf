@@ -8,6 +8,8 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 
 <%@ page import="oscar.*, org.oscarehr.util.*,oscar.util.*,java.net.URLEncoder"%>
+<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 
 <logic:equal name="infirmaryView_isOscar" value="false">
 
@@ -75,7 +77,7 @@ String demographic_name=de.getLabel();
 %><c:if test="${empty sessionScope.archiveView or sessionScope.archiveView != true}"><%
 String tickler_no = "";
 String tickler_note="";
-for(Tickler t: ticklerManager.search_tickler(loggedInInfo,demographic_no,MyDateFormat.getSysDate(strDate))) {
+for(Tickler t: ticklerManager.search_tickler(loggedInInfo,demographic_no, MyDateFormat.getSysDate(strDate))) {
 	tickler_no = t.getId().toString();
     tickler_note = t.getMessage()==null?tickler_note:tickler_note + "\n" + t.getMessage();
 }

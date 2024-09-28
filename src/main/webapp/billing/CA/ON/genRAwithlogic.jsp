@@ -24,7 +24,7 @@
 <%@ page import="org.oscarehr.common.dao.RaHeaderDao" %>
 <%@ page import="org.oscarehr.common.model.Billing" %>
 <%@ page import="org.oscarehr.common.dao.BillingDao" %>
-<%@ page import="oscar.util.ConversionUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%
     RaHeaderDao raHeaderDao = SpringUtils.getBean(RaHeaderDao.class);
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);

@@ -23,7 +23,7 @@
     session.setAttribute("content", "");
 %>
 
-<%@ page import="java.sql.*, java.util.*,java.net.*, oscar.util.*, oscar.oscarBilling.ca.on.data.*, oscar.MyDateFormat"
+<%@ page import="java.sql.*, java.util.*,java.net.*, oscar.util.*, oscar.oscarBilling.ca.on.data.*, openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -34,6 +34,7 @@
 <%@page import="org.oscarehr.common.dao.AppointmentArchiveDao" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>
+<%@ page import="openo.appt.ApptStatusData" %>
 <%
     BillingDao billingDao = SpringUtils.getBean(BillingDao.class);
     BillingDetailDao billingDetailDao = SpringUtils.getBean(BillingDetailDao.class);
@@ -128,7 +129,7 @@
                     apptCurStatus = appts.getStatus();
                 }
 
-                oscar.appt.ApptStatusData as = new oscar.appt.ApptStatusData();
+                ApptStatusData as = new ApptStatusData();
                 String billStatus = as.billStatus(apptCurStatus);
                 Appointment appt = appointmentDao.find(Integer.parseInt(request.getParameter("appointment_no")));
                 appointmentArchiveDao.archiveAppointment(appt);

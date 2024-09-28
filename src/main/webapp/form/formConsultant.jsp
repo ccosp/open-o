@@ -38,6 +38,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmConsultantRecord" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
 <%
     String formClass = "Consultant";
     String formLink = "formConsultant.jsp";

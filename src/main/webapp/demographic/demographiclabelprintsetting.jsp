@@ -48,6 +48,10 @@
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@ page import="org.oscarehr.common.model.ProviderData" %>
 <%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="openo.Misc" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -57,7 +61,7 @@
     if (session.getValue("user") == null) response.sendRedirect("../logout.jsp");
     String curProvider_no = (String) session.getAttribute("user");
 
-    java.util.Properties oscarVariables = oscar.OscarProperties.getInstance();
+    java.util.Properties oscarVariables = OscarProperties.getInstance();
 
     DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
     ProviderDataDao providerDao = SpringUtils.getBean(ProviderDataDao.class);

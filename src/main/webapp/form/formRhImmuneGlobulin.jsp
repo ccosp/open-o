@@ -127,6 +127,13 @@
 -->
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.oscarWorkflow.WFState" %>
+<%@ page import="openo.oscarWorkflow.WorkFlow" %>
+<%@ page import="openo.oscarWorkflow.WorkFlowFactory" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

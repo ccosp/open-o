@@ -47,6 +47,8 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.BillingServiceDao" %>
 <%@page import="org.oscarehr.common.model.BillingService" %>
+<%@ page import="openo.oscarBilling.ca.bc.pageUtil.BillingAssociationPersistence" %>
+<%@ page import="openo.oscarBilling.ca.bc.pageUtil.ServiceCodeAssociation" %>
 <%
     BillingServiceDao billingServiceDao = SpringUtils.getBean(BillingServiceDao.class);
 %>

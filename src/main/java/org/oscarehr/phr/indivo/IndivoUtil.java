@@ -46,7 +46,7 @@ import org.indivo.xml.phr.contact.ContactInformationType;
 import org.indivo.xml.phr.contact.NameType;
 import org.indivo.xml.phr.demographics.DemographicsType;
 
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 /**
  * @author apavel

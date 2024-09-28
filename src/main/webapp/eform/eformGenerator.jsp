@@ -44,8 +44,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="oscar.eform.*" %>
 <%@ page import="oscar.eform.data.*" %>
-<%@ page import="oscar.eform.actions.DisplayImageAction" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.eform.actions.DisplayImageAction" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ page import="org.apache.logging.log4j.Logger" %>
 <!--
 eForm Generator version 7.4 (C) Peter Hutten-Czapski 2014-2023
@@ -76,6 +76,7 @@ and other liscences (MIT, LGPL etc) as indicated
 -->
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.eform.EFormLoader" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
     boolean eformGeneratorIndivicaPrintEnabled = OscarProperties.getInstance().isPropertyActive("eform_generator_indivica_print_enabled");

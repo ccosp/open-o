@@ -37,6 +37,7 @@
 %>
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 <div style="background-color:white;margin:100px;padding:40px;border:2px solid grey">
     <a href="javascript: function myFunction() {return false; }" onclick="$('treatmentsMyD').toggle();">NOTHING
         FOUND</a>

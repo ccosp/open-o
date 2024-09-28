@@ -33,7 +33,8 @@
 <%@ page import="org.oscarehr.util.SessionConstants" %>
 <%@ page import="java.util.*,java.net.*, oscar.util.*"
          errorPage="/errorpage.jsp" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.util.UtilDict" %>
 
 <caisi:isModuleLoad moduleName="caisi">
     <%

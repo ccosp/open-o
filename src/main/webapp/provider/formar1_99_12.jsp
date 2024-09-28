@@ -38,13 +38,16 @@
 <%@page import="org.oscarehr.common.model.Form" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.OscarProperties" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
     FormDao formDao = SpringUtils.getBean(FormDao.class);
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>
 
-<jsp:useBean id="risks" class="oscar.OBRisks_99_12" scope="page"/>
+<jsp:useBean id="risks" class="openo.OBRisks_99_12" scope="page"/>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html>

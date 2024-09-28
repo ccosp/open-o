@@ -2,6 +2,9 @@
 package org.oscarehr.casemgmt.service;
 
 import com.lowagie.text.DocumentException;
+import openo.OscarProperties;
+import openo.oscarEncounter.data.EctProviderData;
+import openo.oscarEncounter.pageUtil.EctSessionBean;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.PMmodule.model.ProgramProvider;
@@ -20,16 +23,15 @@ import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.OscarProperties;
-import oscar.oscarLab.ca.all.pageUtil.LabPDFCreator;
-import oscar.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
-import oscar.oscarLab.ca.all.parsers.Factory;
-import oscar.oscarLab.ca.all.parsers.MessageHandler;
-import oscar.oscarLab.ca.all.parsers.OLISHL7Handler;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.LabResultData;
-import oscar.util.ConcatPDF;
-import oscar.util.ConversionUtils;
+import openo.oscarLab.ca.all.pageUtil.LabPDFCreator;
+import openo.oscarLab.ca.all.pageUtil.OLISLabPDFCreator;
+import openo.oscarLab.ca.all.parsers.Factory;
+import openo.oscarLab.ca.all.parsers.MessageHandler;
+import openo.oscarLab.ca.all.parsers.OLISHL7Handler;
+import openo.oscarLab.ca.on.CommonLabResultData;
+import openo.oscarLab.ca.on.LabResultData;
+import openo.util.ConcatPDF;
+import openo.util.ConversionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -120,7 +122,7 @@ public class CaseManagementPrint {
         }
 
         // we're not guaranteed any ordering of notes given to us, so sort by observation date
-        oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+        OscarProperties p = OscarProperties.getInstance();
         String noteSort = p.getProperty("CMESort", "");
         if (noteSort.trim().equalsIgnoreCase("UP")) {
             Collections.sort(notes, CaseManagementNote.noteObservationDateComparator);
@@ -490,12 +492,12 @@ public class CaseManagementPrint {
 
     protected String getMRP(HttpServletRequest request, String demographicNo) {
         String strBeanName = "casemgmt_oscar_bean" + demographicNo;
-        oscar.oscarEncounter.pageUtil.EctSessionBean bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute(strBeanName);
+        EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute(strBeanName);
         if (bean == null) return new String("");
         if (bean.familyDoctorNo == null) return new String("");
         if (bean.familyDoctorNo.isEmpty()) return new String("");
 
-        oscar.oscarEncounter.data.EctProviderData.Provider prov = new oscar.oscarEncounter.data.EctProviderData().getProvider(bean.familyDoctorNo);
+        EctProviderData.Provider prov = new EctProviderData().getProvider(bean.familyDoctorNo);
         String name = prov.getFirstName() + " " + prov.getSurname();
         return name;
     }

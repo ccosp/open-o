@@ -48,7 +48,7 @@ import org.oscarehr.common.model.CdsHospitalisationDays;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.OcanStaffForm;
 import org.oscarehr.util.SpringUtils;
-import oscar.util.CBIUtil;
+import openo.util.CBIUtil;
 
 public class CdsForm4 {
 

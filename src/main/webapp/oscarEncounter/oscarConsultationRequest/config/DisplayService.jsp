@@ -41,6 +41,7 @@
 
 <%@ page import="java.util.ResourceBundle" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -48,7 +49,7 @@
 <!DOCTYPE html>
 <html:html lang="en">
     <jsp:useBean id="displayServiceUtil" scope="request"
-                 class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
+                 class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
     <%
         displayServiceUtil.estSpecialistVector();
         String serviceId = (String) request.getAttribute("serviceId");
@@ -98,7 +99,7 @@
             <tr style="vertical-align: top">
                 <td class="MainTableLeftColumn">
                     <%
-                        oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar titlebar = new oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar();
+                        EctConTitlebar titlebar = new EctConTitlebar();
                         out.print(titlebar.estBar(request));
                     %>
                 </td>

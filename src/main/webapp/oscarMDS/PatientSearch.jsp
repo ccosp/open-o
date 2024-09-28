@@ -23,8 +23,9 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.util.*, java.sql.*,java.net.*, oscar.oscarDB.DBPreparedHandler, oscar.MyDateFormat, oscar.Misc" %>
-<%@ page import="oscar.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="java.util.*, java.sql.*,java.net.*, openo.oscarDB.DBPreparedHandler, openo.MyDateFormat, openo.Misc" %>
+<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -218,7 +219,7 @@
                 int age = 0;
 
                 ResultSet rs = null;
-                Properties props = oscar.OscarProperties.getInstance();
+                Properties props = OscarProperties.getInstance();
                 DBPreparedHandler db = new DBPreparedHandler();
 
                 String keyword = "";
@@ -343,7 +344,7 @@
             <tr bgcolor="<%=bodd?"ivory":"white"%>" align="center">
                 <td><input type="submit" name="demographicNo"
                            value="<%=oscar.Misc.getString(rs,"demographic_no")%>"
-                           onclick="updateOpener('<%=request.getParameter("labNo")%>','<%=oscar.Misc.getString(rs,"demographic_no")%>');">
+                           onclick="updateOpener('<%=request.getParameter(">
                 </td>
                 <td><%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "last_name")))%>
                 </td>

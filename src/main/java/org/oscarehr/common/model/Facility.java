@@ -23,6 +23,8 @@
 
 package org.oscarehr.common.model;
 
+import openo.Misc;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -142,7 +144,7 @@ public class Facility extends AbstractModel<Integer> implements Serializable {
     }
 
     public String getNameJs() {
-        return oscar.Misc.getStringJs(name);
+        return Misc.getStringJs(name);
     }
 
     public void setName(String name) {

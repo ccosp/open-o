@@ -26,6 +26,7 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.DiagnosticCode" %>
 <%@ page import="org.oscarehr.common.dao.DiagnosticCodeDao" %>
+<%@ page import="openo.Misc" %>
 <%
     DiagnosticCodeDao diagnosticCodeDao = SpringUtils.getBean(DiagnosticCodeDao.class);
 %>
@@ -43,7 +44,7 @@
         } else {
             searchStr = "%" + searchStr + "%";
         }
-        searchStr = oscar.Misc.mysqlEscape(searchStr);
+        searchStr = Misc.mysqlEscape(searchStr);
     %>
     <script language="JavaScript">
     function posttoText(index){

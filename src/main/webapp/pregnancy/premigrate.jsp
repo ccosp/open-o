@@ -48,6 +48,7 @@
 <%@page import="org.oscarehr.common.model.Episode" %>
 <%@page import="org.oscarehr.common.dao.EpisodeDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.util.UtilMisc" %>
 
 <%
     Properties props = (Properties) request.getAttribute("props");

@@ -46,9 +46,9 @@ import org.oscarehr.ws.rest.to.GenericRESTResponse;
 import org.oscarehr.ws.rest.to.model.PatientDetailStatusTo1;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import oscar.OscarProperties;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarProvider.data.ProviderMyOscarIdData;
+import openo.OscarProperties;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarProvider.data.ProviderMyOscarIdData;
 
 
 @Path("/patientDetailStatusService")

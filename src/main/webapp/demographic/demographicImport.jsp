@@ -40,8 +40,9 @@
     }
 %>
 
-<%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarDemographic.pageUtil.Util" %>
+<%@page import="oscar.oscarDemographic.data.*,java.util.*,openo.oscarDemographic.pageUtil.Util" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao, org.oscarehr.util.SpringUtils,org.oscarehr.PMmodule.model.Program" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
@@ -179,7 +180,7 @@
     <body vlink="#0000FF">
 
     <%
-        oscar.OscarProperties op = oscar.OscarProperties.getInstance();
+        OscarProperties op = OscarProperties.getInstance();
         String learningEnabled = op.getProperty("OSCAR_LEARNING");
         if (!Util.checkDir(op.getProperty("TMP_DIR"))) { %>
     <p>

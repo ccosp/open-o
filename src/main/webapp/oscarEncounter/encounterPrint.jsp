@@ -44,10 +44,12 @@
 
 <%@page import="oscar.oscarEncounter.data.*,java.net.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.OscarProperties" %>
 
 <jsp:useBean id="providerBean" class="java.util.Properties"
              scope="session"/>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <link rel="stylesheet" type="text/css" media="print" href="print.css"/>
 <link rel="stylesheet" type="text/css" href="encounterPrintStyles.css"/>
@@ -55,8 +57,8 @@
     //The oscarEncounter session manager, if the session bean is not in the context it looks for a session cookie with the appropriate name and value, if the required cookie is not available
     //it dumps you out to an erros page.
 
-    oscar.oscarEncounter.pageUtil.EctSessionBean bean = null;
-    if ((bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
+    EctSessionBean bean = null;
+    if ((bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
         response.sendRedirect("error.jsp");
         return;
     }

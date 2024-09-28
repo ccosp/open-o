@@ -29,6 +29,8 @@
 %>
 <%@ page import="java.util.*, java.sql.*, java.io.*, oscar.*"
          errorPage="/errorpage.jsp" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.OscarProperties" %>
 <% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html>

@@ -119,9 +119,9 @@
 <%@ page import="org.oscarehr.billing.CA.dao.BillingDetailDao" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
-<%@ page import="oscar.entities.Billingmaster" %>
-<%@ page import="oscar.oscarBilling.ca.bc.data.BillingmasterDAO" %>
-<%@ page import="oscar.util.ConversionUtils" %>
+<%@ page import="openo.entities.Billingmaster" %>
+<%@ page import="openo.oscarBilling.ca.bc.data.BillingmasterDAO" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%@ page import="org.oscarehr.common.model.Billing" %>
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

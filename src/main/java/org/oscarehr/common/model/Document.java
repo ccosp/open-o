@@ -57,6 +57,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -420,7 +421,7 @@ public class Document extends AbstractModel<Integer> implements Serializable {
      * @returns a string representing the path of the file on disk, i.e. document_dir+'/'+filename
      */
     public String getDocumentFileFullPath() {
-        String docDir = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String docDir = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         return (docDir + '/' + docfilename);
     }
 

@@ -77,11 +77,11 @@ import org.w3c.dom.Document;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 import org.oscarehr.documentManager.actions.AddEditDocumentAction;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarProvider.data.ProviderData;
-import oscar.util.UtilDateUtilities;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarProvider.data.ProviderData;
+import openo.util.UtilDateUtilities;
 
 public class PHRMessageAction extends DispatchAction {
 

@@ -41,12 +41,14 @@ import java.util.regex.Matcher;
 //import java.util.List;
 
 
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarProvider.data.ProviderData;
 import org.apache.commons.codec.binary.Base64;
 import org.oscarehr.util.LoggedInInfo;
 
-import oscar.util.UtilMisc;
-import oscar.oscarBilling.data.BillingFormData;
-import oscar.OscarProperties;
+import openo.util.UtilMisc;
+import openo.oscarBilling.data.BillingFormData;
+import openo.OscarProperties;
 
 //import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
 //import org.oscarehr.casemgmt.model.CaseManagementIssue;
@@ -79,8 +81,8 @@ public class ClinicaidCommunication {
             String service_recipient_oscar_number = request.getParameter("demographic_no");
             String appointment_provider_no = request.getParameter("apptProvider_no");
 
-            oscar.oscarDemographic.data.DemographicData demoData =
-                    new oscar.oscarDemographic.data.DemographicData();
+            DemographicData demoData =
+                    new DemographicData();
             org.oscarehr.common.model.Demographic demo =
                     demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), service_recipient_oscar_number);
 
@@ -125,8 +127,8 @@ public class ClinicaidCommunication {
 
                     provider_uli = billform.getPracNo(provider_no);
 
-                    oscar.oscarProvider.data.ProviderData providerData =
-                            new oscar.oscarProvider.data.ProviderData(provider_no);
+                    ProviderData providerData =
+                            new ProviderData(provider_no);
 
                     provider_first_name = providerData.getFirst_name();
                     provider_last_name = providerData.getLast_name();
@@ -149,8 +151,8 @@ public class ClinicaidCommunication {
                     Integer test = Integer.parseInt(provider_no);
 
                     provider_uli = billform.getPracNo(provider_no);
-                    oscar.oscarProvider.data.ProviderData providerData =
-                            new oscar.oscarProvider.data.ProviderData(provider_no);
+                    ProviderData providerData =
+                            new ProviderData(provider_no);
 
                     provider_first_name = providerData.getFirst_name();
                     provider_last_name = providerData.getLast_name();

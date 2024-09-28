@@ -47,12 +47,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %>
 <%@ taglib uri="/WEB-INF/phr-tag.tld" prefix="phr" %>
-<%@ page import="oscar.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="org.oscarehr.common.model.DemographicExt" %>
 <%@ page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
-<%@ page import="oscar.oscarProvider.data.ProviderMyOscarIdData" %>
-<%@ page import="oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProviderMyOscarIdData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 <%@ page import="java.util.*" %>
 
 

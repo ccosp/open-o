@@ -14,9 +14,10 @@
     }
 %>
 
-<%@ page import="java.util.*, oscar.oscarDemographic.data.ProvinceNames"
+<%@ page import="java.util.*, openo.oscarDemographic.data.ProvinceNames"
          errorPage="/errorpage.jsp" %>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<%@ page import="openo.OscarProperties" %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 <%
     ProvinceNames pNames = ProvinceNames.getInstance();
     String prov = ((String) oscarVariables.getProperty("billregion", "")).trim().toUpperCase();

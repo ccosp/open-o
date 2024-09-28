@@ -40,7 +40,7 @@ import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.RaDetail;
 import org.springframework.stereotype.Repository;
 
-import oscar.util.DateUtils;
+import openo.util.DateUtils;
 
 @Repository
 @SuppressWarnings("unchecked")

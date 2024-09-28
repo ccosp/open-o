@@ -40,6 +40,7 @@
 
 <%@ page
         import="java.util.*, java.sql.*, java.net.*,java.text.DecimalFormat, oscar.oscarProvider.data.* " %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 
 <%
 
@@ -53,7 +54,7 @@
     String study_no = request.getParameter("demographic_no");
     String prov_no = (String) session.getAttribute("user");
 
-    oscar.oscarProvider.data.ProviderData pd = new oscar.oscarProvider.data.ProviderData(prov_no);
+    ProviderData pd = new ProviderData(prov_no);
 //pd.getProviderName(prov_no);
 
     String userfirstname = pd.getFirst_name();

@@ -23,13 +23,13 @@
     Ontario, Canada
 
 --%>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="oscar.oscarProvider.data.ProSignatureData, oscar.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData, openo.oscarProvider.data.ProviderData" %>
 <%@ page import="oscar.oscarRx.data.*" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 
@@ -37,7 +37,7 @@
                  java.lang.*,
                  java.util.Date,
                  java.text.SimpleDateFormat,
-                 oscar.oscarRx.util.RxUtil,
+                 openo.oscarRx.util.RxUtil,
                  org.springframework.web.context.WebApplicationContext,
                  org.springframework.web.context.support.WebApplicationContextUtils,
                  org.oscarehr.common.dao.UserPropertyDAO,
@@ -60,6 +60,11 @@
 <%@page import="org.oscarehr.web.PrescriptionQrCodeUIBean" %>
 <%@ page import="org.oscarehr.managers.DemographicManager" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxProviderData" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.oscarRx.data.RxPharmacyData" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -108,7 +113,7 @@
             <logic:redirect href="error.html"/>
         </logic:notPresent>
         <logic:present name="RxSessionBean" scope="session">
-            <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+            <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                          name="RxSessionBean" scope="session"/>
             <logic:equal name="bean" property="valid" value="false">
                 <logic:redirect href="error.html"/>
@@ -132,23 +137,23 @@
     <body topmargin="0" leftmargin="0" vlink="#0000FF">
 
     <%
-        Date rxDate = oscar.oscarRx.util.RxUtil.Today();
+        Date rxDate = RxUtil.Today();
 //String rePrint = request.getParameter("rePrint");
         String rePrint = (String) request.getSession().getAttribute("rePrint");
 //String rePrint = (String)request.getSession().getAttribute("rePrint");
-        oscar.oscarRx.pageUtil.RxSessionBean bean;
-        oscar.oscarRx.data.RxProviderData.Provider provider;
+        RxSessionBean bean;
+        RxProviderData.Provider provider;
         String signingProvider;
         if (rePrint != null && rePrint.equalsIgnoreCase("true")) {
-            bean = (oscar.oscarRx.pageUtil.RxSessionBean) session.getAttribute("tmpBeanRX");
+            bean = (RxSessionBean) session.getAttribute("tmpBeanRX");
             signingProvider = bean.getStashItem(0).getProviderNo();
             rxDate = bean.getStashItem(0).getRxDate();
-            provider = new oscar.oscarRx.data.RxProviderData().getProvider(signingProvider);
+            provider = new RxProviderData().getProvider(signingProvider);
 //    session.setAttribute("tmpBeanRX", null);
             String ip = request.getRemoteAddr();
             //LogAction.addLog((String) session.getAttribute("user"), LogConst.UPDATE, LogConst.CON_PRESCRIPTION, String.valueOf(bean.getDemographicNo()), ip);
         } else {
-            bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+            bean = (RxSessionBean) pageContext.findAttribute("bean");
 
             //set Date to latest in stash
             Date tmp;
@@ -161,12 +166,12 @@
             }
             rePrint = "";
             signingProvider = bean.getProviderNo();
-            provider = new oscar.oscarRx.data.RxProviderData().getProvider(bean.getProviderNo());
+            provider = new RxProviderData().getProvider(bean.getProviderNo());
         }
 
         DemographicManager demographicManager = SpringUtils.getBean(DemographicManager.class);
 
-        oscar.oscarRx.data.RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, bean.getDemographicNo());
+        RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, bean.getDemographicNo());
         String patientAddress = patient.getAddress() == null ? "" : patient.getAddress();
         String patientCity = patient.getCity() == null ? "" : patient.getCity();
         String patientProvince = patient.getProvince() == null ? "" : patient.getProvince();
@@ -175,7 +180,7 @@
         String patientHin = patient.getHin() == null ? "" : patient.getHin();
 
 
-        oscar.oscarRx.data.RxPrescriptionData.Prescription rx = null;
+        RxPrescriptionData.Prescription rx = null;
         int i;
         ProSignatureData sig = new ProSignatureData();
         boolean hasSig = sig.hasSignature(signingProvider);
@@ -411,7 +416,7 @@
                                 <input type="hidden" name="patientPhone"
                                        value="<bean:message key="RxPreview.msgTel"/><%=StringEscapeUtils.escapeHtml(patientPhone) %>"/>
                                 <input type="hidden" name="rxDate"
-                                       value="<%= StringEscapeUtils.escapeHtml(oscar.oscarRx.util.RxUtil.DateToString(rxDate, "MMMM d, yyyy")) %>"/>
+                                       value="<%= StringEscapeUtils.escapeHtml(RxUtil.DateToString(rxDate, "MMMM d, yyyy")) %>"/>
                                 <input type="hidden" name="sigDoctorName"
                                        value="<%= StringEscapeUtils.escapeHtml(doctorName) %>"/>
                                 <!--img src="img/rx.gif" border="0"-->
@@ -510,14 +515,14 @@
 										<% } %>
 								</span>
                                 <span style="float:right">
-									<%= oscar.oscarRx.util.RxUtil.DateToString(rxDate, "MMMM d, yyyy", request.getLocale()) %>
+									<%= RxUtil.DateToString(rxDate, "MMMM d, yyyy", request.getLocale()) %>
 								</span>
                             </th>
                         </tr>
                         </thead>
                         <tfoot>
-                        <% if (oscar.OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
-                            out.write(oscar.OscarProperties.getInstance().getProperty("RX_FOOTER"));
+                        <% if (OscarProperties.getInstance().getProperty("RX_FOOTER") != null) {
+                            out.write(OscarProperties.getInstance().getProperty("RX_FOOTER"));
                         } %>
 
                         <tr valign=bottom>
@@ -614,10 +619,10 @@
                         </tr>
                         <% } %>
 
-                        <% if (oscar.OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null && oscar.OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT").length() > 0) { %>
+                        <% if (OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") != null && OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT").length() > 0) { %>
                         <tr valign=bottom align="center">
                             <td height=25px colspan="2" style="font-size: 9px"></br>
-                                <%= oscar.OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") %>
+                                <%= OscarProperties.getInstance().getProperty("FORMS_PROMOTEXT") %>
                             </td>
                         </tr>
                         <% } %>

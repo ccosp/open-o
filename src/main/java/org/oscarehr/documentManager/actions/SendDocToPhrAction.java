@@ -52,8 +52,8 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.XmlUtils;
 import org.w3c.dom.Document;
 
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.oscarProvider.data.ProviderData;
+import openo.oscarDemographic.data.DemographicData;
+import openo.oscarProvider.data.ProviderData;
 
 /**
  * @author rjonasz

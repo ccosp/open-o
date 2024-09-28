@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -46,18 +45,18 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import openo.Misc;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.model.Intake;
 import org.oscarehr.PMmodule.model.IntakeNode;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Provider;
 import org.oscarehr.common.model.ReportStatistic;
-import org.oscarehr.util.AccumulatorMap;
 import org.oscarehr.util.DbConnectionFilter;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
-import oscar.util.SqlUtils;
+import openo.util.SqlUtils;
 
 /**
  * Hibernate implementation of GenericIntakeDAO interface
@@ -365,7 +364,7 @@ public class GenericIntakeDAOImpl extends HibernateDaoSupport implements Generic
                 ps.setInt(1, intakeId);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    genericIntakeReportStatistics.addResult(rs.getInt("intake_node_id"), oscar.Misc.getString(rs, "val"));
+                    genericIntakeReportStatistics.addResult(rs.getInt("intake_node_id"), Misc.getString(rs, "val"));
                 } else {
                     LOG.error("Error, an intake has no answers? intakeId=" + intakeId);
                 }

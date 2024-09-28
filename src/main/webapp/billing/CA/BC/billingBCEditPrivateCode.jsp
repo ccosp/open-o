@@ -23,7 +23,7 @@
         response.sendRedirect("../logout.jsp");
     }
 %>
-<%@ page import="java.util.*,oscar.oscarBilling.ca.bc.data.BillingCodeData" %>
+<%@ page import="java.util.*,openo.oscarBilling.ca.bc.data.BillingCodeData" %>
 <%@ page import="oscar.oscarBilling.ca.shared.administration.GstControlAction" %>
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="org.oscarehr.common.model.BillingService" %>

@@ -55,6 +55,7 @@
 <%@page import="org.oscarehr.common.dao.DxresearchDAO" %>
 <%@page import="org.oscarehr.common.model.Dxresearch" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.OscarProperties" %>
 <%
     MeasurementDao measurementDao = SpringUtils.getBean(MeasurementDao.class);
     DxresearchDAO dxResearchDao = (DxresearchDAO) SpringUtils.getBean(DxresearchDAO.class);
@@ -62,7 +63,7 @@
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
 
     pageContext.setAttribute("demographic_no", request.getParameter("demographic_no"));
-    String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
+    String labReqVer = OscarProperties.getInstance().getProperty("onare_labreqver", "07");
     if (labReqVer.equals("")) {
         labReqVer = "07";
     }
@@ -174,7 +175,7 @@ Order Labs - <a title="Create Lab Requisition" href="javascript:void(0);"
                 onclick="generateLabReq(<%=demographicNo %>);return false;">Lab Requisition</a>
 <br/><br/>
 <%
-    String flowsheet = oscar.OscarProperties.getInstance().getProperty("ckd_flowsheet", "indicators");
+    String flowsheet = OscarProperties.getInstance().getProperty("ckd_flowsheet", "indicators");
     if (flowsheet.equals("indicators")) {
 %>
 Go to CDM Indicators <a href="javascript:void(0);"

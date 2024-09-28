@@ -29,6 +29,7 @@
 %>
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*,java.net.*" %>
+<%@ page import="openo.DateInMonthTable" %>
 <%
     //to prepare calendar display
     String type = request.getParameter("type");
@@ -79,7 +80,7 @@
     <body bgcolor="ivory" onLoad="setfocus()">
     <%
         now.add(Calendar.DATE, -1);
-        oscar.DateInMonthTable aDate = new oscar.DateInMonthTable(year, month - 1, 1);
+        DateInMonthTable aDate = new DateInMonthTable(year, month - 1, 1);
         int[][] dateGrid = aDate.getMonthDateGrid();
     %>
     <table BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="100%">

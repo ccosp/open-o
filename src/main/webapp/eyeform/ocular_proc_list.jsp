@@ -47,18 +47,20 @@
         import="oscar.oscarEncounter.pageUtil.*,oscar.oscarEncounter.data.*,java.util.List,org.oscarehr.eyeform.model.EyeformOcularProcedure" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
 
 <%
     String demo = request.getParameter("demographicNo");
     String proNo = (String) session.getAttribute("user");
-    oscar.oscarDemographic.data.DemographicData demoData = null;
+    DemographicData demoData = null;
     org.oscarehr.common.model.Demographic demographic = null;
 
-    oscar.oscarProvider.data.ProviderData pdata = new oscar.oscarProvider.data.ProviderData(proNo);
+    ProviderData pdata = new ProviderData(proNo);
     String team = pdata.getTeam();
 
     if (demo != null) {
-        demoData = new oscar.oscarDemographic.data.DemographicData();
+        demoData = new DemographicData();
         demographic = demoData.getDemographic(LoggedInInfo.getLoggedInInfoFromSession(request), demo);
     } else
         response.sendRedirect("../error.jsp");

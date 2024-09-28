@@ -49,7 +49,16 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*, oscar.util.*, java.net.*" errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 <%@ page import="oscar.oscarBilling.ca.on.data.*" %>
-<jsp:useBean id="SxmlMisc" class="oscar.SxmlMisc" scope="session"/>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingCreateBillingFile" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingProviderData" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingBatchHeaderData" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingReviewPrep" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
+<jsp:useBean id="SxmlMisc" class="openo.SxmlMisc" scope="session"/>
 
 <head>
     <title><bean:message key="admin.admin.btnSimulationOHIPDiskette"/></title>

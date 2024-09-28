@@ -58,11 +58,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import openo.OscarProperties;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.oscarehr.common.dao.utils.ConfigUtils;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.util.LoggedInInfo;
@@ -100,7 +100,7 @@ public abstract class DaoTestFixtures {
 
         start = System.currentTimeMillis();
         if (SpringUtils.getBeanFactory() == null) {
-            oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+            OscarProperties p = OscarProperties.getInstance();
             p.setProperty("db_name", ConfigUtils.getProperty("db_schema") + ConfigUtils.getProperty("db_schema_properties"));
             p.setProperty("db_username", ConfigUtils.getProperty("db_user"));
             p.setProperty("db_password", ConfigUtils.getProperty("db_password"));

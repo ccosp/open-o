@@ -55,7 +55,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.log.LogAction;
+import openo.log.LogAction;
 
 public class StaffManagerAction extends DispatchAction {
     private static Logger log = MiscUtils.getLogger();

@@ -33,6 +33,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarProvider.data.*" %>
 <%@ page import="oscar.oscarProvider.pageUtil.*" %>
+<%@ page import="openo.oscarProvider.data.ProSignatureData" %>
+<%@ page import="openo.oscarProvider.pageUtil.ProEditSignatureForm" %>
 
 
 <%

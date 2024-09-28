@@ -40,7 +40,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<jsp:useBean id="templateBean" class="oscar.ScheduleTemplateBean"
+<jsp:useBean id="templateBean" class="openo.ScheduleTemplateBean"
              scope="page"/>
 <jsp:useBean id="dateTimeCodeBean" class="java.util.Hashtable"
              scope="page"/>

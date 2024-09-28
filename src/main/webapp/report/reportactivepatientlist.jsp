@@ -39,7 +39,7 @@
     }
 %>
 
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%
 
     String strLimit1 = "0";
@@ -49,9 +49,10 @@
 %>
 <%@ page import="java.util.*, java.sql.*, oscar.*"
          errorPage="/errorpage.jsp" %>
-<jsp:useBean id="reportMainBean" class="oscar.AppointmentMainBean"
+<%@ page import="openo.MyDateFormat" %>
+<jsp:useBean id="reportMainBean" class="openo.AppointmentMainBean"
              scope="session"/>
-<jsp:useBean id="providerNameBean" class="oscar.Dict" scope="page"/>
+<jsp:useBean id="providerNameBean" class="openo.Dict" scope="page"/>
 <% if (!reportMainBean.getBDoConfigure()) { %>
 <%@ include file="reportMainBeanConn.jspf" %>
 <% } %>

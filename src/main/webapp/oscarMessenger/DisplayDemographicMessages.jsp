@@ -29,7 +29,9 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<%@ page import="oscar.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="openo.oscarMessenger.data.MsgDisplayMessage" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -72,14 +74,14 @@
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
     <bean:define id="bean"
-                 type="oscar.oscarMessenger.pageUtil.MsgSessionBean"
+                 type="openo.oscarMessenger.pageUtil.MsgSessionBean"
                  name="msgSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>
     </logic:equal>
 </logic:present>
 <%
-    oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean) pageContext.findAttribute("bean");
+    MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
     String demographic_no = "";
     if (request.getParameter("demographic_no") != null) {
         demographic_no = request.getParameter("demographic_no");
@@ -96,12 +98,12 @@
 
 %>
 <jsp:useBean id="DisplayMessagesBeanId" scope="session"
-             class="oscar.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
+             class="openo.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
 <% DisplayMessagesBeanId.setProviderNo(bean.getProviderNo());
     bean.nullAttachment();%>
 <jsp:setProperty name="DisplayMessagesBeanId" property="*"/>
 <jsp:useBean id="ViewMessageForm" scope="session"
-             class="oscar.oscarMessenger.pageUtil.MsgViewMessageForm"/>
+             class="openo.oscarMessenger.pageUtil.MsgViewMessageForm"/>
 
 
 <html:html lang="en">
@@ -242,8 +244,8 @@
                                     <!--   for loop Control Initiliation variabe changed to nextMessage   -->
                                     <%
                                         for (int i = 0; i < theMessages2.size(); i++) {
-                                            oscar.oscarMessenger.data.MsgDisplayMessage dm;
-                                            dm = (oscar.oscarMessenger.data.MsgDisplayMessage) theMessages2.get(i);
+                                            MsgDisplayMessage dm;
+                                            dm = (MsgDisplayMessage) theMessages2.get(i);
                                             String isLastMsg = "false";
                                     %>
                                     <tr>

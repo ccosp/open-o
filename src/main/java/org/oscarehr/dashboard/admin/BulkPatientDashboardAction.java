@@ -43,8 +43,8 @@ import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
+import openo.log.LogAction;
+import openo.log.LogConst;
 
 import org.oscarehr.dashboard.handler.DemographicPatientStatusRosterStatusHandler;
 import org.oscarehr.dashboard.handler.DiseaseRegistryHandler;

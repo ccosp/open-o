@@ -185,14 +185,14 @@ import org.oscarehr.util.*;
 import org.springframework.beans.BeanUtils;
 import org.w3c.dom.Document;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.form.FrmLabReq07Record;
-import oscar.log.LogAction;
-import oscar.oscarLab.ca.all.web.LabDisplayHelper;
-import oscar.oscarLab.ca.on.CommonLabResultData;
-import oscar.oscarLab.ca.on.LabResultData;
+import openo.form.FrmLabReq07Record;
+import openo.log.LogAction;
+import openo.oscarLab.ca.all.web.LabDisplayHelper;
+import openo.oscarLab.ca.on.CommonLabResultData;
+import openo.oscarLab.ca.on.LabResultData;
 
 public class CaisiIntegratorUpdateTask extends TimerTask {
 

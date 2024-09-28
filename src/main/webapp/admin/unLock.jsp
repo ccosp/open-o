@@ -33,6 +33,8 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Security" %>
 <%@ page import="org.oscarehr.common.dao.SecurityDao" %>
+<%@ page import="openo.login.LoginCheckLogin" %>
+<%@ page import="openo.log.LogAction" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%
     SecurityDao securityDao = SpringUtils.getBean(SecurityDao.class);

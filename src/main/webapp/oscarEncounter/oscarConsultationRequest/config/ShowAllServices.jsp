@@ -40,6 +40,7 @@
 %>
 
 <%@ page import="java.util.ResourceBundle" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -48,7 +49,7 @@
 <html:html lang="en">
 
     <jsp:useBean id="showAllServicesUtil" scope="session"
-                 class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConShowAllServicesUtil"/>
+                 class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConShowAllServicesUtil"/>
 
 
     <head>
@@ -84,7 +85,7 @@
             <tr style="vertical-align: top">
                 <td class="MainTableLeftColumn">
                     <%
-                        oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar titlebar = new oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar(request);
+                        EctConTitlebar titlebar = new EctConTitlebar(request);
                         out.print(titlebar.estBar(request));
                     %>
                 </td>

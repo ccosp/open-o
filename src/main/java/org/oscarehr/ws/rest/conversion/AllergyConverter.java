@@ -28,7 +28,7 @@ import org.oscarehr.common.model.Allergy;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.ws.rest.to.model.AllergyTo1;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 public class AllergyConverter extends AbstractConverter<Allergy, AllergyTo1> {
 

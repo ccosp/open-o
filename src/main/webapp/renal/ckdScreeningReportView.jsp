@@ -55,13 +55,14 @@
 <%@page import="org.oscarehr.renal.CkdScreeningReportContainer" %>
 <%@page import="org.oscarehr.common.dao.ORNCkdScreeningReportLogDao" %>
 <%@page import="org.oscarehr.common.model.ORNCkdScreeningReportLog" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
 
     List<CKDReportContainer> ckds = null;
 
-    String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
+    String labReqVer = OscarProperties.getInstance().getProperty("onare_labreqver", "07");
     if (labReqVer.equals("")) {
         labReqVer = "07";
     }

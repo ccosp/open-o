@@ -49,14 +49,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ page import="java.sql.*, java.util.*, oscar.*" errorPage="/errorpage.jsp" %>
-<%@ page import="oscar.log.LogAction,oscar.log.LogConst" %>
+<%@ page import="openo.log.LogAction,openo.log.LogConst" %>
 <%@ page import="oscar.log.*, oscar.oscarDB.*" %>
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.common.model.Site" %>
 
-<%@ page import="org.apache.commons.lang.StringEscapeUtils,oscar.oscarProvider.data.ProviderBillCenter" %>
+<%@ page import="org.apache.commons.lang.StringEscapeUtils,openo.oscarProvider.data.ProviderBillCenter" %>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
@@ -64,6 +64,10 @@
 <%@page import="org.oscarehr.common.model.ProviderSite" %>
 <%@page import="org.oscarehr.common.model.ProviderSitePK" %>
 <%@page import="org.oscarehr.common.dao.ProviderSiteDao" %>
+<%@ page import="openo.oscarDB.DBPreparedHandler" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 <%
     ProviderDao providerDao = (ProviderDao) SpringUtils.getBean(ProviderDao.class);
     ProviderSiteDao providerSiteDao = SpringUtils.getBean(ProviderSiteDao.class);

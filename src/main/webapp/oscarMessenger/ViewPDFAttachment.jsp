@@ -27,6 +27,7 @@
 <%@ page
         import="oscar.oscarMessenger.docxfer.send.*, oscar.oscarMessenger.docxfer.util.*, oscar.util.*" %>
 <%@ page import="java.util.*, org.w3c.dom.*" %>
+<%@ page import="openo.util.Doc2PDF" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -51,7 +52,7 @@
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
     <bean:define id="bean"
-                 type="oscar.oscarMessenger.pageUtil.MsgSessionBean"
+                 type="openo.oscarMessenger.pageUtil.MsgSessionBean"
                  name="msgSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>

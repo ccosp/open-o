@@ -26,10 +26,10 @@
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
-<%@page import="oscar.oscarRx.data.RxDrugData,java.util.*" %>
+<%@page import="openo.oscarRx.data.RxDrugData,java.util.*" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.util.Calendar" %>
-<%@page import="oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="oscar.oscarRx.util.*" %>
 <%
     Hashtable hiddenResources = (Hashtable) request.getSession().getAttribute("hideResources");

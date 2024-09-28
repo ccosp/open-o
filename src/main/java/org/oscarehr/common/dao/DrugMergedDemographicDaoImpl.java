@@ -35,7 +35,7 @@ import org.oscarehr.common.merge.MergedDemographicTemplate;
 import org.oscarehr.common.model.Drug;
 import org.springframework.stereotype.Repository;
 
-import oscar.util.ConversionUtils;
+import openo.util.ConversionUtils;
 
 @Repository("drugDao")
 public class DrugMergedDemographicDaoImpl extends DrugDaoImpl implements DrugMergedDemographicDao {

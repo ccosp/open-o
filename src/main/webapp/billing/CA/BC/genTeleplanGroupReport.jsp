@@ -48,7 +48,9 @@
 <%@ page import="org.oscarehr.billing.CA.dao.BillActivityDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.oscarBilling.ca.bc.MSP.ExtractBean" %>
+<%@ page import="openo.SxmlMisc" %>
 <%
     BillActivityDao billActivityDao = SpringUtils.getBean(BillActivityDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);
@@ -65,7 +67,7 @@
     String specialty_code;
     String billinggroup_no;
     String groupFile = "";
-    if (oscar.oscarBilling.ca.bc.MSP.ExtractBean.HasBillingItemsToSubmit()) {
+    if (ExtractBean.HasBillingItemsToSubmit()) {
         if (provider.compareTo("all") == 0) {
             batchCount = "0";
             int fileCount = 0;

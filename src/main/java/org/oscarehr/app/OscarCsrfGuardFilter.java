@@ -34,7 +34,7 @@ import org.owasp.csrfguard.log.LogLevel;
 import org.owasp.csrfguard.util.RandomGenerator;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -47,7 +47,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Oscar OscarCsrfGuardFilter

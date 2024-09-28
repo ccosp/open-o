@@ -25,10 +25,9 @@
 package org.oscarehr.util;
 
 import org.apache.http.client.utils.URIBuilder;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import java.net.URISyntaxException;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 

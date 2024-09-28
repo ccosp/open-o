@@ -45,8 +45,14 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmMentalHealthRecord" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.oscarEncounter.util.EctFileUtil" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.OscarProperties" %>
 
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <html:html lang="en">
     <head>
@@ -69,14 +75,14 @@
             if (formId == 0) {
                 props = ((FrmMentalHealthRecord) rec).getFormCustRecord(props, provNo);
             }
-            oscar.oscarEncounter.util.EctFileUtil list = new oscar.oscarEncounter.util.EctFileUtil();
+            EctFileUtil list = new EctFileUtil();
             props.setProperty("c_lastVisited", "assessment");
 
             String projecthome = oscarVariables.getProperty("project_home");
             String path = "form/dataFiles";
 
             if (props.getProperty("a_formDate", "").equals("")) {
-                props.setProperty("a_formDate", oscar.util.UtilDateUtilities.DateToString(new java.util.Date(), "yyyy/MM/dd"));
+                props.setProperty("a_formDate", UtilDateUtilities.DateToString(new java.util.Date(), "yyyy/MM/dd"));
             }
         %>
 

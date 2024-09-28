@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import openo.oscarLab.ca.all.upload.handlers.IHAPOIHandler;
 import org.apache.logging.log4j.Logger;
 
 import org.xml.sax.SAXException;

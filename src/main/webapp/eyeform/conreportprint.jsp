@@ -44,7 +44,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="org.oscarehr.eyeform.model.EyeformConsultationReport" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <html:html>
 
     <head>

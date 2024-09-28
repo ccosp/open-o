@@ -28,25 +28,12 @@
 
 package org.oscarehr.common.dao;
 
-import java.io.UnsupportedEncodingException;
-
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
-import javax.persistence.Query;
-
-import org.apache.commons.codec.binary.Base64;
-import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.Hl7TextInfo;
 import org.oscarehr.common.model.Hl7TextMessageInfo;
 import org.oscarehr.common.model.Hl7TextMessageInfo2;
-import org.oscarehr.common.model.SystemPreferences;
-import org.oscarehr.util.MiscUtils;
-import org.oscarehr.util.SpringUtils;
-import org.springframework.stereotype.Repository;
-import oscar.OscarProperties;
 
 public interface Hl7TextInfoDao extends AbstractDao<Hl7TextInfo> {
 

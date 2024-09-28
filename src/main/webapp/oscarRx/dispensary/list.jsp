@@ -34,10 +34,10 @@
 <%@page import="org.oscarehr.common.dao.DrugDao" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.Drug" %>
-<%@page import="oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
-<%@page import="oscar.oscarRx.util.RxUtil" %>
+<%@page import="openo.oscarRx.util.RxUtil" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
@@ -45,6 +45,7 @@
 <%@page import="org.oscarehr.common.model.DrugProduct" %>
 <%@page import="org.oscarehr.common.model.DrugDispensing" %>
 <%@page import="java.util.Map" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -385,7 +386,7 @@
                                 </tr>
                                 <tr>
                                     <td><b>Entered Date:</b></td>
-                                    <td><%=oscar.util.UtilDateUtilities.DateToString(drug.getCreateDate())%>
+                                    <td><%=UtilDateUtilities.DateToString(drug.getCreateDate())%>
                                     </td>
                                 </tr>
                                 <tr>

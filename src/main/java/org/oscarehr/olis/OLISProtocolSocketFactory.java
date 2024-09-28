@@ -42,7 +42,7 @@ import javax.net.SocketFactory;
 import org.apache.commons.httpclient.params.HttpConnectionParams;
 import org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;

@@ -42,8 +42,18 @@
 %>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.oscarReport.data.DemographicSets, oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.ClinicalReports.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*" %>
+<%@page import="openo.oscarReport.data.DemographicSets, oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*,oscar.oscarProvider.data.*,oscar.util.*,oscar.oscarReport.ClinicalReports.*,oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarEncounter.oscarMeasurements.bean.*" %>
 <%@page import="com.Ostermiller.util.CSVPrinter,java.io.*" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicNameAgeString" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBean" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.bean.EctMeasurementTypesBeanHandler" %>
+<%@ page import="openo.oscarProvider.data.ProviderData" %>
+<%@ page import="openo.oscarReport.ClinicalReports.Numerator" %>
+<%@ page import="openo.oscarReport.ClinicalReports.ReportEvaluator" %>
+<%@ page import="openo.oscarReport.ClinicalReports.ClinicalReportManager" %>
+<%@ page import="openo.oscarReport.ClinicalReports.Denominator" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
@@ -796,8 +806,8 @@
             return "";
         }
 
-        if (obj instanceof oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean) {
-            oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean md = (oscar.oscarEncounter.oscarMeasurements.bean.EctMeasurementsDataBean) obj;
+        if (obj instanceof EctMeasurementsDataBean) {
+            EctMeasurementsDataBean md = (EctMeasurementsDataBean) obj;
             return md.getDateObserved() + ": " + md.getDataField();
         }
 

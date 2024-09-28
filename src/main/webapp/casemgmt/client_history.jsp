@@ -42,7 +42,7 @@
 
 <%@ page import="org.oscarehr.casemgmt.model.*" %>
 <%@ page import="org.oscarehr.casemgmt.web.formbeans.*" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.OscarProperties" %>
 
 <html:hidden property="cpp.reminders"/>
 <table width="100%" border="0" cellpadding="0" cellspacing="1"

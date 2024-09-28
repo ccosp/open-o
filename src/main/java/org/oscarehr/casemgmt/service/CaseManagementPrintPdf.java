@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
+import openo.oscarRx.data.RxPrescriptionData;
 import org.apache.commons.lang.StringUtils;
 import org.oscarehr.PMmodule.model.Program;
 import org.oscarehr.PMmodule.model.ProgramProvider;
@@ -40,8 +41,8 @@ import org.oscarehr.common.printing.PdfWriterFactory;
 import org.oscarehr.managers.ProgramManager2;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
-import oscar.OscarProperties;
-import oscar.oscarClinic.ClinicData;
+import openo.OscarProperties;
+import openo.oscarClinic.ClinicData;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -294,14 +295,14 @@ public class CaseManagementPrintPdf {
 
         Font normal = new Font(bf, FONTSIZE, Font.NORMAL);
 
-        oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-        oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+        RxPrescriptionData prescriptData = new RxPrescriptionData();
+        RxPrescriptionData.Prescription[] arr = {};
         arr = prescriptData.getUniquePrescriptionsByPatient(Integer.parseInt(demoNo));
 
 
         Font curFont;
         for (int idx = 0; idx < arr.length; ++idx) {
-            oscar.oscarRx.data.RxPrescriptionData.Prescription drug = arr[idx];
+            RxPrescriptionData.Prescription drug = arr[idx];
             p = new Paragraph();
             p.setAlignment(Paragraph.ALIGN_LEFT);
             if (drug.isCurrent() && !drug.isArchived()) {

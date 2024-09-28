@@ -27,11 +27,7 @@
 package org.oscarehr.common.dao;
 
 import org.oscarehr.common.model.AbstractModel;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import oscar.util.ParamAppender;
 
-import javax.persistence.*;
 import java.util.List;
 
 public interface AbstractDao<T extends AbstractModel<?>> {

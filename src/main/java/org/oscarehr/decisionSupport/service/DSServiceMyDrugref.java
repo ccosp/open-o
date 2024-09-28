@@ -55,7 +55,7 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import oscar.oscarRx.pageUtil.RxMyDrugrefInfoAction;
+import openo.oscarRx.pageUtil.RxMyDrugrefInfoAction;
 
 /**
  * @author apavel

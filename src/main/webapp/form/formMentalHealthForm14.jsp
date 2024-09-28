@@ -38,9 +38,12 @@
 %>
 
 <%@ page
-        import="oscar.form.*, oscar.OscarProperties, java.util.Date, oscar.util.UtilDateUtilities" %>
+        import="oscar.form.*, openo.OscarProperties, java.util.Date, openo.util.UtilDateUtilities" %>
 <%@page import="org.oscarehr.common.dao.FrmLabReqPreSetDao, org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmMentalHealthForm14Record" %>
+<%@ page import="openo.form.FrmRecord" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

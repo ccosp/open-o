@@ -36,7 +36,7 @@
 <%@ page import="org.oscarehr.common.model.MyGroup" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="oscar.util.ConversionUtils" %>
+<%@ page import="openo.util.ConversionUtils" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleDateDao" %>
 <%@ page import="org.oscarehr.common.model.ScheduleDate" %>
 <%@ page import="org.oscarehr.common.dao.ProviderSiteDao" %>
@@ -221,7 +221,7 @@
 
 <jsp:useBean id="scheduleHolidayBean" class="java.util.Hashtable"
              scope="session"/>
-<jsp:useBean id="providerNameBean" class="oscar.Dict" scope="page"/>
+<jsp:useBean id="providerNameBean" class="openo.Dict" scope="page"/>
 <jsp:useBean id="myGrpBean" class="java.util.Properties" scope="page"/>
 
 
@@ -313,8 +313,11 @@
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="oscar.appt.JdbcApptImpl" %>
-<%@page import="oscar.appt.ApptUtil" %>
+<%@page import="openo.appt.JdbcApptImpl" %>
+<%@page import="openo.appt.ApptUtil" %>
+<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.OscarProperties" %>
 <html:html lang="en">
     <body bgcolor="#EEEEFF" onLoad="refreshAllTabAlerts();">
 

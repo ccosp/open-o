@@ -28,7 +28,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page
-        import="java.util.*, oscar.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig, oscar.OscarProperties" %>
+        import="java.util.*, openo.oscarEncounter.oscarMeasurements.data.MeasurementMapConfig, openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.model.MeasurementMap" %>
 
 <%

@@ -20,6 +20,9 @@
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.Demographic" %>
 <%@ page import="org.oscarehr.common.dao.DemographicDao" %>
+<%@ page import="openo.oscarDB.DBHandler" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.UtilXML" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
 %>
@@ -56,7 +59,7 @@
     }
 
     //take data from form
-    ResultSet rsdemo = oscar.oscarDB.DBHandler.GetSQL("select * from formType2Diabetes where demographic_no= " + demoNo + " order by formEdited desc, ID desc limit 0,1");
+    ResultSet rsdemo = DBHandler.GetSQL("select * from formType2Diabetes where demographic_no= " + demoNo + " order by formEdited desc, ID desc limit 0,1");
     while (rsdemo.next()) {
         form.setProperty("formType2Diabetes.birthDate", rsdemo.getString("birthDate"));
         //get the column number

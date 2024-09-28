@@ -1,4 +1,4 @@
-<%--
+<%@ page import="openo.OscarProperties" %><%--
 
 
     Copyright (c) 2005-2012. Centre for Research on Inner City Health, St. Michael's Hospital, Toronto. All Rights Reserved.
@@ -28,7 +28,7 @@
 <table width="100%" border="1" bordercolor="#696969">
     <tr>
         <td align="left" width="180px" rowspan="2">
-            <%if (oscar.OscarProperties.getInstance().isTorontoRFQ() && !oscar.OscarProperties.getInstance().getBooleanProperty("USE_CAISI_LOGO", "true")) {%>
+            <%if (OscarProperties.getInstance().isTorontoRFQ() && !OscarProperties.getInstance().getBooleanProperty("USE_CAISI_LOGO", "true")) {%>
             &nbsp;&nbsp;<img
                 src="<html:rewrite page="/images/QuatroShelter-Logo180.gif"   />"
                 width="180px" alt="QuatroShelter" border="0"/> <%} else {%> <img

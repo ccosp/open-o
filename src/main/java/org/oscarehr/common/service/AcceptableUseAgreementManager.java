@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.common.dao.PropertyDao;
@@ -52,7 +53,7 @@ public class AcceptableUseAgreementManager {
     private static PropertyDao propertyDao = SpringUtils.getBean(PropertyDao.class);
 
     private static void loadAUA() {
-        String path = oscar.OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR") + File.separator + "login" + File.separator + "AcceptableUseAgreement.txt";
+        String path = OscarProperties.getInstance().getProperty("BASE_DOCUMENT_DIR") + File.separator + "login" + File.separator + "AcceptableUseAgreement.txt";
         try {
             File auaFile = new File(path);
             if (!auaFile.exists()) {
@@ -74,7 +75,7 @@ public class AcceptableUseAgreementManager {
     }
 
     public static boolean hasAUA() {
-        String auaProp = oscar.OscarProperties.getInstance().getProperty("show_aua");
+        String auaProp = OscarProperties.getInstance().getProperty("show_aua");
 
         if (auaProp == null) {
             auaProp = "";
@@ -97,7 +98,7 @@ public class AcceptableUseAgreementManager {
     }
 
     public boolean auaAlwaysShow() {
-        String auaProp = oscar.OscarProperties.getInstance().getProperty("show_aua");
+        String auaProp = OscarProperties.getInstance().getProperty("show_aua");
 
         if (auaProp == null) {
             auaProp = "";

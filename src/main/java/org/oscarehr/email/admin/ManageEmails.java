@@ -30,8 +30,8 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.form.JSONAction;
-import oscar.util.StringUtils;
+import openo.form.JSONAction;
+import openo.util.StringUtils;
 
 public class ManageEmails extends JSONAction {
     private static final Logger logger = MiscUtils.getLogger();

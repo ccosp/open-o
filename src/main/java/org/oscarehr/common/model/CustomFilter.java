@@ -52,7 +52,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.oscarehr.PMmodule.model.Program;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 @Entity
 @Table(name = "custom_filter")

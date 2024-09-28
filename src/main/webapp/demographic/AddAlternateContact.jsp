@@ -57,10 +57,12 @@
 %>
 
 <%@page import="oscar.oscarDemographic.data.*,java.util.*" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.common.dao.CtlRelationshipsDao" %>
 <%@page import="org.oscarehr.common.model.CtlRelationships" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.oscarDemographic.data.DemographicRelationship" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

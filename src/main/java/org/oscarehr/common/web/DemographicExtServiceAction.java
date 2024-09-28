@@ -43,7 +43,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.log.LogAction;
+import openo.log.LogAction;
 
 public class DemographicExtServiceAction extends DispatchAction {
 

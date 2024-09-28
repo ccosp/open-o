@@ -47,10 +47,10 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.oscarRx.data.RxPrescriptionData;
-import oscar.oscarRx.data.RxProviderData;
-import oscar.oscarRx.util.RxUtil;
-import oscar.util.DateUtils;
+import openo.oscarRx.data.RxPrescriptionData;
+import openo.oscarRx.data.RxProviderData;
+import openo.oscarRx.util.RxUtil;
+import openo.util.DateUtils;
 
 public class StaticScriptBean {
     private static final Logger logger = MiscUtils.getLogger();

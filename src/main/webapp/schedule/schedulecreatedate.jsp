@@ -55,7 +55,7 @@
         errorPage="../appointment/errorpage.jsp" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<jsp:useBean id="scheduleRscheduleBean" class="oscar.RscheduleBean" scope="session"/>
+<jsp:useBean id="scheduleRscheduleBean" class="openo.RscheduleBean" scope="session"/>
 <jsp:useBean id="scheduleDateBean" class="java.util.Hashtable" scope="session"/>
 <jsp:useBean id="scheduleHolidayBean" class="java.util.Hashtable" scope="session"/>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
@@ -65,7 +65,7 @@
 <%@ page import="org.oscarehr.common.dao.RScheduleDao" %>
 <%@ page import="org.oscarehr.common.model.ScheduleHoliday" %>
 <%@ page import="org.oscarehr.common.dao.ScheduleHolidayDao" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%
     ScheduleDateDao scheduleDateDao = SpringUtils.getBean(ScheduleDateDao.class);
     RScheduleDao rScheduleDao = (RScheduleDao) SpringUtils.getBean(RScheduleDao.class);
@@ -227,9 +227,12 @@
 
 %>
 <%@page import="org.oscarehr.common.model.Site" %>
-<%@page import="oscar.appt.ApptUtil" %>
+<%@page import="openo.appt.ApptUtil" %>
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="openo.DateInMonthTable" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

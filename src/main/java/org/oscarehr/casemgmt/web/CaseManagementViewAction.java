@@ -27,6 +27,8 @@ import com.quatro.model.security.Secrole;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsDateJsonBeanProcessor;
+import openo.OscarProperties;
+import openo.util.UtilDateUtilities;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
@@ -64,13 +66,12 @@ import org.oscarehr.provider.web.CppPreferencesUIBean;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.OscarProperties;
-import oscar.eform.EFormUtil;
-import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarEncounter.data.EctFormData.PatientForm;
-import oscar.oscarRx.pageUtil.RxSessionBean;
-import oscar.util.ConversionUtils;
-import oscar.util.OscarRoleObjectPrivilege;
+import openo.eform.EFormUtil;
+import openo.oscarEncounter.data.EctFormData;
+import openo.oscarEncounter.data.EctFormData.PatientForm;
+import openo.oscarRx.pageUtil.RxSessionBean;
+import openo.util.ConversionUtils;
+import openo.util.OscarRoleObjectPrivilege;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -691,7 +692,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         if (noteSort != null && noteSort.length() > 0) {
             notesToDisplay = sortNotes(notesToDisplay, noteSort);
         } else {
-            oscar.OscarProperties p = oscar.OscarProperties.getInstance();
+            OscarProperties p = OscarProperties.getInstance();
             noteSort = p.getProperty("CMESort", "");
             if (noteSort.trim().equalsIgnoreCase("UP"))
                 notesToDisplay = sortNotes(notesToDisplay, "observation_date_asc");
@@ -821,13 +822,13 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
                 notesToDisplay.add(new NoteDisplayNonNote(patientForm));
             }
 
-            if (oscar.OscarProperties.getInstance().getProperty("billregion", "").equalsIgnoreCase("ON")) {
+            if (OscarProperties.getInstance().getProperty("billregion", "").equalsIgnoreCase("ON")) {
                 fetchInvoices(notesToDisplay, demoNo);
             }
         }
 
         // sort the notes
-        String noteSort = oscar.OscarProperties.getInstance().getProperty("CMESort", "");
+        String noteSort = OscarProperties.getInstance().getProperty("CMESort", "");
         if (noteSort.trim().equalsIgnoreCase("UP")) notesToDisplay = sortNotes(notesToDisplay, "observation_date_asc");
         else notesToDisplay = sortNotes(notesToDisplay, "observation_date_desc");
 
@@ -1364,7 +1365,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
         }
 
         /*
-         * oscar.OscarProperties p = oscar.OscarProperties.getInstance(); String noteSort = p.getProperty("CMESort", ""); if (noteSort.trim().equalsIgnoreCase("UP")) request.setAttribute("Notes", sortNotes(notes, "observation_date_asc")); else
+         * openo.OscarProperties p = openo.OscarProperties.getInstance(); String noteSort = p.getProperty("CMESort", ""); if (noteSort.trim().equalsIgnoreCase("UP")) request.setAttribute("Notes", sortNotes(notes, "observation_date_asc")); else
          * request.setAttribute("Notes", sortNotes(notes, "observation_date_desc"));
          */
 
@@ -1908,7 +1909,7 @@ public class CaseManagementViewAction extends BaseCaseManagementViewAction {
                 String val = null;
 
                 if (key.contains(" Date")) {
-                    val = oscar.util.UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
+                    val = UtilDateUtilities.DateToString(cme.getDateValue(), "yyyy-MM-dd");
                 } else {
                     val = org.apache.commons.lang.StringEscapeUtils.escapeJavaScript(cme.getValue());
                 }

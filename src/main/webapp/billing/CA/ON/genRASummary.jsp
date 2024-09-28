@@ -19,7 +19,7 @@
 --%>
 
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, oscar.MyDateFormat,oscar.oscarDB.*"
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, openo.MyDateFormat,oscar.oscarDB.*"
         errorPage="/errorpage.jsp" %>
 <%@ include file="../../../admin/dbconnection.jsp" %>
 
@@ -34,7 +34,7 @@
 <%@page import="org.oscarehr.common.model.Billing" %>
 <%@page import="org.oscarehr.common.model.Provider" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%
     RaHeaderDao dao = SpringUtils.getBean(RaHeaderDao.class);
     RaDetailDao raDetailDao = SpringUtils.getBean(RaDetailDao.class);
@@ -44,6 +44,8 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.SxmlMisc" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

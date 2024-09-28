@@ -27,8 +27,8 @@ package org.oscarehr.common.model.inbox;
 import com.twelvemonkeys.lang.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.oscarehr.util.LoggedInInfo;
-import oscar.oscarLab.ca.on.HRMResultsData;
-import oscar.oscarLab.ca.on.LabResultData;
+import openo.oscarLab.ca.on.HRMResultsData;
+import openo.oscarLab.ca.on.LabResultData;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

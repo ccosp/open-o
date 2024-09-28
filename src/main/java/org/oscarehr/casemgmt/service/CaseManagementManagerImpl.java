@@ -29,6 +29,9 @@ package org.oscarehr.casemgmt.service;
 
 import com.quatro.model.security.Secrole;
 import com.quatro.service.security.RolesManager;
+import openo.OscarProperties;
+import openo.appt.ApptStatusData;
+import openo.util.UtilDateUtilities;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.LabelValueBean;
@@ -57,11 +60,10 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.util.ConversionUtils;
-import oscar.util.DateUtils;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.util.ConversionUtils;
+import openo.util.DateUtils;
 
 import java.net.MalformedURLException;
 import java.nio.file.ProviderNotFoundException;
@@ -1279,7 +1281,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
     @Override
     public CaseManagementTmpSave getTmpSave(String providerNo, String demographicNo, String programId) {
         // If maxTmpSave is "true", "yes", "on", it is treated as active
-        if (oscar.OscarProperties.getInstance().isPropertyActive("maxTmpSave")) {
+        if (OscarProperties.getInstance().isPropertyActive("maxTmpSave")) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_MONTH, -14);
             Date twoWeeksAgo = cal.getTime();
@@ -2326,7 +2328,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
             String encounterText = "";
             try {
                 Appointment appointment = appointmentDao.find(Integer.parseInt(appointmentNo));
-                encounterText = "[" + oscar.util.UtilDateUtilities.DateToString(appointment.getAppointmentDate(),
+                encounterText = "[" + UtilDateUtilities.DateToString(appointment.getAppointmentDate(),
                         "dd-MMM-yyyy", locale) + " .: " + appointment.getReason() + "] \n";
                 note.setAppointmentNo(Integer.parseInt(appointmentNo));
             } catch (Exception e) {
@@ -2351,7 +2353,7 @@ public class CaseManagementManagerImpl implements CaseManagementManager {
 
     // Move this out of here.
     private String updateApptStatus(String status, String type) {
-        oscar.appt.ApptStatusData as = new oscar.appt.ApptStatusData();
+        ApptStatusData as = new ApptStatusData();
         as.setApptStatus(status);
 
         if (type.equalsIgnoreCase("sign"))

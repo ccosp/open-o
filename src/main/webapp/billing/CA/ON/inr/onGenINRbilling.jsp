@@ -27,7 +27,13 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.billing.CA.dao.BillingInrDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingClaimImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     BillingInrDao billingInrDao = SpringUtils.getBean(BillingInrDao.class);
 %>

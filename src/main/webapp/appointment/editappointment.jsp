@@ -44,7 +44,7 @@
 <%@page import="org.oscarehr.common.dao.ProviderDataDao" %>
 <%@page import="org.oscarehr.managers.DemographicManager" %>
 
-<%@page import="oscar.appt.status.service.impl.AppointmentStatusMgrImpl" %>
+<%@page import="openo.appt.status.service.impl.AppointmentStatusMgrImpl" %>
 <%
     if (session.getAttribute("user") == null) response.sendRedirect("../logout.jsp");
 
@@ -60,8 +60,8 @@
 <%@ page import="java.time.ZoneId" %>
 <%@ page import="oscar.appt.*" %>
 <%@ page import="oscar.util.*" %>
-<%@ page import="oscar.appt.status.service.AppointmentStatusMgr" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.appt.status.service.AppointmentStatusMgr" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.OtherIdManager" %>
 <%@ page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
 <%@ page import="org.oscarehr.common.model.*" %>
@@ -90,10 +90,14 @@
 <%@ page import="org.oscarehr.common.model.LookupList" %>
 <%@ page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
-<%@ page import="oscar.oscarEncounter.data.EctFormData" %>
-<%@ page import="oscar.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
 <%@ page import="org.oscarehr.common.dao.AppointmentTypeDao" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.appt.ApptData" %>
+<%@ page import="openo.appt.ApptUtil" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.util.ConversionUtils" %>
 
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -156,7 +160,7 @@
     }
 
     BillingONExtDao billingOnExtDao = (BillingONExtDao) SpringUtils.getBean(BillingONExtDao.class);
-    oscar.OscarProperties pros = oscar.OscarProperties.getInstance();
+    OscarProperties pros = OscarProperties.getInstance();
     String strEditable = pros.getProperty("ENABLE_EDIT_APPT_STATUS");
     String apptStatusHere = pros.getProperty("appt_status_here");
 
@@ -862,7 +866,7 @@
         //Else if we are coming back from search this has been done for us
         //Else how did we get here?
         if (bFirstDisp) {
-            oscar.oscarDemographic.data.DemographicData dd = new oscar.oscarDemographic.data.DemographicData();
+            DemographicData dd = new DemographicData();
             org.oscarehr.common.model.Demographic demo = dd.getDemographic(loggedInInfo, String.valueOf(appt.getDemographicNo()));
             doctorNo = demo != null ? (demo.getProviderNo()) : "";
         } else if (!request.getParameter("doctor_no").equals("")) {

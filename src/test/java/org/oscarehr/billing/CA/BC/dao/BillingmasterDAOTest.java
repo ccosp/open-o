@@ -38,10 +38,10 @@ import org.oscarehr.common.dao.utils.EntityDataGenerator;
 import org.oscarehr.common.dao.utils.SchemaUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.entities.Billingmaster;
-import oscar.entities.WCB;
-import oscar.oscarBilling.ca.bc.administration.TeleplanCorrectionFormWCB;
-import oscar.oscarBilling.ca.bc.data.BillingmasterDAO;
+import openo.entities.Billingmaster;
+import openo.entities.WCB;
+import openo.oscarBilling.ca.bc.administration.TeleplanCorrectionFormWCB;
+import openo.oscarBilling.ca.bc.data.BillingmasterDAO;
 
 public class BillingmasterDAOTest extends DaoTestFixtures {
 

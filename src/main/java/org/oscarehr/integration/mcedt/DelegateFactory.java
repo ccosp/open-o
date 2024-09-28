@@ -33,7 +33,7 @@ import org.oscarehr.integration.mcedt.mailbox.ActionUtils;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import ca.ontario.health.edt.EDTDelegate;
 
 import java.io.File;

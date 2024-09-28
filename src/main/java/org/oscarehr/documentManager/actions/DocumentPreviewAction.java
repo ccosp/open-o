@@ -2,8 +2,8 @@
 package org.oscarehr.documentManager.actions;
 
 import net.sf.json.JSONObject;
-import oscar.eform.EFormUtil;
-import oscar.oscarEncounter.data.EctFormData;
+import openo.eform.EFormUtil;
+import openo.oscarEncounter.data.EctFormData;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
@@ -23,7 +23,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.PDFGenerationException;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;

@@ -46,6 +46,7 @@
 <%@ page import="org.oscarehr.managers.LookupListManager" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.common.model.LookupList" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%
     String demographic_no = request.getParameter("demo");
@@ -135,7 +136,7 @@
         <input type="text" id="statusNum" name="statusNum" maxlength="10" size="10" value="${ demoExt["statusNum"] }">
         <input type="hidden" name="statusNumOrig" value="${ demoExt["statusNum"] }">
     </td>
-    <% if (!oscar.OscarProperties.getInstance().isPropertyActive("showBandNumberOnly")) { %>
+    <% if (!OscarProperties.getInstance().isPropertyActive("showBandNumberOnly")) { %>
     <td align="right" class="label disableStyle">
         <strong>First Nation Community:</strong>
     </td>

@@ -26,8 +26,8 @@
 <html>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.oscarehr.common.model.ScratchPad" %>
-<%@ page import="oscar.util.DateUtils" %>
-<%@ page import="oscar.oscarProvider.data.ProviderColourUpdater" %>
+<%@ page import="openo.util.DateUtils" %>
+<%@ page import="openo.oscarProvider.data.ProviderColourUpdater" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%

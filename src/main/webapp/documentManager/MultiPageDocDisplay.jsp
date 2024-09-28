@@ -40,7 +40,7 @@
     }
 %>
 
-<%@page import="oscar.util.UtilDateUtilities" %>
+<%@page import="openo.util.UtilDateUtilities" %>
 <%@ page import="java.util.*" %>
 <%@ page
         import="org.oscarehr.phr.util.MyOscarUtils,org.oscarehr.myoscar.utils.MyOscarLoggedInInfo,org.oscarehr.util.WebUtils" %>
@@ -54,6 +54,8 @@
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="openo.oscarMDS.data.ReportStatus" %>
 <%!
     ProviderInboxRoutingDao providerInboxRoutingDao = SpringUtils.getBean(ProviderInboxRoutingDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

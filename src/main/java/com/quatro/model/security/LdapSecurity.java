@@ -31,8 +31,8 @@ import javax.security.auth.login.LoginException;
 
 import org.oscarehr.common.model.Security;
 
-import oscar.login.jaas.LoginModuleFactory;
-import oscar.login.jaas.OscarCallbackHandler;
+import openo.login.jaas.LoginModuleFactory;
+import openo.login.jaas.OscarCallbackHandler;
 
 /**
  * Security class for integration with LDAP.

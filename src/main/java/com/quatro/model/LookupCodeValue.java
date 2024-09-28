@@ -21,6 +21,8 @@
  */
 package com.quatro.model;
 
+import openo.Misc;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -87,7 +89,7 @@ public class LookupCodeValue {
     }
 
     public String getDescriptionJs() {
-        return oscar.Misc.getStringJs(description);
+        return Misc.getStringJs(description);
     }
 
     public void setDescription(String description) {

@@ -34,7 +34,7 @@ import org.oscarehr.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
 import org.oscarehr.myoscar_server.ws.NotAuthorisedException_Exception;
 import org.oscarehr.myoscar_server.ws.PersonTransfer3;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public final class MyOscarLoggedInInfo implements Serializable, MyOscarLoggedInInfoInterface {
     private static final String myOscarServerBaseUrl = initMyOscarServerBaseUrl();

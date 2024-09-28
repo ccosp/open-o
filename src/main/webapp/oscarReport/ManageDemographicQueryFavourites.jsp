@@ -42,10 +42,10 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ page import="oscar.oscarReport.data.RptSearchData,java.util.*" %>
+<%@ page import="openo.oscarReport.data.RptSearchData,java.util.*" %>
 
 <%
-    oscar.oscarReport.data.RptSearchData searchData = new oscar.oscarReport.data.RptSearchData();
+    RptSearchData searchData = new RptSearchData();
     java.util.ArrayList queryArray = searchData.getQueryTypes();
 %>
 

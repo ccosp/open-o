@@ -40,6 +40,7 @@
 %>
 
 <%@ page import="java.util.*,oscar.oscarReport.data.*" %>
+<%@ page import="openo.oscarReport.data.RptLabReportData" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -60,7 +61,7 @@
         pros = request.getParameter("proNo");
     }
 
-    oscar.oscarReport.data.RptLabReportData conData = new oscar.oscarReport.data.RptLabReportData();
+    RptLabReportData conData = new RptLabReportData();
     conData.labReportGenerate(pros, mons);
     ArrayList proList = conData.providerList();
 
@@ -186,7 +187,7 @@
         <td class="MainTableRightColumn">
             <table border=0 cellspacing=4 width=700>
                 <%
-                    oscar.oscarReport.data.RptLabReportData.DemoLabDataStruct demoData;
+                    RptLabReportData.DemoLabDataStruct demoData;
                     for (int i = 0; i < conData.demoList.size(); i++) {
                         demoData = (RptLabReportData.DemoLabDataStruct) conData.demoList.get(i);
                 %>

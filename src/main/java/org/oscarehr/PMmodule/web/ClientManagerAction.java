@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.WebServiceException;
 
+import openo.util.DateUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -128,9 +129,9 @@ import org.oscarehr.util.SpringUtils;
 import org.oscarehr.util.WebUtils;
 import org.springframework.beans.factory.annotation.Required;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.oscarDemographic.data.DemographicRelationship;
+import openo.OscarProperties;
+import openo.log.LogAction;
+import openo.oscarDemographic.data.DemographicRelationship;
 
 import com.quatro.service.LookupManager;
 
@@ -256,7 +257,7 @@ public class ClientManagerAction extends DispatchAction {
         String id = request.getParameter("id");
         List<Integer> dependents = clientManager.getDependentsList(new Integer(id));
         String formattedDischargeDate = request.getParameter("dischargeDate");
-        Date dischargeDate = oscar.util.DateUtils.toDate(formattedDischargeDate);
+        Date dischargeDate = DateUtils.toDate(formattedDischargeDate);
         boolean success = true;
 
         try {

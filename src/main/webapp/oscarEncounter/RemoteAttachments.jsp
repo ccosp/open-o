@@ -42,16 +42,18 @@
 <%@ page import="oscar.oscarEncounter.immunization.data.*" %>
 <%@ page
         import="oscar.oscarEncounter.immunization.pageUtil.*, java.util.*, org.w3c.dom.*" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.oscarEncounter.data.EctRemoteAttachments" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%
-    oscar.oscarEncounter.pageUtil.EctSessionBean bean = null;
-    if ((bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
+    EctSessionBean bean = null;
+    if ((bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
         response.sendRedirect("error.jsp");
         return;
     }
-    oscar.oscarEncounter.data.EctRemoteAttachments remoAttach = new oscar.oscarEncounter.data.EctRemoteAttachments();
+    EctRemoteAttachments remoAttach = new EctRemoteAttachments();
     remoAttach.estMessageIds(bean.getDemographicNo());
     out.print(bean.getDemographicNo());
 %>

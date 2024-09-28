@@ -46,6 +46,7 @@
         errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.form.*" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.graphic.FrmGraphicAR" %>
 <HTML>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

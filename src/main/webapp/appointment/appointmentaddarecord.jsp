@@ -42,16 +42,20 @@
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page
-        import="java.sql.*, java.util.*, oscar.MyDateFormat, oscar.oscarDemographic.data.*, org.oscarehr.common.OtherIdManager, java.text.SimpleDateFormat"
+        import="java.sql.*, java.util.*, openo.MyDateFormat, oscar.oscarDemographic.data.*, org.oscarehr.common.OtherIdManager, java.text.SimpleDateFormat"
         errorPage="/errorpage.jsp" %>
-<%@ page import="org.oscarehr.common.model.Demographic,oscar.appt.AppointmentMailer, org.oscarehr.util.SpringUtils" %>
+<%@ page import="org.oscarehr.common.model.Demographic,openo.appt.AppointmentMailer, org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.common.dao.OscarAppointmentDao" %>
 <%@page import="org.oscarehr.common.model.Appointment" %>
 <%@page import="org.oscarehr.common.dao.WaitingListDao" %>
-<%@page import="oscar.util.ConversionUtils" %>
-<%@page import="oscar.util.UtilDateUtilities" %>
+<%@page import="openo.util.ConversionUtils" %>
+<%@page import="openo.util.UtilDateUtilities" %>
 <%@ page import="org.oscarehr.event.EventService" %>
 <%@page import="org.oscarehr.managers.DemographicManager" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="openo.oscarWaitingList.WaitingList" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:html lang="en">
@@ -186,12 +190,12 @@
 
 
                 // turn off reminder of "remove patient from the waiting list"
-                oscar.OscarProperties pros = oscar.OscarProperties.getInstance();
+                OscarProperties pros = OscarProperties.getInstance();
                 String strMWL = pros.getProperty("MANUALLY_CLEANUP_WL");
                 if (strMWL != null && strMWL.equalsIgnoreCase("yes")) {
                     ;
                 } else {
-                    oscar.oscarWaitingList.WaitingList wL = oscar.oscarWaitingList.WaitingList.getInstance();
+                    WaitingList wL = WaitingList.getInstance();
                     if (wL.getFound()) {
                         String demographicNo = request.getParameter("demographic_no");
                         if (demographicNo != null && !"".equals(demographicNo)) {

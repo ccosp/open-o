@@ -29,7 +29,7 @@ import java.util.List;
 
 import org.oscarehr.ws.rest.to.model.PreventionSearchTo1;
 
-import oscar.oscarPrevention.reports.ReportItem;
+import openo.oscarPrevention.reports.ReportItem;
 
 public class Report {
 

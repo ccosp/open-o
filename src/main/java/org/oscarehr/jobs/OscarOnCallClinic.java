@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import openo.util.UtilDateUtilities;
 import org.oscarehr.PMmodule.model.ProgramProvider;
 import org.oscarehr.common.dao.OnCallClinicDao;
 import org.oscarehr.common.dao.OscarAppointmentDao;
@@ -62,7 +63,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.documentManager.EDocUtil;
 
@@ -251,7 +252,7 @@ public class OscarOnCallClinic implements OscarRunnable {
         String user = "System";
         String mrp = demographic.getProviderNo();
         EDoc newDoc = new EDoc("", "", fileName, "", user, user, "", 'A',
-                oscar.util.UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", demographic.getDemographicNo().toString(), 0);
+                UtilDateUtilities.getToday("yyyy-MM-dd"), "", "", "demographic", demographic.getDemographicNo().toString(), 0);
         newDoc.setDocPublic("0");
 
         // if the document was added in the context of a program

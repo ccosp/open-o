@@ -35,12 +35,12 @@
 <%@page import="org.oscarehr.common.model.PartialDate" %>
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.common.model.Drug" %>
-<%@page import="oscar.oscarRx.data.RxPrescriptionData" %>
+<%@page import="openo.oscarRx.data.RxPrescriptionData" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager" %>
 <%@page import="org.oscarehr.caisi_integrator.ws.DemographicWs" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@page import="org.oscarehr.oscarRx.StaticScriptBean" %>
-<%@page import="oscar.oscarRx.util.RxUtil" %>
+<%@page import="openo.oscarRx.util.RxUtil" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 
 <%@page import="java.util.ArrayList" %>
@@ -69,11 +69,11 @@
 
         <%
             LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-            oscar.oscarRx.pageUtil.RxSessionBean rxBean = null;
+            RxSessionBean rxBean = null;
         %>
         <%
             if (request.getParameter("demographicNo") != null) {
-                rxBean = new oscar.oscarRx.pageUtil.RxSessionBean();
+                rxBean = new RxSessionBean();
 
                 rxBean.setProviderNo((String) session.getAttribute("user"));
                 rxBean.setDemographicNo(Integer.parseInt(request.getParameter("demographicNo")));
@@ -95,7 +95,7 @@
         <c:set var="ctx" value="${pageContext.request.contextPath}"/>
         <%
             if (rxBean == null) {
-                rxBean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+                rxBean = (RxSessionBean) pageContext.findAttribute("bean");
             }
             com.quatro.service.security.SecurityManager securityManager = new com.quatro.service.security.SecurityManager();
         %>
@@ -122,7 +122,7 @@
 
             ArrayList<StaticScriptBean.DrugDisplayData> drugs = StaticScriptBean.getDrugList(loggedInInfo, currentDemographicNo, regionalIdentifier, cn, bn, atc);
 
-            oscar.oscarRx.data.RxPatientData.Patient patient = oscar.oscarRx.data.RxPatientData.getPatient(loggedInInfo, currentDemographicNo);
+            RxPatientData.Patient patient = RxPatientData.getPatient(loggedInInfo, currentDemographicNo);
             String annotation_display = org.oscarehr.casemgmt.model.CaseManagementNoteLink.DISP_PRESCRIP;
         %>
         <script type="text/javascript" src="../share/javascript/prototype.js"/>

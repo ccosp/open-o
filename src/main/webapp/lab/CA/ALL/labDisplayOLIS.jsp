@@ -11,11 +11,19 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.oscarLab.ca.all.upload.MessageUploader" %>
+<%@page import="openo.oscarLab.ca.all.upload.MessageUploader" %>
 <%@ page language="java" errorPage="../../../provider/errorpage.jsp" %>
 <%@ page
-        import="java.util.*,java.sql.*,org.oscarehr.olis.*,org.oscarehr.common.dao.PatientLabRoutingDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,oscar.oscarLab.LabRequestReportLink,oscar.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
+        import="java.util.*,java.sql.*,org.oscarehr.olis.*,org.oscarehr.common.dao.PatientLabRoutingDao, org.oscarehr.util.SpringUtils, org.oscarehr.common.model.PatientLabRouting,oscar.oscarLab.ca.all.*,oscar.oscarLab.ca.all.util.*,oscar.oscarLab.ca.all.parsers.*,openo.oscarLab.LabRequestReportLink,openo.oscarMDS.data.ReportStatus,oscar.log.*,org.apache.commons.codec.binary.Base64" %>
 <%@page import="org.oscarehr.util.AppointmentUtil" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.oscarLab.ca.all.AcknowledgementData" %>
+<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.MessageHandler" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.Factory" %>
+<%@ page import="openo.oscarLab.ca.all.parsers.OLISHL7Handler" %>
+<%@ page import="openo.Misc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -45,7 +53,7 @@
     String providerNo = request.getParameter("providerNo");
     String searchProviderNo = request.getParameter("searchProviderNo");
 
-    boolean preview = oscar.Misc.getStr(request.getParameter("preview"), "").equals("true");
+    boolean preview = Misc.getStr(request.getParameter("preview"), "").equals("true");
     Long reqIDL = preview ? null : LabRequestReportLink.getIdByReport("hl7TextMessage", Long.valueOf(segmentID));
     String reqID = reqIDL == null ? "" : reqIDL.toString();
     reqIDL = preview ? null : LabRequestReportLink.getRequestTableIdByReport("hl7TextMessage", Long.valueOf(segmentID));
@@ -85,7 +93,7 @@
         hl7 = Factory.getHL7Body(segmentID);
 
     } else {
-        String resultUuid = oscar.Misc.getStr(request.getParameter("uuid"), "");
+        String resultUuid = Misc.getStr(request.getParameter("uuid"), "");
         handlerMain = OLISResultsAction.searchResultsMap.get(resultUuid);
     }
 
@@ -1989,7 +1997,7 @@
                                 style="margin-left: 30px;">Click to view attachment.</a>
                                 <% } else { %>
                         <td colspan="4" valign="left"><a
-                                href="PrintOLIS.do?uuid=<%=oscar.Misc.getStr(request.getParameter("uuid"), "")%>&obr=<%=obr%>&obx=<%=obx%>"
+                                href="PrintOLIS.do?uuid=<%=Misc.getStr(request.getParameter("uuid"), "")%>&obr=<%=obr%>&obx=<%=obx%>"
                                 style="margin-left: 30px;">Click to view attachment.</a>
                             <% } %>
                         </td>

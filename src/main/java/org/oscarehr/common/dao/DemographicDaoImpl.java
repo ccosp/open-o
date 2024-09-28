@@ -46,6 +46,7 @@ import java.util.TreeMap;
 
 import javax.persistence.PersistenceException;
 
+import openo.Misc;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -68,7 +69,6 @@ import org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters;
 import org.oscarehr.common.DemographicSearchResultTransformer;
 import org.oscarehr.common.Gender;
 import org.oscarehr.common.NativeSql;
-import org.oscarehr.common.dao.DemographicDao;
 import org.oscarehr.common.model.Admission;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.DemographicExt;
@@ -89,9 +89,9 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import oscar.MyDateFormat;
-import oscar.OscarProperties;
-import oscar.util.SqlUtils;
+import openo.MyDateFormat;
+import openo.OscarProperties;
+import openo.util.SqlUtils;
 
 /**
  *
@@ -2286,16 +2286,16 @@ public class DemographicDaoImpl extends HibernateDaoSupport implements Applicati
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(0);
-                calendar.set(Calendar.YEAR, Integer.parseInt(oscar.Misc.getString(rs, "demographic.year_of_birth")));
+                calendar.set(Calendar.YEAR, Integer.parseInt(Misc.getString(rs, "demographic.year_of_birth")));
                 calendar.set(Calendar.MONTH, rs.getInt("demographic.month_of_birth") - 1);
                 calendar.set(Calendar.DAY_OF_MONTH, rs.getInt("demographic.date_of_birth"));
                 clientListsReportResults.dateOfBirth = calendar;
 
                 clientListsReportResults.demographicId = rs.getInt("demographic.demographic_no");
-                clientListsReportResults.firstName = oscar.Misc.getString(rs, "demographic.first_name");
-                clientListsReportResults.lastName = oscar.Misc.getString(rs, "demographic.last_name");
+                clientListsReportResults.firstName = Misc.getString(rs, "demographic.first_name");
+                clientListsReportResults.lastName = Misc.getString(rs, "demographic.last_name");
                 clientListsReportResults.programId = rs.getInt("program.id");
-                clientListsReportResults.programName = oscar.Misc.getString(rs, "program.name");
+                clientListsReportResults.programName = Misc.getString(rs, "program.name");
 
                 results.put(clientListsReportResults.lastName + clientListsReportResults.firstName,
                         clientListsReportResults);

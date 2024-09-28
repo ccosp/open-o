@@ -40,8 +40,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import org.oscarehr.documentManager.ConvertToEdoc;
-import oscar.form.util.FormTransportContainer;
-import oscar.log.LogAction;
+import openo.form.util.FormTransportContainer;
+import openo.log.LogAction;
 
 @Service
 public class FaxDocumentManagerImpl implements FaxDocumentManager {

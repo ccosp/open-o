@@ -41,7 +41,7 @@ import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Provider;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 @Entity
 public class EyeformFollowUp extends AbstractModel<Integer> {

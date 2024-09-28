@@ -40,7 +40,7 @@ import org.oscarehr.common.NativeSql;
 import org.oscarehr.common.model.BillingService;
 import org.springframework.stereotype.Repository;
 
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 @Repository
 @SuppressWarnings("unchecked")

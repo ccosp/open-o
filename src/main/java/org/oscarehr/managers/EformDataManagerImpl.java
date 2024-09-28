@@ -47,11 +47,10 @@ import org.oscarehr.documentManager.EDoc;
 import org.oscarehr.hospitalReportManager.HRMUtil;
 import org.springframework.context.annotation.Lazy;
 
-import oscar.eform.EFormUtil;
-import oscar.eform.data.EForm;
-import oscar.log.LogAction;
-import oscar.oscarEncounter.data.EctFormData;
-import oscar.util.StringUtils;
+import openo.eform.EFormUtil;
+import openo.eform.data.EForm;
+import openo.log.LogAction;
+import openo.oscarEncounter.data.EctFormData;
 
 @Service
 public class EformDataManagerImpl implements EformDataManager {

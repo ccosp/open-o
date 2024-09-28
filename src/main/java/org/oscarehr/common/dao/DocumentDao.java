@@ -28,25 +28,13 @@
 
 package org.oscarehr.common.dao;
 
-import java.math.BigInteger;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Query;
-
-import org.oscarehr.common.model.ConsultDocs;
 import org.oscarehr.common.model.Demographic;
 import org.oscarehr.common.model.Document;
-import org.oscarehr.common.model.EFormDocs;
-import org.springframework.stereotype.Repository;
 
 import org.oscarehr.documentManager.EDocUtil.EDocSort;
-import oscar.util.ConversionUtils;
 
 public interface DocumentDao extends AbstractDao<Document> {
 

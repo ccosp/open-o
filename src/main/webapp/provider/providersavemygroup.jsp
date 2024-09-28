@@ -27,7 +27,7 @@
 <%
     if (session.getValue("user") == null) response.sendRedirect("../logout.htm");
 %>
-<%@ page import="java.sql.*, java.util.*, oscar.MyDateFormat" errorPage="../errorpage.jsp" %>
+<%@ page import="java.sql.*, java.util.*, openo.MyDateFormat" errorPage="../errorpage.jsp" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

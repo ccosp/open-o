@@ -25,7 +25,7 @@
 --%>
 
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.oscarRx.data.RxPatientData" %>
+<%@page import="openo.oscarRx.data.RxPatientData" %>
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -76,12 +76,12 @@
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
 
 <%@page
-        import="oscar.log.*,oscar.util.UtilMisc,oscar.oscarEncounter.data.*, java.net.*,java.util.*,oscar.util.UtilDateUtilities" %>
+        import="oscar.log.*,openo.util.UtilMisc,oscar.oscarEncounter.data.*, java.net.*,java.util.*,openo.util.UtilDateUtilities" %>
 <%@page
-        import="oscar.oscarMDS.data.MDSResultsData,oscar.oscarLab.ca.on.*, oscar.oscarMessenger.util.MsgDemoMap, oscar.oscarMessenger.data.MsgMessageData" %>
+        import="openo.oscarMDS.data.MDSResultsData,oscar.oscarLab.ca.on.*, openo.oscarMessenger.util.MsgDemoMap, openo.oscarMessenger.data.MsgMessageData" %>
 <%@page
         import="oscar.oscarEncounter.oscarMeasurements.*,oscar.oscarResearch.oscarDxResearch.bean.*" %>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <%
     String ip = request.getRemoteAddr();
@@ -91,8 +91,8 @@
     //The oscarEncounter session manager, if the session bean is not in the context it looks for a session cookie with the appropriate name and value, if the required cookie is not available
     //it dumps you out to an erros page.
 
-    oscar.oscarEncounter.pageUtil.EctSessionBean bean = null;
-    if ((bean = (oscar.oscarEncounter.pageUtil.EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
+    EctSessionBean bean = null;
+    if ((bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean")) == null) {
         response.sendRedirect("error.jsp");
         return;
     }
@@ -113,7 +113,7 @@
 <!-- add by caisi end-->
 <%
     //need these variables for the forms
-    oscar.util.UtilDateUtilities dateConvert = new oscar.util.UtilDateUtilities();
+    UtilDateUtilities dateConvert = new UtilDateUtilities();
     String demoNo = bean.demographicNo;
     String provNo = bean.providerNo;
     EctFormData.Form[] forms = EctFormData.getForms();
@@ -131,7 +131,7 @@
     Collections.sort(labs);
 
     String province = ((String) oscarVariables.getProperty("billregion", "")).trim().toUpperCase();
-    Properties windowSizes = oscar.oscarEncounter.pageUtil.EctWindowSizes.getWindowSizes(provNo);
+    Properties windowSizes = EctWindowSizes.getWindowSizes(provNo);
 
     MsgDemoMap msgDemoMap = new MsgDemoMap();
     List<String> msgVector = msgDemoMap.getMsgVector(demoNo);
@@ -148,6 +148,21 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.oscarEncounter.immunization.data.EctImmImmunizationData" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctSessionBean" %>
+<%@ page import="openo.oscarEncounter.pageUtil.EctWindowSizes" %>
+<%@ page import="openo.oscarEncounter.data.EctFormData" %>
+<%@ page import="openo.oscarEncounter.data.EctPatientData" %>
+<%@ page import="openo.oscarEncounter.data.EctProviderData" %>
+<%@ page import="openo.oscarEncounter.data.EctSplitChart" %>
+<%@ page import="openo.oscarEncounter.oscarMeasurements.MeasurementTemplateFlowSheetConfig" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
+<%@ page import="openo.oscarDxResearch.bean.dxResearchBeanHandler" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.OscarProperties" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>
@@ -721,8 +736,8 @@
             // Written by wreby
             // This code supports the autosave function
             //autoSaveTimer is in milliseconds
-            var autoSaveTimerLength = <%= oscar.OscarProperties.getInstance().getProperty("ECT_AUTOSAVE_TIMER","-1") %>;
-            var SaveFeedbackTimerLength = <%=oscar.OscarProperties.getInstance().getProperty("ECT_SAVE_FEEDBACK_TIMER","2500") %>;
+            var autoSaveTimerLength = <%= OscarProperties.getInstance().getProperty("ECT_AUTOSAVE_TIMER","-1") %>;
+            var SaveFeedbackTimerLength = <%=OscarProperties.getInstance().getProperty("ECT_SAVE_FEEDBACK_TIMER","2500") %>;
             var request = null;
             if (autoSaveTimerLength > 0) {
                 var autoSaveTimer = setTimeout("AutoSaveEncounter()", autoSaveTimerLength);
@@ -909,7 +924,7 @@
 
                             <oscar:oscarPropertiesCheck property="IMMUNIZATION" value="yes"
                                                         defaultVal="true">
-                                <% if (oscar.oscarEncounter.immunization.data.EctImmImmunizationData.hasImmunizations(demoNo)) { %>
+                                <% if (EctImmImmunizationData.hasImmunizations(demoNo)) { %>
                                 <a style="color: red"
                                    href="javascript:popUpImmunizations(700,960,'<rewrite:reWrite jspPage="immunization/initSchedule.do"/>')"><bean:message
                                         key="global.immunizations"/></a>
@@ -926,7 +941,7 @@
                                 <oscar:preventionWarnings
                                         demographicNo="<%=bean.demographicNo%>">prevention</oscar:preventionWarnings></a>
                             <br>
-                        </oscar:oscarPropertiesCheck> <% if (oscar.OscarProperties.getInstance().getProperty("oscarcomm", "").equals("on")) { %>
+                        </oscar:oscarPropertiesCheck> <% if (OscarProperties.getInstance().getProperty("oscarcomm", "").equals("on")) { %>
                             <a href="javascript:popupOscarComm(700,960,'RemoteAttachments.jsp')"><bean:message
                                     key="global.oscarComm"/></a><br>
                             <% } %> <a href=#
@@ -1441,8 +1456,8 @@
                                     </table>
                                     <div class="presBox" id="presBox">
                                         <%
-                                            oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-                                            oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+                                            RxPrescriptionData prescriptData = new RxPrescriptionData();
+                                            RxPrescriptionData.Prescription[] arr = {};
                                             arr = prescriptData.getUniquePrescriptionsByPatient(Integer.parseInt(bean.demographicNo));
                                             if (arr.length > 0) {%>
                                         <table>

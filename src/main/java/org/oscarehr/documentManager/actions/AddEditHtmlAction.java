@@ -53,7 +53,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import org.oscarehr.documentManager.data.AddEditDocumentForm;
-import oscar.util.UtilDateUtilities;
+import openo.util.UtilDateUtilities;
 
 public class AddEditHtmlAction extends Action {
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);

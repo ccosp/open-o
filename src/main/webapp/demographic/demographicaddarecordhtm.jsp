@@ -54,7 +54,7 @@
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page
-        import="java.util.*, oscar.*, oscar.oscarDemographic.data.ProvinceNames, oscar.oscarDemographic.pageUtil.Util, oscar.oscarWaitingList.WaitingList" %>
+        import="java.util.*, oscar.*, openo.oscarDemographic.data.ProvinceNames, openo.oscarDemographic.pageUtil.Util, openo.oscarWaitingList.WaitingList" %>
 <%@ page
         import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -72,7 +72,7 @@
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao" %>
 <%@page import="org.oscarehr.common.model.Facility" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="org.oscarehr.managers.ProgramManager2" %>
@@ -80,8 +80,9 @@
 
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.Misc" %>
 
-<jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session"/>
+<jsp:useBean id="apptMainBean" class="openo.AppointmentMainBean" scope="session"/>
 <%!
     ProfessionalSpecialistDao professionalSpecialistDao = (ProfessionalSpecialistDao) SpringUtils.getBean(ProfessionalSpecialistDao.class);
     ProviderDao providerDao = SpringUtils.getBean(ProviderDao.class);

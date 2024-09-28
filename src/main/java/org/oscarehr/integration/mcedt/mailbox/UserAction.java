@@ -36,8 +36,8 @@ import org.oscarehr.common.dao.UserPropertyDAO;
 import org.oscarehr.common.model.UserProperty;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.login.LoginForm;
+import openo.OscarProperties;
+import openo.login.LoginForm;
 
 public class UserAction extends DispatchAction {
     private static Logger logger = org.oscarehr.util.MiscUtils.getLogger();

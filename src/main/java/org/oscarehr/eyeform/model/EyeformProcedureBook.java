@@ -40,7 +40,7 @@ import javax.persistence.Transient;
 import org.oscarehr.common.model.AbstractModel;
 import org.oscarehr.common.model.Demographic;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 @Entity
 public class EyeformProcedureBook extends AbstractModel<Integer> {

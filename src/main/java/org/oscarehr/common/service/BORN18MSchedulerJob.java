@@ -31,7 +31,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.integration.born.BORN18MConnector;
 import org.oscarehr.util.MiscUtils;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class BORN18MSchedulerJob extends TimerTask {
 

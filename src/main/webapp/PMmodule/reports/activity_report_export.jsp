@@ -22,8 +22,8 @@
     Toronto, Ontario, Canada
 
 --%>
-<%@page import="oscar.util.DateUtils" %>
-<%@page import="oscar.util.SqlUtils" %>
+<%@page import="openo.util.DateUtils" %>
+<%@page import="openo.util.SqlUtils" %>
 <%@page import="java.util.*" %>
 <%@page import="org.caisi.model.*" %>
 <%@page import="org.oscarehr.PMmodule.model.*" %>
@@ -32,11 +32,12 @@
 <%@page import="org.oscarehr.util.*" %>
 <%@page import="java.text.*" %>
 <%@page import="org.apache.commons.lang.StringEscapeUtils" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%@page contentType="text/csv" %>
 <%
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-    String agencyName = oscar.OscarProperties.getInstance().getProperty("db_name", "");
+    String agencyName = OscarProperties.getInstance().getProperty("db_name", "");
     String startDateString = request.getParameter("startDate");
     String endDateString = request.getParameter("endDate");
     SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");

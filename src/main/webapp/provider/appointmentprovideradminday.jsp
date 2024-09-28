@@ -65,6 +65,12 @@
 <%@ page import="org.oscarehr.common.model.*" %>
 <%@ page import="org.oscarehr.managers.PreventionManager" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.util.UtilMisc" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
 
 <%@ taglib uri="/WEB-INF/caisi-tag.tld" prefix="caisi" %>
 <%@ taglib uri="/WEB-INF/special_tag.tld" prefix="special" %>
@@ -122,7 +128,7 @@
 </security:oscarSec>
 
 <jsp:useBean id="providerBean" class="java.util.Properties" scope="session"/>
-<jsp:useBean id="as" class="oscar.appt.ApptStatusData"/>
+<jsp:useBean id="as" class="openo.appt.ApptStatusData"/>
 <jsp:useBean id="dateTimeCodeBean" class="java.util.HashMap"/>
 
 <c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 2345) %>
@@ -484,7 +490,7 @@
             if (!caseload) {
         %>
         <c:if test="${empty sessionScope.archiveView or sessionScope.archiveView != true}">
-            <%!String refresh = oscar.OscarProperties.getInstance().getProperty("refresh.appointmentprovideradminday.jsp", "-1");%>
+            <%!String refresh = OscarProperties.getInstance().getProperty("refresh.appointmentprovideradminday.jsp", "-1");%>
             <%="-1".equals(refresh) ? "" : "<meta http-equiv=\"refresh\" content=\"" + refresh + "\">"%>
         </c:if>
         <%
@@ -2194,7 +2200,7 @@
 
                                                         <!-- doctor code block 3 -->
                                                         <% if (!isWeekView) { %>
-                                                        <% if (oscar.OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) {
+                                                        <% if (OscarProperties.getInstance().isPropertyActive("SINGLE_PAGE_CHART")) {
 
                                                             newUxUrl = "../web/#/record/" + demographic_no + "/";
 
@@ -2244,7 +2250,7 @@
 
                                                         <%= (bShortcutIntakeForm) ? "| <a href='#' onClick='popupPage(700, 1024, \"formIntake.jsp?demographic_no=" + demographic_no + "\")' title='Intake Form'>In</a>" : "" %>
                                                         <!--  eyeform open link -->
-                                                        <% if (oscar.OscarProperties.getInstance().isPropertyActive("new_eyeform_enabled") && !isWeekView) { %>
+                                                        <% if (OscarProperties.getInstance().isPropertyActive("new_eyeform_enabled") && !isWeekView) { %>
                                                         &#124; <a href="#"
                                                                   onClick='popupPage(800, 1280, "../eyeform/eyeform.jsp?demographic_no=<%=demographic_no %>&appointment_no=<%=appointment.getId()%>");return false;'
                                                                   title="EyeForm">EF</a>

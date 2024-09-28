@@ -38,7 +38,7 @@ import org.oscarehr.study.decisionSupport.StudyGuidelines;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class MyMedsStudy implements Study {
 

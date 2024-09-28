@@ -25,7 +25,7 @@
 --%>
 
 <%@ page
-        import="java.util.*,oscar.oscarRx.data.*,oscar.oscarRx.pageUtil.*,java.io.*,org.apache.xmlrpc.*, oscar.util.StringUtils" %>
+        import="java.util.*,oscar.oscarRx.data.*,oscar.oscarRx.pageUtil.*,java.io.*,org.apache.xmlrpc.*, openo.util.StringUtils" %>
 <%
     String thisistheperson = "mybrain";
     RxSessionBean bean = (RxSessionBean) session.getAttribute("RxSessionBean");
@@ -42,6 +42,7 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 <div
         style="background-color:<%=sigColor(""+ht.get("significance"))%>;margin-right:3px;margin-left:3px;margin-top:2px;padding-left:3px;padding-top:3px;padding-bottom:3px;">
     <b><%=ht.get("name")%>

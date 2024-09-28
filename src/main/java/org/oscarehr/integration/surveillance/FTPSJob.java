@@ -42,7 +42,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
 import net.sf.json.JSONObject;
-import oscar.oscarSurveillance.ProcessSurveyFile;
+import openo.oscarSurveillance.ProcessSurveyFile;
 
 
 //import oscar.oscarSurveillance.ProcessSurveyFile;

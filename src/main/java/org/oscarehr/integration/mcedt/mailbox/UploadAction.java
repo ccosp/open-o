@@ -54,7 +54,7 @@ import ca.ontario.health.edt.Faultexception;
 import ca.ontario.health.edt.ResourceResult;
 import ca.ontario.health.edt.ResponseResult;
 import ca.ontario.health.edt.UploadData;
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class UploadAction extends DispatchAction {
 

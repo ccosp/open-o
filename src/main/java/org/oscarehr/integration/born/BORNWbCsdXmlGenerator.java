@@ -86,8 +86,8 @@ import ca.bornontario.wbcsd.ReferralCategoryName;
 import ca.bornontario.wbcsd.ReferringProviderType;
 import ca.bornontario.wbcsd.Vaccine;
 import ca.bornontario.wbcsd.VisitData;
-import oscar.OscarProperties;
-import oscar.util.StringUtils;
+import openo.OscarProperties;
+import openo.util.StringUtils;
 
 public class BORNWbCsdXmlGenerator {
 

@@ -65,7 +65,7 @@
         }
     }
 %>
-<%@page import="oscar.oscarDB.DBPreparedHandler" %>
+<%@page import="openo.oscarDB.DBPreparedHandler" %>
 
 <%@page import="oscar.Misc" %>
 <html>

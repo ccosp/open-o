@@ -32,12 +32,14 @@
     <body bgcolor="#FFFFFF" text="#000000" topmargin="5" leftmargin="0"
           rightmargin="0">
     <%@ page import="oscar.*,java.text.*, java.util.*" %>
-    <jsp:useBean id="billing" scope="session" class="oscar.BillingBean"/>
-    <jsp:useBean id="billingItem" scope="page" class="oscar.BillingItemBean"/>
-    <jsp:useBean id="billingDataBean" class="oscar.BillingDataBean"
+    <%@ page import="openo.BillingItemBean" %>
+    <%@ page import="openo.SxmlMisc" %>
+    <jsp:useBean id="billing" scope="session" class="openo.BillingBean"/>
+    <jsp:useBean id="billingItem" scope="page" class="openo.BillingItemBean"/>
+    <jsp:useBean id="billingDataBean" class="openo.BillingDataBean"
                  scope="session"/>
     <jsp:useBean id="billingPatientDataBean"
-                 class="oscar.BillingPatientDataBean" scope="session"/>
+                 class="openo.BillingPatientDataBean" scope="session"/>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr bgcolor="#000000">
             <td height="40" width="10%"></td>

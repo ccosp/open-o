@@ -41,14 +41,14 @@
     }
 %>
 <%@page import="org.oscarehr.sharingcenter.SharingCenterUtil" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.PMmodule.caisi_integrator.ConformanceTestHelper" %>
 <%@page import="org.oscarehr.common.dao.DemographicExtDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicArchiveDao" %>
 <%@page import="org.oscarehr.common.dao.DemographicExtArchiveDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.common.dao.ScheduleTemplateCodeDao" %>
 <%@page import="org.oscarehr.common.model.ScheduleTemplateCode" %>
 <%@page import="org.oscarehr.common.dao.WaitingListDao" %>
@@ -63,7 +63,7 @@
 <%@page import="org.oscarehr.PMmodule.model.ProgramProvider" %>
 <%@page import="org.oscarehr.managers.PatientConsentManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<jsp:useBean id="apptMainBean" class="oscar.AppointmentMainBean" scope="session"/>
+<jsp:useBean id="apptMainBean" class="openo.AppointmentMainBean" scope="session"/>
 <%
     String demographic$ = request.getParameter("demographic_no");
     LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
@@ -84,10 +84,10 @@
 
 %>
 <%@ page
-        import="java.util.*, java.net.*,java.text.DecimalFormat, oscar.*, oscar.oscarDemographic.data.ProvinceNames, oscar.oscarWaitingList.WaitingList, oscar.oscarReport.data.DemographicSets,oscar.log.*" %>
+        import="java.util.*, java.net.*,java.text.DecimalFormat, oscar.*, openo.oscarDemographic.data.ProvinceNames, openo.oscarWaitingList.WaitingList, openo.oscarReport.data.DemographicSets,oscar.log.*" %>
 <%@ page import="oscar.oscarDemographic.data.*" %>
-<%@ page import="oscar.oscarDemographic.pageUtil.Util" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.oscarDemographic.pageUtil.Util" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*" %>
 <%@ page import="org.oscarehr.common.OtherIdManager" %>
 <%@ page import="org.oscarehr.common.web.ContactAction" %>
@@ -248,6 +248,12 @@
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.apache.commons.lang.StringUtils" %>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.log.LogConst" %>
+<%@ page import="openo.log.LogAction" %>
+<%@ page import="openo.oscarDemographic.data.DemographicMerged" %>
+<%@ page import="openo.oscarDemographic.data.DemographicRelationship" %>
+<%@ page import="openo.MyDateFormat" %>
+<%@ page import="openo.SxmlMisc" %>
 <!DOCTYPE html>
 <html:html lang="en">
 
@@ -1001,11 +1007,11 @@
                                             }
                                             //----------------------------REFERRAL DOCTOR --------------end-----------
 
-                                            if (oscar.util.StringUtils.filled(demographic.getYearOfBirth()))
+                                            if (openo.util.StringUtils.filled(demographic.getYearOfBirth()))
                                                 birthYear = StringUtils.trimToEmpty(demographic.getYearOfBirth());
-                                            if (oscar.util.StringUtils.filled(demographic.getMonthOfBirth()))
+                                            if (openo.util.StringUtils.filled(demographic.getMonthOfBirth()))
                                                 birthMonth = StringUtils.trimToEmpty(demographic.getMonthOfBirth());
-                                            if (oscar.util.StringUtils.filled(demographic.getDateOfBirth()))
+                                            if (openo.util.StringUtils.filled(demographic.getDateOfBirth()))
                                                 birthDate = StringUtils.trimToEmpty(demographic.getDateOfBirth());
 
                                             dob_year = Integer.parseInt(birthYear);
@@ -1427,7 +1433,7 @@
                                         <tr>
                                             <td>
                                                 <%
-                                                    oscar.oscarDemographic.data.DemographicMerged dmDAO = new oscar.oscarDemographic.data.DemographicMerged();
+                                                    DemographicMerged dmDAO = new DemographicMerged();
                                                     String dboperation = "search_detail";
                                                     String head = dmDAO.getHead(demographic_no);
                                                     ArrayList records = dmDAO.getTail(head);
@@ -2884,7 +2890,7 @@
                                                         </td>
                                                         <td align="left">
                                                             <%
-                                                                String lang = oscar.util.StringUtils.noNull(demographic.getOfficialLanguage()); %>
+                                                                String lang = openo.util.StringUtils.noNull(demographic.getOfficialLanguage()); %>
                                                             <select name="official_lang" <%=getDisabled("official_lang")%>>
                                                                 <option value="English" <%=lang.equals("English") ? "selected" : ""%> >
                                                                     <bean:message
@@ -2903,7 +2909,7 @@
                                                         </td>
                                                         <td>
                                                             <%
-                                                                String spokenLang = oscar.util.StringUtils.noNull(demographic.getSpokenLanguage()); %>
+                                                                String spokenLang = openo.util.StringUtils.noNull(demographic.getSpokenLanguage()); %>
                                                             <select name="spoken_lang"
                                                                     style="width: 200px;" <%=getDisabled("spoken_lang")%>>
                                                                 <%for (String splang : Util.spokenLangProperties.getLangSorted()) { %>
@@ -3538,7 +3544,7 @@
                                                         </b></td>
                                                         <td align="left">
                                                             <%
-                                                                String newsletter = oscar.util.StringUtils.noNull(demographic.getNewsletter()).trim();
+                                                                String newsletter = openo.util.StringUtils.noNull(demographic.getNewsletter()).trim();
                                                                 if (newsletter == null || newsletter.equals("")) {
                                                                     newsletter = "Unknown";
                                                                 }
@@ -4043,7 +4049,7 @@
                                                                     key="demographic.demographiceditdemographic.msgNotSet"/></option>
                                                             <%for (CountryCode cc : countryList) { %>
                                                             <option value="<%=cc.getCountryId()%>"
-                                                                    <% if (oscar.util.StringUtils.noNull(demographic.getCountryOfOrigin()).equals(cc.getCountryId())) {
+                                                                    <% if (openo.util.StringUtils.noNull(demographic.getCountryOfOrigin()).equals(cc.getCountryId())) {
                                                                         out.print("SELECTED");
                                                                     }%>><%=cc.getCountryName() %>
                                                             </option>
@@ -4984,7 +4990,7 @@
                                                                                     wlId = wl.getId().toString();
                                                                                     listID = String.valueOf(wl.getListId());
                                                                                     wlnote = wl.getNote();
-                                                                                    wlReferralDate = oscar.util.ConversionUtils.toDateString(wl.getOnListSince());
+                                                                                    wlReferralDate = ConversionUtils.toDateString(wl.getOnListSince());
                                                                                     if (wlReferralDate != null && wlReferralDate.length() > 10) {
                                                                                         wlReferralDate = wlReferralDate.substring(0, 11);
                                                                                     }

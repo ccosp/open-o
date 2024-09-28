@@ -15,11 +15,14 @@
 
 <%@ page import="oscar.form.*" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.FrmRecord" %>
 
 <%
     int demoNo = Integer.parseInt(request.getParameter("demographic_no"));
     String studyId = request.getParameter("study_no");
-    oscar.form.data.FrmData.PatientForm pform = (new oscar.form.data.FrmData()).getCurrentPatientForm("" + demoNo, studyId);
+    FrmData.PatientForm pform = (new FrmData()).getCurrentPatientForm("" + demoNo, studyId);
     int formId = (pform == null) ? 0 : Integer.parseInt(pform.getFormId());
     //int formId = Integer.parseInt(request.getParameter("formId"));
 

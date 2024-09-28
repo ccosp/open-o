@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceException;
 
+import openo.util.DateUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -88,7 +89,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class GenericIntakeEditAction extends DispatchAction {
 
@@ -178,7 +179,7 @@ public class GenericIntakeEditAction extends DispatchAction {
         Integer defaultCommunityProgramId = null;
 
         if (org.oscarehr.common.IsPropertiesOn.propertiesOn("oscarClinic")) {
-            defaultCommunityProgramId = getOscarClinicDefaultCommunityProgramId(oscar.OscarProperties.getInstance().getProperty("oscarClinicDefaultProgram"));
+            defaultCommunityProgramId = getOscarClinicDefaultCommunityProgramId(OscarProperties.getInstance().getProperty("oscarClinicDefaultProgram"));
         }
 
         setBeanProperties(loggedInInfo, formBean, intake, getClient(request), providerNo, Agency.getLocalAgency().areHousingProgramsVisible(intakeType), Agency.getLocalAgency()
@@ -435,7 +436,7 @@ public class GenericIntakeEditAction extends DispatchAction {
         if (StringUtils.isBlank(formattedAdmissionDate)) {
             admissionDate = new Date();
         } else {
-            admissionDate = oscar.util.DateUtils.toDate(formattedAdmissionDate);
+            admissionDate = DateUtils.toDate(formattedAdmissionDate);
         }
 
         /* for repeating elements */

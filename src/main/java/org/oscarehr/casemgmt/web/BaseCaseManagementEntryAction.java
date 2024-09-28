@@ -35,7 +35,7 @@ import org.oscarehr.common.dao.DxDao;
 import org.oscarehr.util.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import oscar.form.JSONAction;
+import openo.form.JSONAction;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;

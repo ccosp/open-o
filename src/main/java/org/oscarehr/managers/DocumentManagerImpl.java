@@ -39,6 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.itextpdf.text.DocumentException;
+import openo.OscarProperties;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -52,12 +53,11 @@ import org.oscarehr.util.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import oscar.OscarProperties;
 import org.oscarehr.documentManager.EDoc;
 
 import org.oscarehr.documentManager.EDocUtil;
-import oscar.log.LogAction;
-import oscar.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
+import openo.log.LogAction;
+import openo.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
 
 @Service
 public class DocumentManagerImpl implements DocumentManager {
@@ -152,7 +152,7 @@ public class DocumentManagerImpl implements DocumentManager {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date today = new Date();
         // Generates filename and path data and saves the document data to the file system
-        String documentPath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
+        String documentPath = OscarProperties.getInstance().getProperty("DOCUMENT_DIR");
         String fileName = dateTimeFormat.format(today) + "_" + document.getDocfilename();
         File file = new File(documentPath + File.separator + fileName);
         FileUtils.writeByteArrayToFile(file, documentData);

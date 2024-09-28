@@ -33,6 +33,10 @@
 <%@ page import="org.oscarehr.common.dao.SystemPreferencesDao" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.model.SystemPreferences" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPatientData" %>
+<%@ page import="openo.oscarRx.data.RxDrugData" %>
+<%@ page import="openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
     String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
@@ -55,11 +59,11 @@
     String atcCode = request.getParameter("atcCode");
     String id = request.getParameter("id");
 
-    String disabled = oscar.OscarProperties.getInstance().getProperty("rx3.disable_allergy_warnings", "false");
+    String disabled = OscarProperties.getInstance().getProperty("rx3.disable_allergy_warnings", "false");
     if (disabled.equals("false")) {
 
 
-        oscar.oscarRx.pageUtil.RxSessionBean rxSessionBean = (oscar.oscarRx.pageUtil.RxSessionBean) session.getAttribute("RxSessionBean");
+        RxSessionBean rxSessionBean = (RxSessionBean) session.getAttribute("RxSessionBean");
         Allergy[] allergies = RxPatientData.getPatient(loggedInInfo, rxSessionBean.getDemographicNo()).getActiveAllergies();
 
         if (loggedInInfo.getCurrentFacility().isIntegratorEnabled()) {

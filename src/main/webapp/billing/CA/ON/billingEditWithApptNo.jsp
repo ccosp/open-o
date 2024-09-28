@@ -31,6 +31,11 @@
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <%@page import="org.oscarehr.common.dao.ProviderPreferenceDao" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
 
 <%
     String prov = request.getParameter("billRegion");
@@ -50,7 +55,7 @@
         response.sendRedirect("../../../logout.jsp");
     }
 
-    oscar.OscarProperties oscarVariables = oscar.OscarProperties.getInstance();
+    OscarProperties oscarVariables = OscarProperties.getInstance();
 
     String user_no = (String) session.getAttribute("user");
 

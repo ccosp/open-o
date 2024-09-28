@@ -23,7 +23,7 @@
 
 package org.oscarehr.common;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class IsPropertiesOn {
 

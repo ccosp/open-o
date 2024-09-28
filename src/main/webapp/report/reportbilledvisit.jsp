@@ -23,6 +23,9 @@
 <%@ page
         import="java.util.*, java.sql.*, oscar.*, java.text.*, oscar.oscarDB.*,java.net.*"
         errorPage="../appointment/errorpage.jsp" %>
+<%@ page import="openo.oscarDB.DBPreparedHandler" %>
+<%@ page import="openo.oscarDB.DBPreparedHandlerParam" %>
+<%@ page import="openo.MyDateFormat" %>
 <html>
 <head>
     <script type="text/javascript" src="<%= request.getContextPath() %>/js/global.js"></script>

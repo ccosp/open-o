@@ -48,11 +48,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,oscar.MyDateFormat, oscar.oscarProvider.data.ProviderMyOscarIdData, oscar.oscarDemographic.data.DemographicData" %>
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,openo.MyDateFormat, openo.oscarProvider.data.ProviderMyOscarIdData, openo.oscarDemographic.data.DemographicData" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="oscar.oscarMDS.data.*,oscar.oscarLab.ca.on.*" %>
 <%@page import="org.oscarehr.util.SessionConstants" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
+<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <html:html lang="en">
     <head>

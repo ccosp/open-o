@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import openo.OscarProperties;
 import org.apache.tika.mime.MimeType;
 import org.apache.commons.io.IOUtils;
 
@@ -147,7 +148,7 @@ import org.oscarehr.documentManager.EDocUtil;
 public class SharingCenterUtil {
 
     private static final Logger LOGGER = MiscUtils.getLogger();
-    private static final oscar.OscarProperties oscarProperties = oscar.OscarProperties.getInstance();
+    private static final OscarProperties oscarProperties = OscarProperties.getInstance();
     private static final boolean sharingCenterEnabled = oscarProperties.getBooleanProperty("sharingcenter.enabled", "true");
     private static final String keyStoreFile = oscarProperties.getProperty("TOMCAT_KEYSTORE_FILE", null);
     private static final String keyStorePassword = oscarProperties.getProperty("TOMCAT_KEYSTORE_PASSWORD", null);

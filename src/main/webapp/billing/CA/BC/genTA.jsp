@@ -41,10 +41,10 @@
 
 
 <%@ page
-        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,oscar.MyDateFormat,oscar.oscarBilling.ca.bc.MSP.*,oscar.*" %>
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,openo.MyDateFormat,oscar.oscarBilling.ca.bc.MSP.*,oscar.*" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 
-<jsp:useBean id="documentBean" class="oscar.DocumentBean" scope="request"/>
+<jsp:useBean id="documentBean" class="openo.DocumentBean" scope="request"/>
 
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.billing.CA.BC.model.TeleplanS21" %>
@@ -59,6 +59,8 @@
 <%@ page import="org.oscarehr.billing.CA.BC.dao.TeleplanS22Dao" %>
 <%@ page import="org.oscarehr.billing.CA.BC.model.TeleplanC12" %>
 <%@ page import="org.oscarehr.billing.CA.BC.dao.TeleplanC12Dao" %>
+<%@ page import="openo.oscarBilling.ca.bc.MSP.MSPReconcile" %>
+<%@ page import="openo.OscarProperties" %>
 <%
     TeleplanS21Dao teleplanS21Dao = SpringUtils.getBean(TeleplanS21Dao.class);
     TeleplanS00Dao teleplanS00Dao = SpringUtils.getBean(TeleplanS00Dao.class);

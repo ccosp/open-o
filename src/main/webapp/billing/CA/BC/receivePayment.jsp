@@ -1,4 +1,5 @@
 <%@page import="java.sql.*" errorPage="" %>
+<%@ page import="openo.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -37,7 +38,7 @@
                 key="oscar.billing.CA.BC.received"/></legend>
         <div class="msgDisplay">
             <%
-                oscar.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm frm = (oscar.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm) request.getAttribute("receivePaymentActionForm");
+                ReceivePaymentActionForm frm = (ReceivePaymentActionForm) request.getAttribute("receivePaymentActionForm");
             %> <%=java.text.NumberFormat.getCurrencyInstance().format(new Double(frm.getAmountReceived()))%>
             <bean:message key="oscar.billing.CA.BC.credit"/> &nbsp; <bean:message
                 key="oscar.billing.CA.BC.invoice"/> <bean:write

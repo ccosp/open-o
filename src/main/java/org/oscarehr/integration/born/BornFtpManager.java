@@ -35,7 +35,7 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.integration.file.remote.session.Session;
 import org.springframework.integration.sftp.session.DefaultSftpSessionFactory;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class BornFtpManager {
 

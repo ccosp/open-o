@@ -50,7 +50,7 @@
 <%@page import="javax.xml.transform.stream.StreamSource" %>
 <%@page import="java.io.StringReader" %>
 <%@page import="java.io.StringWriter" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%
     String htmlResult = "No result";

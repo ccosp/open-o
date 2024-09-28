@@ -42,7 +42,7 @@
 <%@page import="java.util.List" %>
 <%@page import="org.oscarehr.PMmodule.web.OcanForm" %>
 <%@page import="org.oscarehr.common.model.OcanStaffForm" %>
-<%@page import="oscar.util.CBIUtil" %>
+<%@page import="openo.util.CBIUtil" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 
 <%!

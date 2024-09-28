@@ -60,7 +60,7 @@ import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SessionConstants;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 
 public class TicklerAction extends DispatchAction {
     private static Logger log = MiscUtils.getLogger();

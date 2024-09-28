@@ -34,7 +34,7 @@ import org.oscarehr.ws.rest.to.model.SummaryTo1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 
 @Component

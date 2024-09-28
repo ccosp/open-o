@@ -33,8 +33,8 @@
 <%@ page import="java.util.*, java.sql.*, oscar.*"
          errorPage="/errorpage.jsp" %>
 
-<jsp:useBean id="checklist" class="oscar.OBChecklist_99_12" scope="page"/>
-<jsp:useBean id="risks" class="oscar.OBRisks_99_12" scope="page"/>
+<jsp:useBean id="checklist" class="openo.OBChecklist_99_12" scope="page"/>
+<jsp:useBean id="risks" class="openo.OBRisks_99_12" scope="page"/>
 
 <%@ include file="../admin/dbconnection.jsp" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -44,6 +44,8 @@
 <%@page import="org.oscarehr.common.model.Form" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao" %>
 <%@page import="org.oscarehr.common.model.Demographic" %>
+<%@ page import="openo.SxmlMisc" %>
+<%@ page import="openo.MyDateFormat" %>
 <%
     DemographicAccessoryDao demographicAccessoryDao = (DemographicAccessoryDao) SpringUtils.getBean(DemographicAccessoryDao.class);
     FormDao formDao = SpringUtils.getBean(FormDao.class);

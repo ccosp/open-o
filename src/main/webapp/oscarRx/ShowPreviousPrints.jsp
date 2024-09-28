@@ -30,6 +30,9 @@
 <%@ page import="oscar.oscarRx.data.*" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
+<%@ page import="openo.oscarRx.data.RxPrescriptionData" %>
+<%@ page import="openo.util.DateUtils" %>
 
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
@@ -50,14 +53,14 @@
     <logic:redirect href="error.html"/>
 </logic:notPresent>
 <logic:present name="RxSessionBean" scope="session">
-    <bean:define id="bean" type="oscar.oscarRx.pageUtil.RxSessionBean"
+    <bean:define id="bean" type="openo.oscarRx.pageUtil.RxSessionBean"
                  name="RxSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="error.html"/>
     </logic:equal>
 </logic:present>
 <%
-    oscar.oscarRx.pageUtil.RxSessionBean bean = (oscar.oscarRx.pageUtil.RxSessionBean) pageContext.findAttribute("bean");
+    RxSessionBean bean = (RxSessionBean) pageContext.findAttribute("bean");
 %>
 <html:html lang="en">
     <head>
@@ -71,12 +74,12 @@
 
     </head>
 
-    <bean:define id="patient" type="oscar.oscarRx.data.RxPatientData.Patient" name="Patient"/>
+    <bean:define id="patient" type="openo.oscarRx.data.RxPatientData.Patient" name="Patient"/>
     <%
         String scriptNo = request.getParameter("scriptNo");
         //load prescription
-        oscar.oscarRx.data.RxPrescriptionData.Prescription[] prescribedDrugs = patient.getPrescribedDrugScripts();
-        oscar.oscarRx.data.RxPrescriptionData.Prescription prescription = null;
+        RxPrescriptionData.Prescription[] prescribedDrugs = patient.getPrescribedDrugScripts();
+        RxPrescriptionData.Prescription prescription = null;
         for (int x = 0; x < prescribedDrugs.length; x++) {
             if (prescribedDrugs[x].getScript_no() != null && prescribedDrugs[x].getScript_no().equals(scriptNo)) {
                 prescription = prescribedDrugs[x];
@@ -123,7 +126,7 @@
                                             %>
                                             <tr>
                                                 <td width="50%" valign="top"
-                                                    nowrap="nowrap"><%=oscar.util.DateUtils.formatDate(originalPrintDate, request.getLocale()) %>
+                                                    nowrap="nowrap"><%=DateUtils.formatDate(originalPrintDate, request.getLocale()) %>
                                                 </td>
                                                 <td width="50%" valign="top"
                                                     nowrap="nowrap"><%=providerDao.getProvider(originalProviderNo).getFormattedName() %>

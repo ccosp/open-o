@@ -29,21 +29,10 @@ package org.oscarehr.managers;
 
 import java.util.*;
 
-import org.apache.commons.lang.StringUtils;
-import org.oscarehr.common.exception.PatientDirectiveException;
 import org.oscarehr.util.LoggedInInfo;
-import org.oscarehr.util.MiscUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import oscar.util.OscarRoleObjectPrivilege;
-
-import com.quatro.dao.security.SecobjprivilegeDao;
-import com.quatro.dao.security.SecuserroleDao;
 import com.quatro.model.security.Secobjprivilege;
 import com.quatro.model.security.Secuserrole;
-
-import javax.servlet.http.HttpSession;
 
 public interface SecurityInfoManager {
     public static final String READ = "r";

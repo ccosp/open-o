@@ -1,4 +1,5 @@
-<%@ page import="org.owasp.encoder.Encode" %><%--
+<%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -46,7 +47,7 @@
 <!DOCTYPE html>
 <html:html lang="en">
     <jsp:useBean id="displayServiceUtil" scope="request"
-                 class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
+                 class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
     <%
         displayServiceUtil.estSpecialistVector();
     %>
@@ -94,7 +95,7 @@
             <tr style="vertical-align: top">
                 <td class="MainTableLeftColumn">
                     <%
-                        oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar titlebar = new oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConTitlebar(request);
+                        EctConTitlebar titlebar = new EctConTitlebar(request);
                         out.print(titlebar.estBar(request));
                     %>
                 </td>

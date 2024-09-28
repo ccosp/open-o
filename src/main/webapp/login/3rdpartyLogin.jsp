@@ -27,7 +27,7 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.apache.cxf.rs.security.oauth.data.OAuthAuthorizationData" %>
 <%@page import="org.apache.cxf.rs.security.oauth.data.OAuthPermission" %>
-<%@page import="oscar.login.OAuthSessionMerger" %>
+<%@page import="openo.login.OAuthSessionMerger" %>
 
 <%
     boolean loggedIn = false;

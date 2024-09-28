@@ -18,7 +18,11 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
-<% java.util.Properties oscarVariables = oscar.OscarProperties.getInstance(); %>
+<%@ page import="openo.form.FrmRecordFactory" %>
+<%@ page import="openo.form.data.FrmData" %>
+<%@ page import="openo.form.FrmRecord" %>
+<%@ page import="openo.OscarProperties" %>
+<% java.util.Properties oscarVariables = OscarProperties.getInstance(); %>
 
 <%
     String formClass = "BCNewBorn";

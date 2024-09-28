@@ -51,25 +51,25 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 
 
-<%@page import="java.util.ArrayList, java.util.List, java.util.*, oscar.OscarProperties, oscar.oscarLab.ca.on.*" %>
+<%@page import="java.util.ArrayList, java.util.List, java.util.*, openo.OscarProperties, oscar.oscarLab.ca.on.*" %>
 <%@page import="org.oscarehr.casemgmt.service.CaseManagementManager,org.oscarehr.casemgmt.model.CaseManagementNote,org.oscarehr.casemgmt.model.Issue,org.oscarehr.common.model.UserProperty,org.oscarehr.common.dao.UserPropertyDAO,org.springframework.web.context.support.*,org.springframework.web.context.*" %>
 
 <%@page import="org.oscarehr.common.dao.SiteDao" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="org.oscarehr.common.model.Site" %>
 <%@page import="org.oscarehr.util.WebUtils" %>
-<%@page import="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" %>
-<%@page import="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
-<%@page import="oscar.oscarDemographic.data.DemographicData" %>
-<%@page import="oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestAction" %>
-<%@page import="org.oscarehr.util.MiscUtils,oscar.oscarClinic.ClinicData" %>
+<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestForm" %>
+<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
+<%@page import="openo.oscarDemographic.data.DemographicData" %>
+<%@page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewRequestAction" %>
+<%@page import="org.oscarehr.util.MiscUtils,openo.oscarClinic.ClinicData" %>
 <%@ page import="org.oscarehr.util.LoggedInInfo" %>
 <%@ page import="org.oscarehr.util.DigitalSignatureUtils" %>
 <%@ page import="org.oscarehr.ui.servlet.ImageRenderingServlet" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.util.MiscUtils" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProgramDao, org.oscarehr.PMmodule.model.Program" %>
-<%@page import="oscar.oscarDemographic.data.DemographicData, oscar.oscarRx.data.RxProviderData, oscar.oscarRx.data.RxProviderData.Provider, oscar.oscarClinic.ClinicData" %>
+<%@page import="openo.oscarDemographic.data.DemographicData, openo.oscarRx.data.RxProviderData, openo.oscarRx.data.RxProviderData.Provider, openo.oscarClinic.ClinicData" %>
 <%@ page import="org.oscarehr.common.dao.FaxConfigDao, org.oscarehr.common.model.FaxConfig" %>
 <%@page import="org.oscarehr.common.dao.ConsultationServiceDao" %>
 <%@page import="org.oscarehr.common.model.ConsultationServices" %>
@@ -82,18 +82,23 @@
 <%@ page import="org.oscarehr.common.model.enumerator.ConsultationRequestExtKey" %>
 <%@ page import="org.oscarehr.common.dao.ConsultationRequestExtDao" %>
 <%@ page import="org.oscarehr.managers.ConsultationManager" %>
-<%@ page import="oscar.oscarEncounter.data.EctFormData" %>
+<%@ page import="openo.oscarEncounter.data.EctFormData" %>
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="org.oscarehr.common.model.EFormData" %>
-<%@ page import="oscar.eform.EFormUtil" %>
-<%@ page import="oscar.oscarLab.ca.all.Hl7textResultsData" %>
+<%@ page import="openo.eform.EFormUtil" %>
+<%@ page import="openo.oscarLab.ca.all.Hl7textResultsData" %>
 <%@ page import="org.oscarehr.documentManager.EDocUtil" %>
 <%@ page import="org.oscarehr.documentManager.EDoc" %>
-<%@ page import="oscar.util.StringUtils" %>
+<%@ page import="openo.util.StringUtils" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
+<%@ page import="openo.oscarDemographic.data.EctInformation" %>
+<%@ page import="openo.oscarDemographic.data.RxInformation" %>
+<%@ page import="openo.oscarLab.ca.on.CommonLabResultData" %>
+<%@ page import="openo.oscarLab.ca.on.LabResultData" %>
 
 
 <jsp:useBean id="displayServiceUtil" scope="request"
-             class="oscar.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
+             class="openo.oscarEncounter.oscarConsultationRequest.config.pageUtil.EctConDisplayServiceUtil"/>
 <!DOCTYPE html>
 <html:html lang="en">
 
@@ -173,7 +178,7 @@
 
         UserPropertyDAO userPropertyDAO = SpringUtils.getBean(UserPropertyDAO.class);
         if (demo != null) {
-            demoData = new oscar.oscarDemographic.data.DemographicData();
+            demoData = new DemographicData();
             demographic = demoData.getDemographic(loggedInInfo, demo);
             providerNoFromChart = demographic.getProviderNo();
             demo_mrp = demographic.getProviderNo();
@@ -663,8 +668,8 @@
         var services = new Array();				// the following are used as a 2D table for makes and models
         var specialists = new Array();
         var specialistFaxNumber = "";
-        <%oscar.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData configScript;
-				configScript = new oscar.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData();
+        <%EctConConfigurationJavascriptData configScript;
+				configScript = new EctConConfigurationJavascriptData();
 				out.println(configScript.getJavascript());%>
 
         /////////////////////////////////////////////////////////////////////
@@ -1570,7 +1575,7 @@ if (userAgent != null) {
             } else if (request.getAttribute("validateError") == null) {
                 //  new request
                 if (demo != null) {
-                    oscar.oscarDemographic.data.RxInformation RxInfo = new oscar.oscarDemographic.data.RxInformation();
+                    RxInformation RxInfo = new RxInformation();
                     EctViewRequestAction.fillFormValues(thisForm, consultUtil);
 
                     if ("true".equalsIgnoreCase(props.getProperty("CONSULTATION_AUTO_INCLUDE_ALLERGIES", "true"))) {
@@ -1580,7 +1585,7 @@ if (userAgent != null) {
 
                     if ("true".equalsIgnoreCase(props.getProperty("CONSULTATION_AUTO_INCLUDE_MEDICATIONS", "true"))) {
                         if (props.getProperty("currentMedications", "").equalsIgnoreCase("otherMedications")) {
-                            oscar.oscarDemographic.data.EctInformation EctInfo = new oscar.oscarDemographic.data.EctInformation(loggedInInfo, demo);
+                            EctInformation EctInfo = new EctInformation(loggedInInfo, demo);
                             thisForm.setCurrentMedications(EctInfo.getFamilyHistory());
                         } else {
                             thisForm.setCurrentMedications(RxInfo.getCurrentMedication(demo));

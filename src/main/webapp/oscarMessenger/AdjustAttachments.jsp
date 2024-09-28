@@ -42,6 +42,9 @@
 
 <%@page contentType='text/xml'
         import="oscar.oscarMessenger.docxfer.send.*, oscar.oscarMessenger.docxfer.util.*" %>
+<%@ page import="openo.oscarMessenger.docxfer.util.MsgCommxml" %>
+<%@ page import="openo.oscarMessenger.pageUtil.MsgSessionBean" %>
+<%@ page import="openo.oscarMessenger.docxfer.send.MsgSendDocument" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
@@ -50,7 +53,7 @@
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
     <bean:define id="bean"
-                 type="oscar.oscarMessenger.pageUtil.MsgSessionBean"
+                 type="openo.oscarMessenger.pageUtil.MsgSessionBean"
                  name="msgSessionBean" scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>
@@ -58,7 +61,7 @@
 </logic:present>
 
 <%
-    oscar.oscarMessenger.pageUtil.MsgSessionBean bean = (oscar.oscarMessenger.pageUtil.MsgSessionBean) pageContext.findAttribute("bean");
+    MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
     String checks = "";
     java.util.Enumeration names = request.getParameterNames();
 
@@ -71,7 +74,7 @@
         }
     }
 
-    String xmlDoc = oscar.oscarMessenger.docxfer.util.MsgCommxml.decode64(request.getParameter("xmlDoc"));
+    String xmlDoc = MsgCommxml.decode64(request.getParameter("xmlDoc"));
     String idEnc = request.getParameter("id");
 
     String sXML = MsgCommxml.toXML(new MsgSendDocument().parseChecks(xmlDoc, checks));

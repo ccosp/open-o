@@ -53,6 +53,8 @@
 
 <%@ page import="org.oscarehr.common.model.ProviderData" %>
 <%@ page import="org.oscarehr.common.dao.ProviderDataDao" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil" %>
+<%@ page import="openo.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsUtil" %>
 
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
@@ -153,8 +155,8 @@
         String desc = (String) request.getAttribute("desc");
         String searchDate = (String) request.getAttribute("searchDate");
 
-        oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil consultUtil;
-        consultUtil = new oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctConsultationFormRequestUtil();
+        EctConsultationFormRequestUtil consultUtil;
+        consultUtil = new EctConsultationFormRequestUtil();
 
         if (isTeamAccessPrivacy) {
             consultUtil.estTeamsByTeam(curProvider_no);
@@ -452,8 +454,8 @@
                                     <%} %>
                                 </tr>
                                 <%
-                                    oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsUtil theRequests;
-                                    theRequests = new oscar.oscarEncounter.oscarConsultationRequest.pageUtil.EctViewConsultationRequestsUtil();
+                                    EctViewConsultationRequestsUtil theRequests;
+                                    theRequests = new EctViewConsultationRequestsUtil();
                                     theRequests.estConsultationVecByTeam(LoggedInInfo.getLoggedInInfoFromSession(request), team, includeCompleted, startDate, endDate, orderby, desc, searchDate, offset, limit);
                                     boolean overdue;
                                     UserPropertyDAO pref = (UserPropertyDAO) WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext()).getBean(UserPropertyDAO.class);

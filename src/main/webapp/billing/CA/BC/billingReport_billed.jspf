@@ -25,7 +25,9 @@
 -->
 
 
-<%@page import="org.apache.commons.lang.StringUtils"%><table width="100%" border="2" valign="top">
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@ page import="openo.MyDateFormat" %>
+<table width="100%" border="2" valign="top">
 	<% 
  String dateBegin = StringUtils.trimToNull(request.getParameter("xml_vdate"));
    String dateEnd = StringUtils.trimToNull(request.getParameter("xml_appointment_date"));

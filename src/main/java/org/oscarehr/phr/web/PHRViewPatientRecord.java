@@ -51,11 +51,11 @@ import org.oscarehr.myoscar.utils.MyOscarLoggedInInfo;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
-import oscar.oscarDemographic.data.DemographicData;
-import oscar.util.UtilDateUtilities;
+import openo.OscarProperties;
+import openo.log.LogAction;
+import openo.log.LogConst;
+import openo.oscarDemographic.data.DemographicData;
+import openo.util.UtilDateUtilities;
 
 /**
  * @author apavel

@@ -184,7 +184,7 @@ import org.oscarehr.util.CxfClientUtilsOld;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
+import openo.OscarProperties;
 import ca.ehealthontario.ccim.ApplyToDocument;
 import ca.ehealthontario.ccim.ApplyToDocument.ApplyTo;
 import ca.ehealthontario.ccim.ApplyToDocument.ApplyTo.Assessment.AssessmentType;

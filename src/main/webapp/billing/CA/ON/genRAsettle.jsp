@@ -18,7 +18,7 @@
 
 --%>
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,oscar.MyDateFormat"
+<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, oscar.util.*, java.net.*,openo.MyDateFormat"
          errorPage="/errorpage.jsp" %>
 
 <%@page import="org.oscarehr.util.SpringUtils" %>

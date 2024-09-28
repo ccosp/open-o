@@ -37,7 +37,7 @@
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
 <%@page import="org.oscarehr.util.WebUtils" %>
 <%@page import="org.oscarehr.myoscar.utils.MyOscarLoggedInInfo" %>
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <%@page import="oscar.oscarDemographic.data.*,java.util.*,oscar.oscarPrevention.*" %>
 <%@page import="org.oscarehr.phr.util.MyOscarUtils" %>
 <%@page import="org.oscarehr.common.dao.DemographicDao, org.oscarehr.common.model.Demographic" %>
@@ -90,7 +90,7 @@
     Integer demographicId = Integer.parseInt(demographic_no);
     PreventionData.addRemotePreventions(loggedInInfo, p, demographicId);
     Date demographicDateOfBirth = PreventionData.getDemographicDateOfBirth(loggedInInfo, Integer.valueOf(demographic_no));
-    String demographicDob = oscar.util.UtilDateUtilities.DateToString(demographicDateOfBirth);
+    String demographicDob = UtilDateUtilities.DateToString(demographicDateOfBirth);
 
     PreventionDS pf = SpringUtils.getBean(PreventionDS.class);
 
@@ -147,6 +147,12 @@
 
 
 <%@page import="org.oscarehr.util.SessionConstants" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.oscarPrevention.PreventionDS" %>
+<%@ page import="openo.oscarPrevention.PreventionData" %>
+<%@ page import="openo.oscarPrevention.PreventionDisplayConfig" %>
+<%@ page import="openo.oscarPrevention.Prevention" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 <html:html>
 
     <head>
@@ -854,7 +860,7 @@
                         <input type="hidden" name="mrp" value="<%=mrp%>"/>
                         <input type="hidden" name="module" value="prevention">
                                 <%
-                 if (!oscar.OscarProperties.getInstance().getBooleanProperty("PREVENTION_CLASSIC_VIEW","yes")){
+                 if (!OscarProperties.getInstance().getBooleanProperty("PREVENTION_CLASSIC_VIEW","yes")){
                    ArrayList<Map<String,Object>> hiddenlist = new ArrayList<Map<String,Object>>();
                   for (int i = 0 ; i < prevList.size(); i++){
                   		HashMap<String,String> h = prevList.get(i);
@@ -931,7 +937,7 @@
                                         <!--<%=refused(hdata.get("refused"))%>-->
                                         Date: <%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>
                                                 <%if (hExt.get("comments") != null && (hExt.get("comments")).length()>0) {
-                    if (oscar.OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","yes")){%>
+                    if (OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","yes")){%>
                                     <div class="comments">
                                         <span><%=StringEscapeUtils.escapeHtml((String) hExt.get("comments"))%></span>
                                     </div>
@@ -1018,7 +1024,7 @@
                                                 <!--<%=refused(hdata.get("refused"))%>-->
                                                 Date: <%=StringEscapeUtils.escapeHtml((String)hdata.get("prevention_date_no_time"))%>
                                                         <%if (hExt.get("comments") != null && (hExt.get("comments")).length()>0) {
-                     if (oscar.OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","yes")){ %>
+                     if (OscarProperties.getInstance().getBooleanProperty("prevention_show_comments","yes")){ %>
                                             <div class="comments">
                                                 <span><%=StringEscapeUtils.escapeHtml((String) hExt.get("comments"))%></span>
                                             </div>

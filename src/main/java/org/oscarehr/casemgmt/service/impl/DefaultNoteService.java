@@ -36,6 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import org.oscarehr.caisi_integrator.ws.CachedDemographicNote;
@@ -62,10 +63,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import oscar.eform.EFormUtil;
-import oscar.oscarEncounter.data.EctFormData;
-import oscar.oscarEncounter.data.EctFormData.PatientForm;
-import oscar.util.ConversionUtils;
+import openo.eform.EFormUtil;
+import openo.oscarEncounter.data.EctFormData;
+import openo.oscarEncounter.data.EctFormData.PatientForm;
+import openo.util.ConversionUtils;
 
 /**
  * Default implementation of the notes service
@@ -206,7 +207,7 @@ public class DefaultNoteService implements NoteService {
         intTime = System.currentTimeMillis();
 
         List<Map<String, Object>> bills = null;
-        if (oscar.OscarProperties.getInstance().getProperty("billregion", "").equalsIgnoreCase("ON")) {
+        if (OscarProperties.getInstance().getProperty("billregion", "").equalsIgnoreCase("ON")) {
             bills = billingONCHeader1Dao.getInvoicesMeta(Integer.parseInt(demoNo));
             for (Map<String, Object> h1 : bills) {
                 EChartNoteEntry e = new EChartNoteEntry();

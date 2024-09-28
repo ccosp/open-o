@@ -52,8 +52,8 @@ import org.oscarehr.common.model.EFormValue;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.util.UtilDateUtilities;
+import openo.OscarProperties;
+import openo.util.UtilDateUtilities;
 
 public class BORN18MConnector {
     private final String UPLOADED_TO_BORN = "uploaded_to_BORN";

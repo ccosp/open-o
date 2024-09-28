@@ -50,6 +50,7 @@
 <%@page import="org.oscarehr.renal.CkdScreenerReportHandler" %>
 <%@page import="org.oscarehr.renal.CKDReportContainer" %>
 <%@page import="org.oscarehr.PMmodule.dao.ProviderDao" %>
+<%@ page import="openo.OscarProperties" %>
 
 
 <%
@@ -58,7 +59,7 @@
     CkdScreenerReportHandler report = new CkdScreenerReportHandler();
     List<CKDReportContainer> ckds = report.generateReport();
 
-    String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
+    String labReqVer = OscarProperties.getInstance().getProperty("onare_labreqver", "07");
     if (labReqVer.equals("")) {
         labReqVer = "07";
     }

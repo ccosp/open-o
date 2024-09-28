@@ -47,9 +47,9 @@
 
 
 <%@ page
-        import="java.sql.*, java.util.*, oscar.SxmlMisc, oscar.oscarProvider.data.ProviderBillCenter"
+        import="java.sql.*, java.util.*, openo.SxmlMisc, openo.oscarProvider.data.ProviderBillCenter"
         errorPage="/errorpage.jsp" %>
-<%@ page import="oscar.log.LogAction,oscar.log.LogConst" %>
+<%@ page import="openo.log.LogAction,openo.log.LogConst" %>
 <%@ page import="org.oscarehr.common.model.ClinicNbr" %>
 <%@ page import="org.oscarehr.util.SpringUtils" %>
 <%@ page import="org.oscarehr.common.dao.ClinicNbrDao" %>
@@ -59,7 +59,7 @@
 <%@ page import="org.oscarehr.common.model.Security" %>
 <%@page import="org.oscarehr.common.dao.UserPropertyDAO" %>
 <%@page import="org.oscarehr.common.model.UserProperty" %>
-<%@ page import="oscar.OscarProperties" %>
+<%@ page import="openo.OscarProperties" %>
 <%@page import="org.oscarehr.common.Gender" %>
 
 <%
@@ -77,6 +77,7 @@
     <%@page import="org.oscarehr.common.model.ProviderSite" %>
     <%@page import="org.oscarehr.common.model.ProviderSitePK" %>
     <%@page import="org.oscarehr.common.dao.ProviderSiteDao" %>
+    <%@ page import="openo.MyDateFormat" %>
 
 
     <head>
@@ -341,7 +342,7 @@
                         <td align="right"><bean:message key="admin.provider.formDOB"/>:
                         </td>
                         <td><input type="text" name="dob"
-                                   value="<%= oscar.MyDateFormat.getMyStandardDate(provider.getDob()) %>"
+                                   value="<%= MyDateFormat.getMyStandardDate(provider.getDob()) %>"
                                    maxlength="11"></td>
                     </tr>
                     <tr>

@@ -63,12 +63,12 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%@page import="oscar.OscarProperties" %>
+<%@page import="openo.OscarProperties" %>
 <html:html lang="en">
     <head>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/global.js"></script>
         <title><bean:message key="admin.admin.page.title"/> Start Time
-            : <%=oscar.OscarProperties.getInstance().getStartTime()%>
+            : <%=OscarProperties.getInstance().getStartTime()%>
         </title>
         <link rel="stylesheet" type="text/css"
               href="../share/css/OscarStandardLayout.css"/>
@@ -419,7 +419,7 @@
                     <% } %>
                     <li><a href="#"
                            onclick='popupPage(600,900,&quot;<html:rewrite
-                                   page="/servlet/oscar.DocumentUploadServlet"/>&quot;);return false;'><bean:message
+                                   page="/servlet/openo.DocumentUploadServlet"/>&quot;);return false;'><bean:message
                             key="admin.admin.btnBillingReconciliation"/></a></li>
                     <!-- li><a href="#" onclick ='popupPage(600,900,&quot;<html:rewrite
                         page="/billing/CA/ON/billingRA.jsp"/>&quot;);return false;'><bean:message

@@ -46,7 +46,7 @@
 <%@ page import="org.oscarehr.casemgmt.model.CaseManagementNote" %>
 <%@ page import="org.oscarehr.casemgmt.model.CaseManagementIssue" %>
 <%@ page import="org.oscarehr.common.model.Provider" %>
-<%@ page import="oscar.util.DateUtils" %>
+<%@ page import="openo.util.DateUtils" %>
 
 <% CaseManagementNote note = (CaseManagementNote) request.getAttribute("Note");
     pageContext.setAttribute("provName", note.getProviderName());

@@ -48,11 +48,11 @@ import org.oscarehr.util.SpringUtils;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import oscar.OscarDocumentCreator;
-import oscar.oscarResearch.oscarDxResearch.bean.dxCodeSearchBean;
-import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListBeanHandler;
-import oscar.oscarResearch.oscarDxResearch.bean.dxQuickListItemsHandler;
-import oscar.oscarResearch.oscarDxResearch.util.dxResearchCodingSystem;
+import openo.OscarDocumentCreator;
+import openo.oscarDxResearch.bean.dxCodeSearchBean;
+import openo.oscarDxResearch.bean.dxQuickListBeanHandler;
+import openo.oscarDxResearch.bean.dxQuickListItemsHandler;
+import openo.oscarDxResearch.util.dxResearchCodingSystem;
 
 
 /**

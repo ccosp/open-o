@@ -41,7 +41,7 @@ import org.oscarehr.caisi_integrator.ws.FacilityIdStringCompositePk;
 import org.oscarehr.caisi_integrator.ws.Referral;
 import org.oscarehr.util.LoggedInInfo;
 
-import oscar.util.DateUtils;
+import openo.util.DateUtils;
 
 public class ReferralSummaryDisplay {
     public static final Comparator<ReferralSummaryDisplay> REFERRAL_DATE_COMPARATOR = new Comparator<ReferralSummaryDisplay>() {

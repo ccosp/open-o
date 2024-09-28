@@ -38,8 +38,8 @@ import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.oscarTickler.TicklerCreator;
+import openo.OscarProperties;
+import openo.oscarTickler.TicklerCreator;
 
 public class CkdNotificationManager {
     private Logger logger = MiscUtils.getLogger();
@@ -118,7 +118,7 @@ public class CkdNotificationManager {
         }
 
 
-        String labReqVer = oscar.OscarProperties.getInstance().getProperty("onare_labreqver", "07");
+        String labReqVer = OscarProperties.getInstance().getProperty("onare_labreqver", "07");
         if (labReqVer.equals("")) {
             labReqVer = "07";
         }

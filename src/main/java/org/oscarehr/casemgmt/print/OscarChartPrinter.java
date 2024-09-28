@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import openo.oscarRx.data.RxPrescriptionData;
 import org.oscarehr.PMmodule.dao.ProgramDao;
 import org.oscarehr.PMmodule.dao.ProviderDao;
 import org.oscarehr.casemgmt.dao.CaseManagementIssueDAO;
@@ -71,10 +72,10 @@ import org.oscarehr.managers.TicklerManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.SxmlMisc;
-import oscar.oscarClinic.ClinicData;
-import oscar.oscarDemographic.data.DemographicRelationship;
+import openo.OscarProperties;
+import openo.SxmlMisc;
+import openo.oscarClinic.ClinicData;
+import openo.oscarDemographic.data.DemographicRelationship;
 
 /**
  * This will create a PDF + assemble e-forms,documents,labs into a package
@@ -571,8 +572,8 @@ public class OscarChartPrinter {
         else
             newPage = true;
         */
-        oscar.oscarRx.data.RxPrescriptionData prescriptData = new oscar.oscarRx.data.RxPrescriptionData();
-        oscar.oscarRx.data.RxPrescriptionData.Prescription[] arr = {};
+        RxPrescriptionData prescriptData = new RxPrescriptionData();
+        RxPrescriptionData.Prescription[] arr = {};
         arr = prescriptData.getUniquePrescriptionsByPatient(Integer.parseInt(demoNo));
 
         if (arr.length == 0) {
@@ -592,7 +593,7 @@ public class OscarChartPrinter {
 
         Font curFont;
         for (int idx = 0; idx < arr.length; ++idx) {
-            oscar.oscarRx.data.RxPrescriptionData.Prescription drug = arr[idx];
+            RxPrescriptionData.Prescription drug = arr[idx];
             p = new Paragraph();
             p.setAlignment(Paragraph.ALIGN_LEFT);
             if (drug.isCurrent() && !drug.isArchived()) {

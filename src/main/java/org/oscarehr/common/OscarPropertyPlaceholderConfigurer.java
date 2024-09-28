@@ -25,6 +25,7 @@ package org.oscarehr.common;
 
 import java.util.Properties;
 
+import openo.OscarProperties;
 import org.apache.logging.log4j.Logger;
 import org.oscarehr.util.MiscUtils;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -37,7 +38,7 @@ public class OscarPropertyPlaceholderConfigurer extends PropertyPlaceholderConfi
      */
     protected String resolvePlaceholder(String placeholder, Properties properties, int systemPropertiesMode) {
         log.debug("resolvePlaceholder Start " + placeholder);
-        Properties props = oscar.OscarProperties.getInstance();
+        Properties props = OscarProperties.getInstance();
         if (props.containsKey(placeholder)) {
             log.debug("setting property " + placeholder + " with " + props.getProperty(placeholder));
             properties.setProperty(placeholder, props.getProperty(placeholder));

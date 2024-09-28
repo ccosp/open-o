@@ -30,6 +30,10 @@
 %>
 
 <%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*" %>
+<%@ page import="openo.oscarReport.reportByTemplate.Choice" %>
+<%@ page import="openo.oscarReport.reportByTemplate.Parameter" %>
+<%@ page import="openo.oscarReport.reportByTemplate.ReportObject" %>
+<%@ page import="openo.oscarReport.reportByTemplate.ReportManager" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>

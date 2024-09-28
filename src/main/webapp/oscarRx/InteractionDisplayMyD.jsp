@@ -55,6 +55,7 @@
 
 
 <%@page import="org.oscarehr.util.MiscUtils" %>
+<%@ page import="openo.oscarRx.pageUtil.RxSessionBean" %>
 <div
         style="background-color:<%=sigColor(""+ht.get("significance"))%>;margin-right:3px;margin-left:3px;margin-top:2px;padding-left:3px;padding-top:3px;padding-bottom:3px;">
     <%=ht.get("name")%> <%=effect("" + ht.get("effect"))%> <%=ht.get("drug2")%>

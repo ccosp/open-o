@@ -65,8 +65,8 @@ import org.oscarehr.sharingcenter.model.ClinicInfoDataObject;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.OscarProperties;
-import oscar.util.StringUtils;
+import openo.OscarProperties;
+import openo.util.StringUtils;
 import ca.bornontario.wb.BORNWBBatch;
 import ca.bornontario.wb.BORNWBBatchDocument;
 import ca.bornontario.wb.CountryProvince;

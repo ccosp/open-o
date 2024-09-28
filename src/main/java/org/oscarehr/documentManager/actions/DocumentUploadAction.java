@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import openo.OscarProperties;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.ActionForm;
@@ -49,8 +50,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import org.oscarehr.documentManager.data.DocumentUploadForm;
-import oscar.log.LogAction;
-import oscar.log.LogConst;
+import openo.log.LogAction;
+import openo.log.LogConst;
 
 public class DocumentUploadAction extends DispatchAction {
 
@@ -196,7 +197,7 @@ public class DocumentUploadAction extends DispatchAction {
         FileOutputStream fos = null;
         try {
             fis = docFile.getInputStream();
-            String savePath = oscar.OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/" + fileName;
+            String savePath = OscarProperties.getInstance().getProperty("DOCUMENT_DIR") + "/" + fileName;
             fos = new FileOutputStream(savePath);
             byte[] buf = new byte[128 * 1024];
             int i = 0;

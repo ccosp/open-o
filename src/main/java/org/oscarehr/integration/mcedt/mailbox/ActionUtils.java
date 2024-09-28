@@ -54,8 +54,8 @@ import org.oscarehr.integration.mcedt.McedtConstants;
 import org.oscarehr.integration.mcedt.ResourceForm;
 import org.oscarehr.util.MiscUtils;
 
-import oscar.OscarProperties;
-import oscar.util.ConversionUtils;
+import openo.OscarProperties;
+import openo.util.ConversionUtils;
 import ca.ontario.health.edt.Detail;
 import ca.ontario.health.edt.DetailData;
 import ca.ontario.health.edt.EDTDelegate;

@@ -25,6 +25,7 @@
 <%@page import="org.oscarehr.billing.CA.BC.model.WcbBpCode" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.billing.CA.dao.WcbBpCodeDao" %>
+<%@ page import="openo.Misc" %>
 <%
     if (session.getAttribute("user") == null) {
         response.sendRedirect("../../logout.jsp");
@@ -45,7 +46,7 @@
         } else {
             searchStr = "%" + searchStr + "%";
         }
-        searchStr = oscar.Misc.mysqlEscape(searchStr);
+        searchStr = Misc.mysqlEscape(searchStr);
     %>
     <script language="JavaScript">
     function posttoText(index){

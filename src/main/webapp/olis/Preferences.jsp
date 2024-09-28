@@ -24,8 +24,8 @@
     ;
     OLISSystemPreferences olisPreferences = olisPrefDao.getPreferences();
 
-    String startTime = oscar.Misc.getStr(olisPreferences.getStartTime(), "");
-    String endTime = oscar.Misc.getStr(olisPreferences.getEndTime(), "");
+    String startTime = Misc.getStr(olisPreferences.getStartTime(), "");
+    String endTime = Misc.getStr(olisPreferences.getEndTime(), "");
     DateTimeFormatter output = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss Z");
     DateTimeFormatter input = DateTimeFormat.forPattern("YYYYMMddHHmmssZ");
 
@@ -51,6 +51,7 @@
 </security:oscarSec>
 
 <%@ page import="java.util.*,oscar.oscarReport.reportByTemplate.*" %>
+<%@ page import="openo.Misc" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

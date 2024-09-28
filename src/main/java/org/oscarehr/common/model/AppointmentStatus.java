@@ -33,7 +33,7 @@ import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
-import oscar.appt.status.service.impl.AppointmentStatusMgrImpl;
+import openo.appt.status.service.impl.AppointmentStatusMgrImpl;
 
 
 @Entity

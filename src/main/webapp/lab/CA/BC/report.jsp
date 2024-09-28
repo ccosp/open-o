@@ -43,7 +43,7 @@
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obx" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Obr" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.Hl7ObrDao" %>
-<%@page import="oscar.util.ConversionUtils" %>
+<%@page import="openo.util.ConversionUtils" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.Hl7PidDao" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Pid" %>
@@ -51,6 +51,8 @@
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Link" %>
 <%@page import="org.oscarehr.billing.CA.BC.dao.Hl7MessageDao" %>
 <%@page import="org.oscarehr.billing.CA.BC.model.Hl7Message" %>
+<%@ page import="openo.Misc" %>
+<%@ page import="openo.MyDateFormat" %>
 
 <%
     String pid = request.getParameter("pid"),
@@ -138,7 +140,7 @@
             int age = 0;
             java.util.GregorianCalendar calendar = new java.util.GregorianCalendar();
             calendar.setTime(hl7pid.getDateOfBirth());
-            age = oscar.MyDateFormat.getAge(calendar.get(java.util.GregorianCalendar.YEAR), calendar.get(java.util.GregorianCalendar.MONTH), calendar.get(java.util.GregorianCalendar.DATE));
+            age = MyDateFormat.getAge(calendar.get(java.util.GregorianCalendar.YEAR), calendar.get(java.util.GregorianCalendar.MONTH), calendar.get(java.util.GregorianCalendar.DATE));
     %>
     <table width="100%">
         <tr>
@@ -281,7 +283,7 @@
                 class="<%=(other? "LightBG" : "WhiteBG")%>"><%=hl7_obx.getObservationIdentifier().substring(hl7_obx.getObservationIdentifier().indexOf(" "))%>
             </td>
             <td class="Text" nowrap class="<%=(other? "LightBG" : "WhiteBG")%>">
-                <b><%=((hl7_obx.getAbnormalFlags().toUpperCase().equals("N")) ? "&nbsp;" : oscar.Misc.check(hl7_obx.getAbnormalFlags(), "", "&nbsp;"))%>
+                <b><%=((hl7_obx.getAbnormalFlags().toUpperCase().equals("N")) ? "&nbsp;" : Misc.check(hl7_obx.getAbnormalFlags(), "", "&nbsp;"))%>
                 </b></td>
             <td class="Text"
                 class="<%=(other? "LightBG" : "WhiteBG")%>"><%=((hl7_obx.getAbnormalFlags().toUpperCase().equals("N")) ? hl7_obx.getObservationResults() : "<b>" + hl7_obx.getObservationResults() + "</b>").replaceAll("\\\\\\.br\\\\", " ")%>
@@ -309,7 +311,7 @@
         </tr>
         <tr>
             <td colspan="7"><textarea name="notes" rows="7"
-                                      style="width: 100%;"><%=oscar.Misc.check(hl7_message.getNotes(), "")%></textarea>
+                                      style="width: 100%;"><%=Misc.check(hl7_message.getNotes(), "")%></textarea>
             </td>
         </tr>
         <tr class="LightBG">

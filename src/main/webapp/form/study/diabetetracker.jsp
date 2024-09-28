@@ -42,7 +42,7 @@
 <%@ page contentType="text/xml" %>
 <%@ page import="java.util.*, java.sql.*,  org.w3c.dom.*, oscar.util.*,java.io.*"
          errorPage="../../appointment/errorpage.jsp" %>
-<%@page import="oscar.oscarDB.DBHandler" %>
+<%@page import="openo.oscarDB.DBHandler" %>
 <%@page import="org.oscarehr.common.dao.AllergyDao" %>
 <%@page import="org.oscarehr.common.model.Allergy" %>
 <%@page import="org.oscarehr.util.SpringUtils" %>
@@ -51,6 +51,8 @@
 <%@page import="org.oscarehr.common.model.Demographic" %>
 <%@page import="org.oscarehr.common.dao.EChartDao" %>
 <%@page import="org.oscarehr.common.model.EChart" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.UtilXML" %>
 <%
     DemographicDao demographicDao = SpringUtils.getBean(DemographicDao.class);
     EChartDao eChartDao = SpringUtils.getBean(EChartDao.class);

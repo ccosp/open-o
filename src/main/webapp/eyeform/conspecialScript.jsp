@@ -1,4 +1,4 @@
-<%--
+<%@ page import="openo.OscarProperties" %><%--
 
     Copyright (c) 2001-2002. Department of Family Medicine, McMaster University. All Rights Reserved.
     This software is published under the GPL GNU General Public License.
@@ -67,7 +67,7 @@ case 'otherMeds':
 str='<%=(String) request.getAttribute("otherMeds") %>';
 break;
 <%
-    String customCppIssues[] = oscar.OscarProperties.getInstance().getProperty("encounter.custom_cpp_issues", "").split(",");
+    String customCppIssues[] = OscarProperties.getInstance().getProperty("encounter.custom_cpp_issues", "").split(",");
     for (String customCppIssue : customCppIssues) {
 %>
 case '<%=customCppIssue %>':

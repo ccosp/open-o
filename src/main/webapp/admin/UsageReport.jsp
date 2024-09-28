@@ -59,6 +59,7 @@
 <%@page import="org.oscarehr.common.model.CustomFilter" %>
 <%@page import="org.oscarehr.common.dao.DocumentDao" %>
 <%@page import="org.oscarehr.common.dao.BillingONCHeader1Dao" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
 
 <%@ include file="/taglibs.jsp" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>

@@ -28,7 +28,7 @@
 <%@page import="java.util.*,java.net.*,java.sql.*,oscar.*,oscar.util.*,oscar.appt.*" %>
 <%@page import="oscar.oscarBilling.ca.on.data.*" %>
 <%@page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
-<%@page import="oscar.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
+<%@page import="openo.oscarBilling.ca.bc.decisionSupport.BillingGuidelines" %>
 <%@page import="org.oscarehr.common.dao.CSSStylesDAO, org.oscarehr.common.model.ProviderPreference, org.oscarehr.common.model.CssStyle" %>
 <%@page import="org.oscarehr.common.dao.BillingServiceDao, org.oscarehr.common.model.BillingService" %>
 <%@page import="org.oscarehr.common.dao.ClinicNbrDao, org.oscarehr.common.model.ClinicNbr" %>
@@ -61,7 +61,7 @@
     if (session.getAttribute("user") == null) {
         response.sendRedirect("${ pageContext.request.contextPath }/logout.jsp");
     }
-    oscar.OscarProperties oscarVariables = oscar.OscarProperties.getInstance();
+    OscarProperties oscarVariables = OscarProperties.getInstance();
 
     String user_no = (String) session.getAttribute("user");
     String providerview = request.getParameter("providerview") == null ? "" : request.getParameter("providerview");
@@ -547,6 +547,18 @@
 <%@page import="org.oscarehr.common.model.ProviderPreference" %>
 <html>
 <%@ page import="org.owasp.encoder.Encode" %>
+<%@ page import="openo.appt.JdbcApptImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingDataHlp" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingPageUtil" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingClaimHeader1Data" %>
+<%@ page import="openo.oscarBilling.ca.on.data.JdbcBillingReviewImpl" %>
+<%@ page import="openo.oscarBilling.ca.on.data.BillingItemData" %>
+<%@ page import="openo.oscarBilling.ca.on.pageUtil.BillingSiteIdPrep" %>
+<%@ page import="openo.oscarDemographic.data.DemographicData" %>
+<%@ page import="openo.util.UtilDateUtilities" %>
+<%@ page import="openo.util.ConversionUtils" %>
+<%@ page import="openo.OscarProperties" %>
+<%@ page import="openo.SxmlMisc" %>
 <head>
     <title>Ontario Billing</title>
 
@@ -1725,7 +1737,7 @@
                                             String inPatient = oscarVariables.getProperty("inPatient");
                                             try {
                                                 if (inPatient != null && inPatient.trim().equalsIgnoreCase("YES")) {
-                                                    oscar.oscarDemographic.data.DemographicData demoData = new oscar.oscarDemographic.data.DemographicData();
+                                                    DemographicData demoData = new DemographicData();
                                                     admDate = demoData.getDemographicDateJoined(loggedInInfo, demo_no);
                                                 }
                                             } catch (Exception inPatientEx) {

@@ -54,7 +54,7 @@ import org.oscarehr.managers.SecurityInfoManager;
 import org.oscarehr.util.LoggedInInfo;
 import org.oscarehr.util.MiscUtils;
 import org.oscarehr.util.SpringUtils;
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 public class MeasurementDataAction extends DispatchAction {
 

@@ -44,7 +44,7 @@ import org.oscarehr.common.model.Property;
 import org.oscarehr.common.model.ProviderData;
 import org.oscarehr.util.SpringUtils;
 
-import oscar.util.StringUtils;
+import openo.util.StringUtils;
 
 public class FieldNoteManager {
 
