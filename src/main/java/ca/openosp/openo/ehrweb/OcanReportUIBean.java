@@ -169,7 +169,7 @@ import ca.openosp.openo.ocan.ServiceUseRecordListDocument.ServiceUseRecordList;
 import ca.openosp.openo.ocan.SourceOfIncomeDocument.SourceOfIncome;
 import ca.openosp.openo.ocan.StaffWorkerDocument.StaffWorker;
 import ca.openosp.openo.ocan.StageOfChangeAddictionsDocument.StageOfChangeAddictions;
-import ca.openosp.openo.ocan.StageOfChangeAlcoholDocument.StageOfChangeAlcohol;
+import org.oscarehr.ocan.StageOfChangeAlcoholDocument.StageOfChangeAlcohol;
 import ca.openosp.openo.ocan.StageOfChangeDrugsDocument.StageOfChangeDrugs;
 import ca.openosp.openo.ocan.SubmitOrgDocument.SubmitOrg;
 import ca.openosp.openo.ocan.SubmitOrganizationRecordDocument.SubmitOrganizationRecord;
