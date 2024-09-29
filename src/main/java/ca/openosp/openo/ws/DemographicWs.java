@@ -47,7 +47,6 @@ import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ws.transfer_objects.DemographicTransfer;
 import ca.openosp.openo.ws.transfer_objects.DemographicTransfer2;
-import ca.openosp.openo.ws.transfer_objects.PhrVerificationTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -73,36 +72,11 @@ public class DemographicWs extends AbstractWs {
         return (DemographicTransfer2.toTransfer(demographic));
     }
 
-    public DemographicTransfer getDemographicByMyOscarUserName(String myOscarUserName) {
-        Demographic demographic = demographicManager.getDemographicByMyOscarUserName(getLoggedInInfo(), myOscarUserName);
-        return (DemographicTransfer.toTransfer(demographic));
-    }
-
     public DemographicTransfer[] searchDemographicByName(String searchString, int startIndex, int itemsToReturn) {
         List<Demographic> demographics = demographicManager.searchDemographicByName(getLoggedInInfo(), searchString, startIndex, itemsToReturn);
         return (DemographicTransfer.toTransfers(demographics));
     }
 
-    public PhrVerificationTransfer getLatestPhrVerificationByDemographic(Integer demographicId) {
-        PHRVerification phrVerification = demographicManager.getLatestPhrVerificationByDemographicId(getLoggedInInfo(), demographicId);
-        return (PhrVerificationTransfer.toTransfer(phrVerification));
-    }
-
-    /**
-     * This method should only return true if the demographic passed in is "phr verified" to a sufficient level to allow a provider to send this phr account messages.
-     */
-    public boolean isPhrVerifiedToSendMessages(Integer demographicId) {
-        boolean result = demographicManager.isPhrVerifiedToSendMessages(getLoggedInInfo(), demographicId);
-        return (result);
-    }
-
-    /**
-     * This method should only return true if the demographic passed in is "phr verified" to a sufficient level to allow a provider to send this phr account medicalData.
-     */
-    public boolean isPhrVerifiedToSendMedicalData(Integer demographicId) {
-        boolean result = demographicManager.isPhrVerifiedToSendMedicalData(getLoggedInInfo(), demographicId);
-        return (result);
-    }
 
     /**
      * @see DemographicManager.searchDemographicsByAttributes for parameter details
@@ -118,11 +92,6 @@ public class DemographicWs extends AbstractWs {
     public Integer[] getAdmittedDemographicIdsByProgramProvider(Integer programId, String providerNo) {
         logger.debug("programId=" + programId + ", providerNo=" + providerNo);
         List<Integer> results = demographicManager.getAdmittedDemographicIdsByProgramAndProvider(getLoggedInInfo(), programId, providerNo);
-        return (results.toArray(new Integer[0]));
-    }
-
-    public Integer[] getDemographicIdsWithMyOscarAccounts(@WebParam(name = "startDemographicIdExclusive") Integer startDemographicIdExclusive, @WebParam(name = "itemsToReturn") int itemsToReturn) {
-        List<Integer> results = demographicManager.getDemographicIdsWithMyOscarAccounts(getLoggedInInfo(), startDemographicIdExclusive, itemsToReturn);
         return (results.toArray(new Integer[0]));
     }
 
@@ -178,17 +147,6 @@ public class DemographicWs extends AbstractWs {
         return result.toArray(new DemographicTransfer2[0]);
     }
 
-    public String writePHRId(@WebParam(name = "demographicNo") Integer demographicNo, @WebParam(name = "phrId") String phrId) {
-
-        if (demographicNo != null && phrId != null) {
-            Demographic demo = demographicManager.getDemographic(getLoggedInInfo(), demographicNo);
-            demo.setMyOscarUserName(phrId);
-            demographicManager.updateDemographic(getLoggedInInfo(), demo);
-
-            return "success";
-        }
-        return "fail";
-    }
 
     public Integer[] getConsentedDemographicIdsAfter(@WebParam(name = "lastUpdate") Calendar lastUpdate) {
         LoggedInInfo loggedInInfo = getLoggedInInfo();

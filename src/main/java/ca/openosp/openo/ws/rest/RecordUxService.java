@@ -149,20 +149,6 @@ public class RecordUxService extends AbstractServiceImpl {
             menulist.add(new MenuItemTo1(idCounter++, "Rx", "../ehroscarRx/choosePatient.do?demographicNo=" + demographicNo));
         }
 
-        //PHR
-        if (ProviderMyOscarIdData.idIsSet(loggedInInfo.getLoggedInProviderNo())) {
-            DemographicDao demographicDao = (DemographicDao) SpringUtils.getBean(DemographicDao.class);
-            Demographic demographic = demographicDao.getDemographic("" + demographicNo);
-
-            if (demographic.getMyOscarUserName() == null || demographic.getMyOscarUserName().equals("")) {        /*register link -myoscar (strikethrough) links to create account*/
-                menulist.add(new MenuItemTo1(idCounter++, "PHR", "../phr/indivo/RegisterIndivo.jsp?demographicNo=" + demographicNo));
-            } else {
-                menulist.add(MenuItemTo1.generateStateMenuItem(idCounter++, "PHR", "record.phr"));
-
-            }
-
-        }
-
         menulist.add(MenuItemTo1.generateStateMenuItem(idCounter++, "Rx", "record.rx"));
 
         if (securityInfoManager.hasPrivilege(loggedInInfo, "_newCasemgmt.consultations", "r", null)) {
@@ -186,7 +172,7 @@ public class RecordUxService extends AbstractServiceImpl {
                 menulist.add(new MenuItemTo1(idCounter++, "Consultations", "record.consultRequests." + demographicNo, outstanding));
             }
         }
-        //END PHR
+
 
         MenuItemTo1 moreMenu = new MenuItemTo1(idCounter++, "More", null);
         moreMenu.setDropdown(true);

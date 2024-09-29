@@ -33,7 +33,6 @@ import ca.openosp.openo.common.model.DemographicContact;
 import ca.openosp.openo.common.model.DemographicCust;
 import ca.openosp.openo.common.model.DemographicExt;
 import ca.openosp.openo.common.model.DemographicMerged;
-import ca.openosp.openo.common.model.PHRVerification;
 import ca.openosp.openo.common.model.Provider;
 import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
 import ca.openosp.openo.common.Gender;
@@ -52,9 +51,6 @@ import java.util.*;
  */
 
 public interface DemographicManager {
-    public static final String PHR_VERIFICATION_LEVEL_3 = "+3";
-    public static final String PHR_VERIFICATION_LEVEL_2 = "+2";
-    public static final String PHR_VERIFICATION_LEVEL_1 = "+1";
 
 
     public Demographic getDemographic(LoggedInInfo loggedInInfo, Integer demographicId)
@@ -67,8 +63,6 @@ public interface DemographicManager {
     public String getDemographicFormattedName(LoggedInInfo loggedInInfo, Integer demographicId);
 
     public String getDemographicEmail(LoggedInInfo loggedInInfo, Integer demographicId);
-
-    public Demographic getDemographicByMyOscarUserName(LoggedInInfo loggedInInfo, String myOscarUserName);
 
     public List<Demographic> searchDemographicByName(LoggedInInfo loggedInInfo, String searchString, int startIndex,
                                                      int itemsToReturn);
@@ -129,14 +123,6 @@ public interface DemographicManager {
 
     public List<DemographicMerged> getMergedDemographics(LoggedInInfo loggedInInfo, Integer parentId);
 
-    public PHRVerification getLatestPhrVerificationByDemographicId(LoggedInInfo loggedInInfo, Integer demographicId);
-
-    public boolean getPhrVerificationLevelByDemographicId(LoggedInInfo loggedInInfo, Integer demographicId);
-
-    public boolean isPhrVerifiedToSendMessages(LoggedInInfo loggedInInfo, Integer demographicId);
-
-    public boolean isPhrVerifiedToSendMedicalData(LoggedInInfo loggedInInfo, Integer demographicId);
-
     public String getDemographicWorkPhoneAndExtension(LoggedInInfo loggedInInfo, Integer demographicNo);
 
     public List<Demographic> searchDemographicsByAttributes(LoggedInInfo loggedInInfo, String hin, String firstName,
@@ -154,9 +140,6 @@ public interface DemographicManager {
 
     public List<Integer> getAdmittedDemographicIdsByProgramAndProvider(LoggedInInfo loggedInInfo, Integer programId,
                                                                        String providerNo);
-
-    public List<Integer> getDemographicIdsWithMyOscarAccounts(LoggedInInfo loggedInInfo,
-                                                              Integer startDemographicIdExclusive, int itemsToReturn);
 
     public List<Demographic> getDemographics(LoggedInInfo loggedInInfo, List<Integer> demographicIds);
 

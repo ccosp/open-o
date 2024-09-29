@@ -79,13 +79,6 @@ public class DemographicData {
         return date;
     }
 
-    public String getDemographicNoByIndivoId(LoggedInInfo loggedInInfo, String myOscarUserName) {
-        Demographic demographic = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
-        if (demographic != null) {
-            return demographic.getDemographicNo().toString();
-        }
-        return "";
-    }
 
     public String getDemoNoByNamePhoneEmail(LoggedInInfo loggedInInfo, String firstName, String lastName, String hPhone, String wPhone, String email) {
         Demographic demographic = demographicManager.getDemographicByNamePhoneEmail(loggedInInfo, firstName, lastName, hPhone, wPhone, email);
@@ -199,14 +192,6 @@ public class DemographicData {
     public Demographic getDemographic(LoggedInInfo loggedInInfo, String DemographicNo) {
         Demographic demographic = demographicManager.getDemographic(loggedInInfo, DemographicNo);
         return demographic;
-    }
-
-    public String getDemographicNoByMyOscarUserName(LoggedInInfo loggedInInfo, String myOscarUserName) {
-        Demographic d = demographicManager.getDemographicByMyOscarUserName(loggedInInfo, myOscarUserName);
-        if (d != null) {
-            return d.getDemographicNo().toString();
-        }
-        return "";
     }
 
     public String getDemographicDateJoined(LoggedInInfo loggedInInfo, String demographicNo) {

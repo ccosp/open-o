@@ -79,30 +79,6 @@ public class PatientDetailStatusTo1 implements Serializable {
         return serialVersionUID;
     }
 
-    public boolean isMacPHRLoggedIn() {
-        return macPHRLoggedIn;
-    }
-
-    public void setMacPHRLoggedIn(boolean macPHRLoggedIn) {
-        this.macPHRLoggedIn = macPHRLoggedIn;
-    }
-
-    public boolean isMacPHRIdsSet() {
-        return macPHRIdsSet;
-    }
-
-    public void setMacPHRIdsSet(boolean macPHRIdsSet) {
-        this.macPHRIdsSet = macPHRIdsSet;
-    }
-
-    public boolean getMacPHRVerificationLevel() {
-        return macPHRVerificationLevel;
-    }
-
-    public void setMacPHRVerificationLevel(boolean macPHRVerificationLevel) {
-        this.macPHRVerificationLevel = macPHRVerificationLevel;
-    }
-
     public boolean isConformanceFeaturesEnabled() {
         return conformanceFeaturesEnabled;
     }
