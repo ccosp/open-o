@@ -40,7 +40,6 @@ import ca.openosp.openo.integration.mchcv.HCValidationResult;
 import ca.openosp.openo.integration.mchcv.HCValidator;
 import ca.openosp.openo.integration.mchcv.OnlineHCValidator;
 import ca.openosp.openo.managers.DemographicManager;
-import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ws.rest.to.GenericRESTResponse;
 import ca.openosp.openo.ws.rest.to.model.PatientDetailStatusTo1;
@@ -93,22 +92,6 @@ public class PatientDetailStatusService extends AbstractServiceImpl {
             status.setIntegratorAllSynced(allSynced);
         }
 
-        //McMaster PHR status
-        MyOscarLoggedInInfo myOscarLoggedInInfo = MyOscarLoggedInInfo.getLoggedInInfo(getLoggedInInfo().getSession());
-        if (myOscarLoggedInInfo != null) {
-            status.setMacPHRLoggedIn(myOscarLoggedInInfo.isLoggedIn());
-        }
-
-        if (ProviderMyOscarIdData.idIsSet(getLoggedInInfo().getLoggedInProviderNo())) {
-            if (demographicNo > 0) {
-                Demographic demo = new DemographicData().getDemographic(getLoggedInInfo(), demographicNo.toString());
-                String myOscarUserName = demo.getMyOscarUserName();
-                if (myOscarUserName != null && !myOscarUserName.equals("")) {
-                    status.setMacPHRIdsSet(true);
-                    status.setMacPHRVerificationLevel(demographicManager.getPhrVerificationLevelByDemographicId(getLoggedInInfo(), demographicNo));
-                }
-            }
-        }
 
         //from oscar.properties
         status.setConformanceFeaturesEnabled(oscarProperties.isPropertyActive("ENABLE_CONFORMANCE_ONLY_FEATURES"));
