@@ -38,9 +38,9 @@ import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.actions.AddEditDocumentAction;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.actions.AddEditDocumentAction;
 
 public final class EfmpatientformlistSendPhrAction {
 

@@ -34,7 +34,7 @@
 
 <%@page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicData" %>
-<%@ page import="java.util.Enumeration,documentManager.EDoc,documentManager.EDocUtil" %>
+<%@ page import="java.util.Enumeration,ca.openosp.openo.documentManager.EDoc,ca.openosp.openo.documentManager.EDocUtil" %>
 <%@ page import="ca.openosp.openo.ehrutil.SpringUtils,org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="ca.openosp.openo.common.dao.Hl7TextInfoDao,ca.openosp.openo.common.model.Hl7TextInfo" %>
 

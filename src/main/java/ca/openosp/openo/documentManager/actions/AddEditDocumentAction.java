@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,8 +62,8 @@ import ca.openosp.openo.common.model.DocumentExtraReviewer;
 import ca.openosp.openo.common.model.DocumentStorage;
 import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.common.model.SecRole;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.managers.ProgramManager2;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
@@ -74,7 +74,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import ca.openosp.openo.MyDateFormat;
-import documentManager.data.AddEditDocumentForm;
+import ca.openosp.openo.documentManager.data.AddEditDocumentForm;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 import ca.openosp.openo.oscarEncounter.data.EctProgram;

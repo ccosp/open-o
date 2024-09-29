@@ -48,8 +48,8 @@ import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
 import ca.openosp.openo.OscarProperties;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.form.util.FormTransportContainer;
 import ca.openosp.openo.oscarEncounter.data.EctFormData;
 import ca.openosp.openo.oscarLab.ca.all.pageUtil.LabPDFCreator;

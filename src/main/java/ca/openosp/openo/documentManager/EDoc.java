@@ -23,7 +23,7 @@
  * Ontario, Canada
  */
 
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

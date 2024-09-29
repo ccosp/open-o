@@ -56,7 +56,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import ca.openosp.openo.common.dao.*;
 
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
@@ -64,9 +63,9 @@ import ca.openosp.openo.ehrutil.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDoc;
 
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.oscarEncounter.oscarConsultationRequest.pageUtil.ImagePDFCreator;
 

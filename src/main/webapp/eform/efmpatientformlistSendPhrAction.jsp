@@ -38,7 +38,7 @@
 
     StringBuilder sb = new StringBuilder();
     sb.append(request.getContextPath());
-    sb.append("/documentManager/SendDocToPhr.do?demoId=");
+    sb.append("/ca/openosp/openo/documentManager/SendDocToPhr.do?demoId=");
     sb.append(clientId);
 
     for (String docId : newDocIds) {

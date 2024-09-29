@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.util.Date;
 import java.util.Hashtable;
@@ -42,8 +42,8 @@ import ca.openosp.openo.PMmodule.model.ProgramProvider;
 import ca.openosp.openo.casemgmt.model.CaseManagementNote;
 import ca.openosp.openo.casemgmt.model.CaseManagementNoteLink;
 import ca.openosp.openo.casemgmt.service.CaseManagementManager;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.managers.ProgramManager2;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
@@ -52,7 +52,7 @@ import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import documentManager.data.AddEditDocumentForm;
+import ca.openosp.openo.documentManager.data.AddEditDocumentForm;
 import ca.openosp.openo.util.UtilDateUtilities;
 
 public class AddEditHtmlAction extends Action {

@@ -45,7 +45,7 @@ import ca.openosp.openo.common.model.Document;
 import ca.openosp.openo.common.model.EFormDocs;
 import org.springframework.stereotype.Repository;
 
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.util.ConversionUtils;
 
 @Repository

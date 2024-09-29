@@ -1,5 +1,5 @@
 //CHECKSTYLE:OFF
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import ca.openosp.openo.managers.ConsultationManager;
 import ca.openosp.openo.managers.DocumentManager;
@@ -16,9 +16,8 @@ import ca.openosp.openo.common.model.ConsultDocs;
 import ca.openosp.openo.common.model.EFormData;
 import ca.openosp.openo.common.model.EFormDocs;
 import ca.openosp.openo.hospitalReportManager.HRMUtil;
-import ca.openosp.openo.managers.*;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.data.AttachmentLabResultData;
+import ca.openosp.openo.documentManager.data.AttachmentLabResultData;
 import ca.openosp.openo.ehrutil.DateUtils;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.PDFGenerationException;

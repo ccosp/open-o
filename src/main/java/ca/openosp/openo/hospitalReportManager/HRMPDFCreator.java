@@ -39,7 +39,7 @@ import ca.openosp.openo.hospitalReportManager.model.HRMDocument;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
-import documentManager.ConvertToEdoc;
+import ca.openosp.openo.documentManager.ConvertToEdoc;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

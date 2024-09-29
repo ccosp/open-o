@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -38,7 +38,7 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

@@ -32,7 +32,7 @@ import java.util.List;
 
 import ca.openosp.openo.common.merge.MergedDemographicTemplate;
 import ca.openosp.openo.common.model.Document;
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.util.ConversionUtils;
 
 public class DocumentMergeDemographicDAOImpl extends DocumentDaoImpl implements DocumentMergeDemographicDAO {

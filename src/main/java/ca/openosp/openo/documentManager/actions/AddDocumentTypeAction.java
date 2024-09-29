@@ -8,7 +8,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.util.HashMap;
 
@@ -20,13 +20,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
-import documentManager.data.AddDocumentTypeForm;
+import ca.openosp.openo.documentManager.data.AddDocumentTypeForm;
 
 public class AddDocumentTypeAction extends DispatchAction {
 

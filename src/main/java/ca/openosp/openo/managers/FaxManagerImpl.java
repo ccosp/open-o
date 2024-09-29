@@ -56,7 +56,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.sf.json.JSONObject;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.form.util.FormTransportContainer;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.util.ConcatPDF;

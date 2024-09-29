@@ -1,5 +1,5 @@
 //CHECKSTYLE:OFF
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import ca.openosp.openo.common.dao.ConsultDocsDao;
 import ca.openosp.openo.common.dao.EFormDocsDao;

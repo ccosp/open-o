@@ -56,9 +56,9 @@
 <%@page import="ca.openosp.openo.PMmodule.dao.ProviderDao" %>
 <%@page import="oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*" %>
 <%@page import="org.oscarehr.common.dao.*,org.oscarehr.common.model.*,ca.openosp.openo.ehrutil.SpringUtils" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
-<%@ page import="documentManager.IncomingDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.IncomingDocUtil" %>
 <%@ page import="ca.openosp.openo.log.LogConst" %>
 <%@ page import="ca.openosp.openo.log.LogAction" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
@@ -155,8 +155,8 @@
     else
         numOfPageStr = (new Integer(numOfPage)).toString();
     String cp = request.getContextPath();
-    String url = cp + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId + "&curPage=1";
-    String url2 = cp + "/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
+    String url = cp + "/ca/openosp/openo/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId + "&curPage=1";
+    String url2 = cp + "/ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
     String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 %>
 

@@ -50,8 +50,8 @@
 			<!--    <form-property name="codesearch" type="java.lang.String" />  -->
 		</form-bean>
 
-		<form-bean name="addDocumentType" type="documentManager.data.AddDocumentTypeForm" />
-		<form-bean name="changeDocStatus" type="documentManager.data.ChangeDocStatusForm" />
+		<form-bean name="addDocumentType" type="ca.openosp.openo.documentManager.data.AddDocumentTypeForm" />
+		<form-bean name="changeDocStatus" type="ca.openosp.openo.documentManager.data.ChangeDocStatusForm" />
 		<!-- login form bean -->
 		<form-bean name="loginForm" type="ca.openosp.openo.login.LoginForm" />
 		<form-bean name="msgSendMessageForm" type="ca.openosp.openo.oscarMessenger.pageUtil.MsgSendMessageForm" />
@@ -218,10 +218,10 @@
 		<form-bean name="receivePaymentActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.ReceivePaymentActionForm" />
 		<form-bean name="billingPreferencesActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingPreferencesActionForm" />
 		<form-bean name="supServiceCodeAssocActionForm" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocActionForm" />
-		<form-bean name="eDocsAddEditDocument" type="documentManager.data.AddEditDocumentForm" />
-		<form-bean name="documentUploadForm" type="documentManager.data.DocumentUploadForm" />
-		<form-bean name="addLinkDoc" type="documentManager.data.AddEditDocumentForm" />
-		<form-bean name="addEditHtmlDoc" type="documentManager.data.AddEditDocumentForm" />
+		<form-bean name="eDocsAddEditDocument" type="ca.openosp.openo.documentManager.data.AddEditDocumentForm" />
+		<form-bean name="documentUploadForm" type="ca.openosp.openo.documentManager.data.DocumentUploadForm" />
+		<form-bean name="addLinkDoc" type="ca.openosp.openo.documentManager.data.AddEditDocumentForm" />
+		<form-bean name="addEditHtmlDoc" type="ca.openosp.openo.documentManager.data.AddEditDocumentForm" />
 		<form-bean name="ManagePatientLettersForm" type="ca.openosp.openo.oscarReport.pageUtil.ManagePatientLettersForm" />
 		<form-bean name="CihiExportForm" type="org.apache.struts.validator.DynaValidatorForm">
 			<form-property name="patientSet" type="java.lang.String" />
@@ -746,13 +746,13 @@
     	</action>
 
 	<action input="/documentManager/addNewDocumentCategories.jsp" name="addDocumentType"
-			path="/documentManager/addDocumentType" type="documentManager.actions.AddDocumentTypeAction"
+			path="/documentManager/addDocumentType" type="ca.openosp.openo.documentManager.actions.AddDocumentTypeAction"
 			parameter="method" scope="request" validate="false">
 			<forward name="failed" path="/documentManager/addNewDocumentCategories.jsp"></forward>
 			<forward name="success" path="/documentManager/closeWindow.html"></forward>
 		</action>
 		<action input="/documentManager/changeStatus.jsp" name="changeDocStatus"
-			path="/documentManager/changeDocStatus" type="documentManager.actions.ChangeDocStatusAction"
+			path="/documentManager/changeDocStatus" type="ca.openosp.openo.documentManager.actions.ChangeDocStatusAction"
 			parameter="method" scope="request" validate="false">
 			<!--<forward name="failed" path="/documentManager/addNewDocumentCategories.jsp"></forward> -->
 			<forward name="success" path="/documentManager/closeWindow.html"></forward>
@@ -1277,7 +1277,7 @@
 			<forward name="success" path="/oscarEncounter/oscarConsultationRequest/ViewConsultationRequests.jsp" />
 		</action>
 		
-		<action path="/previewDocs" validate="false" parameter="method" type="documentManager.actions.DocumentPreviewAction" scope="request">
+		<action path="/previewDocs" validate="false" parameter="method" type="ca.openosp.openo.documentManager.actions.DocumentPreviewAction" scope="request">
 			<forward name="fetchDocuments" path="/documentManager/attachDocument.jsp" />
 		</action>
 
@@ -2148,21 +2148,21 @@
 		<action input="/billing/CA/BC/billingSVCTrayAssoc.jsp" name="supServiceCodeAssocActionForm" path="/billing/CA/BC/supServiceCodeAssocAction" scope="request" type="ca.openosp.openo.oscarBilling.ca.bc.pageUtil.SupServiceCodeAssocAction" validate="false">
 			<forward name="success" path="/billing/CA/BC/billingSVCTrayAssoc.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="eDocsAddEditDocument" path="/documentManager/addEditDocument" type="documentManager.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="eDocsAddEditDocument" path="/documentManager/addEditDocument" type="ca.openosp.openo.documentManager.actions.AddEditDocumentAction" parameter="method" scope="request" validate="false">
 			<forward name="successAdd" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failAdd" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failEdit" path="/documentManager/editDocument.jsp"></forward>
 			<forward name="successEdit" path="/documentManager/closeWindow.html"></forward>
 			<forward name="fastUploadSuccess" path="/documentManager/uploadMultiDocument.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="FrmForm" path="/documentManager/combinePDFs" type="documentManager.actions.CombinePDFAction" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="FrmForm" path="/documentManager/combinePDFs" type="ca.openosp.openo.documentManager.actions.CombinePDFAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/documentReport.jsp"></forward>
 		</action>
-		<action input="/documentManager/documentReport.jsp" name="addLinkDoc" path="/documentManager/addLink" type="documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/documentManager/documentReport.jsp" name="addLinkDoc" path="/documentManager/addLink" type="ca.openosp.openo.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/documentReport.jsp"></forward>
 			<forward name="failed" path="/documentManager/documentReport.jsp"></forward>
 		</action>
-		<action input="/documentManager/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/documentManager/addEditHtml" type="documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
+		<action input="/documentManager/addedithtmldocument.jsp" name="addEditHtmlDoc" path="/documentManager/addEditHtml" type="ca.openosp.openo.documentManager.actions.AddEditHtmlAction" scope="request" validate="false">
 			<forward name="success" path="/documentManager/closeWindow.html" />
 			<forward name="failed" path="/documentManager/addedithtmldocument.jsp" />
 		</action>
@@ -2666,7 +2666,7 @@
 			<forward name="success" path="/oscarEncounter/oscarMeasurements/TemplateFlowSheet.jsp" />
 		</action>
 
-		<action path="/documentManager/ManageDocument" name="FrmForm" type="documentManager.actions.ManageDocumentAction" parameter="method" scope="request">
+		<action path="/documentManager/ManageDocument" name="FrmForm" type="ca.openosp.openo.documentManager.actions.ManageDocumentAction" parameter="method" scope="request">
 			<forward name="success" path="/documentManager/undocument.jsp" />
 			<forward name="displaySingleDoc" path="/documentManager/MultiPageDocDisplay.jsp" />
                         <forward name="nextIncomingDoc" path="/documentManager/incomingDocs.jsp" />
@@ -2678,11 +2678,11 @@
                 <action path="/PrinterList" name="FrmForm" type="ca.openosp.openo.printer.PrinterListAction" parameter="method" scope="request">
 		</action>
                 
-		<action path="/documentManager/SplitDocument" name="FrmForm" type="documentManager.actions.SplitDocumentAction" parameter="method" scope="request">
+		<action path="/documentManager/SplitDocument" name="FrmForm" type="ca.openosp.openo.documentManager.actions.SplitDocumentAction" parameter="method" scope="request">
         	<forward name="success" path="/oscarMDS/Splitclose.jsp" />
         </action>
 
-		<action input="/documentManager/documentUploader.jsp" name="documentUploadForm" path="/documentManager/documentUpload" type="documentManager.actions.DocumentUploadAction" parameter="method" scope="request" validate="false">
+		<action input="/documentManager/documentUploader.jsp" name="documentUploadForm" path="/documentManager/documentUpload" type="ca.openosp.openo.documentManager.actions.DocumentUploadAction" parameter="method" scope="request" validate="false">
         </action>
 
 		<action path="/PhrRetrieve" type="org.springframework.web.struts.DelegatingActionProxy" parameter="method" scope="request">

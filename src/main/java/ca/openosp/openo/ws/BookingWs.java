@@ -55,7 +55,7 @@ import ca.openosp.openo.ehrutil.MiscUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 
 @WebService
 @Component

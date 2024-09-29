@@ -18,7 +18,7 @@ import ca.openosp.openo.common.model.EmailLog;
 import ca.openosp.openo.common.model.EmailLog.EmailStatus;
 import ca.openosp.openo.common.model.EmailLog.TransactionType;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
 import ca.openosp.openo.email.core.EmailStatusResult;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.managers.EmailComposeManager;

@@ -38,11 +38,11 @@
 <%@page import="org.oscarehr.PMmodule.model.*" %>
 <%@page import="org.oscarehr.common.model.*" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.documentManager.EDocUtil" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="ca.openosp.openo.casemgmt.common.Colour" %>
-<%@page import="documentManager.EDoc" %>
+<%@page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="com.quatro.dao.security.*,com.quatro.model.security.Secrole" %>
 <%@page import="ca.openosp.openo.ehrutil.EncounterUtil" %>
@@ -523,7 +523,7 @@
                 String winName = "docs" + demographicNo;
                 int hash = Math.abs(winName.hashCode());
 
-                url = "popupPage(1000,1200,'" + hash + "', '" + request.getContextPath() + "/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + provNo + "');";
+                url = "popupPage(1000,1200,'" + hash + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + provNo + "');";
                 url = url + "return false;";
 
                 if (note.getRemoteFacilityId() == null) // only allow editing for local notes
@@ -555,7 +555,7 @@
                 String winName = "docs" + demographicNo;
                 int hash = Math.abs(winName.hashCode());
 
-                url = "popupPage(1000,1200,'" + hash + "', '" + request.getContextPath() + "/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + provNo + "');";
+                url = "popupPage(1000,1200,'" + hash + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + provNo + "');";
                 url = url + "return false;";
             %>
             <div class="view-links"

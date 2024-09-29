@@ -1,8 +1,8 @@
 //CHECKSTYLE:OFF
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import ca.openosp.openo.common.model.EFormData;
-import documentManager.data.AttachmentLabResultData;
+import ca.openosp.openo.documentManager.data.AttachmentLabResultData;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.PDFGenerationException;

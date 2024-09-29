@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.util.GregorianCalendar;
 
@@ -40,8 +40,8 @@ import ca.openosp.openo.common.dao.RemoteDataLogDao;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.RemoteDataLog;
 import ca.openosp.openo.common.service.myoscar.MyOscarMedicalDataManagerUtils;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
 import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;

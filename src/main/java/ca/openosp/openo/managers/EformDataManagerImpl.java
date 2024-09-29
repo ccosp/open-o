@@ -41,9 +41,9 @@ import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import documentManager.ConvertToEdoc;
-import documentManager.DocumentAttachmentManager;
-import documentManager.EDoc;
+import ca.openosp.openo.documentManager.ConvertToEdoc;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.EDoc;
 import ca.openosp.openo.hospitalReportManager.HRMUtil;
 import org.springframework.context.annotation.Lazy;
 

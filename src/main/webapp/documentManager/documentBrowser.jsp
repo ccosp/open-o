@@ -38,7 +38,7 @@
 <jsp:useBean id="oscarVariables" class="java.util.Properties" scope="page"/>
 
 <%@page import="java.net.URLDecoder, java.net.URLEncoder,java.util.Date, java.util.List" %>
-<%@page import="documentManager.EDocUtil,documentManager.EDoc" %>
+<%@page import="ca.openosp.openo.documentManager.EDocUtil,ca.openosp.openo.documentManager.EDoc" %>
 <%@page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@page import="java.util.Hashtable" %>
 <%@page import="ca.openosp.openo.common.dao.CtlDocClassDao,ca.openosp.openo.common.dao.QueueDao" %>

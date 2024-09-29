@@ -59,8 +59,8 @@
 <%@page import="ca.openosp.openo.common.model.Demographic" %>
 <%@page import="ca.openosp.openo.common.model.ProviderLabRoutingModel" %>
 
-<%@page import="documentManager.IncomingDocUtil" %>
-<%@ page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.documentManager.IncomingDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
 
 <jsp:useBean id="LastPatientsBean" class="java.util.ArrayList" scope="session"/>
 

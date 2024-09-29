@@ -99,8 +99,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONObject;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.eform.EFormUtil;
 import ca.openosp.openo.oscarDemographic.data.RxInformation;
 import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
@@ -681,7 +681,7 @@ public class ConsultationWebService extends AbstractServiceImpl {
 
     private void getDocuments(List<EDoc> edocs, boolean attached, List<ConsultationAttachmentTo1> attachments) {
         for (EDoc edoc : edocs) {
-            String url = "documentManager/ManageDocument.do?method=display&doc_no=" + edoc.getDocId();
+            String url = "ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=" + edoc.getDocId();
             attachments.add(new ConsultationAttachmentTo1(ConversionUtils.fromIntString(edoc.getDocId()), ConsultationAttachmentTo1.TYPE_DOC, attached, edoc.getDescription(), url));
         }
     }

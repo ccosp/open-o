@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import ca.openosp.openo.common.dao.CtlDocumentDao;
 import ca.openosp.openo.common.dao.DocumentDao;
@@ -66,10 +66,9 @@ import ca.openosp.openo.caisi_integrator.ws.FacilityIdIntegerCompositePk;
 import ca.openosp.openo.casemgmt.model.CaseManagementNote;
 import ca.openosp.openo.casemgmt.model.CaseManagementNoteLink;
 import ca.openosp.openo.casemgmt.service.CaseManagementManager;
-import ca.openosp.openo.common.dao.*;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.IncomingDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.IncomingDocUtil;
 import ca.openosp.openo.managers.ProgramManager2;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.sharingcenter.SharingCenterUtil;

@@ -25,7 +25,7 @@ import ca.openosp.openo.common.model.EmailConfig;
 import ca.openosp.openo.common.model.EmailLog;
 import ca.openosp.openo.common.model.UserProperty;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.PDFGenerationException;

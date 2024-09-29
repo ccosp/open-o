@@ -62,8 +62,8 @@ import ca.openosp.openo.ehrutil.SpringUtils;
 import com.itextpdf.text.pdf.codec.Base64;
 
 import ca.openosp.openo.OscarProperties;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 
 public class FaxImporter {
 

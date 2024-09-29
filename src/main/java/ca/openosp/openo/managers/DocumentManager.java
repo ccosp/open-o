@@ -37,12 +37,11 @@ import java.util.List;
 import ca.openosp.openo.common.dao.DocumentDao;
 import ca.openosp.openo.common.model.CtlDocument;
 import ca.openosp.openo.common.model.Document;
-import ca.openosp.openo.common.dao.*;
 
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.PDFGenerationException;
 
-import documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDoc;
 
 public interface DocumentManager {
 

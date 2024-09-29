@@ -57,7 +57,7 @@
 <%@page import="ca.openosp.openo.sharingcenter.model.CodeMappingDataObject" %>
 <%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="ca.openosp.openo.sharingcenter.dao.AffinityDomainDao" %>
-<%@page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.documentManager.EDocUtil" %>
 <%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="java.util.List" %>
 <%@page import="java.util.Set" %>

@@ -9,7 +9,7 @@ import ca.openosp.openo.common.dao.EReferAttachmentDao;
 import ca.openosp.openo.common.model.EReferAttachment;
 import ca.openosp.openo.common.model.EReferAttachmentData;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;

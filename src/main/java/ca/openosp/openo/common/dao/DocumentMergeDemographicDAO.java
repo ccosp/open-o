@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import ca.openosp.openo.common.model.Document;
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 
 public interface DocumentMergeDemographicDAO extends DocumentDao {
     List<Object[]> findDocuments(String module, String moduleid, String docType, boolean includePublic, boolean includeDeleted, boolean includeActive, EDocSort sort, Date since);

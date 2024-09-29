@@ -44,8 +44,8 @@ import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.PDFGenerationException;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
-import documentManager.DocumentAttachmentManager;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 import com.itextpdf.text.DocumentException;

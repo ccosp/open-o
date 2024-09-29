@@ -53,7 +53,7 @@
                 java.util.Date,
                 java.util.List" %>
 <%@page import="ca.openosp.openo.log.LogAction, ca.openosp.openo.log.LogConst" %>
-<%@page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.documentManager.EDocUtil" %>
 
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>

@@ -50,8 +50,8 @@ import ca.openosp.openo.ehrutil.PDFGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import documentManager.ConvertToEdoc;
-import documentManager.EDoc;
+import ca.openosp.openo.documentManager.ConvertToEdoc;
+import ca.openosp.openo.documentManager.EDoc;
 import ca.openosp.openo.form.util.FormTransportContainer;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.oscarEncounter.data.EctFormData;

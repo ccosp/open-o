@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.data;
+package ca.openosp.openo.documentManager.data;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.upload.FormFile;

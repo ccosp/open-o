@@ -64,8 +64,8 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="ca.openosp.openo.common.model.EFormData" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
@@ -343,7 +343,7 @@
                                 String dStatus = "";
                                 if ((curDoc.getStatus() + "").compareTo("A") == 0) dStatus = "active";
                                 else if ((curDoc.getStatus() + "").compareTo("H") == 0) dStatus = "html";
-                                url = request.getContextPath() + "/documentManager/"
+                                url = request.getContextPath() + "/ca/openosp/openo/documentManager/"
                                         + "showDocument.jsp?inWindow=true&segmentID=" + curDoc.getDocId() + "&providerNo=" + providerNo;
                                 String onClick = "";
 

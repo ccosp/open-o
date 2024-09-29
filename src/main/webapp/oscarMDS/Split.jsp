@@ -95,7 +95,7 @@
                 %>
                 <li>
                     <img class="page"
-                         src='<%=request.getContextPath() + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i%>'/>
+                         src='<%=request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + documentId + "&curPage=" + i%>'/>
                 </li>
                 <%
                     }

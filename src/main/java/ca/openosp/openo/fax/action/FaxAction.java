@@ -49,7 +49,7 @@ import org.apache.struts.action.DynaActionForm;
 import ca.openosp.openo.common.model.FaxConfig;
 import ca.openosp.openo.common.model.FaxJob;
 import ca.openosp.openo.common.model.FaxJob.STATUS;
-import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
 import ca.openosp.openo.managers.FaxManager;
 import ca.openosp.openo.managers.FaxManager.TransactionType;
 import ca.openosp.openo.ehrutil.LoggedInInfo;

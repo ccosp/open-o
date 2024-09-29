@@ -34,7 +34,7 @@ import java.util.List;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.Document;
 
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 
 public interface DocumentDao extends AbstractDao<Document> {
 

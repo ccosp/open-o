@@ -29,7 +29,7 @@
  * and open the template in the editor.
  */
 
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

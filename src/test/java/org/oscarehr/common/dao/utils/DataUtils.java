@@ -50,8 +50,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.oscarLab.ca.all.upload.HandlerClassFactory;
 import ca.openosp.openo.oscarLab.ca.all.upload.handlers.MessageHandler;
 import ca.openosp.openo.util.ConversionUtils;

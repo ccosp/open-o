@@ -21,7 +21,7 @@
  * Centre de Medecine Integree, Saint-Laurent, Quebec, Canada to be provided
  * as part of the OSCAR McMaster EMR System
  */
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 
 import com.itextpdf.text.Document;

@@ -61,8 +61,8 @@
 <%@ page import="ca.openosp.openo.common.dao.CtlDocClassDao" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.casemgmt.model.CaseManagementNoteLink" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 

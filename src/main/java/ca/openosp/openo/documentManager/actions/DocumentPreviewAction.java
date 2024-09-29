@@ -1,5 +1,5 @@
 //CHECKSTYLE:OFF
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import net.sf.json.JSONObject;
 import ca.openosp.openo.eform.EFormUtil;
@@ -12,10 +12,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import ca.openosp.openo.common.model.EFormData;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.DocumentAttachmentManager;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.data.AttachmentLabResultData;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.data.AttachmentLabResultData;
 import ca.openosp.openo.hospitalReportManager.HRMUtil;
 import ca.openosp.openo.managers.FormsManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;

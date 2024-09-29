@@ -39,11 +39,11 @@
 <%@page import="org.oscarehr.common.model.*" %>
 <%@page import="ca.openosp.openo.common.dao.EFormDao" %>
 <%@page import="ca.openosp.openo.util.DateUtils" %>
-<%@page import="documentManager.EDocUtil" %>
+<%@page import="ca.openosp.openo.documentManager.EDocUtil" %>
 <%@page import="org.springframework.web.context.WebApplicationContext" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="ca.openosp.openo.casemgmt.common.Colour" %>
-<%@page import="documentManager.EDoc" %>
+<%@page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@page import="com.quatro.dao.security.*,com.quatro.model.security.Secrole" %>
 <%@page import="ca.openosp.openo.ehrutil.EncounterUtil" %>

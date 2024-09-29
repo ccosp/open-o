@@ -1,5 +1,5 @@
 //CHECKSTYLE:OFF
-package documentManager.data;
+package ca.openosp.openo.documentManager.data;
 
 import java.util.Date;
 import java.util.LinkedHashMap;

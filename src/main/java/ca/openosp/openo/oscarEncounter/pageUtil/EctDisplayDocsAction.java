@@ -45,9 +45,9 @@ import ca.openosp.openo.common.dao.DocumentDao.DocumentType;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.util.DateUtils;
 import ca.openosp.openo.util.StringUtils;
 
@@ -74,7 +74,7 @@ public class EctDisplayDocsAction extends EctDisplayAction {
             boolean inboxflag = IsPropertiesOn.propertiesOn("inboxmnger");
             // set lefthand module heading and link
             String winName = "docs" + bean.demographicNo;
-            String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/documentManager/documentReport.jsp?" + "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "')";
+            String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/documentReport.jsp?" + "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "')";
 
             Dao.setLeftHeading(messages.getMessage(request.getLocale(), "oscarEncounter.Index.msgDocuments"));
             if (inboxflag) {
@@ -85,7 +85,7 @@ public class EctDisplayDocsAction extends EctDisplayAction {
 
             // set the right hand heading link to call addDocument in index jsp
             winName = "addDoc" + bean.demographicNo;
-            url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/documentManager/documentReport.jsp?" + "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&mode=add" + "&parentAjaxId=" + cmd + "');return false;";
+            url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/ca/openosp/openo/documentManager/documentReport.jsp?" + "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&mode=add" + "&parentAjaxId=" + cmd + "');return false;";
 
             if (inboxflag) {
                 url = "popupPage(300,600,'" + winName + "','" + request.getContextPath() + "/mod/docmgmtComp/FileUpload.do?method=newupload&demographic_no=" + bean.demographicNo + "');return false;";
@@ -164,10 +164,10 @@ public class EctDisplayDocsAction extends EctDisplayAction {
                     url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/mod/docmgmtComp/FillARForm.do?method=showInboxDocDetails&path=" + path + "&demoNo=" + bean.demographicNo + "&name=" + StringEscapeUtils.escapeHtml(dispFilename) + "'); return false;";
                     isURLjavaScript = true;
                 } else if (curDoc.getRemoteFacilityId() == null && curDoc.isPDF()) {
-                    url = "popupPage(window.screen.width,window.screen.height,'" + hash + "','" + request.getContextPath() + "/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + user + "&searchProviderNo=" + user + "&status=A'); return false;";
+                    url = "popupPage(window.screen.width,window.screen.height,'" + hash + "','" + request.getContextPath() + "/ca/openosp/openo/documentManager/showDocument.jsp?inWindow=true&segmentID=" + dispDocNo + "&providerNo=" + user + "&searchProviderNo=" + user + "&status=A'); return false;";
                     isURLjavaScript = true;
                 } else {
-                    url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/documentManager/ManageDocument.do?method=display&doc_no=" + dispDocNo + "&providerNo=" + user + (curDoc.getRemoteFacilityId() != null ? "&remoteFacilityId=" + curDoc.getRemoteFacilityId() : "") + "'); return false;";
+                    url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=" + dispDocNo + "&providerNo=" + user + (curDoc.getRemoteFacilityId() != null ? "&remoteFacilityId=" + curDoc.getRemoteFacilityId() : "") + "'); return false;";
                 }
 
                 item.setLinkTitle(title + serviceDateStr);

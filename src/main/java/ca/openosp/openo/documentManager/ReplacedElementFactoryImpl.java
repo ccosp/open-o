@@ -22,7 +22,7 @@
  * Hamilton
  * Ontario, Canada
  */
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 
 import com.lowagie.text.BadElementException;

@@ -143,7 +143,7 @@ import ca.openosp.openo.sharingcenter.util.EformParser;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 
 public class SharingCenterUtil {
 

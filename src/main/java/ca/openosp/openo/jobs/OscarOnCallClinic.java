@@ -64,8 +64,8 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import ca.openosp.openo.OscarProperties;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 
 public class OscarOnCallClinic implements OscarRunnable {
     private Provider provider = null;

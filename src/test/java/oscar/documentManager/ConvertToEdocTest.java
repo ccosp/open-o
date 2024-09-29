@@ -29,7 +29,7 @@ package oscar.documentManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import ca.openosp.openo.common.model.EFormData;
-import documentManager.ConvertToEdoc;
+import ca.openosp.openo.documentManager.ConvertToEdoc;
 
 
 public class ConvertToEdocTest {

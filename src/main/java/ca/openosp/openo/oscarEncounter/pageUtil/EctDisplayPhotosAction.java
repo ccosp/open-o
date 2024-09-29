@@ -39,9 +39,9 @@ import org.apache.struts.util.MessageResources;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.util.DateUtils;
 import ca.openosp.openo.util.StringUtils;
 
@@ -62,7 +62,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
             boolean inboxflag = IsPropertiesOn.propertiesOn("inboxmnger");
             //set lefthand module heading and link
             String winName = "docs" + bean.demographicNo;
-            String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/documentManager/documentReport.jsp?" +
+            String url = "popupPage(500,1115,'" + winName + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/documentReport.jsp?" +
                     "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&view=photo')";
 
             Dao.setLeftHeading("Photos");
@@ -76,7 +76,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
 
             //set the right hand heading link to call addDocument in index jsp
             winName = "addPhoto" + bean.demographicNo;
-            url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/documentManager/documentReport.jsp?" +
+            url = "popupPage(500,1115,'" + winName + "','" + request.getContextPath() + "/ca/openosp/openo/documentManager/documentReport.jsp?" +
                     "function=demographic&doctype=lab&functionid=" + bean.demographicNo + "&curUser=" + bean.providerNo + "&mode=add" +
                     "&parentAjaxId=" + cmd + "&defaultDocType=photo&appointmentNo=" + appointmentNo + "');return false;";
 
@@ -131,7 +131,7 @@ public class EctDisplayPhotosAction extends EctDisplayAction {
                 String user = (String) request.getSession().getAttribute("user");
                 item.setDate(date);
                 hash = Math.abs(winName.hashCode());
-                url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/documentManager/ManageDocument.do?method=display&doc_no=" + dispDocNo + "&providerNo=" + user + "');";
+                url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=" + dispDocNo + "&providerNo=" + user + "');";
                 if (inboxflag) {
                     String path = IsPropertiesOn.getProperty("DOCUMENT_DIR");
                     url = "popupPage(700,800,'" + hash + "', '" + request.getContextPath() +

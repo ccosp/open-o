@@ -51,8 +51,8 @@
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@page import="org.springframework.web.context.support.WebApplicationContextUtils,oscar.oscarLab.ca.all.*,oscar.oscarMDS.data.*,oscar.oscarLab.ca.all.util.*" %>
 <%@page import="org.springframework.web.context.WebApplicationContext,org.oscarehr.common.dao.*,org.oscarehr.common.model.*, ca.openosp.openo.PMmodule.dao.ProviderDao" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.all.AcknowledgementData" %>
 <%@ page import="ca.openosp.openo.oscarMDS.data.ReportStatus" %>
@@ -115,8 +115,8 @@
         numOfPageStr = "unknown";
     else
         numOfPageStr = (new Integer(numOfPage)).toString();
-    String url = request.getContextPath() + "/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId + "&curPage=1";
-    String url2 = request.getContextPath() + "/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
+    String url = request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=viewDocPage&doc_no=" + docId + "&curPage=1";
+    String url2 = request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=" + docId;
 %>
 
 <html>

@@ -24,7 +24,7 @@
  */
 
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import ca.openosp.openo.common.dao.DocumentDao;
 import ca.openosp.openo.common.dao.InboxResultsDao;
@@ -44,13 +44,12 @@ import org.apache.struts.actions.DispatchAction;
 import ca.openosp.openo.PMmodule.dao.SecUserRoleDao;
 import ca.openosp.openo.PMmodule.model.SecUserRole;
 import ca.openosp.openo.PMmodule.utility.UtilDateUtilities;
-import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.ProviderInboxItem;
 import ca.openosp.openo.common.model.Queue;
 import ca.openosp.openo.common.model.QueueDocumentLink;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

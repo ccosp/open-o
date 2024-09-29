@@ -7,7 +7,7 @@
  * License details are available via "indivica.ca/gplv2"
  * and "gnu.org/licenses/gpl-2.0.html".
  */
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,8 +52,8 @@ import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.oscarLab.ca.all.upload.ProviderLabRouting;
 
 

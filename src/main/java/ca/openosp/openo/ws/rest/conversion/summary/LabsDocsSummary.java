@@ -41,9 +41,9 @@ import ca.openosp.openo.ws.rest.to.model.SummaryItemTo1;
 import ca.openosp.openo.ws.rest.to.model.SummaryTo1;
 import org.springframework.stereotype.Component;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.EDocUtil.EDocSort;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil.EDocSort;
 import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
 import ca.openosp.openo.oscarLab.ca.on.LabResultData;
 import ca.openosp.openo.util.StringUtils;

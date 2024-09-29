@@ -169,7 +169,7 @@ import cdsDt.PersonNameStandard.LegalName;
 import cdsDt.PersonNameStandard.OtherNames;
 import ca.openosp.openo.ws.LabUploadWs;
 import ca.openosp.openo.OscarProperties;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.oscarDemographic.data.DemographicAddResult;
 import ca.openosp.openo.oscarDemographic.data.DemographicData;
 import ca.openosp.openo.oscarEncounter.data.EctProgram;

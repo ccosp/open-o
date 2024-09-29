@@ -23,7 +23,7 @@
  * Ontario, Canada
  */
 
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -70,7 +70,6 @@ import ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO;
 import ca.openosp.openo.casemgmt.dao.CaseManagementNoteLinkDAO;
 import ca.openosp.openo.casemgmt.model.CaseManagementNote;
 import ca.openosp.openo.casemgmt.model.CaseManagementNoteLink;
-import ca.openosp.openo.common.dao.*;
 import ca.openosp.openo.common.dao.DocumentDao.Module;
 import ca.openosp.openo.common.model.ConsultDocs;
 import ca.openosp.openo.common.model.CtlDocType;

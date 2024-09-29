@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
-import documentManager.ConvertToEdoc.DocumentType;
+import ca.openosp.openo.documentManager.ConvertToEdoc.DocumentType;
 
 /**
  * @author denniswarren

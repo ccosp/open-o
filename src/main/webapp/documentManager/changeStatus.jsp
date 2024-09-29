@@ -25,7 +25,7 @@
 %>
 
 <%@ page
-        import="java.util.*, documentManager.EDocUtil, documentManager.data.ChangeDocStatusForm" %>
+        import="java.util.*, ca.openosp.openo.documentManager.EDocUtil, ca.openosp.openo.documentManager.data.ChangeDocStatusForm" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%
     ArrayList<String> doctypesD = EDocUtil.getDoctypes("demographic");

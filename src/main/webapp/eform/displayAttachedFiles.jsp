@@ -53,8 +53,8 @@
 <%@ page import="ca.openosp.openo.hospitalReportManager.model.HRMDocumentToDemographic" %>
 <%@ page import="ca.openosp.openo.common.model.EFormData" %>
 <%@ page import="ca.openosp.openo.eform.EFormUtil" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.LabResultData" %>
 

@@ -45,7 +45,7 @@ public class DocumentPreviewServlet extends Action {
         // figure out the destination by the document type
         String destination = "";
         if (DocumentType.CDS.name().equalsIgnoreCase(docType)) {
-            destination = String.format(request.getContextPath() + "/documentManager/ManageDocument.do?method=downloadCDS&doc_no=%s", document);
+            destination = String.format(request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=downloadCDS&doc_no=%s", document);
 
         } else if (DocumentType.XPHR.name().equalsIgnoreCase(docType) || DocumentType.NEXJ.name().equalsIgnoreCase(docType)) {
             destination = String.format("cdaExport.jsp?document_no=%s", document);
@@ -54,7 +54,7 @@ public class DocumentPreviewServlet extends Action {
             destination = String.format(request.getContextPath() + "/eform/efmshowform_data.jsp?fdid=%s", document);
 
         } else if ("edocs".equalsIgnoreCase(docType)) {
-            destination = String.format(request.getContextPath() + "/documentManager/ManageDocument.do?method=display&doc_no=%s&providerNo=", document, provider);
+            destination = String.format(request.getContextPath() + "/ca/openosp/openo/documentManager/ManageDocument.do?method=display&doc_no=%s&providerNo=", document, provider);
 
         }
 

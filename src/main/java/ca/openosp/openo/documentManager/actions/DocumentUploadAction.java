@@ -8,7 +8,7 @@
  * and "gnu.org/licenses/gpl-2.0.html".
  */
 
-package documentManager.actions;
+package ca.openosp.openo.documentManager.actions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,9 +38,9 @@ import ca.openosp.openo.common.dao.ProviderInboxRoutingDao;
 import ca.openosp.openo.common.dao.QueueDocumentLinkDao;
 import ca.openosp.openo.common.dao.UserPropertyDAO;
 import ca.openosp.openo.common.model.UserProperty;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.IncomingDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.IncomingDocUtil;
 import ca.openosp.openo.managers.ProgramManager2;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
@@ -49,7 +49,7 @@ import ca.openosp.openo.ehrutil.SpringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import documentManager.data.DocumentUploadForm;
+import ca.openosp.openo.documentManager.data.DocumentUploadForm;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 

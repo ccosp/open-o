@@ -57,7 +57,7 @@
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@page import="ca.openosp.openo.ehrutil.SessionConstants" %>
 <%@page import="oscar.oscarProvider.data.*" %>
-<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
 <%@ page import="ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%
     List providers = ProviderData.getProviderList();

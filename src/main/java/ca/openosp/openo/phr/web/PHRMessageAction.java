@@ -74,9 +74,9 @@ import ca.openosp.openo.ehrutil.WebUtils;
 import ca.openosp.openo.ehrutil.XmlUtils;
 import org.w3c.dom.Document;
 
-import documentManager.EDoc;
-import documentManager.EDocUtil;
-import documentManager.actions.AddEditDocumentAction;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.actions.AddEditDocumentAction;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.log.LogConst;
 import ca.openosp.openo.oscarDemographic.data.DemographicData;

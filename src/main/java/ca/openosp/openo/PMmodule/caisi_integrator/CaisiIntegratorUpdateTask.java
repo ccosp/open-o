@@ -189,13 +189,12 @@ import ca.openosp.openo.managers.IntegratorFileLogManager;
 import ca.openosp.openo.managers.IntegratorPushManager;
 import ca.openosp.openo.managers.MessengerIntegratorManager;
 import ca.openosp.openo.managers.PatientConsentManager;
-import ca.openosp.openo.ehrutil.*;
 import org.springframework.beans.BeanUtils;
 import org.w3c.dom.Document;
 
 import ca.openosp.openo.OscarProperties;
-import documentManager.EDoc;
-import documentManager.EDocUtil;
+import ca.openosp.openo.documentManager.EDoc;
+import ca.openosp.openo.documentManager.EDocUtil;
 import ca.openosp.openo.form.FrmLabReq07Record;
 import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.oscarLab.ca.all.web.LabDisplayHelper;

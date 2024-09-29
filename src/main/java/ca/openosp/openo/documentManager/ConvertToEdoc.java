@@ -22,7 +22,7 @@
  * University of British Columbia
  * Vancouver, British Columbia, Canada
  */
-package documentManager;
+package ca.openosp.openo.documentManager;
 
 import com.lowagie.text.DocumentException;
 import io.woo.htmltopdf.HtmlToPdf;

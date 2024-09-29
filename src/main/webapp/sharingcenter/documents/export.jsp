@@ -57,7 +57,7 @@
 <%@page import="ca.openosp.openo.sharingcenter.model.AffinityDomainDataObject" %>
 <%@page import="org.oscarehr.common.model.Document" %>
 
-<%@ page import="documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
 
 <%
     String user_no = (String) session.getAttribute("user");

@@ -337,7 +337,7 @@
                             } else if (result.isDocument()) {
                                 String patientName = result.getPatientName();
                                 StringBuilder url = new StringBuilder(request.getContextPath());
-                                url.append("/documentManager/showDocument.jsp?inWindow=true&segmentID=");
+                                url.append("/ca/openosp/openo/documentManager/showDocument.jsp?inWindow=true&segmentID=");
                                 url.append(segmentID);
                                 url.append("&providerNo=");
                                 url.append(providerNo);

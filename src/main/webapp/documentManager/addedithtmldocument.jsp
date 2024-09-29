@@ -50,9 +50,9 @@
 
 <%@ page
         import="java.util.*, oscar.*, oscar.util.*, ca.openosp.openo.oscarProvider.data.ProviderData, ca.openosp.openo.ehrutil.SpringUtils, ca.openosp.openo.common.dao.CtlDocClassDao" %>
-<%@ page import="documentManager.data.AddEditDocumentForm" %>
-<%@ page import="documentManager.EDocUtil" %>
-<%@ page import="documentManager.EDoc" %>
+<%@ page import="ca.openosp.openo.documentManager.data.AddEditDocumentForm" %>
+<%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
+<%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.util.UtilDateUtilities" %>
 <%@ page import="ca.openosp.openo.util.UtilMisc" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>

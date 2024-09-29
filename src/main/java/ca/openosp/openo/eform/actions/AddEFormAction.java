@@ -30,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.action.*;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.enumerator.DocumentType;
-import documentManager.DocumentAttachmentManager;
+import ca.openosp.openo.documentManager.DocumentAttachmentManager;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.managers.EformDataManager;
 import ca.openosp.openo.managers.EmailManager;

@@ -351,7 +351,7 @@
 <bean id="integratorProgressDao" class="org.oscarehr.common.dao.IntegratorProgressDaoImpl"></bean> -->
 <!-- <bean id="messengerDemographicManager" class="ca.openosp.openo.managers.MessengerDemographicManagerImpl"></bean>
 <bean id="roomDemographicManager" class="ca.openosp.openo.managers.RoomDemographicManagerImpl"></bean> -->
-<!-- <bean id="documentAttachmentManager" class="documentManager.DocumentAttachmentManagerImpl"></bean> -->
+<!-- <bean id="documentAttachmentManager" class="ca.openosp.openo.documentManager.DocumentAttachmentManagerImpl"></bean> -->
 <!-- <bean id="faxDocumentManager" class="ca.openosp.openo.managers.FaxDocumentManagerImpl"></bean> -->
 
 
