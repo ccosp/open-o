@@ -129,11 +129,10 @@ public class CDADocumentUtil {
     /**
      * Creates and formats an xPHR CDA document.
      *
-     * @param demoId The id of the patient.
+     * @param demoId  The id of the patient.
      * @param session The current session.
-     * @param mode The mode of the document.
+     * @param mode    The mode of the document.
      * @return PhrExtractDocument
-     *
      */
     public static PhrExtractDocument createDoc(String demographicId, String providerId) {
 

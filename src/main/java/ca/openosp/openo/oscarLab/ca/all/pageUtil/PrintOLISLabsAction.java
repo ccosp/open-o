@@ -46,7 +46,6 @@ import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import ca.openosp.openo.oscarLab.ca.all.parsers.OLISHL7Handler;
 
 /**
- *
  * @author wrighd
  */
 public class PrintOLISLabsAction extends Action {
@@ -54,7 +53,9 @@ public class PrintOLISLabsAction extends Action {
     Logger logger = MiscUtils.getLogger();
     private SecurityInfoManager securityInfoManager = SpringUtils.getBean(SecurityInfoManager.class);
 
-    /** Creates a new instance of PrintLabsAction */
+    /**
+     * Creates a new instance of PrintLabsAction
+     */
     public PrintOLISLabsAction() {
     }
 
