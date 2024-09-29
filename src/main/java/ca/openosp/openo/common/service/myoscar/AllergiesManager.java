@@ -38,9 +38,6 @@ import ca.openosp.openo.common.dao.AllergyDao;
 import ca.openosp.openo.common.dao.SentToPHRTrackingDao;
 import ca.openosp.openo.common.model.Allergy;
 import ca.openosp.openo.common.model.SentToPHRTracking;
-import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
-import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
@@ -51,36 +48,6 @@ public final class AllergiesManager {
     private static final Logger logger = MiscUtils.getLogger();
     private static final String OSCAR_ALLERGIES_DATA_TYPE = "ALLERGY";
     private static final SentToPHRTrackingDao sentToPHRTrackingDao = (SentToPHRTrackingDao) SpringUtils.getBean(SentToPHRTrackingDao.class);
-
-    public static void sendAllergiesToMyOscar(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Integer demographicId) throws ClassCastException {
-        // get last synced info
-
-        // get the items for the person which are changed since last sync
-        // for each item
-        // send the item or update it
-
-        Date startSyncTime = new Date();
-        SentToPHRTracking sentToPHRTracking = MyOscarMedicalDataManagerUtils.getExistingOrCreateInitialSentToPHRTracking(demographicId, OSCAR_ALLERGIES_DATA_TYPE, MyOscarLoggedInInfo.getMyOscarServerBaseUrl());
-        logger.debug("sendAllergiesToMyOscar : demographicId=" + demographicId + ", lastSyncTime=" + sentToPHRTracking.getSentDatetime());
-
-        AllergyDao allergyDao = (AllergyDao) SpringUtils.getBean(AllergyDao.class);
-        List<Allergy> changedAllergies = allergyDao.findByDemographicIdUpdatedAfterDate(demographicId, sentToPHRTracking.getSentDatetime());
-        for (Allergy allergy : changedAllergies) {
-            logger.debug("sendAllergiesToMyOscar : allergyId=" + allergy.getId());
-
-            try {
-                MedicalDataTransfer4 medicalDataTransfer = toMedicalDataTransfer(loggedInInfo, myOscarLoggedInInfo, allergy);
-
-                // don't ask me why but allergies are currently changeable in oscar, therefore, they're never completed.
-                MyOscarMedicalDataManagerUtils.addMedicalData(loggedInInfo.getLoggedInProviderNo(), myOscarLoggedInInfo, medicalDataTransfer, OSCAR_ALLERGIES_DATA_TYPE, allergy.getId(), false, true);
-            } catch (Exception e) {
-                logger.error("Unexpected error", e);
-            }
-        }
-
-        sentToPHRTracking.setSentDatetime(startSyncTime);
-        sentToPHRTrackingDao.merge(sentToPHRTracking);
-    }
 
     public static Document toXml(Allergy allergy) throws ParserConfigurationException {
         Document doc = XmlUtils.newDocument("Allergy");
@@ -148,45 +115,5 @@ public final class AllergiesManager {
         return (doc);
     }
 
-
-    /**
-     * This method may return null for invalid allergy entries... we have some of those, specifically when no provider can be identified to be responsible for this send.
-     */
-    private static MedicalDataTransfer4 toMedicalDataTransfer(LoggedInInfo loggedInInfo, MyOscarLoggedInInfo myOscarLoggedInInfo, Allergy allergy) throws ClassCastException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException {
-
-        // okay big anomaly here, some records do not have providers numbers. This is really invalid data.
-        // Our attempt will be to check for a provider number, if none exists, we'll try to use the person who is sending - if it's a person
-        // otherwise... we can't do anything, we can't set this to null, it makes no sense from a thread, at least if its clicked by a person they have double checked it.
-        String providerNo = allergy.getProviderNo();
-
-        if (providerNo == null) {
-            if (loggedInInfo.getLoggedInProvider() != null) // in case it's background thread.
-            {
-                providerNo = loggedInInfo.getLoggedInProviderNo();
-            }
-        }
-
-        if (providerNo != null) {
-            MedicalDataTransfer4 medicalDataTransfer = MyOscarMedicalDataManagerUtils.getEmptyMedicalDataTransfer(myOscarLoggedInInfo, allergy.getEntryDate(), providerNo, allergy.getDemographicNo());
-            // don't ask me why but allergies are currently changeable in oscar, therefore, they're never completed.
-            medicalDataTransfer.setCompleted(false);
-
-            Document doc = toXml(allergy);
-            medicalDataTransfer.setData(XmlUtils.toString(doc, false));
-
-            medicalDataTransfer.setMedicalDataType(MedicalDataType.ALLERGY.name());
-
-            medicalDataTransfer.setOriginalSourceId(MyOscarMedicalDataManagerUtils.generateSourceId(loggedInInfo.getCurrentFacility().getName(), OSCAR_ALLERGIES_DATA_TYPE, allergy.getId()));
-
-            boolean active = true;
-            if (allergy.getArchived()) active = false;
-            medicalDataTransfer.setActive(active);
-
-            return (medicalDataTransfer);
-        } else {
-            return (null);
-        }
-
-    }
 
 }
