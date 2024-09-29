@@ -120,7 +120,7 @@
     <property name="sessionFactory" ref="sessionFactory"></property>  
     </bean>  
 
-	<bean id="hibernateTestDao" class="oscar.util.HibernateTestDao">
+	<bean id="hibernateTestDao" class="ca.openosp.openo.util.HibernateTestDao">
     <property name="template" ref="template"/>
 	</bean>
 		
