@@ -206,20 +206,6 @@
 
     <!-- Indivo -->
 
-    <bean name="/phr/PhrMessage" class="ca.openosp.openo.phr.web.PHRMessageAction" scope="prototype"/>
-    <bean name="/oscarRx/SendToPhr" class="ca.openosp.openo.oscarRx.pageUtil.RxSendToPhrAction" scope="prototype"/>
-    <bean name="/oscarEncounter/oscarMeasurements/SendToPhr"
-          class="ca.openosp.openo.oscarEncounter.oscarMeasurements.pageUtil.EctSendMeasurementToPhr" scope="prototype"/>
-
-    <bean name="/documentManager/SendDocToPhr" class="ca.openosp.openo.documentManager.actions.SendDocToPhrAction"
-          scope="prototype"/>
-    <bean name="/phr/Login" class="ca.openosp.openo.phr.web.PHRLoginAction" scope="prototype"/>
-    <bean name="/phr/Logout" class="ca.openosp.openo.phr.web.PHRLogoutAction" scope="prototype"/>
-
-    <bean name="/phr/UserManagement" class="ca.openosp.openo.phr.web.PHRUserManagementAction" scope="prototype"/>
-
-    <bean name="/SendToPhr" class="ca.openosp.openo.phr.web.PHRGenericSendToPhrAction" scope="prototype"/>
-
     <bean name="/testAction" class="ca.openosp.openo.decisionSupport.web.TestActionW" scope="prototype">
         <property name="dsService" ref="dsService"/>
     </bean>
