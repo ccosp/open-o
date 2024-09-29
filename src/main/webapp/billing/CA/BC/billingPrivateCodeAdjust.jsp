@@ -28,7 +28,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<%@ page import="java.util.*,ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData,oscar.oscarBilling.ca.bc.pageUtil.*" %>
+<%@ page
+        import="java.util.*,ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData,oscar.oscarBilling.ca.bc.pageUtil.*" %>
 
 <html:html lang="en">
     <head>

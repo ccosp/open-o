@@ -20,8 +20,9 @@
 <%! boolean bMultisites = IsPropertiesOn.isMultisitesEnable(); %>
 
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, ca.openosp.openo.MyDateFormat"
-         errorPage="/errorpage.jsp" %>
+<%@ page
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, java.net.*,oscar.*, oscar.util.*, ca.openosp.openo.MyDateFormat"
+        errorPage="/errorpage.jsp" %>
 <%@ page import="oscar.oscarBilling.ca.on.pageUtil.*" %>
 
 <jsp:useBean id="billingLocalInvNoBean" class="java.util.Properties" scope="page"/>

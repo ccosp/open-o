@@ -73,7 +73,6 @@ import ca.openosp.openo.oscarBilling.ca.bc.pageUtil.BillingSessionBean;
  * @author Dennis Warren
  * @Revised Jun 4, 2012
  * @Comment
- *
  */
 public class QuickBillingBCHandler {
 
@@ -152,7 +151,6 @@ public class QuickBillingBCHandler {
 
 
     /**
-     *
      * @return Provider Data Access Object
      */
     public ProviderDataDao getProviderDao() {
@@ -160,7 +158,6 @@ public class QuickBillingBCHandler {
     }
 
     /**
-     *
      * @return Oscar Properties Object
      */
     public Properties getOscarProperties() {
@@ -171,6 +168,7 @@ public class QuickBillingBCHandler {
     /**
      * The number of invoices saved in the last
      * session.
+     *
      * @return int
      */
     public int getNumberSaved() {
@@ -179,6 +177,7 @@ public class QuickBillingBCHandler {
 
     /**
      * set the number of invoices saved in this session.
+     *
      * @param numberSaved
      */
     private void setNumberSaved(int numberSaved) {
@@ -204,7 +203,6 @@ public class QuickBillingBCHandler {
      * Header consists of a provider, service location, and service date and
      * is the header for a group of individual patients with the header data
      * in common.
-     *
      */
     public void setHeader(JSONObject billingEntry) {
 
@@ -237,7 +235,7 @@ public class QuickBillingBCHandler {
     }
 
     /**
-     * Create a new billing object to be stored into an array 
+     * Create a new billing object to be stored into an array
      * for later processing.
      * Lots of data here is hard coded.
      */
@@ -405,6 +403,7 @@ public class QuickBillingBCHandler {
 
     /**
      * Triggers exsisting class: BillingSaveBillingAction to recursivley save the bills array list.
+     *
      * @throws IOException
      * @throws ServletException
      */
@@ -463,6 +462,7 @@ public class QuickBillingBCHandler {
 
     /**
      * remove selected bill from the bill arraylist stored in the quickBillingBCFormBean
+     *
      * @param bill
      */
     public boolean removeBill(String bill) {
@@ -474,6 +474,7 @@ public class QuickBillingBCHandler {
 
     /**
      * Class borrowed from BillingSaveBillingAction
+     *
      * @param bean
      * @param curDate
      * @param billingAccountStatus

@@ -44,7 +44,8 @@
 <%@ page
         import="java.sql.*, java.util.*, ca.openosp.openo.MyDateFormat, oscar.oscarDemographic.data.*, ca.openosp.openo.common.OtherIdManager, java.text.SimpleDateFormat"
         errorPage="/errorpage.jsp" %>
-<%@ page import="ca.openosp.openo.common.model.Demographic,ca.openosp.openo.appt.AppointmentMailer, ca.openosp.openo.ehrutil.SpringUtils" %>
+<%@ page
+        import="ca.openosp.openo.common.model.Demographic,ca.openosp.openo.appt.AppointmentMailer, ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.common.dao.OscarAppointmentDao" %>
 <%@page import="ca.openosp.openo.common.model.Appointment" %>
 <%@page import="ca.openosp.openo.common.dao.WaitingListDao" %>

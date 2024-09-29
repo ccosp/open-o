@@ -24,7 +24,8 @@
 
 --%>
 
-<%@ page import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat,oscar.log.*" %>
+<%@ page
+        import="java.math.*, java.util.*, java.io.*, java.sql.*, oscar.*, java.net.*,ca.openosp.openo.MyDateFormat,oscar.log.*" %>
 
 <%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.ehrutil.LoggedInInfo" %>

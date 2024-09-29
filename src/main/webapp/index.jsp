@@ -41,7 +41,8 @@
     pageContext.setAttribute("isMobileDevice", isMobileDevice);
 %>
 
-<jsp:useBean id="LoginResourceBean" beanName="ca.openosp.openo.login.LoginResourceBean" type="ca.openosp.openo.login.LoginResourceBean"/>
+<jsp:useBean id="LoginResourceBean" beanName="ca.openosp.openo.login.LoginResourceBean"
+             type="ca.openosp.openo.login.LoginResourceBean"/>
 <c:set var="login_error" value="" scope="page"/>
 <!DOCTYPE html>
 <html:html lang="en">

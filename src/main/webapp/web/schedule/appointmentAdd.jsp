@@ -63,7 +63,7 @@
                     </div>
                     <div>{{appointment.demographic.hin}}</div>
                     <div>{{appointment.demographic.dateOfBirth | date:
-                            'yyyy-MM-dd'}}
+                        'yyyy-MM-dd'}}
                     </div>
                 </div>
             </div>

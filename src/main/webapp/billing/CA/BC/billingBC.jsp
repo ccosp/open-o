@@ -56,7 +56,8 @@
 <%@ page import="org.owasp.encoder.Encode" %>
 <%@ page import="ca.openosp.openo.common.dao.PropertyDao" %>
 <%@ page import="ca.openosp.openo.common.model.Property" %>
-<%@ page import="ca.openosp.openo.managers.DemographicManager,ca.openosp.openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic" %>
+<%@ page
+        import="ca.openosp.openo.managers.DemographicManager,ca.openosp.openo.oscarBilling.ca.bc.MSP.ServiceCodeValidationLogic" %>
 <%@ page import="ca.openosp.openo.common.model.Demographic" %>
 <%@ page import="org.apache.commons.lang3.StringUtils" %>
 <%@ page import="ca.openosp.openo.entities.PaymentType" %>

@@ -60,7 +60,7 @@
 
             <!-- il18n problem here -->
             <p class="lead">You have {{(totalInbox > 0) && totalInbox || "no"}} report{{(totalInbox > 1) && "s" ||
-            ""}}{{(totalInbox == 0) && "s" || ""}}{{(totalInbox == null) && "s" || ""}} which are not yet
+                ""}}{{(totalInbox == 0) && "s" || ""}}{{(totalInbox == null) && "s" || ""}} which are not yet
                 acknowledged.</p>
 
 
@@ -104,7 +104,7 @@
 
             <!-- il18n problem here -->
             <p class="lead">You have {{(totalMessages > 0) && totalMessages || "no"}} unread message{{(totalMessages !=
-                    1) && "s" || ""}}.</p>
+                1) && "s" || ""}}.</p>
 
 
             <div ng-if="totalMessages > 0">
@@ -179,8 +179,8 @@
 
             <!-- this is a bit of a problem for il18n -->
             <p class="lead">You have {{(totalTicklers > 0) && totalTicklers || "no"}} active tickler{{(totalTicklers !=
-                    1) && "s" || ""}}. <span style="color:red"
-                                             ng-if="prefs.expiredTicklersOnly == true">(Overdue)</span>
+                1) && "s" || ""}}. <span style="color:red"
+                                         ng-if="prefs.expiredTicklersOnly == true">(Overdue)</span>
             </p>
 
             <div ng-if="totalTicklers>0">
@@ -277,13 +277,13 @@
 
                                     <div ng-repeat="comment in item.comments" | class="well">
                                         <h5><b>{{comment.author}}</b> posted {{comment.publishedDate |
-                                        date:'yyyy-MM-dd'}}</h5>
+                                            date:'yyyy-MM-dd'}}</h5>
                                         <p style="text-align:left">{{comment.body}}</p>
                                     </div>
 
                                     <div class="well" ng-if="item.comments.length < item.commentCount">
                                         <a target="_blank" href="{{item.link}}">See {{item.commentCount -
-                                        item.comments.length}} more comments...</a>
+                                            item.comments.length}} more comments...</a>
                                     </div>
 
                                     <div>

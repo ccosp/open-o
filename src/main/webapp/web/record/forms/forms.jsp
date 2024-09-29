@@ -110,7 +110,8 @@
                 <ul style="padding-left:12px;">
                     <li ng-repeat="item in currentEformGroup.summaryItem">
                         <span class="pull-right">{{item.date | date: 'dd-MMM-yyyy'}}</span>
-                        <a ng-click="openFormFromGroups(item)" href="javascript:void(0)" ng-class="item.indicatorClass">{{item.displayName | limitTo: 34
+                        <a ng-click="openFormFromGroups(item)" href="javascript:void(0)" ng-class="item.indicatorClass">{{item.displayName
+                            | limitTo: 34
                             }} {{item.displayName.length > 34 ? '...' : '' }}<small
                                     ng-show="item.classification">({{item.classification}})</small></a>
                     </li>
@@ -125,7 +126,8 @@
                 <ul style="padding-left:12px;">
                     <li ng-repeat="item in favouriteGroup.summaryItem">
                         <span class="pull-right">{{item.date | date: 'dd-MMM-yyyy'}}</span>
-                        <a ng-click="openFormFromGroups(item)" href="javascript:void(0)" ng-class="item.indicatorClass">{{item.displayName | limitTo: 34
+                        <a ng-click="openFormFromGroups(item)" href="javascript:void(0)" ng-class="item.indicatorClass">{{item.displayName
+                            | limitTo: 34
                             }} {{item.displayName.length > 34 ? '...' : '' }}<small
                                     ng-show="item.classification">({{item.classification}})</small></a>
                     </li>

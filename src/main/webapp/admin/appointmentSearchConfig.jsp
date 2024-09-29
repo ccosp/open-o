@@ -190,7 +190,7 @@
                                     <ul class="dropdown-menu">
                                         <li ng-repeat="prov in  activeProviders"><a
                                                 ng-click="addTeamMember(provider,prov)">{{prov.lastName + ",
-                                                "+prov.firstName}}</a></li>
+                                            "+prov.firstName}}</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -223,7 +223,7 @@
                                     <ul class="dropdown-menu">
                                         <li ng-repeat="prov in  activeProviders"><a
                                                 ng-click="addProvider(prov)">{{prov.lastName + ",
-                                                "+prov.firstName}}</a></li>
+                                            "+prov.firstName}}</a></li>
                                     </ul>
                                 </div>
                             </td>

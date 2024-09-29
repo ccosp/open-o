@@ -28,7 +28,8 @@
 
 <%@ taglib uri="/WEB-INF/oscarProperties-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="ca.openosp.openo.oscarProvider.data.ProSignatureData, ca.openosp.openo.oscarProvider.data.ProviderData" %>
+<%@ page
+        import="ca.openosp.openo.oscarProvider.data.ProSignatureData, ca.openosp.openo.oscarProvider.data.ProviderData" %>
 <%@ page import="oscar.log.*,oscar.oscarRx.data.*" %>
 <%@ page import="org.apache.commons.lang.StringEscapeUtils" %>
 <%@ page import="org.apache.logging.log4j.Logger,java.util.List" %>

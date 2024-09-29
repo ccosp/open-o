@@ -33,7 +33,7 @@
         <small class="patientHeaderExt pull-right">
             <i><bean:message key="demographic.patient.context.born"/>: </i>
             <b>{{demographic.dobYear}}-{{demographic.dobMonth}}-{{demographic.dobDay}}</b> (<b>{{demographic.age |
-        age}}</b>) &nbsp;&nbsp; <i><bean:message key="demographic.patient.context.sex"/>:</i>
+            age}}</b>) &nbsp;&nbsp; <i><bean:message key="demographic.patient.context.sex"/>:</i>
             <b>{{demographic.sex}}</b>
             <i> &nbsp;&nbsp; <bean:message key="Appointment.msgTelephone"/>:</i> <b>{{demographic.phone}}</b>
             <!-- <span class="glyphicon glyphicon-new-window"></span>-->

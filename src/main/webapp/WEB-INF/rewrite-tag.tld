@@ -5,7 +5,6 @@
         "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 
 
-
 <taglib>
     <tlib-version>1.0</tlib-version>
     <jsp-version>1.2</jsp-version>
@@ -13,8 +12,8 @@
     <uri>/oscarrewrite</uri>
     <display-name>rewrite-tag</display-name>
 
-<tag>
-  <name>reWrite</name>
+    <tag>
+        <name>reWrite</name>
         <tag-class>ca.openosp.openo.util.FullPathReWrite</tag-class>
         <body-content>empty</body-content>
         <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
@@ -26,10 +25,10 @@
             <findparent>FALSE</findparent>
         </tldx>
         -->
-  <attribute>
-    <name>jspPage</name>
-    <required>false</required>
-    <rtexprvalue>true</rtexprvalue>
+        <attribute>
+            <name>jspPage</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
             <type>String</type>
             <!-- Forte4J_TLDX:  This comment contains code generation information. Do not delete.
             <tldx>
@@ -39,7 +38,7 @@
                 <ReferencesTagReferentFirst>TRUE</ReferencesTagReferentFirst>
             </tldx>
             -->
-  </attribute>
-</tag>
+        </attribute>
+    </tag>
 
 </taglib>

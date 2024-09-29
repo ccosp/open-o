@@ -28,8 +28,8 @@
 
     <h5 class="list-group-item-heading">{{patient.name}}</h5>
     <h5 class="list-group-item-heading pull-right" style="padding-bottom:2px">{{patient.date | date: 'yyyy-MM-dd
-    HH:mm
-    '}}</h5>
+        HH:mm
+        '}}</h5>
     <div style="height:5px"></div>
 </a>
 		

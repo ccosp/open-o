@@ -23,8 +23,9 @@
     session.setAttribute("content", "");
 %>
 
-<%@ page import="java.sql.*, java.util.*,java.net.*, oscar.util.*, oscar.oscarBilling.ca.on.data.*, ca.openosp.openo.MyDateFormat"
-         errorPage="/errorpage.jsp" %>
+<%@ page
+        import="java.sql.*, java.util.*,java.net.*, oscar.util.*, oscar.oscarBilling.ca.on.data.*, ca.openosp.openo.MyDateFormat"
+        errorPage="/errorpage.jsp" %>
 
 <%@ page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@ page import="ca.openosp.openo.common.model.Billing" %>

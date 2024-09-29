@@ -23,7 +23,8 @@
     Ontario, Canada
 
 --%>
-<%@ page import="java.util.*, java.sql.*,java.net.*, ca.openosp.openo.oscarDB.DBPreparedHandler, ca.openosp.openo.MyDateFormat, ca.openosp.openo.Misc" %>
+<%@ page
+        import="java.util.*, java.sql.*,java.net.*, ca.openosp.openo.oscarDB.DBPreparedHandler, ca.openosp.openo.MyDateFormat, ca.openosp.openo.Misc" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.DemographicMerged" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 
@@ -211,7 +212,7 @@
                         key="oscarMDS.segmentDisplay.patientSearch.msgDoctor"/></B></TH>
             </tr>
 
-            <%
+                <%
                 GregorianCalendar now = new GregorianCalendar();
                 int curYear = now.get(Calendar.YEAR);
                 int curMonth = (now.get(Calendar.MONTH) + 1);
@@ -346,42 +347,43 @@
                            value="<%=oscar.Misc.getString(rs,"demographic_no")%>"
                            onclick="updateOpener('<%=request.getParameter(">
                 </td>
-                <td><%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "last_name")))%>
-                </td>
-                <td><%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "first_name")))%>
-                </td>
-                <td><%= age %>
-                </td>
-                <td><%=nbsp(oscar.Misc.getString(rs, "roster_status"))%>
-                </td>
-                <td><%=nbsp(oscar.Misc.getString(rs, "patient_status"))%>
-                </td>
-                <td><%=nbsp(oscar.Misc.getString(rs, "sex"))%>
-                </td>
-                <td><%=nbsp(oscar.Misc.getString(rs, "year_of_birth") + "-" + oscar.Misc.getString(rs, "month_of_birth") + "-" + oscar.Misc.getString(rs, "date_of_birth"))%>
-                </td>
-                <td><%=providerBean.getProperty(oscar.Misc.getString(rs, "provider_no")) == null ? "&nbsp;" : providerBean.getProperty(oscar.Misc.getString(rs, "provider_no")) %>
-                </td>
+                <td>
+                               <%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "last_name")))%>
+                                   </td>
+                                   <td><%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "first_name")))%>
+                                   </td>
+                                   <td><%= age %>
+                                   </td>
+                                   <td><%=nbsp(oscar.Misc.getString(rs, "roster_status"))%>
+                                   </td>
+                                   <td><%=nbsp(oscar.Misc.getString(rs, "patient_status"))%>
+                                   </td>
+                                   <td><%=nbsp(oscar.Misc.getString(rs, "sex"))%>
+                                   </td>
+                                   <td><%=nbsp(oscar.Misc.getString(rs, "year_of_birth") + "-" + oscar.Misc.getString(rs, "month_of_birth") + "-" + oscar.Misc.getString(rs, "date_of_birth"))%>
+                                   </td>
+                                   <td><%=providerBean.getProperty(oscar.Misc.getString(rs, "provider_no")) == null ? "&nbsp;" : providerBean.getProperty(oscar.Misc.getString(rs, "provider_no")) %>
+                                   </td>
 
-            </tr>
-            <%
+                                   </tr>
+                               <%
                         bufName = new StringBuffer((oscar.Misc.getString(rs, "last_name") + "," + oscar.Misc.getString(rs, "first_name")));
                         bufNo = new StringBuffer((oscar.Misc.getString(rs, "demographic_no")));
                         bufChart = new StringBuffer((oscar.Misc.getString(rs, "chart_no")));
                     }
                 }
             %>
-        </form>
+                                   </form>
 
-    </table>
+                                   </table>
 
-    <%
+                               <%
         int nLastPage = 0, nNextPage = 0;
         nNextPage = Integer.parseInt(strLimit2) + Integer.parseInt(strLimit1);
         nLastPage = Integer.parseInt(strLimit1) - Integer.parseInt(strLimit2);
     %>
-    <script language="JavaScript">
-        <!--
+                                   <script language=" JavaScript">
+                    <!--
         function last() {
             document.nextform.action = "PatientSearch.jsp?keyword=<%=request.getParameter("keyword")%>&search_mode=<%=request.getParameter("search_mode")%>&displaymode=<%=request.getParameter("displaymode")%>&dboperation=<%=request.getParameter("dboperation")%>&orderby=<%=request.getParameter("orderby")%>&limit1=<%=nLastPage%>&limit2=<%=strLimit2%>&from=<%=request.getParameter("from")%>";
             //document.nextform.submit();
@@ -393,25 +395,25 @@
         }
 
         //-->
-    </SCRIPT>
+                    </SCRIPT>
 
-    <form method="post" name="nextform"
-          action="../demographic/demographiccontrol.jsp"><input
-            type="hidden" name="labNo" value="<%=request.getParameter("labNo")%>">
-        <input type="hidden" name="labType"
-               value="<%=request.getParameter("labType")%>"/> <%
-            if (nLastPage >= 0) {
-        %> <input type="submit" name="submit"
-                  value="<bean:message key="oscarMDS.segmentDisplay.patientSearch.btnLastPage"/>"
-                  onClick="last()"> <%
-            }
-            if (nItems == Integer.parseInt(strLimit2)) {
-        %> <input type="submit" name="submit"
-                  value="<bean:message key="oscarMDS.segmentDisplay.patientSearch.btnNextPage"/>"
-                  onClick="next()"> <%
-            }
-        %>
-    </form>
+                    <form method="post" name="nextform"
+                          action="../demographic/demographiccontrol.jsp"><input
+                            type="hidden" name="labNo" value="<%=request.getParameter("labNo")%>">
+                        <input type="hidden" name="labType"
+                               value="<%=request.getParameter("labType")%>"/> <%
+                            if (nLastPage >= 0) {
+                        %> <input type="submit" name="submit"
+                                  value="<bean:message key="oscarMDS.segmentDisplay.patientSearch.btnLastPage"/>"
+                                  onClick="last()"> <%
+                            }
+                            if (nItems == Integer.parseInt(strLimit2)) {
+                        %> <input type="submit" name="submit"
+                                  value="<bean:message key="oscarMDS.segmentDisplay.patientSearch.btnNextPage"/>"
+                                  onClick="next()"> <%
+                            }
+                        %>
+                    </form>
 
     <bean:message
             key="oscarMDS.segmentDisplay.patientSearch.msgSearchMessage"/></center>

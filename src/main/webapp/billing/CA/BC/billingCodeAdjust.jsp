@@ -42,7 +42,8 @@
 %>
 
 <%@page import="java.util.*,ca.openosp.openo.oscarBilling.ca.bc.data.BillingCodeData,oscar.oscarBilling.ca.bc.pageUtil.*" %>
-<%@ page import="ca.openosp.openo.common.dao.BillingServiceDao,ca.openosp.openo.ehrutil.SpringUtils,org.oscarehr.common.model.*" %>
+<%@ page
+        import="ca.openosp.openo.common.dao.BillingServiceDao,ca.openosp.openo.ehrutil.SpringUtils,org.oscarehr.common.model.*" %>
 <%@ page import="ca.openosp.openo.common.model.BillingService" %>
 <%BillingServiceDao billingServiceDao = (BillingServiceDao) SpringUtils.getBean(BillingServiceDao.class); %>
 

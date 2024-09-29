@@ -38,7 +38,8 @@
     }
 %>
 
-<%@ page import="oscar.oscarProvider.data.*, ca.openosp.openo.OscarProperties, ca.openosp.openo.oscarClinic.ClinicData, java.util.*" %>
+<%@ page
+        import="oscar.oscarProvider.data.*, ca.openosp.openo.OscarProperties, ca.openosp.openo.oscarClinic.ClinicData, java.util.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>

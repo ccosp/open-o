@@ -93,7 +93,8 @@
     <logic:redirect href="index.jsp"/>
 </logic:notPresent>
 <logic:present name="msgSessionBean" scope="session">
-    <bean:define id="bean" type="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" name="msgSessionBean" scope="session"/>
+    <bean:define id="bean" type="ca.openosp.openo.oscarMessenger.pageUtil.MsgSessionBean" name="msgSessionBean"
+                 scope="session"/>
     <logic:equal name="bean" property="valid" value="false">
         <logic:redirect href="index.jsp"/>
     </logic:equal>
@@ -101,7 +102,8 @@
 <%
     MsgSessionBean bean = (MsgSessionBean) pageContext.findAttribute("bean");
 %>
-<jsp:useBean id="DisplayMessagesBeanId" scope="session" class="ca.openosp.openo.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
+<jsp:useBean id="DisplayMessagesBeanId" scope="session"
+             class="ca.openosp.openo.oscarMessenger.pageUtil.MsgDisplayMessagesBean"/>
 <% DisplayMessagesBeanId.setProviderNo(bean.getProviderNo());
     bean.nullAttachment();
 %>

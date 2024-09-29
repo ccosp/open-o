@@ -180,57 +180,56 @@ public class EctIncomingEncounterAction extends Action {
             }
 
 
+        }
 
-            }
+        bean.appointmentDate = request.getParameter("appointmentDate");
+        bean.startTime = request.getParameter("startTime");
+        bean.status = request.getParameter("status");
+        bean.date = request.getParameter("date");
+        bean.check = "myCheck";
+        bean.oscarMsgID = request.getParameter("msgId");
+        bean.setUpEncounterPage(LoggedInInfo.getLoggedInInfoFromSession(request));
+        request.getSession().setAttribute("EctSessionBean", bean);
+        request.getSession().setAttribute("eChartID", bean.eChartId);
+        if (request.getParameter("source") != null) {
+            bean.source = request.getParameter("source");
+        }
 
-            bean.appointmentDate = request.getParameter("appointmentDate");
-            bean.startTime = request.getParameter("startTime");
-            bean.status = request.getParameter("status");
-            bean.date = request.getParameter("date");
-            bean.check = "myCheck";
-            bean.oscarMsgID = request.getParameter("msgId");
-            bean.setUpEncounterPage(LoggedInInfo.getLoggedInInfoFromSession(request));
-            request.getSession().setAttribute("EctSessionBean", bean);
-            request.getSession().setAttribute("eChartID", bean.eChartId);
-            if (request.getParameter("source") != null) {
-                bean.source = request.getParameter("source");
-            }
-
-            long notesCount = caseManagementNoteDao.getNotesCountByDemographicId(bean.getDemographicNo());
-            if (notesCount == 0
-                    && OscarProperties.getInstance().getProperty("wl_default_issue", "false").equals("true")) {
-                // assign default issues for a feature: WL: default issues assignment
-                String wlProgramId = (String) request.getSession().getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
-                DefaultIssueDao defaultIssueDao = SpringUtils.getBean(DefaultIssueDao.class);
-                IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
-                CaseManagementIssueDAO cmiDao = (CaseManagementIssueDAO) SpringUtils.getBean(CaseManagementIssueDAO.class);
-                Set<Long> issueIdSet = getIssueIdSet(bean.getCurProviderNo(), wlProgramId);
-                String[] issueIds = defaultIssueDao.findAllDefaultIssueIds();
-                for (String id : issueIds) {
-                    Issue issue = issueDao.getIssue(Long.valueOf(id));
-                    // judge current provider can access this issue
-                    if (!issueIdSet.contains(Long.parseLong(id))) {
-                        continue;
-                    }
-
-                    // judge this issue exists or not
-                    CaseManagementIssue cmi = cmiDao.getIssuebyId(bean.getDemographicNo(), id);
-                    if (cmi != null) { // this issue exists
-                        continue;
-                    }
-                    cmi = new CaseManagementIssue();
-                    cmi.setAcute(false);
-                    cmi.setCertain(false);
-                    cmi.setDemographic_no(Integer.valueOf(bean.getDemographicNo()));
-                    cmi.setIssue_id(Long.valueOf(id));
-                    cmi.setMajor(false);
-                    cmi.setProgram_id(Integer.valueOf(wlProgramId));
-                    cmi.setResolved(false);
-                    cmi.setType(issue.getRole());
-                    cmi.setUpdate_date(new Date());
-                    cmiDao.saveIssue(cmi);
+        long notesCount = caseManagementNoteDao.getNotesCountByDemographicId(bean.getDemographicNo());
+        if (notesCount == 0
+                && OscarProperties.getInstance().getProperty("wl_default_issue", "false").equals("true")) {
+            // assign default issues for a feature: WL: default issues assignment
+            String wlProgramId = (String) request.getSession().getAttribute(SessionConstants.CURRENT_PROGRAM_ID);
+            DefaultIssueDao defaultIssueDao = SpringUtils.getBean(DefaultIssueDao.class);
+            IssueDAO issueDao = (IssueDAO) SpringUtils.getBean(IssueDAO.class);
+            CaseManagementIssueDAO cmiDao = (CaseManagementIssueDAO) SpringUtils.getBean(CaseManagementIssueDAO.class);
+            Set<Long> issueIdSet = getIssueIdSet(bean.getCurProviderNo(), wlProgramId);
+            String[] issueIds = defaultIssueDao.findAllDefaultIssueIds();
+            for (String id : issueIds) {
+                Issue issue = issueDao.getIssue(Long.valueOf(id));
+                // judge current provider can access this issue
+                if (!issueIdSet.contains(Long.parseLong(id))) {
+                    continue;
                 }
+
+                // judge this issue exists or not
+                CaseManagementIssue cmi = cmiDao.getIssuebyId(bean.getDemographicNo(), id);
+                if (cmi != null) { // this issue exists
+                    continue;
+                }
+                cmi = new CaseManagementIssue();
+                cmi.setAcute(false);
+                cmi.setCertain(false);
+                cmi.setDemographic_no(Integer.valueOf(bean.getDemographicNo()));
+                cmi.setIssue_id(Long.valueOf(id));
+                cmi.setMajor(false);
+                cmi.setProgram_id(Integer.valueOf(wlProgramId));
+                cmi.setResolved(false);
+                cmi.setType(issue.getRole());
+                cmi.setUpdate_date(new Date());
+                cmiDao.saveIssue(cmi);
             }
+        }
 
         ArrayList newDocArr = (ArrayList) request.getSession().getServletContext().getAttribute("newDocArr");
         Boolean useNewEchart = (Boolean) request.getSession().getServletContext().getAttribute("useNewEchart");

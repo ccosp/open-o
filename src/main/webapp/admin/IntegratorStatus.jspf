@@ -21,64 +21,70 @@
     Centre for Research on Inner City Health, St. Michael's Hospital,
     Toronto, Ontario, Canada
 
---%><%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+--%>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/oscar-tag.tld" prefix="oscar" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="oscar.oscarEncounter.data.*, oscar.oscarProvider.data.*, ca.openosp.openo.util.UtilDateUtilities" %>
-<%@ page import="ca.openosp.openo.ehrutil.MiscUtils"%>
-<%@ page import="java.net.URLEncoder"%>
-<%@ page import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager, ca.openosp.openo.ehrutil.LoggedInInfo, ca.openosp.openo.common.model.Facility" %>
+<%@ page import="ca.openosp.openo.ehrutil.MiscUtils" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page
+        import="ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager, ca.openosp.openo.ehrutil.LoggedInInfo, ca.openosp.openo.common.model.Facility" %>
 <%@ page import="ca.openosp.openo.OscarProperties" %>
 <%@ taglib uri="/WEB-INF/security.tld" prefix="security" %>
 <%
-    String roleName$ = (String)session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
-	boolean authed=true;
+    String roleName$ = (String) session.getAttribute("userrole") + "," + (String) session.getAttribute("user");
+    boolean authed = true;
 %>
 <security:oscarSec roleName="<%=roleName$%>" objectName="_admin" rights="r" reverse="<%=true%>">
-	<%authed=false; %>
-	<%response.sendRedirect("../securityError.jsp?type=_admin");%>
+    <%authed = false; %>
+    <%response.sendRedirect("../securityError.jsp?type=_admin");%>
 </security:oscarSec>
 <%
-	if(!authed) {
-		return;
-	}
+    if (!authed) {
+        return;
+    }
 %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/><%
 
-	LoggedInInfo loggedInInfo8876=LoggedInInfo.getLoggedInInfoFromSession(request);
+    LoggedInInfo loggedInInfo8876 = LoggedInInfo.getLoggedInInfoFromSession(request);
 
     Facility facility = loggedInInfo8876.getCurrentFacility();
 
-		if (facility.isIntegratorEnabled()){
-			int secondsTillConsideredStale = -1;
-			try{
-				secondsTillConsideredStale = Integer.parseInt(OscarProperties.getInstance().getProperty("seconds_till_considered_stale"));
-			}catch(Exception e){
-				MiscUtils.getLogger().error("OSCAR Property: seconds_till_considered_stale did not parse to an int",e);
-				secondsTillConsideredStale = -1;
-			}
-			
-			boolean allSynced = true;
-			
-			try{
-				allSynced  = CaisiIntegratorManager.haveAllRemoteFacilitiesSyncedIn(loggedInInfo8876, facility, secondsTillConsideredStale); 
-			}catch(Exception remoteFacilityException){
-				MiscUtils.getLogger().error("Error checking Remote Facilities Sync status",remoteFacilityException);
-				CaisiIntegratorManager.checkForConnectionError(request.getSession(), remoteFacilityException);
-			}
-			if(secondsTillConsideredStale == -1){  
-				allSynced = true; 
-			}	
-		%>
-			<%if (CaisiIntegratorManager.isIntegratorOffline(request.getSession())) {%>
-    			<div style="background: none repeat scroll 0% 0% red; color: white; font-weight: bold; padding-left: 10px; margin-bottom: 2px;"><bean:message key="oscarEncounter.integrator.NA"/></div>
-    		<%}else if(!allSynced) {%>
-    			<div style="background: none repeat scroll 0% 0% orange; color: white; font-weight: bold; padding-left: 10px; margin-bottom: 2px;"><bean:message key="oscarEncounter.integrator.outOfSync"/>
-    			&nbsp;&nbsp;
-				<a href="javascript:void(0)" onClick="popup(233,600,'<c:out value="${ctx}"/>/admin/viewIntegratedCommunity.jsp','ViewICommun'); return false;" >Integrator</a>
-    			</div>
-	    	<%}else{%>
-	    		<a href="javascript:void(0)" onClick="popup(233,600,'<c:out value="${ctx}"/>/admin/viewIntegratedCommunity.jsp','ViewICommun'); return false;" >I</a>
-	    	<%}%>
-	  <%}%>    
+    if (facility.isIntegratorEnabled()) {
+        int secondsTillConsideredStale = -1;
+        try {
+            secondsTillConsideredStale = Integer.parseInt(OscarProperties.getInstance().getProperty("seconds_till_considered_stale"));
+        } catch (Exception e) {
+            MiscUtils.getLogger().error("OSCAR Property: seconds_till_considered_stale did not parse to an int", e);
+            secondsTillConsideredStale = -1;
+        }
+
+        boolean allSynced = true;
+
+        try {
+            allSynced = CaisiIntegratorManager.haveAllRemoteFacilitiesSyncedIn(loggedInInfo8876, facility, secondsTillConsideredStale);
+        } catch (Exception remoteFacilityException) {
+            MiscUtils.getLogger().error("Error checking Remote Facilities Sync status", remoteFacilityException);
+            CaisiIntegratorManager.checkForConnectionError(request.getSession(), remoteFacilityException);
+        }
+        if (secondsTillConsideredStale == -1) {
+            allSynced = true;
+        }
+%>
+<%if (CaisiIntegratorManager.isIntegratorOffline(request.getSession())) {%>
+<div style="background: none repeat scroll 0% 0% red; color: white; font-weight: bold; padding-left: 10px; margin-bottom: 2px;">
+    <bean:message key="oscarEncounter.integrator.NA"/></div>
+<%} else if (!allSynced) {%>
+<div style="background: none repeat scroll 0% 0% orange; color: white; font-weight: bold; padding-left: 10px; margin-bottom: 2px;">
+    <bean:message key="oscarEncounter.integrator.outOfSync"/>
+    &nbsp;&nbsp;
+    <a href="javascript:void(0)" onClick="popup(233,600,'<c:out
+            value="${ctx}"/>/admin/viewIntegratedCommunity.jsp','ViewICommun'); return false;">Integrator</a>
+</div>
+<%} else {%>
+<a href="javascript:void(0)" onClick="popup(233,600,'<c:out
+        value="${ctx}"/>/admin/viewIntegratedCommunity.jsp','ViewICommun'); return false;">I</a>
+<%}%>
+<%}%>

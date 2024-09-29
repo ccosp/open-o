@@ -39,7 +39,6 @@
  * @author Paul Brown
  * @author Jacqueline Figueroa
  * @author Nityan Khanna
- *
  */
 package ca.openosp.openo.sharingcenter.util;
 

@@ -90,7 +90,8 @@
 <%@ page import="ca.openosp.openo.documentManager.EDocUtil" %>
 <%@ page import="ca.openosp.openo.documentManager.EDoc" %>
 <%@ page import="ca.openosp.openo.util.StringUtils" %>
-<%@ page import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
+<%@ page
+        import="ca.openosp.openo.oscarEncounter.oscarConsultationRequest.config.data.EctConConfigurationJavascriptData" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.EctInformation" %>
 <%@ page import="ca.openosp.openo.oscarDemographic.data.RxInformation" %>
 <%@ page import="ca.openosp.openo.oscarLab.ca.on.CommonLabResultData" %>

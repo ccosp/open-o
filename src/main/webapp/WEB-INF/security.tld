@@ -18,27 +18,27 @@
 
         <attribute>
             <name>roleName</name>
-                <required>false</required>
-                <rtexprvalue>true</rtexprvalue>
-                <type>String</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>String</type>
         </attribute>
         <attribute>
             <name>objectName</name>
-                <required>true</required>
-                <rtexprvalue>true</rtexprvalue>
-                <type>String</type>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>String</type>
         </attribute>
         <attribute>
             <name>rights</name>
-                <required>false</required>
-                <rtexprvalue>true</rtexprvalue>
-                <type>String</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>String</type>
         </attribute>
         <attribute>
             <name>reverse</name>
-                <required>false</required>
-                <rtexprvalue>true</rtexprvalue>
-                <type>boolean</type>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
     </tag>
 </taglib>

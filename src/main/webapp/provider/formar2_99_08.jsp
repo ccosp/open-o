@@ -29,8 +29,9 @@
     String form_name = "ar2_99_08";
     String username = (String) session.getAttribute("userlastname") + "," + (String) session.getAttribute("userfirstname");
 %>
-<%@ page import="java.util.*, java.sql.*, java.net.*, oscar.*, ca.openosp.openo.util.UtilDateUtilities, oscar.form.graphic.*"
-         errorPage="/errorpage.jsp" %>
+<%@ page
+        import="java.util.*, java.sql.*, java.net.*, oscar.*, ca.openosp.openo.util.UtilDateUtilities, oscar.form.graphic.*"
+        errorPage="/errorpage.jsp" %>
 
 <%@page import="ca.openosp.openo.ehrutil.SpringUtils" %>
 <%@page import="ca.openosp.openo.common.dao.DemographicAccessoryDao" %>
