@@ -212,20 +212,6 @@ public final class RxDeleteRxAction extends DispatchAction {
         return null;
     }
 
-    public ActionForward clearPHRMeds(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        checkPrivilege(request, PRIVILEGE_UPDATE);
-
-        RxSessionBean bean = (RxSessionBean) request.getSession().getAttribute("RxSessionBean");
-        if (bean == null) {
-            response.sendRedirect("error.html");
-            return null;
-        }
-        bean.clearPairPHRMed();
-        //return mapping.findForward("successClearStash");
-        return null;
-    }
-
     /**
      * The action to discontinue a drug.
      * <p>
