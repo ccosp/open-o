@@ -59,7 +59,7 @@ import ca.openosp.openo.common.model.Property;
 import ca.openosp.openo.common.printing.FontSettings;
 import ca.openosp.openo.common.printing.PdfWriterFactory;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.InvalidRelationshipException_Exception;
 import ca.openosp.openo.myoscar_server.ws.InvalidRequestException_Exception;
 import ca.openosp.openo.myoscar_server.ws.ItemAlreadyExistsException_Exception;

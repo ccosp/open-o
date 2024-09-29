@@ -44,7 +44,7 @@ import ca.openosp.openo.common.model.RemoteDataLog;
 import ca.openosp.openo.common.model.SentToPHRTracking;
 import ca.openosp.openo.myoscar.client.ws_manager.MedicalDataManager;
 import ca.openosp.openo.myoscar.client.ws_manager.MyOscarServerWebServicesManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.InvalidRequestException_Exception;
 import ca.openosp.openo.myoscar_server.ws.ItemCompletedException_Exception;
 import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;

@@ -39,7 +39,7 @@ import org.apache.struts.action.ActionMapping;
 import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.common.service.myoscar.MeasurementsManager;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.DateRange;
 
 public class EctMyOscarFilterAction extends Action {

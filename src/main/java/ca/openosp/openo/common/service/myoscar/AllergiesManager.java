@@ -39,7 +39,7 @@ import ca.openosp.openo.common.dao.SentToPHRTrackingDao;
 import ca.openosp.openo.common.model.Allergy;
 import ca.openosp.openo.common.model.SentToPHRTracking;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

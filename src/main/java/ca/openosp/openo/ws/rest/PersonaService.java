@@ -52,7 +52,7 @@ import ca.openosp.openo.managers.MessagingManager;
 import ca.openosp.openo.managers.PreferenceManager;
 import ca.openosp.openo.managers.ProgramManager2;
 import ca.openosp.openo.managers.SecurityInfoManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 import ca.openosp.openo.ws.rest.conversion.ProgramProviderConverter;

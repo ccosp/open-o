@@ -54,7 +54,7 @@ import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
 import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.Message2DataTransfer;
 import ca.openosp.openo.myoscar_server.ws.Message2RecipientPersonAttributesTransfer;
 import ca.openosp.openo.myoscar_server.ws.MessageTransfer3;

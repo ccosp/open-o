@@ -37,7 +37,7 @@ import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 import ca.openosp.openo.common.dao.ProviderPreferenceDao;
 import ca.openosp.openo.common.model.ProviderPreference;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;

@@ -40,7 +40,7 @@ import ca.openosp.openo.integration.mchcv.HCValidationResult;
 import ca.openosp.openo.integration.mchcv.HCValidator;
 import ca.openosp.openo.integration.mchcv.OnlineHCValidator;
 import ca.openosp.openo.managers.DemographicManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ws.rest.to.GenericRESTResponse;
 import ca.openosp.openo.ws.rest.to.model.PatientDetailStatusTo1;

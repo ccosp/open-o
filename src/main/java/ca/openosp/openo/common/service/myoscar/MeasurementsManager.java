@@ -43,7 +43,7 @@ import ca.openosp.openo.common.model.Measurement;
 import ca.openosp.openo.common.model.MeasurementType;
 import ca.openosp.openo.common.model.SentToPHRTracking;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.InvalidRequestException_Exception;
 import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;
 import ca.openosp.openo.myoscar_server.ws.NoSuchItemException_Exception;

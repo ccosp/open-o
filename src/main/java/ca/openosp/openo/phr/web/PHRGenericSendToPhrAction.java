@@ -51,7 +51,7 @@ import ca.openosp.openo.common.service.myoscar.MyOscarMedicalDataManagerUtils;
 import ca.openosp.openo.myoscar.client.ws_manager.MedicalDataManager;
 import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.MedicalDataTransfer4;
 import ca.openosp.openo.phr.service.PHRService;
 import ca.openosp.openo.phr.util.MyOscarUtils;

@@ -45,7 +45,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.indivo.IndivoException;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.phr.model.PHRMeasurement;
 import ca.openosp.openo.phr.service.PHRService;
 import ca.openosp.openo.phr.util.MyOscarUtils;

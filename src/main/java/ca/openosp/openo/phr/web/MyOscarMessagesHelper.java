@@ -31,7 +31,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.Message2DataTransfer;
 import ca.openosp.openo.myoscar_server.ws.Message2RecipientPersonAttributesTransfer;
 import ca.openosp.openo.myoscar_server.ws.MessageTransfer3;

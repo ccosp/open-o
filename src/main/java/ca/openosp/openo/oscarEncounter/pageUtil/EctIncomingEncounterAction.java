@@ -65,7 +65,7 @@ import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
 import ca.openosp.openo.myoscar.client.ws_manager.MessageManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.MessageTransfer3;
 import ca.openosp.openo.myoscar_server.ws.MinimalPersonTransfer2;
 import ca.openosp.openo.phr.web.MyOscarMessagesHelper;

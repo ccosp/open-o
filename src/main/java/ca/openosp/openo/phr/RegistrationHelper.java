@@ -48,7 +48,7 @@ import ca.openosp.openo.myoscar.client.ws_manager.MyOscarLoggedInInfoInterface;
 import ca.openosp.openo.phr.util.UsernameHelper;
 import ca.openosp.openo.myoscar_server.ws.AccountWs;
 import ca.openosp.openo.myoscar.client.ws_manager.MyOscarServerWebServicesManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.RelationshipTransfer4;
 
 

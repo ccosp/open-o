@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.myoscar.client.ws_manager.MyOscarServerWebServicesManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.AccountWs;
 import ca.openosp.openo.myoscar_server.ws.RelationshipTransfer4;
 import ca.openosp.openo.ehrutil.MiscUtils;

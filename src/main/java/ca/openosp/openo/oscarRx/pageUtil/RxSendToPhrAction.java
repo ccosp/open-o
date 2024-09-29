@@ -51,7 +51,7 @@ import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.managers.SecurityInfoManager;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
 import ca.openosp.openo.myoscar.commons.MedicalDataType;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.phr.service.PHRService;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

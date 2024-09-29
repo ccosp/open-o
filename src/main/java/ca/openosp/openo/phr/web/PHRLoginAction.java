@@ -39,7 +39,7 @@ import org.apache.struts.actions.DispatchAction;
 import ca.openosp.openo.common.dao.ProviderPreferenceDao;
 import ca.openosp.openo.common.model.ProviderPreference;
 import ca.openosp.openo.myoscar.client.ws_manager.AccountManager;
-import ca.openosp.openo.myOscar.utils.MyOscarLoggedInInfo;
+import ca.openosp.openo.myoscar.utils.MyOscarLoggedInInfo;
 import ca.openosp.openo.myoscar_server.ws.LoginResultTransfer3;
 import ca.openosp.openo.myoscar_server.ws.NotAuthorisedException_Exception;
 import ca.openosp.openo.phr.util.MyOscarUtils;
