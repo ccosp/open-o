@@ -65,7 +65,7 @@ import ca.openosp.openo.PMmodule.dao.SecUserRoleDao;
 import ca.openosp.openo.PMmodule.model.ProgramProvider;
 import ca.openosp.openo.PMmodule.model.ProgramTeam;
 import ca.openosp.openo.PMmodule.model.SecUserRole;
-import ca.openosp.openo.caisi_integrator.ws.*;
+import org.oscarehr.caisi_integrator.ws.*;
 import ca.openosp.openo.casemgmt.common.Colour;
 import ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO;
 import ca.openosp.openo.casemgmt.dao.IssueDAO;

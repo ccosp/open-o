@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
-import ca.openosp.openo.caisi_integrator.ws.CachedDemographicIssue;
+import org.oscarehr.caisi_integrator.ws.CachedDemographicIssue;
 import ca.openosp.openo.casemgmt.model.CaseManagementIssue;
 import ca.openosp.openo.casemgmt.service.CaseManagementManager;
 import ca.openosp.openo.ehrutil.CppUtils;

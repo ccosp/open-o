@@ -23,7 +23,7 @@
 
 package ca.openosp.openo.PMmodule.caisi_integrator;
 
-import ca.openosp.openo.caisi_integrator.ws.Role;
+import org.oscarehr.caisi_integrator.ws.Role;
 
 public final class IntegratorRoleUtils {
 

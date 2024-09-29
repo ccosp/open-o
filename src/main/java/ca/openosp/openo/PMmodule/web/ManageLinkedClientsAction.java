@@ -30,8 +30,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import ca.openosp.openo.caisi_integrator.ws.DemographicTransfer;
-import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import ca.openosp.openo.common.dao.ClientLinkDao;
 import ca.openosp.openo.common.model.ClientLink;
 import ca.openosp.openo.common.model.Facility;

@@ -36,8 +36,8 @@ import java.util.Map;
 import java.util.Set;
 
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import ca.openosp.openo.caisi_integrator.ws.DemographicTransfer;
-import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import ca.openosp.openo.common.dao.MsgDemoMapDao;
 import ca.openosp.openo.common.dao.MsgIntegratorDemoMapDao;
 import ca.openosp.openo.common.model.Demographic;

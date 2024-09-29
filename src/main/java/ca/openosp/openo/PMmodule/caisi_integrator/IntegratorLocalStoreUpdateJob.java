@@ -37,7 +37,7 @@ import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 import org.apache.logging.log4j.Logger;
-import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import ca.openosp.openo.common.dao.DemographicExtDao;
 import ca.openosp.openo.common.dao.FacilityDao;
 import ca.openosp.openo.common.dao.UserPropertyDAO;

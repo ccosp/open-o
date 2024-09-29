@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Vector;
 
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import ca.openosp.openo.caisi_integrator.ws.CachedMeasurement;
+import org.oscarehr.caisi_integrator.ws.CachedMeasurement;
 import ca.openosp.openo.common.dao.MeasurementDao;
 import ca.openosp.openo.common.dao.ValidationsDao;
 import ca.openosp.openo.common.model.Measurement;

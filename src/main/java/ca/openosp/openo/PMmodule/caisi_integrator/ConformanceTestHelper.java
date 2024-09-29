@@ -32,12 +32,12 @@ import java.util.List;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.logging.log4j.Logger;
-import ca.openosp.openo.caisi_integrator.ws.CachedProvider;
-import ca.openosp.openo.caisi_integrator.ws.DemographicTransfer;
-import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
-import ca.openosp.openo.caisi_integrator.ws.FacilityIdStringCompositePk;
-import ca.openosp.openo.caisi_integrator.ws.ProviderCommunicationTransfer;
-import ca.openosp.openo.caisi_integrator.ws.ProviderWs;
+import org.oscarehr.caisi_integrator.ws.CachedProvider;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
+import org.oscarehr.caisi_integrator.ws.FacilityIdStringCompositePk;
+import org.oscarehr.caisi_integrator.ws.ProviderCommunicationTransfer;
+import org.oscarehr.caisi_integrator.ws.ProviderWs;
 import ca.openosp.openo.common.dao.DemographicDao;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.ehrutil.LoggedInInfo;

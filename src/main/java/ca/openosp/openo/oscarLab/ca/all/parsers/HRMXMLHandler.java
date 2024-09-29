@@ -41,12 +41,12 @@ import org.apache.logging.log4j.Logger;
 import ca.openosp.openo.common.dao.Hl7TextInfoDao;
 import ca.openosp.openo.common.model.Hl7TextMessageInfo;
 import ca.openosp.openo.hospitalReportManager.SFTPConnector;
-import ca.openosp.openo.hospitalReportManager.xsd.DateFullOrPartial;
-import ca.openosp.openo.hospitalReportManager.xsd.HealthCard;
-import ca.openosp.openo.hospitalReportManager.xsd.OmdCds;
-import ca.openosp.openo.hospitalReportManager.xsd.PatientRecord;
-import ca.openosp.openo.hospitalReportManager.xsd.PhoneNumber;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportsReceived;
+import org.oscarehr.hospitalReportManager.xsd.DateFullOrPartial;
+import org.oscarehr.hospitalReportManager.xsd.HealthCard;
+import org.oscarehr.hospitalReportManager.xsd.OmdCds;
+import org.oscarehr.hospitalReportManager.xsd.PatientRecord;
+import org.oscarehr.hospitalReportManager.xsd.PhoneNumber;
+import org.oscarehr.hospitalReportManager.xsd.ReportsReceived;
 import ca.openosp.openo.ehrutil.MiscUtils;
 import ca.openosp.openo.ehrutil.SpringUtils;
 

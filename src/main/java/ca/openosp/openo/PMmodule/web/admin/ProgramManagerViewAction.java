@@ -62,7 +62,7 @@ import ca.openosp.openo.PMmodule.service.ProgramManager;
 import ca.openosp.openo.PMmodule.service.ProgramQueueManager;
 import ca.openosp.openo.PMmodule.service.VacancyTemplateManager;
 import ca.openosp.openo.PMmodule.web.formbean.ProgramManagerViewFormBean;
-import ca.openosp.openo.caisi_integrator.ws.ReferralWs;
+import org.oscarehr.caisi_integrator.ws.ReferralWs;
 import ca.openosp.openo.casemgmt.service.CaseManagementManager;
 import ca.openosp.openo.common.dao.DemographicDao;
 import ca.openosp.openo.common.dao.FacilityDao;

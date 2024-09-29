@@ -30,7 +30,7 @@ package ca.openosp.openo.managers;
 import java.util.List;
 import java.util.Map;
 
-import ca.openosp.openo.caisi_integrator.ws.DemographicTransfer;
+import org.oscarehr.caisi_integrator.ws.DemographicTransfer;
 import ca.openosp.openo.common.model.Demographic;
 import ca.openosp.openo.common.model.MsgDemoMap;
 import ca.openosp.openo.common.model.MsgIntegratorDemoMap;

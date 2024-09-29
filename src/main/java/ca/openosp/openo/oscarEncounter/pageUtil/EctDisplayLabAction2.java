@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import ca.openosp.openo.oscarLab.ca.all.parsers.Factory;
 import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
-import ca.openosp.openo.caisi_integrator.ws.CachedDemographicLabResult;
+import org.oscarehr.caisi_integrator.ws.CachedDemographicLabResult;
 import ca.openosp.openo.common.dao.OscarLogDao;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

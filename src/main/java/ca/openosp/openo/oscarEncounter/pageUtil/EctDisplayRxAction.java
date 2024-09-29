@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
 import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
-import ca.openosp.openo.caisi_integrator.ws.CachedDemographicDrug;
+import org.oscarehr.caisi_integrator.ws.CachedDemographicDrug;
 import ca.openosp.openo.provider.web.CppPreferencesUIBean;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 import ca.openosp.openo.ehrutil.MiscUtils;

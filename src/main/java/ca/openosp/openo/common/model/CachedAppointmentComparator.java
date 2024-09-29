@@ -26,7 +26,7 @@ package ca.openosp.openo.common.model;
 
 import java.util.Comparator;
 
-import ca.openosp.openo.caisi_integrator.ws.CachedAppointment;
+import org.oscarehr.caisi_integrator.ws.CachedAppointment;
 
 public class CachedAppointmentComparator implements Comparator<CachedAppointment> {
 

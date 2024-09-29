@@ -41,17 +41,17 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import ca.openosp.openo.ehrutil.MiscUtils;
-import ca.openosp.openo.hospitalReportManager.xsd.DateFullOrPartial;
-import ca.openosp.openo.hospitalReportManager.xsd.OmdCds;
-import ca.openosp.openo.hospitalReportManager.xsd.PatientRecord;
-import ca.openosp.openo.hospitalReportManager.xsd.PersonNameSimple;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportClass;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportContent;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportFormat;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportMedia;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportsReceived;
-import ca.openosp.openo.hospitalReportManager.xsd.ReportsReceived.OBRContent;
-import ca.openosp.openo.hospitalReportManager.xsd.TransactionInformation;
+import org.oscarehr.hospitalReportManager.xsd.DateFullOrPartial;
+import org.oscarehr.hospitalReportManager.xsd.OmdCds;
+import org.oscarehr.hospitalReportManager.xsd.PatientRecord;
+import org.oscarehr.hospitalReportManager.xsd.PersonNameSimple;
+import org.oscarehr.hospitalReportManager.xsd.ReportClass;
+import org.oscarehr.hospitalReportManager.xsd.ReportContent;
+import org.oscarehr.hospitalReportManager.xsd.ReportFormat;
+import org.oscarehr.hospitalReportManager.xsd.ReportMedia;
+import org.oscarehr.hospitalReportManager.xsd.ReportsReceived;
+import org.oscarehr.hospitalReportManager.xsd.ReportsReceived.OBRContent;
+import org.oscarehr.hospitalReportManager.xsd.TransactionInformation;
 
 
 /**

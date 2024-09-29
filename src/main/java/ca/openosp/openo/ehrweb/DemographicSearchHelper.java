@@ -30,9 +30,9 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 import ca.openosp.openo.PMmodule.caisi_integrator.CaisiIntegratorManager;
-import ca.openosp.openo.caisi_integrator.ws.DemographicWs;
-import ca.openosp.openo.caisi_integrator.ws.MatchingDemographicParameters;
-import ca.openosp.openo.caisi_integrator.ws.MatchingDemographicTransferScore;
+import org.oscarehr.caisi_integrator.ws.DemographicWs;
+import org.oscarehr.caisi_integrator.ws.MatchingDemographicParameters;
+import org.oscarehr.caisi_integrator.ws.MatchingDemographicTransferScore;
 import ca.openosp.openo.ehrutil.LoggedInInfo;
 
 public final class DemographicSearchHelper {

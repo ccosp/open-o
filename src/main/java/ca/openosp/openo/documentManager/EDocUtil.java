@@ -65,7 +65,7 @@ import ca.openosp.openo.PMmodule.caisi_integrator.IntegratorFallBackManager;
 import ca.openosp.openo.PMmodule.dao.ProviderDao;
 import ca.openosp.openo.PMmodule.model.ProgramProvider;
 import ca.openosp.openo.PMmodule.service.ProgramManager;
-import ca.openosp.openo.caisi_integrator.ws.CachedDemographicDocument;
+import org.oscarehr.caisi_integrator.ws.CachedDemographicDocument;
 import ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO;
 import ca.openosp.openo.casemgmt.dao.CaseManagementNoteLinkDAO;
 import ca.openosp.openo.casemgmt.model.CaseManagementNote;
