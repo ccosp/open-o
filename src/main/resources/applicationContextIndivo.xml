@@ -11,34 +11,4 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
        default-autowire="no">
-
-
-	<bean id="phrService" class="ca.openosp.openo.phr.service.PHRService">
-		<property name="phrDocumentDAO">
-			<ref bean="phrDocumentDAO" />
-		</property>
-		<property name="phrActionDAO">
-			<ref bean="phrActionDAO" />
-		</property>
-	</bean>
-	<bean id="indivoAPService"
-		class="ca.openosp.openo.phr.indivo.service.accesspolicies.IndivoAPService">
-		<property name="phrDocumentDAO">
-			<ref bean="phrDocumentDAO" />
-		</property>
-		<property name="phrActionDAO">
-			<ref bean="phrActionDAO" />
-		</property>
-	</bean>
-	<bean id="phrDocumentDAO" class="ca.openosp.openo.phr.dao.hibernate.PHRDocumentDAOHibernate">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-	<bean id="phrActionDAO" class="ca.openosp.openo.phr.dao.PHRActionDAO">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
-	
 </beans>
