@@ -190,7 +190,7 @@
 	</bean> -->
 	<bean id="QuestionTypes" class="ca.openosp.openo.survey.model.QuestionTypes" scope="singleton" />
 	<!--
-		<bean id="UCRConfigurationManager" class="ca.openosp.openo.PMmodule.ehrweb.reports.custom.UCRConfigurationManager"> <property name="filename"> <value>org/oscarehr/PMmodule/ehrweb/reports/custom/test.xml</value> </property> </bean>
+		<bean id="UCRConfigurationManager" class="ca.openosp.openo.PMmodule.ehrweb.reports.custom.UCRConfigurationManager"> <property name="filename"> <value>ca/openosp/openo/PMmodule/ehrweb/reports/custom/test.xml</value> </property> </bean>
 	-->
 
 
@@ -206,27 +206,27 @@
 		<property name="genericIntakeManager" ref="genericIntakeManager"></property>
 	</bean>
 	<bean id="intakeExporterAgencyInformation" class="ca.openosp.openo.PMmodule.exporter.DATISAgencyInformation" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/agencyinformation.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/agencyinformation.xml"></property>
 		<property name="validator" ref="agencyInformationValidator"></property>
 	</bean>
 	<bean id="intakeExporterListOfPrograms" class="ca.openosp.openo.PMmodule.exporter.DATISListOfPrograms" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/listofprograms.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/listofprograms.xml"></property>
 		<property name="validator" ref="listOfProgramsValidator"></property>
 	</bean>
 	<bean id="intakeExporterMain" class="ca.openosp.openo.PMmodule.exporter.DATISMain" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/main.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/main.xml"></property>
 		<property name="validator" ref="mainValidator"></property>
 	</bean>
 	<bean id="intakeExporterProgramInformation" class="ca.openosp.openo.PMmodule.exporter.DATISProgramInformation" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/programinformation.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/programinformation.xml"></property>
 		<property name="validator" ref="programInformationValidator"></property>
 	</bean>
 	<bean id="intakeExporterGamblingForm" class="ca.openosp.openo.PMmodule.exporter.DATISGamingForm" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/gamblingform.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/gamblingform.xml"></property>
 		<property name="validator" ref="gamingFormValidator"></property>
 	</bean>
 	<bean id="intakeExporterNonClientService" class="ca.openosp.openo.PMmodule.exporter.DATISNonClientService" parent="abstractIntakeExporter" scope="prototype">
-		<property name="fieldsFile" value="/org/oscarehr/PMmodule/exporter/nonclientservice.xml"></property>
+		<property name="fieldsFile" value="/ca/openosp/openo/PMmodule/exporter/nonclientservice.xml"></property>
 		<property name="validator" ref="nonClientServiceValidator"></property>
 	</bean>
 
