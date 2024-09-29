@@ -125,6 +125,9 @@ import org.oscarehr.caisi_integrator.ws.ImportLog;
 import org.oscarehr.caisi_integrator.ws.ProviderCommunicationTransfer;
 import org.oscarehr.caisi_integrator.ws.transfer.DemographicTransfer;
 import org.oscarehr.caisi_integrator.ws.transfer.ProviderTransfer;
+import org.oscarehr.PMmodule.caisi_integrator.DeleteCachedDemographicIssuesWrapper;
+import org.oscarehr.PMmodule.caisi_integrator.ProgramDeleteIdWrapper;
+import org.oscarehr.PMmodule.caisi_integrator.DeleteCachedDemographicPreventionsWrapper;
 import ca.openosp.openo.casemgmt.dao.CaseManagementIssueDAO;
 import ca.openosp.openo.casemgmt.dao.CaseManagementNoteDAO;
 import ca.openosp.openo.casemgmt.dao.ClientImageDAO;
@@ -191,7 +194,8 @@ import ca.openosp.openo.managers.MessengerIntegratorManager;
 import ca.openosp.openo.managers.PatientConsentManager;
 import org.springframework.beans.BeanUtils;
 import org.w3c.dom.Document;
-
+import org.oscarehr.PMmodule.caisi_integrator.IntegratorFileHeader;
+import org.oscarehr.PMmodule.caisi_integrator.IntegratorFileFooter;
 import ca.openosp.openo.OscarProperties;
 import ca.openosp.openo.documentManager.EDoc;
 import ca.openosp.openo.documentManager.EDocUtil;
@@ -200,6 +204,8 @@ import ca.openosp.openo.log.LogAction;
 import ca.openosp.openo.oscarLab.ca.all.web.LabDisplayHelper;
 import ca.openosp.openo.oscarLab.ca.on.CommonLabResultData;
 import ca.openosp.openo.oscarLab.ca.on.LabResultData;
+
+import org.oscarehr.caisi_integrator.*;
 
 public class CaisiIntegratorUpdateTask extends TimerTask {
 
