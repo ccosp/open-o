@@ -40,7 +40,6 @@ import ca.openosp.openo.common.Gender;
 import ca.openosp.openo.common.model.Consent;
 import ca.openosp.openo.common.model.ConsentType;
 import ca.openosp.openo.common.model.Demographic;
-import ca.openosp.openo.common.model.PHRVerification;
 import ca.openosp.openo.managers.DemographicManager;
 import ca.openosp.openo.managers.PatientConsentManager;
 import ca.openosp.openo.ehrutil.LoggedInInfo;

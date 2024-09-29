@@ -62,7 +62,6 @@ import ca.openosp.openo.common.model.DemographicContact;
 import ca.openosp.openo.common.model.DemographicCust;
 import ca.openosp.openo.common.model.DemographicExt;
 import ca.openosp.openo.common.model.DemographicMerged;
-import ca.openosp.openo.common.model.PHRVerification;
 import ca.openosp.openo.common.model.Provider;
 import ca.openosp.openo.common.model.UserProperty;
 import ca.openosp.openo.common.model.enumerator.DemographicExtKey;
