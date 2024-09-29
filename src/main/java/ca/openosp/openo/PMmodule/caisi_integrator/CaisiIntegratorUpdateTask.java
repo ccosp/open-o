@@ -118,7 +118,7 @@ import org.oscarehr.caisi_integrator.dao.FacilityIdLabResultCompositePk;
 import org.oscarehr.caisi_integrator.dao.FacilityIdStringCompositePk;
 import org.oscarehr.caisi_integrator.dao.NoteIssue;
 import org.oscarehr.caisi_integrator.util.CodeType;
-import ca.openosp.openo.caisi_integrator.util.Role;
+import org.oscarehr.caisi_integrator.util.Role;
 import org.oscarehr.caisi_integrator.ws.DemographicWs;
 import org.oscarehr.caisi_integrator.ws.FacilityWs;
 import org.oscarehr.caisi_integrator.ws.ImportLog;
