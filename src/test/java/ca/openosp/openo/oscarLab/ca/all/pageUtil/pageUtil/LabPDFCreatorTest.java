@@ -22,7 +22,7 @@
  * Ontario, Canada
  */
 
-package ca.openosp.openo.oscarLab.ca.all.all.pageUtil;
+package ca.openosp.openo.oscarLab.ca.all.pageUtil.pageUtil;
 
 import static org.junit.Assert.assertTrue;
 

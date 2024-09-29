@@ -21,7 +21,7 @@
  * Hamilton
  * Ontario, Canada
  */
-package ca.openosp.openo.oscarLab.ca.all.all.upload.handlers;
+package ca.openosp.openo.oscarLab.ca.all.upload.handlers.handlers;
 
 //import static org.junit.Assert.*;
 

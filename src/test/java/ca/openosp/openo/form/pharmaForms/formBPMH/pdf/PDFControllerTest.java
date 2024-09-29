@@ -21,7 +21,7 @@
  * University of British Columbia
  * Vancouver, British Columbia, Canada
  */
-package ca.openosp.openo.form.pharmaForms.formBPMH.formBPMH.pdf;
+package ca.openosp.openo.form.pharmaForms.formBPMH.pdf;
 
 
 import static org.junit.Assert.*;

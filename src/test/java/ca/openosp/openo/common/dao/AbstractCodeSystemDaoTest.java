@@ -24,7 +24,7 @@
 package ca.openosp.openo.common.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.oscarehr.common.dao.AbstractCodeSystemDao.getDaoName;
+import static ca.openosp.openo.common.dao.AbstractCodeSystemDao.getDaoName;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -21,7 +21,7 @@
  * Hamilton
  * Ontario, Canada
  */
-package ca.openosp.openo.oscarLab.ca.all.all.parsers;
+package ca.openosp.openo.oscarLab.ca.all.parsers;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -232,8 +232,6 @@ public class EctIncomingEncounterAction extends Action {
                 }
             }
 
-        }
-
         ArrayList newDocArr = (ArrayList) request.getSession().getServletContext().getAttribute("newDocArr");
         Boolean useNewEchart = (Boolean) request.getSession().getServletContext().getAttribute("useNewEchart");
 
