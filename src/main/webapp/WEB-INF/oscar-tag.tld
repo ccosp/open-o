@@ -113,22 +113,6 @@
     </tag>
 
     <tag>
-        <name>phrverification</name>
-        <tagclass>ca.openosp.openo.phr.util.PHRVerificationTag</tagclass>
-        <bodycontent>jsp</bodycontent>
-        <attribute>
-            <name>demographicNo</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-        <attribute>
-            <name>styleId</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-        </attribute>
-    </tag>
-
-    <tag>
         <name>nextAppt</name>
         <tagclass>ca.openosp.openo.appt.tld.NextApptTag</tagclass>
         <bodycontent>empty</bodycontent>
