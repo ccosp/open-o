@@ -23,7 +23,7 @@
 
 	<util:list id="oscarJobTypes" value-type="java.lang.String">
     	<value>ca.openosp.openo.common.jobs.TestJob</value>
-    	<value>org.oscarehr.common.jobs.TestJob1</value>
+    	<value>ca.openosp.openo.common.jobs.TestJob1</value>
     	<value>ca.openosp.openo.OscarProperties</value>
    </util:list>
 

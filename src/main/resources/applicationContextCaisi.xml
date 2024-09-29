@@ -190,7 +190,7 @@
 	</bean> -->
 	<bean id="QuestionTypes" class="ca.openosp.openo.survey.model.QuestionTypes" scope="singleton" />
 	<!--
-		<bean id="UCRConfigurationManager" class="org.oscarehr.PMmodule.ehrweb.reports.custom.UCRConfigurationManager"> <property name="filename"> <value>org/oscarehr/PMmodule/ehrweb/reports/custom/test.xml</value> </property> </bean>
+		<bean id="UCRConfigurationManager" class="ca.openosp.openo.PMmodule.ehrweb.reports.custom.UCRConfigurationManager"> <property name="filename"> <value>org/oscarehr/PMmodule/ehrweb/reports/custom/test.xml</value> </property> </bean>
 	-->
 
 
@@ -230,7 +230,7 @@
 		<property name="validator" ref="nonClientServiceValidator"></property>
 	</bean>
 
-	<context:component-scan base-package="org.oscarehr.PMmodule.dao" />
-	<context:component-scan base-package="org.oscarehr.PMmodule.service" />
-	<context:component-scan base-package="org.oscarehr.PMmodule.web.admin" />
+	<context:component-scan base-package="ca.openosp.openo.PMmodule.dao" />
+	<context:component-scan base-package="ca.openosp.openo.PMmodule.service" />
+	<context:component-scan base-package="ca.openosp.openo.PMmodule.web.admin" />
 </beans>

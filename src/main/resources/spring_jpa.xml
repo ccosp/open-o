@@ -77,7 +77,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- Managed Beans -->
-	<context:component-scan base-package="org.oscarehr.common.dao">
+	<context:component-scan base-package="ca.openosp.openo.common.dao">
     <context:exclude-filter type="regex" expression=".*\.UserPropertyDAOImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.DemographicDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.DxresearchDAOImpl$"/>
@@ -112,15 +112,15 @@
 </context:component-scan>
 
 
-	<context:component-scan base-package="org.oscarehr.eyeform.dao" />
-	<context:component-scan base-package="org.oscarehr.fax.core" />
-	<context:component-scan base-package="org.oscarehr.hospitalReportManager.dao" />
-	<context:component-scan base-package="org.oscarehr.olis.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.ON.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.BC.dao" />
-	<context:component-scan base-package="org.oscarehr.billing.CA.dao" />
-	<context:component-scan base-package="org.oscarehr.PMmodule.dao" />
+	<context:component-scan base-package="ca.openosp.openo.eyeform.dao" />
+	<context:component-scan base-package="ca.openosp.openo.fax.core" />
+	<context:component-scan base-package="ca.openosp.openo.hospitalReportManager.dao" />
+	<context:component-scan base-package="ca.openosp.openo.olis.dao" />
+	<context:component-scan base-package="ca.openosp.openo.billing.CA.ON.dao" />
+	<context:component-scan base-package="ca.openosp.openo.billing.CA.BC.dao" />
+	<context:component-scan base-package="ca.openosp.openo.billing.CA.dao" />
+	<context:component-scan base-package="ca.openosp.openo.PMmodule.dao" />
 	<!-- Sharing Center -->
-	<context:component-scan base-package="org.oscarehr.sharingcenter.dao" />
+	<context:component-scan base-package="ca.openosp.openo.sharingcenter.dao" />
 
 </beans>

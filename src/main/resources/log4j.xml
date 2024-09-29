@@ -40,7 +40,7 @@
 	</category>
 
 <!--
-	<category name="org.oscarehr.PMmodule.caisi_integrator">
+	<category name="ca.openosp.openo.PMmodule.caisi_integrator">
 		<priority value="DEBUG" />
 	</category>
 -->
@@ -78,7 +78,7 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="org.oscarehr.integration.born">
+	<category name="ca.openosp.openo.integration.born">
 		<priority value="INFO" />
 	</category>
 <!--	
@@ -104,7 +104,7 @@
 	</category>
 	
 	<!-- control if you want the possible excessive memory usage warnings. WARN and below will show them -->
-	<category name="org.oscarehr.ehrutil.ProblemCheckFilter">
+	<category name="ca.openosp.openo.ehrutil.ProblemCheckFilter">
 		<priority value="ERROR" />
 	</category>
 	
@@ -123,7 +123,7 @@
 	<category name="oscar.oscarReport.ClinicalReports">
 		<priority value="DEBUG" />
 	</category>
-	<category name="org.oscarehr.hospitalReportManager">
+	<category name="ca.openosp.openo.hospitalReportManager">
 		<priority value="INFO" />
 	</category>
 	

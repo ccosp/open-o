@@ -21,7 +21,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 "-//Hibernate/Hibernate Mapping DTD//EN"
 "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping package="org.oscarehr.phr.model">
+<hibernate-mapping package="ca.openosp.openo.phr.model">
 	<class name="ca.openosp.openo.phr.model.PHRDocument" table="phr_documents">
 		<id column="id" name="id" type="integer">
 			<generator class="native" />

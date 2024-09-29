@@ -20,21 +20,21 @@
 
 
 	<!-- Managed JPA Beans -->
- 	<context:component-scan base-package="org.oscarehr.managers" />
-    <context:component-scan base-package="org.oscarehr.documentManager" />
-    <context:component-scan base-package="org.oscarehr.common.service" />
-    <context:component-scan base-package="org.oscarehr.casemgmt.service" />
+ 	<context:component-scan base-package="ca.openosp.openo.managers" />
+    <context:component-scan base-package="ca.openosp.openo.documentManager" />
+    <context:component-scan base-package="ca.openosp.openo.common.service" />
+    <context:component-scan base-package="ca.openosp.openo.casemgmt.service" />
     <context:component-scan base-package="ca.openosp.openo.oscarDemographic.pageUtil" />
-    <context:component-scan base-package="org.oscarehr.survey.service.impl" />
-    <context:component-scan base-package="org.oscarehr.survey.service" />
-    <context:component-scan base-package="org.oscarehr.PMmodule.service"/>
-    <context:component-scan base-package="org.oscarehr.ticklers.service"/>
-    <context:component-scan base-package="org.oscarehr.consultations"/>
+    <context:component-scan base-package="ca.openosp.openo.survey.service.impl" />
+    <context:component-scan base-package="ca.openosp.openo.survey.service" />
+    <context:component-scan base-package="ca.openosp.openo.PMmodule.service"/>
+    <context:component-scan base-package="ca.openosp.openo.ticklers.service"/>
+    <context:component-scan base-package="ca.openosp.openo.consultations"/>
     <context:component-scan base-package="ca.openosp.openo.oscarPrevention"/>
-    <context:component-scan base-package="org.oscarehr.billing.CA.filters"/>
-    <context:component-scan base-package="org.oscarehr.integration.fhir.manager"/>
+    <context:component-scan base-package="ca.openosp.openo.billing.CA.filters"/>
+    <context:component-scan base-package="ca.openosp.openo.integration.fhir.manager"/>
 <!--
     I have a sample listener in here. Leaving commented for now.    
-    <context:component-scan base-package="org.oscarehr.listeners" />
+    <context:component-scan base-package="ca.openosp.openo.listeners" />
 -->    
 </beans>

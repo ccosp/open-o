@@ -77,7 +77,7 @@
 
 	<!-- Managed WS Beans -->
 	<!-- The WS classes are turned into spring beans to allow autowiring etc, then the endpoints reference them -->
- 	<context:component-scan base-package="org.oscarehr.ws"/>
+ 	<context:component-scan base-package="ca.openosp.openo.ws"/>
 	
 	<bean id="authenticationInWSS4JInterceptor" class="ca.openosp.openo.ws.AuthenticationInWSS4JInterceptor" />
 
@@ -158,9 +158,9 @@
 	</jaxws:endpoint>	
 	
 	
-	<context:component-scan base-package="org.oscarehr.ws.rest"/>
-	<context:component-scan base-package="org.oscarehr.ws.rest.util"/>
-	<context:component-scan base-package="org.oscarehr.ws.rest.conversion"/>
+	<context:component-scan base-package="ca.openosp.openo.ws.rest"/>
+	<context:component-scan base-package="ca.openosp.openo.ws.rest.util"/>
+	<context:component-scan base-package="ca.openosp.openo.ws.rest.conversion"/>
 	<aop:aspectj-autoproxy/>
 	
 	<!-- RESTful ehrweb service  -->
@@ -215,7 +215,7 @@
 			<bean class="ca.openosp.openo.ws.rest.ResourceService" autowire="byName" />
 			<bean class="ca.openosp.openo.ws.rest.SurveillanceService" autowire="byName" />
 			<bean class="ca.openosp.openo.ws.rest.DiseaseRegistryService" autowire="byName" />
-<!--			<bean class="org.oscarehr.ws.rest.SystemInfoService" autowire="byName" /> -->
+<!--			<bean class="ca.openosp.openo.ws.rest.SystemInfoService" autowire="byName" /> -->
 			<bean class="ca.openosp.openo.ws.rest.LabService" autowire="byName" />
 			<bean class="ca.openosp.openo.ws.rest.MeasurementService" autowire="byName" />
 			<bean class="ca.openosp.openo.ws.rest.ConsentService" autowire="byName" />

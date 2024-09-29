@@ -8,7 +8,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
-<hibernate-mapping package="org.oscarehr.common.model">
+<hibernate-mapping package="ca.openosp.openo.common.model">
 	<class name="ca.openosp.openo.common.model.Demographic" table="demographic">
 		<id column="demographic_no" name="DemographicNo" type="integer">
 			<generator class="native" />
