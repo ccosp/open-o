@@ -711,8 +711,6 @@ public class DemographicManagerImpl implements DemographicManager {
     }
 
 
-
-
     /**
      * @deprecated there should be a generic call for getDemographicExt(Integer
      * demoId, String key) instead. Then the caller should assemble what
