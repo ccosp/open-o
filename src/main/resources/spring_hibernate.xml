@@ -28,7 +28,6 @@
 				<value>classpath:/ca/openosp/openo/PMmodule/model</value>
 				<value>classpath:/ca/openosp/openo/survey/model</value>
 				<value>classpath:/ca/openosp/openo/casemgmt/model</value>
-				<value>classpath:/ca/openosp/openo/phr/model</value>
 				<value>classpath:/ca/openosp/openo/common/model</value>
 				<value>classpath:/ca/openosp/openo/eyeform/model</value>
 				<value>classpath:/com/quatro/model</value>
@@ -55,40 +54,4 @@
 		</property>
 		
 	</bean>
-
-	<!-- <property name="eventListeners">
-			<map>
-				<entry key="merge">
-					<bean class="org.springframework.orm.hibernate5.support.IdTransferringMergeEventListener" />
-					<bean class="org.hibernate.event.internal.DefaultMergeEventListener" />
-				</entry>
-			</map>
-		</property> -->
-
-<!--
-	<bean id="auditSessionFactory" class="ca.openosp.openo.ehrutiltil.SpringHibernateLocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="mappingDirectoryLocations">
-			<list>
-				<value>classpath:/ca/openosp/openo/common/model</value>
-				<value>classpath:/org/caisi/model</value>
-				<value>classpath:/ca/openosp/openo/PMmodule/model</value>
-				<value>classpath:/ca/openosp/openo/survey/model</value>
-				<value>classpath:/ca/openosp/openo/casemgmt/model</value>
-				<value>classpath:/com/quatro/model</value>
-				<value>classpath:/oscar/appt/status/model</value>
-				<value>classpath:/oscar/ehroscarRx/model</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
-				<prop key="hibernate.cache.use_second_level_cache">false</prop>
-				<prop key="hibernate.cache.use_query_cache">false</prop>
-			</props>
-		</property>
-	</bean>
--->
 </beans>
