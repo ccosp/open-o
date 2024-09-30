@@ -348,6 +348,7 @@
                            onclick="updateOpener('<%=request.getParameter(">
                 </td>
                 <td>
+
                                <%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "last_name")))%>
                                    </td>
                                    <td><%=nbsp(Misc.toUpperLowerCase(oscar.Misc.getString(rs, "first_name")))%>
