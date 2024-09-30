@@ -114,7 +114,7 @@
 	<bean id="programSignatureDao" class="ca.openosp.openo.PMmodule.dao.ProgramSignatureDaoImpl" autowire="byName" />
 	<bean id="programClientRestrictionDAO" class="ca.openosp.openo.PMmodule.dao.ProgramClientRestrictionDAOImpl" autowire="byName" />
 	<bean id="UserPropertyDAO" class="ca.openosp.openo.common.dao.UserPropertyDAOImpl" autowire="byName" />
-	<!-- <bean id="demographicDao" class="ca.openosp.openo.common.dao.DemographicDaoImpl" autowire="byName" /> -->
+	<bean id="demographicDao" class="ca.openosp.openo.common.dao.DemographicDaoImpl" autowire="byName" /> 
 	<bean id="clinicDAO" class="ca.openosp.openo.common.dao.ClinicDAOImpl" autowire="byName" />
 	<bean id="dataExportDAO" class="ca.openosp.openo.common.dao.DataExportDaoImpl" autowire="byName" />
 	<bean id="siteDao" class="ca.openosp.openo.common.dao.SiteDaoImpl" autowire="byName" />

@@ -79,12 +79,12 @@
 	<!-- Managed Beans -->
 	<context:component-scan base-package="ca.openosp.openo.common.dao">
     <context:exclude-filter type="regex" expression=".*\.UserPropertyDAOImpl$"/>
-		<!--    <context:exclude-filter type="regex" expression=".*\.DemographicDaoImpl$"/> -->
+    <context:exclude-filter type="regex" expression=".*\.DemographicDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.DxresearchDAOImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.EChartDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.EncounterWindowDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.AppointmentArchiveDaoImpl$"/>
-    <!--    <context:exclude-filter type="regex" expression=".*\.DemographicExtDaoImpl$"/> -->
+    <context:exclude-filter type="regex" expression=".*\.DemographicExtDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.AdmissionDaoImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.OtherIdDAOImpl$"/>
     <context:exclude-filter type="regex" expression=".*\.HL7HandlerMSHMappingDaoImpl$"/>
