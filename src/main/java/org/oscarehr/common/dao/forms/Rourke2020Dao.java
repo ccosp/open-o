@@ -50,7 +50,7 @@ public class Rourke2020Dao extends AbstractDaoImpl<FormRourke2020> {
                 + "= (select max(frm2.id) from FormRourke2020 frm2 where frm2.formCreated "
                 + "= frm.formCreated and frm2.demographicNo = frm.demographicNo)";
         Query query = entityManager.createQuery(sql);
-        query = query.setParameter("demo", demographicNo);
+        query = query.setParameter(1, demographicNo);
         return query.getResultList();
     }
 
