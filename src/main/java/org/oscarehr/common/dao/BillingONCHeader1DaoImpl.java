@@ -510,10 +510,10 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
 
     @Override
     public List<BillingONCHeader1> findByAppointmentNo(Integer appointmentNo) {
-        String sql = "select h1 from BillingONCHeader1 h1 where h1.appointmentNo=?";
+        String sql = "select h1 from BillingONCHeader1 h1 where h1.appointmentNo=?1";
         Query q = entityManager.createQuery(sql);
 
-        q.setParameter(0, appointmentNo);
+        q.setParameter(1, appointmentNo);
 
         return q.getResultList();
     }
@@ -553,11 +553,11 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     @Override
     public List<Long> count_larrykain_clinic(String facilityNum, Date startDate, Date endDate) {
         Query q = entityManager.createQuery(
-                "select count(b) from BillingONCHeader1 b where b.visitType = '00' and b.faciltyNum = ? and b.status <> 'D' and b.billingDate >=? and b.billingDate <=?");
+                "select count(b) from BillingONCHeader1 b where b.visitType = '00' and b.faciltyNum = ?1 and b.status <> 'D' and b.billingDate >=?2 and b.billingDate <=?3");
 
-        q.setParameter(0, facilityNum);
-        q.setParameter(1, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(2, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(1, facilityNum);
+        q.setParameter(2, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(3, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
@@ -566,14 +566,14 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<Long> count_larrykain_hospital(String facilityNum1, String facilityNum2, String facilityNum3,
                                                String facilityNum4, Date startDate, Date endDate) {
         Query q = entityManager.createQuery(
-                "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and (b.faciltyNum=? or b.faciltyNum=? or b.faciltyNum=? or b.faciltyNum=?) and status<>'D' and b.billingDate >=? and b.billingDate <=?");
+                "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and (b.faciltyNum=?1 or b.faciltyNum=?2 or b.faciltyNum=?3 or b.faciltyNum=?4) and status<>'D' and b.billingDate >=?5 and b.billingDate <=?6");
 
-        q.setParameter(0, facilityNum1);
-        q.setParameter(1, facilityNum2);
-        q.setParameter(2, facilityNum3);
-        q.setParameter(3, facilityNum4);
-        q.setParameter(4, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(1, facilityNum1);
+        q.setParameter(2, facilityNum2);
+        q.setParameter(3, facilityNum3);
+        q.setParameter(4, facilityNum4);
+        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
@@ -582,15 +582,15 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<Long> count_larrykain_other(String facilityNum1, String facilityNum2, String facilityNum3,
                                             String facilityNum4, String facilityNum5, Date startDate, Date endDate) {
         Query q = entityManager.createQuery(
-                "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and status<>'D' and  (b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>? and b.faciltyNum<>?) and b.billingDate >=? and b.billingDate<=?");
+                "select count(b) from BillingONCHeader1 b where b.visitType<>'00' and status<>'D' and  (b.faciltyNum<>?1 and b.faciltyNum<>?2 and b.faciltyNum<>?3 and b.faciltyNum<>?4 and b.faciltyNum<>?5) and b.billingDate >=?6 and b.billingDate<=?7");
 
-        q.setParameter(0, facilityNum1);
-        q.setParameter(1, facilityNum2);
-        q.setParameter(2, facilityNum3);
-        q.setParameter(3, facilityNum4);
-        q.setParameter(4, facilityNum5);
-        q.setParameter(5, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
-        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
+        q.setParameter(1, facilityNum1);
+        q.setParameter(2, facilityNum2);
+        q.setParameter(3, facilityNum3);
+        q.setParameter(4, facilityNum4);
+        q.setParameter(5, facilityNum5);
+        q.setParameter(6, (new SimpleDateFormat("yyyy-MM-dd")).format(startDate));
+        q.setParameter(7, (new SimpleDateFormat("yyyy-MM-dd")).format(endDate));
 
         return q.getResultList();
     }
