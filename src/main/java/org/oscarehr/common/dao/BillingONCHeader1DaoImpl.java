@@ -101,7 +101,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
         }
 
         Query query = entityManager.createNativeQuery("select count(" + distinctStr
-                + " demographic_no) from billing_on_cheader1 ch where ch.provider_no = ? and billing_date >= ? and billing_date <= ?");
+                + " demographic_no) from billing_on_cheader1 ch where ch.provider_no = ?1 and billing_date >= ?2 and billing_date <= ?3");
         query.setParameter(1, providerNo);
         query.setParameter(2, startDate);
         query.setParameter(3, endDate);
@@ -485,8 +485,8 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> get3rdPartyInvoiceByDate(Date start, Date end, Locale locale) {
         String sql = "select distinct bCh1 from BillingONPayment bPay, BillingONCHeader1 bCh1 where bPay.billingNo=bCh1.id and bPay.paymentdate >= ? and bPay.paymentdate <= ? order by bCh1.id";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, start);
-        query.setParameter(1, end);
+        query.setParameter(1, start);
+        query.setParameter(2, end);
 
         List<BillingONCHeader1> results = query.getResultList();
 
@@ -497,8 +497,8 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public BillingONCHeader1 getLastOHIPBillingDateForServiceCode(Integer demographicNo, String serviceCode) {
         String sql = "select b from BillingONItem i, BillingONCHeader1 b where i.ch1Id=b.id and i.status!='D' and i.serviceCode=? and b.demographicNo=?  and (b.payProgram='HCP' or b.payProgram='RMB' or b.payProgram='WCB') and (b.status='S' or b.status='O' or b.status='B') order by b.billingDate desc";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, serviceCode);
-        query.setParameter(1, demographicNo);
+        query.setParameter(1, serviceCode);
+        query.setParameter(2, demographicNo);
 
         List<BillingONCHeader1> results = query.getResultList();
         BillingONCHeader1 result = null;
@@ -705,10 +705,10 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> getBillingItemByDxCode(Integer demographicNo, String dxCode) {
         String queryStr = "select h FROM BillingONItem b, BillingONCHeader1 h WHERE h.id = b.ch1Id and h.demographicNo=? and (b.dx =? or b.dx1 = ? or b.dx2=?)";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
-        query.setParameter(1, dxCode);
+        query.setParameter(1, demographicNo);
         query.setParameter(2, dxCode);
         query.setParameter(3, dxCode);
+        query.setParameter(4, dxCode);
 
         @SuppressWarnings("unchecked")
         List<BillingONCHeader1> rs = query.getResultList();
@@ -904,7 +904,7 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> findAllByPayProgram(String payProgram, int startIndex, int limit) {
         String sql = "select b FROM BillingONCHeader1 b where b.payProgram=? order by b.id ASC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, payProgram);
+        query.setParameter(1, payProgram);
         query.setFirstResult(startIndex);
         query.setMaxResults(limit);
 
