@@ -36,7 +36,7 @@ public class FormBCAR2020Dao extends AbstractDaoImpl<FormBCAR2020> {
 
     public Integer getLatestActiveFormIdByDemographic(Integer demographicNo) {
         Integer latestFormId = null;
-        String sql = "select max(frm.formId) from FormBCAR2020 frm WHERE frm.demographicNo = :demographicNo and frm.active = true";
+        String sql = "select max(frm.formId) from FormBCAR2020 frm WHERE frm.demographicNo = ?1 and frm.active = true";
         Query query = entityManager.createQuery(sql);
         query.setParameter(1, demographicNo);
         Object result = query.getSingleResult();
