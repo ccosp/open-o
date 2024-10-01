@@ -86,8 +86,8 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
     }
 
     public List<BillingService> findByServiceCode(String code) {
-        Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ? order by bs.billingserviceDate desc");
-        query.setParameter(0, code);
+        Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ?1 order by bs.billingserviceDate desc");
+        query.setParameter(1, code);
 
 
         List<BillingService> list = query.getResultList();
@@ -95,9 +95,9 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
     }
 
     public List<BillingService> findByServiceCodeAndDate(String code, Date date) {
-        Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ? and bs.billingserviceDate = ? order by bs.billingserviceDate desc");
-        query.setParameter(0, code);
-        query.setParameter(1, date);
+        Query query = entityManager.createQuery("select bs  from BillingService bs where bs.serviceCode = ?1 and bs.billingserviceDate = ?2 order by bs.billingserviceDate desc");
+        query.setParameter(1, code);
+        query.setParameter(2, date);
 
 
         List<BillingService> list = query.getResultList();
@@ -234,19 +234,19 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
     }
 
     public Date getLatestServiceDate(Date endDate, String serviceCode) {
-        String sql = "select max(bs.billingserviceDate) from BillingService bs where bs.billingserviceDate <= ? and bs.serviceCode = ?";
+        String sql = "select max(bs.billingserviceDate) from BillingService bs where bs.billingserviceDate <= ?1 and bs.serviceCode = ?2";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, endDate);
-        query.setParameter(1, serviceCode);
+        query.setParameter(1, endDate);
+        query.setParameter(2, serviceCode);
         Date date = (Date) query.getSingleResult();
         return date;
     }
 
     public Object[] getUnitPrice(String bcode, Date date) {
-        String sql = "select bs from BillingService bs where bs.serviceCode = ? and bs.billingserviceDate = ?";
+        String sql = "select bs from BillingService bs where bs.serviceCode = ?1 and bs.billingserviceDate = ?2";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, bcode);
-        query.setParameter(1, getLatestServiceDate(date, bcode));
+        query.setParameter(1, bcode);
+        query.setParameter(2, getLatestServiceDate(date, bcode));
 
 
         List<BillingService> results = query.getResultList();
@@ -344,14 +344,14 @@ public class BillingServiceDaoImpl extends AbstractDaoImpl<BillingService> imple
     }
 
     public List<BillingService> search_service_code(String code, String code1, String code2, String desc, String desc1, String desc2) {
-        String sql = "select b from BillingService b where (b.serviceCode like ? or b.serviceCode like ? or b.serviceCode like ? or b.description like ? or b.description like ? or b.description like ?) and b.id = (select max(b2.id) from BillingService b2 where b2.serviceCode = b.serviceCode)";
+        String sql = "select b from BillingService b where (b.serviceCode like ?1 or b.serviceCode like ?2 or b.serviceCode like ?3 or b.description like ?4 or b.description like ?5 or b.description like ?6) and b.id = (select max(b2.id) from BillingService b2 where b2.serviceCode = b.serviceCode)";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, code);
-        query.setParameter(1, code1);
-        query.setParameter(2, code2);
-        query.setParameter(3, desc);
-        query.setParameter(4, desc1);
-        query.setParameter(5, desc2);
+        query.setParameter(1, code);
+        query.setParameter(2, code1);
+        query.setParameter(3, code2);
+        query.setParameter(4, desc);
+        query.setParameter(5, desc1);
+        query.setParameter(6, desc2);
 
         return query.getResultList();
     }
