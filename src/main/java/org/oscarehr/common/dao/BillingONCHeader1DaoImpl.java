@@ -472,9 +472,9 @@ public class BillingONCHeader1DaoImpl extends AbstractDaoImpl<BillingONCHeader1>
     public List<BillingONCHeader1> get3rdPartyInvoiceByProvider(Provider p, Date start, Date end, Locale locale) {
         String sql = "select distinct bCh1 from BillingONPayment bPay, BillingONCHeader1 bCh1 where bPay.billingNo=bCh1.id and bCh1.providerNo=? and bPay.paymentdate >= ? and bPay.paymentdate <= ? order by bCh1.id";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, p.getProviderNo());
-        query.setParameter(1, start);
-        query.setParameter(2, end);
+        query.setParameter(1, p.getProviderNo());
+        query.setParameter(2, start);
+        query.setParameter(3, end);
 
         List<BillingONCHeader1> results = query.getResultList();
 
