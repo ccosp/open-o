@@ -35,7 +35,7 @@ public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
     public List<Object[]> findBillingServices(String billRegion, String serviceGroup, String serviceType) {
         Query query = entityManager.createNativeQuery("SELECT DISTINCT b.service_code, b.description, b.value, b.percentage "
                 + "FROM ctl_billingservice c left outer join billingservice b on b.service_code="
-                + "c.service_code where b.region = ? and c.service_group= ? and c.servicetype = ? order by c.service_order");
+                + "c.service_code where b.region = ?1 and c.service_group= ?2 and c.servicetype = ?3 order by c.service_order");
 
         query.setParameter(1, billRegion);
         query.setParameter(2, serviceGroup);
@@ -48,7 +48,7 @@ public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
     @SuppressWarnings("unchecked")
     public List<Object[]> findBillingServicesByType(String serviceType) {
         Query query = entityManager.createNativeQuery("SELECT DISTINCT service_code, servicetype, service_group, status, service_order "
-                + "FROM ctl_billingservice where servicetype = ? order by service_order");
+                + "FROM ctl_billingservice where servicetype = ?1 order by service_order");
 
         query.setParameter(1, serviceType);
 
@@ -61,8 +61,8 @@ public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
         Query query = entityManager.createNativeQuery(
                 "SELECT DISTINCT b.service_code, b.description , b.value, b.percentage " +
                         "FROM ctl_billingservice c left outer join billingservice b on b.service_code="
-                        + "c.service_code where b.region = ? and c.service_group = ? and c.servicetype = ?" +
-                        " and b.billingservice_date in (select max(b2.billingservice_date) from billingservice b2 where b2.billingservice_date <= ? and b2.service_code = b.service_code) order by c.service_order");
+                        + "c.service_code where b.region = ?1 and c.service_group = ?2 and c.servicetype = ?3" +
+                        " and b.billingservice_date in (select max(b2.billingservice_date) from billingservice b2 where b2.billingservice_date <= ?4 and b2.service_code = b.service_code) order by c.service_order");
 
         query.setParameter(1, billRegion);
         query.setParameter(2, serviceGroup);
@@ -75,7 +75,7 @@ public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
     @SuppressWarnings("unchecked")
     @NativeSql("billinglocation")
     public List<Object[]> findBillingLocations(String billRegion) {
-        Query query = entityManager.createNativeQuery("SELECT billinglocation,billinglocation_desc FROM billinglocation WHERE region = ?");
+        Query query = entityManager.createNativeQuery("SELECT billinglocation,billinglocation_desc FROM billinglocation WHERE region = ?1");
         query.setParameter(1, billRegion);
         return query.getResultList();
     }
@@ -83,7 +83,7 @@ public class BillingBCDaoImpl extends BillingDaoImpl implements BillingBCDao {
     @SuppressWarnings("unchecked")
     @NativeSql("billingvisit")
     public List<Object[]> findBillingVisits(String billRegion) {
-        Query query = entityManager.createNativeQuery("SELECT visittype, visit_desc FROM billingvisit WHERE region = ? ORDER BY visittype ASC");
+        Query query = entityManager.createNativeQuery("SELECT visittype, visit_desc FROM billingvisit WHERE region = ?1 ORDER BY visittype ASC");
         query.setParameter(1, billRegion);
         return query.getResultList();
     }
