@@ -42,32 +42,32 @@ public class BatchBillingDaoImpl extends AbstractDaoImpl<BatchBilling> implement
 
     @SuppressWarnings("unchecked")
     public List<BatchBilling> find(Integer demographicNo, String service_code) {
-        Query query = entityManager.createQuery("select b from BatchBilling b where b.demographicNo = :demo and b.serviceCode = :service_code");
-        query.setParameter("demo", demographicNo);
-        query.setParameter("service_code", service_code);
+        Query query = entityManager.createQuery("select b from BatchBilling b where b.demographicNo = ?1 and b.serviceCode = ?2");
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, service_code);
 
         return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
     public List<BatchBilling> findByProvider(String providerNo) {
-        Query query = entityManager.createQuery("select b from BatchBilling b where b.billingProviderNo = :provider");
-        query.setParameter("provider", providerNo);
+        Query query = entityManager.createQuery("select b from BatchBilling b where b.billingProviderNo = ?1");
+        query.setParameter(1, providerNo);
         return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
     public List<BatchBilling> findByProvider(String providerNo, String service_code) {
-        Query query = entityManager.createQuery("select b from BatchBilling b where b.billingProviderNo = :provider and b.serviceCode = :service_code");
-        query.setParameter("provider", providerNo);
-        query.setParameter("service_code", service_code);
+        Query query = entityManager.createQuery("select b from BatchBilling b where b.billingProviderNo = ?1 and b.serviceCode = ?2");
+        query.setParameter(1, providerNo);
+        query.setParameter(2, service_code);
         return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
     public List<BatchBilling> findByServiceCode(String service_code) {
-        Query query = entityManager.createQuery("select b from BatchBilling b where b.serviceCode = :service_code");
-        query.setParameter("service_code", service_code);
+        Query query = entityManager.createQuery("select b from BatchBilling b where b.serviceCode = ?1");
+        query.setParameter(1, service_code);
         return query.getResultList();
     }
 
