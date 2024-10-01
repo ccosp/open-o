@@ -48,27 +48,27 @@ public class FavoriteDaoImpl extends AbstractDaoImpl<Favorite> implements Favori
     }
 
     public Favorite findByEverything(String providerNo, String favoriteName, String bn, int gcn_SEQNO, String customName, float takeMin, float takeMax, String frequencyCode, String duration, String durationUnit, String quantity, int repeat, boolean nosubsInt, boolean prnInt, String parsedSpecial, String gn, String unitName, boolean customInstr) {
-        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " f WHERE f.providerNo = :providerNo AND f.name = :favoritename AND f.bn = :brandName AND f.gcnSeqno = :gcnSeqNo AND f.customName = :customName AND f.takeMin = :takemin AND f.takeMax = :takemax AND f.frequencyCode = :freqcode AND f.duration = :duration "
-                + "AND f.durationUnit = :durunit AND f.quantity = :quantity AND f.repeat = :repeat AND f.nosubs = :nosubs AND f.prn = :prn AND f.special = :special AND f.gn = :gn AND f.unitName = :unitName AND " + "f.customInstructions = :customInstructions");
+        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " f WHERE f.providerNo = ?1 AND f.name = ?2 AND f.bn = ?3 AND f.gcnSeqno = ?4 AND f.customName = ?5 AND f.takeMin = ?6 AND f.takeMax = ?7 AND f.frequencyCode = ?8 AND f.duration = ?9 "
+                + "AND f.durationUnit = ?10 AND f.quantity = ?11 AND f.repeat = ?12 AND f.nosubs = ?13 AND f.prn = ?14 AND f.special = ?15 AND f.gn = ?16 AND f.unitName = ?17 AND f.customInstructions = ?18");
 
-        query.setParameter("providerNo", providerNo);
-        query.setParameter("favoritename", favoriteName);
-        query.setParameter("brandName", bn);
-        query.setParameter("gcnSeqNo", (double) gcn_SEQNO);
-        query.setParameter("customName", customName);
-        query.setParameter("takemin", takeMin);
-        query.setParameter("takemax", takeMax);
-        query.setParameter("freqcode", frequencyCode);
-        query.setParameter("duration", duration);
-        query.setParameter("durunit", durationUnit);
-        query.setParameter("quantity", quantity);
-        query.setParameter("repeat", repeat);
-        query.setParameter("nosubs", nosubsInt);
-        query.setParameter("prn", prnInt);
-        query.setParameter("special", parsedSpecial);
-        query.setParameter("gn", gn);
-        query.setParameter("unitName", unitName);
-        query.setParameter("customInstructions", customInstr);
+        query.setParameter(1, providerNo);
+        query.setParameter(2, favoriteName);
+        query.setParameter(3, bn);
+        query.setParameter(4, gcn_SEQNO);
+        query.setParameter(5, customName);
+        query.setParameter(6, takeMin);
+        query.setParameter(7, takeMax);
+        query.setParameter(8, frequencyCode);
+        query.setParameter(9, duration);
+        query.setParameter(10, durationUnit);
+        query.setParameter(11, quantity);
+        query.setParameter(12, repeat);
+        query.setParameter(13, nosubsInt);
+        query.setParameter(14, prnInt);
+        query.setParameter(15, parsedSpecial);
+        query.setParameter(16, gn);
+        query.setParameter(17, unitName);
+        query.setParameter(18, customInstr);
 
         return getSingleResultOrNull(query);
     }
