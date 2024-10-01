@@ -43,7 +43,7 @@ public class BillingCdmServiceCodesDaoImpl extends AbstractDaoImpl<BillingCdmSer
 
     @SuppressWarnings("unchecked")
     public List<BillingCdmServiceCodes> findAll() {
-        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName());
+        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " e");
         return query.getResultList();
     }
 
