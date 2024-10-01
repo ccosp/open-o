@@ -194,7 +194,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
     @Override
     @SuppressWarnings("unchecked")
     public List<T> findAll(Integer offset, Integer limit) {
-        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName());
+        Query query = entityManager.createQuery("FROM " + modelClass.getSimpleName() + " e");
 
         if (offset != null && offset > 0) {
             query.setFirstResult(offset);
@@ -275,7 +275,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
         }
 
         // older hibernate work around
-        String sqlCommand = "select count(*) from " + tableName;
+        String sqlCommand = "select count(*) from " + tableName + " e";
         Query query = entityManager.createNativeQuery(sqlCommand);
         return (((Number) query.getSingleResult()).intValue());
     }
@@ -288,11 +288,11 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
      * <code>e</code> stands for "entity"
      */
     protected String getBaseQuery() {
-        return getBaseQueryBuf(null, null).toString();
+        return getBaseQueryBuf(null, "e").toString();
     }
 
     protected String getBaseQuery(String alias) {
-        return getBaseQueryBuf(null, alias).toString();
+        return getBaseQueryBuf(null, "e").toString();
     }
 
     /**
@@ -348,7 +348,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
      * @return Returns the query
      */
     protected Query createQuery(String select, String alias, String whereClause) {
-        StringBuilder buf = createQueryString(select, alias, whereClause);
+        StringBuilder buf = createQueryString(select, "e", whereClause);
         return entityManager.createQuery(buf.toString());
     }
 
@@ -362,7 +362,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
      * @see #createQuery(String, String)
      */
     protected StringBuilder createQueryString(String select, String alias, String whereClause) {
-        StringBuilder buf = getBaseQueryBuf(select, alias);
+        StringBuilder buf = getBaseQueryBuf(select, "e");
         if (whereClause != null && !whereClause.isEmpty()) {
             buf.append("WHERE ");
             buf.append(whereClause);
@@ -425,7 +425,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
      * @see #getBaseQuery()
      */
     protected ParamAppender getAppender() {
-        return new ParamAppender(getBaseQuery());
+        return new ParamAppender(getBaseQuery("e"));
     }
 
     /**
@@ -436,7 +436,7 @@ public abstract class AbstractDaoImpl<T extends AbstractModel<?>> implements Abs
      * @see #getBaseQuery(String)
      */
     protected ParamAppender getAppender(String alias) {
-        return new ParamAppender(getBaseQuery(alias));
+        return new ParamAppender(getBaseQuery("e"));
     }
 
     protected final void setDefaultLimit(Query query) {
