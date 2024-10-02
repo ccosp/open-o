@@ -48,12 +48,12 @@ public class BillingNoteDao extends AbstractDaoImpl<BillingNotes> {
      */
     @SuppressWarnings("unchecked")
     public List<BillingNotes> findNotes(Integer billingmaster_no, Integer noteType) {
-        StringBuilder buf = new StringBuilder("FROM BillingNotes n WHERE n.billingmasterNo = :bmno");
+        StringBuilder buf = new StringBuilder("FROM BillingNotes n WHERE n.billingmasterNo = ?1");
         boolean isNoteTypeSpecified = noteType != null;
-        if (isNoteTypeSpecified) buf.append(" AND n.noteType = :noteType");
+        if (isNoteTypeSpecified) buf.append(" AND n.noteType = ?2");
         Query query = entityManager.createQuery(buf.toString());
-        query.setParameter("bmno", billingmaster_no);
-        if (isNoteTypeSpecified) query.setParameter("noteType", noteType);
+        query.setParameter(1, billingmaster_no);
+        if (isNoteTypeSpecified) query.setParameter(2, noteType);
         return query.getResultList();
     }
 
@@ -65,9 +65,9 @@ public class BillingNoteDao extends AbstractDaoImpl<BillingNotes> {
      * @return Returns the note or null, if no note can be found
      */
     public BillingNotes findSingleNote(Integer billingmaster_no, Integer noteType) {
-        Query query = entityManager.createQuery("FROM BillingNotes n WHERE n.billingmasterNo = :bmno AND n.noteType = :noteType ORDER BY n.createdate desc");
-        query.setParameter("bmno", billingmaster_no);
-        query.setParameter("noteType", noteType);
+        Query query = entityManager.createQuery("FROM BillingNotes n WHERE n.billingmasterNo = ?1 AND n.noteType = ?2 ORDER BY n.createdate desc");
+        query.setParameter(1, billingmaster_no);
+        query.setParameter(2, noteType);
         query.setMaxResults(1);
         return getSingleResultOrNull(query);
     }
