@@ -60,9 +60,9 @@ public class ExportedDocumentDao extends AbstractDaoImpl<ExportedDocument> {
      * @return ExportedDocument objects for a patient
      */
     public List<ExportedDocument> findByPatient(int demographicId) {
-        String sql = "FROM ExportedDocument e where e.demographicNo = ? ORDER BY id DESC";
+        String sql = "FROM ExportedDocument e where e.demographicNo = ?1 ORDER BY id DESC";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, demographicId);
+        query.setParameter(1, demographicId);
 
         @SuppressWarnings("unchecked")
         List<ExportedDocument> retVal = query.getResultList();
