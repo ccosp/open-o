@@ -47,9 +47,9 @@ public class WcbBpCodeDaoImpl extends AbstractDaoImpl<WcbBpCode> implements WcbB
     public List<WcbBpCode> findByCodeOrAnyLevel(String code) {
         String codeParamValue = code.substring(0, Math.min(code.length() - 1, 5));
         Query query = createQuery("c",
-                "c.code like :codeParamValue OR c.level1 like :c OR c.level2 like :c OR c.level3 like :c ORDER BY c.level1, c.level2, c.level3");
+                "c.code like :codeParamValue OR c.level1 like ?1 OR c.level2 like ?1 OR c.level3 like ?1 ORDER BY c.level1, c.level2, c.level3");
         query.setParameter("codeParamValue", codeParamValue + "%");
-        query.setParameter("c", code + "%");
+        query.setParameter(1, code + "%");
         return query.getResultList();
     }
 }
