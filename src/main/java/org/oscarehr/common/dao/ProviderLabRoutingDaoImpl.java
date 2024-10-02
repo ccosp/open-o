@@ -45,11 +45,11 @@ public class ProviderLabRoutingDaoImpl extends AbstractDaoImpl<ProviderLabRoutin
     private List<ProviderLabRoutingModel> getProviderLabRoutings(Integer labNo, String labType, String providerNo,
                                                                  String status) {
         Query q = entityManager.createQuery("select x from " + modelClass.getName()
-                + " x where x.labNo LIKE ? and x.labType LIKE ? and x.providerNo LIKE ? and x.status LIKE ?");
-        q.setParameter(0, labNo != null ? labNo : "%");
-        q.setParameter(1, labType != null ? labType : "%");
-        q.setParameter(2, providerNo != null ? providerNo : "%");
-        q.setParameter(3, status != null ? status : "%");
+                + " x where x.labNo LIKE ?1 and x.labType LIKE ?2 and x.providerNo LIKE ?3 and x.status LIKE ?4");
+        q.setParameter(1, labNo != null ? labNo : "%");
+        q.setParameter(2, labType != null ? labType : "%");
+        q.setParameter(3, providerNo != null ? providerNo : "%");
+        q.setParameter(4, status != null ? status : "%");
 
         return q.getResultList();
     }
@@ -58,10 +58,10 @@ public class ProviderLabRoutingDaoImpl extends AbstractDaoImpl<ProviderLabRoutin
     public List<ProviderLabRoutingModel> findByLabNoAndLabTypeAndProviderNo(int labNo, String labType,
                                                                             String providerNo) {
         Query q = entityManager.createQuery(
-                "select x from " + modelClass.getName() + " x where x.labNo=? and x.labType=? and x.providerNo=?");
-        q.setParameter(0, labNo);
-        q.setParameter(1, labType);
-        q.setParameter(2, providerNo);
+                "select x from " + modelClass.getName() + " x where x.labNo=?1 and x.labType=?2 and x.providerNo=?3");
+        q.setParameter(1, labNo);
+        q.setParameter(2, labType);
+        q.setParameter(3, providerNo);
 
         return q.getResultList();
     }
@@ -100,8 +100,8 @@ public class ProviderLabRoutingDaoImpl extends AbstractDaoImpl<ProviderLabRoutin
 
     @Override
     public ProviderLabRoutingModel findByLabNo(int labNo) {
-        Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x where x.labNo=?");
-        query.setParameter(0, labNo);
+        Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x where x.labNo=?1");
+        query.setParameter(1, labNo);
 
         return this.getSingleResultOrNull(query);
     }
@@ -118,9 +118,9 @@ public class ProviderLabRoutingDaoImpl extends AbstractDaoImpl<ProviderLabRoutin
     @Override
     public ProviderLabRoutingModel findByLabNoAndLabType(int labNo, String labType) {
         Query query = entityManager
-                .createQuery("select x from " + modelClass.getName() + " x where x.labNo=? and x.labType = ?");
-        query.setParameter(0, labNo);
-        query.setParameter(1, labType);
+                .createQuery("select x from " + modelClass.getName() + " x where x.labNo=?1 and x.labType = ?2");
+        query.setParameter(1, labNo);
+        query.setParameter(2, labType);
 
         return this.getSingleResultOrNull(query);
     }
