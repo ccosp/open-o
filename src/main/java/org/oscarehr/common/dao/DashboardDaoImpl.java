@@ -48,8 +48,8 @@ public class DashboardDaoImpl extends AbstractDaoImpl<Dashboard> implements Dash
     @SuppressWarnings("unchecked")
     @Override
     public List<Dashboard> getDashboardsByStatus(boolean status) {
-        Query query = entityManager.createQuery("SELECT x FROM Dashboard x WHERE x.active = :status");
-        query.setParameter("status", status);
+        Query query = entityManager.createQuery("SELECT x FROM Dashboard x WHERE x.active = ?1");
+        query.setParameter(1, status);
         List<Dashboard> result = query.getResultList();
         return result;
     }
