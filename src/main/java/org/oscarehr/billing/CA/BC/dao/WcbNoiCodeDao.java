@@ -41,8 +41,8 @@ public class WcbNoiCodeDao extends AbstractDaoImpl<WcbNoiCode> {
     }
 
     public List<WcbNoiCode> findByCodeOrLevel(String search) {
-        Query q = createQuery("w", "w.code like :s OR w.level1 like :s OR w.level2 like :s OR w.level3 like :s ORDER BY w.level1, w.level2, w.level3");
-        q.setParameter("s", search);
+        Query q = createQuery("w", "w.code like ?1 OR w.level1 like ?1 OR w.level2 like ?1 OR w.level3 like ?1 ORDER BY w.level1, w.level2, w.level3");
+        q.setParameter(1, search);
         return q.getResultList();
     }
 }
