@@ -61,7 +61,6 @@ for arg in "$@"; do
       # Clean the project using Maven and remove the deployed app from Tomcat.
       mvn clean
       rm -rf /usr/local/tomcat/webapps/oscar
-      exit 0
       ;;
     install)
       # Shift the arguments so that we can check for the optional --run-tests argument.
@@ -71,7 +70,6 @@ for arg in "$@"; do
       fi
       # Run the build and deploy process, passing in whether or not to run tests.
       build_and_deploy "$run_tests"
-      exit 0
       ;;
     *)
       # If an unknown argument is passed, display usage instructions and exit.
