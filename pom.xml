@@ -26,7 +26,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <log4j2.version>2.17.0</log4j2.version>
         <slf4j.version>1.7.32</slf4j.version>
-        <hapifhir.version>5.4.0</hapifhir.version>
+        <hapifhir.version>7.4.3</hapifhir.version>
     </properties>
 
     <repositories>
@@ -1546,15 +1546,12 @@
 
                                 <echo message="build time : ${build.dateTime.value}"/>
 
-                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.dateTime}"
-                                         value="${build.dateTime.value}"/>
+                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.dateTime}" value="${build.dateTime.value}"/>
 
                                 <property environment="env"/>
                                 <echo message="JOB_NAME - BUILD_NUMBER : ${env.JOB_NAME}-${env.BUILD_NUMBER}"/>
-                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.JOB_NAME}"
-                                         value="${env.JOB_NAME}"/>
-                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.BUILD_NUMBER}"
-                                         value="${env.BUILD_NUMBER}"/>
+                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.JOB_NAME}" value="${env.JOB_NAME}"/>
+                                <replace file="target/classes/oscar_mcmaster.properties" token="${build.BUILD_NUMBER}" value="${env.BUILD_NUMBER}"/>
                             </target>
                         </configuration>
                     </execution>
@@ -1571,7 +1568,7 @@
                         <configuration>
                             <target>
                                 <property name="build.compiler" value="extJavac"/>
-                                <property name='jspc_target' value="${project.artifactId}-${project.version}"/>
+                                <property name="jspc_target" value="${project.artifactId}-${project.version}"/>
                                 <ant antfile="jspc.xml" target="jspc"/>
                             </target>
                         </configuration>
