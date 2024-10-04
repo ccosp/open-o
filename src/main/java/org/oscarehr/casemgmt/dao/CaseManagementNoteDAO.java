@@ -190,8 +190,8 @@ public interface CaseManagementNoteDAO {
 
             // get the numbers broken down by encounter types
             {
-                String sqlCommand = "select encounter_type,count(demographic_no), count(distinct demographic_no) from casemgmt_note where reporter_caisi_role=? and observation_date>=? and observation_date<?"
-                        + (programId == null ? "" : " and program_no=?") + " group by encounter_type";
+                String sqlCommand = "select encounter_type,count(demographic_no), count(distinct demographic_no) from casemgmt_note where reporter_caisi_role=?1 and observation_date>=?2 and observation_date<?3"
+                        + (programId == null ? "" : " and program_no=?4") + " group by encounter_type";
                 PreparedStatement ps = c.prepareStatement(sqlCommand);
                 ps.setInt(1, roleId);
                 ps.setTimestamp(2, new Timestamp(startDate.getTime()));
@@ -211,8 +211,8 @@ public interface CaseManagementNoteDAO {
 
             // get the numbers in total, not broken down.
             {
-                String sqlCommand = "select count(distinct demographic_no) from casemgmt_note where reporter_caisi_role=? and observation_date>=? and observation_date<?"
-                        + (programId == null ? "" : " and program_no=?");
+                String sqlCommand = "select count(distinct demographic_no) from casemgmt_note where reporter_caisi_role=?1 and observation_date>=?2 and observation_date<?3"
+                        + (programId == null ? "" : " and program_no=?4");
                 PreparedStatement ps = c.prepareStatement(sqlCommand);
                 ps.setInt(1, roleId);
                 ps.setTimestamp(2, new Timestamp(startDate.getTime()));
