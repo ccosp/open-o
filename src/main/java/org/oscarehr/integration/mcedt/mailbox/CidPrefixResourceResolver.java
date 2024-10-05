@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import org.apache.cxf.message.Attachment;
 import org.apache.log4j.Logger;
-import org.oscarehr.integration.ebs.client.AttachmentCachingInterceptor;
+import org.oscarehr.integration.ebs.client.ng.AttachmentCachingInterceptor;
 
 /**
  * Resource resolver class that detects if a uriToResolve starts with "cid:", as in

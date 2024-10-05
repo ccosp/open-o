@@ -41,8 +41,8 @@ import javax.xml.soap.SOAPFault;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.logging.log4j.Logger;
-import org.oscarehr.integration.ebs.client.EdtClientBuilder;
-import org.oscarehr.integration.ebs.client.EdtClientBuilderConfig;
+import org.oscarehr.integration.ebs.client.ng.EdtClientBuilder;
+import org.oscarehr.integration.ebs.client.ng.EdtClientBuilderConfig;
 import org.oscarehr.util.MiscUtils;
 
 import oscar.OscarProperties;
