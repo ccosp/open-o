@@ -3,6 +3,7 @@
 	"workspaceFolder": "/workspace",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "open-o",
+	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
 	"shutdownAction": "stopCompose",
 	"customizations": {
 		"vscode": {
@@ -24,7 +25,7 @@
 			"target": "/ssh-agent"
 		}
 	],
-	"remoteEnv": {
+	"containerEnv": {
 		"SSH_AUTH_SOCK": "/ssh-agent"
 	},
 	"forwardPorts": [
