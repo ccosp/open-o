@@ -8,7 +8,7 @@ This error was caused after the "Apache CXF" was updated from version 2.7.11 to 
 
 To resolve this error, we had to update the "ebs-client" library to make it compatible with Apache CXF 3.2.0. Since the latest published version of the ebs-client is 0.0.6, which is what we had in the application, we modified the ebs-client core classes, implemented these classes into the OSCAR source code, and removed the ebs-client 0.0.6 dependency to avoid any future conflict between two different versions.
 
-The updated ebs-client classes are located in pacakge "org.oscarehr.integration.ebs.client.ng" (file path: src/main/java/org/oscarehr/integration/ebs/client/ng).
+The updated ebs-client classes are located in package "org.oscarehr.integration.ebs.client.ng" (file path: src/main/java/org/oscarehr/integration/ebs/client/ng).
 
 # XOP References Issue
 
@@ -29,6 +29,8 @@ We had to insert a line of code into the EDTClientBuilder.java (one of the class
 
 This enabled the use of the RSA 1.5 algorithm in the current WSS4J version, and the header parsing error was resolved. 
 
+Note: Periodically check for updates to WSS4J and CXF versions, as newer releases may address this issue differently or provide alternative solutions.
+
 # Signature Invalid Error
 
 The error "org.apache.ws.security.WSSecurityException: The signature or decryption was invalid" threw when attempting to download the file on the Download page.
@@ -45,7 +47,7 @@ The default setting of the two properties is false. However, the setting has bee
 
 # EdtClientBuilder.java
 
-The SOAP message must contain the EBS and IDP headers in the SOAP message header with the user name and password (for the Go-Secure IDP in a WS-Security username token). The SOAP headers and body are then digitally signed to guarantee message integrity and source.
+The SOAP message must contain the EBS and IDP headers in the SOAP message header with the user name and password (for the Go-Secure IDP in a WS-Security username token, it is used for authentication. Go-Secure IDP ensures secure access to the system by verifying user credentials). The SOAP headers and body are then digitally signed to guarantee message integrity and source.
 
 If any request data is specified to be encrypted, by the specific web service, it will use the public key of the EBS system. SOAP must be signed with a Timestamp element for each message TTL for the SOAP message will be 10 minutes. Each message must also include the Username token.
 
@@ -57,7 +59,7 @@ The error "NullPointerException" was caused by "SpringUtils.getBean", which led 
 
 After we fixed the error, most of the test cases passed.
 
-There are 7 test cases running failed and throwing "NumberFormatException" error since we used "List<BigInteger>" as the parameter type, but the ID attempts to be passed with string type. Therefore, due to the current implementation of the dependency, we are not catching the exact error "Rejected By Policy." This has been confirmed with the MOH MCEDT Conformance Testing team, who stated that "catching exceptions isn't possible is fine here", and we are not going to fix them at this point.
+There are 7 test cases failing with a "NumberFormatException" error since we used "List<BigInteger>" as the parameter type, but the ID attempts to be passed as a string. Therefore, due to the current implementation of the dependency, we are not catching the exact error "Rejected By Policy." The MOH MCEDT Conformance Testing team has confirmed that not catching these exceptions is acceptable in this case, and we are not going to fix them at this point.
 
 ## HCV Tests
 

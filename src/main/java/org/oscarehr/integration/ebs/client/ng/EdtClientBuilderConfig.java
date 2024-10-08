@@ -33,7 +33,9 @@ public class EdtClientBuilderConfig {
 	
 	/**
  	 * Creates a new instance of {@code EdtClientBuilderConfig} with a randomly generated 
- 	 * audit ID. This audit ID uniquely identifies the client session in the logs.
+ 	 * audit ID. This audit ID uniquely identifies the client session in the logs,
+	 * facilitating traceability and debugging. It is automatically assigned upon
+ 	 * instantiation and remains constant throughout the client's lifecycle.
  	 */
 	public EdtClientBuilderConfig() {
 		setAuditId(UUID.randomUUID().toString());
