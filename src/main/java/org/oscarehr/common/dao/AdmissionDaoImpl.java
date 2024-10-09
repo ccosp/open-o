@@ -93,10 +93,10 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.programId=? AND a.clientId=?";
+        String queryStr = "select a FROM Admission a WHERE a.programId=?1 AND a.clientId=?2";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, programId);
-        query.setParameter(1, demographicNo);
+        query.setParameter(1, programId);
+        query.setParameter(2, demographicNo);
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
 
@@ -166,9 +166,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -186,9 +186,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? ORDER BY a.admissionDate ASC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 ORDER BY a.admissionDate ASC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -209,11 +209,11 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? and a.programId in " +
-                "(select s.id from Program s where s.facilityId=? or s.facilityId is null) ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 and a.programId in " +
+                "(select s.id from Program s where s.facilityId=?2 or s.facilityId is null) ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
-        query.setParameter(1, facilityId);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, facilityId);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -252,10 +252,10 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? and a.programId=? and a.admissionStatus='current' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 and a.programId=?2 and a.admissionStatus='current' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
-        query.setParameter(1, programId);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, programId);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -331,9 +331,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -352,9 +352,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? AND a.admissionStatus='discharged' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 AND a.admissionStatus='discharged' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         @SuppressWarnings("unchecked")
         List<Admission> dischargedAdmissions = query.getResultList();
@@ -462,9 +462,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
         Admission admission = null;
         List<Admission> rs = query.getResultList();
 
@@ -498,9 +498,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         Admission admission = null;
         List<Admission> admissions = new ArrayList<Admission>();
@@ -534,9 +534,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
             throw new IllegalArgumentException();
         }
 
-        String queryStr = "select a FROM Admission a WHERE a.clientId=? AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
+        String queryStr = "select a FROM Admission a WHERE a.clientId=?1 AND a.admissionStatus='current' ORDER BY a.admissionDate DESC";
         Query query = entityManager.createQuery(queryStr);
-        query.setParameter(0, demographicNo);
+        query.setParameter(1, demographicNo);
 
         Admission admission = null;
         List<Admission> rs = query.getResultList();
@@ -566,8 +566,8 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         }
 
         Query query = entityManager
-                .createQuery("select a from Admission a where a.programId = ? and a.admissionStatus='current'");
-        query.setParameter(0, programId);
+                .createQuery("select a from Admission a where a.programId = ?1 and a.admissionStatus='current'");
+        query.setParameter(1, programId);
         @SuppressWarnings("unchecked")
         List<Admission> results = query.getResultList();
 
@@ -623,9 +623,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         }
 
         Query query = entityManager.createQuery(
-                "select a from Admission a where a.programId = ? and a.teamId = ? and a.admissionStatus='current'");
-        query.setParameter(0, programId);
-        query.setParameter(1, teamId);
+                "select a from Admission a where a.programId = ?1 and a.teamId = ?2 and a.admissionStatus='current'");
+        query.setParameter(1, programId);
+        query.setParameter(2, teamId);
         @SuppressWarnings("unchecked")
         List<Admission> results = query.getResultList();
 
@@ -645,8 +645,8 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         }
 
         Query query = entityManager.createQuery(
-                "select a from Admission a where a.temporaryAdmissionFlag = true and a.admissionStatus='current' and a.clientId = ?");
-        query.setParameter(0, demographicNo);
+                "select a from Admission a where a.temporaryAdmissionFlag = true and a.admissionStatus='current' and a.clientId = ?1");
+        query.setParameter(1, demographicNo);
         @SuppressWarnings("unchecked")
         List<Admission> results = query.getResultList();
 
@@ -673,27 +673,27 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         queryStr.append("select a from Admission a  where 1=1 ");
 
         if (searchBean.getProviderNo() != null && searchBean.getProviderNo().length() > 0) {
-            queryStr.append("and a.providerNo = ? ");
+            queryStr.append("and a.providerNo = ?1 ");
             params.add(searchBean.getProviderNo());
         }
 
         if (searchBean.getAdmissionStatus() != null && searchBean.getAdmissionStatus().length() > 0) {
-            queryStr.append(" and a.admissionStatus = ? ");
+            queryStr.append(" and a.admissionStatus = ?2 ");
             params.add(searchBean.getAdmissionStatus());
         }
 
         if (searchBean.getClientId() != null && searchBean.getClientId() > 0) {
-            queryStr.append(" and a.clientId = ? ");
+            queryStr.append(" and a.clientId = ?3 ");
             params.add(searchBean.getClientId());
         }
 
         if (searchBean.getProgramId() != null && searchBean.getProgramId() > 0) {
-            queryStr.append(" and a.programId = ? ");
+            queryStr.append(" and a.programId = ?4 ");
             params.add(searchBean.getProgramId());
         }
 
         if (searchBean.getStartDate() != null && searchBean.getEndDate() != null) {
-            queryStr.append(" and a.admissionDate >= ? and a.admissionDate <= ?");
+            queryStr.append(" and a.admissionDate >= ?5 and a.admissionDate <= ?6");
             params.add(searchBean.getStartDate());
             params.add(searchBean.getEndDate());
         }
@@ -713,11 +713,11 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
 
     @Override
     public List<Admission> getClientIdByProgramDate(int programId, Date dt) {
-        String q = "select a FROM Admission a WHERE a.programId=? and a.admissionDate<=? and (a.dischargeDate>=? or (a.dischargeDate is null))";
+        String q = "select a FROM Admission a WHERE a.programId=?1 and a.admissionDate<=?2 and (a.dischargeDate>=?3 or (a.dischargeDate is null))";
         Query query = entityManager.createQuery(q);
-        query.setParameter(0, programId);
-        query.setParameter(1, dt);
+        query.setParameter(1, programId);
         query.setParameter(2, dt);
+        query.setParameter(3, dt);
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
         return rs;
@@ -734,9 +734,9 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         }
 
         Query query = entityManager.createQuery(
-                "select a from Admission a where a.programId = ? and a.clientId = ? and a.admissionStatus='discharged' order by a.id DESC");
-        query.setParameter(0, programId);
-        query.setParameter(1, demographicId);
+                "select a from Admission a where a.programId = ?1 and a.clientId = ?2 and a.admissionStatus='discharged' order by a.id DESC");
+        query.setParameter(1, programId);
+        query.setParameter(2, demographicId);
 
         @SuppressWarnings("unchecked")
         List<Admission> results = query.getResultList();
@@ -773,11 +773,11 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
      */
     @Override
     public List<Admission> getAdmissionsByProgramAndAdmittedDate(int programId, Date startDate, Date endDate) {
-        String q = "select a FROM Admission a WHERE a.programId=? and a.admissionDate>=? and a.admissionDate<?";
+        String q = "select a FROM Admission a WHERE a.programId=?1 and a.admissionDate>=?2 and a.admissionDate<?3";
         Query query = entityManager.createQuery(q);
-        query.setParameter(0, programId);
-        query.setParameter(1, startDate);
-        query.setParameter(2, endDate);
+        query.setParameter(1, programId);
+        query.setParameter(2, startDate);
+        query.setParameter(3, endDate);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -805,11 +805,11 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         // y- S------>E
         // y- S------------>E
 
-        String q = "select a FROM Admission a WHERE a.programId=? and a.admissionDate<=? and (a.dischargeDate>=? or a.dischargeDate is null)";
+        String q = "select a FROM Admission a WHERE a.programId=?1 and a.admissionDate<=?2 and (a.dischargeDate>=?3 or a.dischargeDate is null)";
         Query query = entityManager.createQuery(q);
-        query.setParameter(0, programId);
-        query.setParameter(1, endDate);
-        query.setParameter(2, startDate);
+        query.setParameter(1, programId);
+        query.setParameter(2, endDate);
+        query.setParameter(3, startDate);
 
         @SuppressWarnings("unchecked")
         List<Admission> rs = query.getResultList();
@@ -835,10 +835,10 @@ public class AdmissionDaoImpl extends AbstractDaoImpl<Admission> implements Admi
         String status = "AC"; // only show active clients
         // get duplicated clients from this sql
         String q = "Select a From Demographic d, Admission a "
-                + "Where d.anonymous = ? and (d.PatientStatus=? or d.PatientStatus='' or d.PatientStatus=null) and d.DemographicNo=a.clientId and a.admissionStatus='current' and a.program.type != 'community'";
+                + "Where d.anonymous = ?1 and (d.PatientStatus=?2 or d.PatientStatus='' or d.PatientStatus=null) and d.DemographicNo=a.clientId and a.admissionStatus='current' and a.program.type != 'community'";
         Query query = entityManager.createQuery(q);
-        query.setParameter(0, "one-time-anonymous");
-        query.setParameter(1, status);
+        query.setParameter(1, "one-time-anonymous");
+        query.setParameter(2, status);
 
         List rs = query.getResultList();
 
