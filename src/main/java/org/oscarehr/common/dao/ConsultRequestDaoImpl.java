@@ -80,25 +80,25 @@ public class ConsultRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> 
                         +
                         " left outer join d.provider p where d.DemographicNo = cr.demographicId and cs.id = cr.serviceId ");
         if (StringUtils.isNotBlank(consultationQuery.getProviderNo())) {
-            sql.append("and cr.providerNo = '" + StringEscapeUtils.escapeSql(consultationQuery.getProviderNo()) + "' ");
+            sql.append("and cr.providerNo = ?1 ");
         }
         if (!StringUtils.equals(consultationQuery.getComplete(), "true")) {
             sql.append("and cr.status != 4 ");
         }
         if (StringUtils.isNotBlank(consultationQuery.getStatus())) {
-            sql.append("and cr.status = '" + StringEscapeUtils.escapeSql(consultationQuery.getStatus()) + "' ");
+            sql.append("and cr.status = ?2 ");
         }
         if (StringUtils.isNotBlank(consultationQuery.getTeam())) {
-            sql.append("and cr.sendTo = '" + StringEscapeUtils.escapeSql(consultationQuery.getTeam()) + "' ");
+            sql.append("and cr.sendTo = ?3 ");
         }
         if (StringUtils.isNotBlank(consultationQuery.getKeyword())) {
             String escapedKeyword = "%" + StringEscapeUtils.escapeSql(consultationQuery.getKeyword()) + "%";
             sql.append("and (");
-            sql.append("d.LastName like '" + escapedKeyword + "'");
-            sql.append("or d.FirstName like '" + escapedKeyword + "'");
-            sql.append("or specialist.lastName like '" + escapedKeyword + "'");
-            sql.append("or specialist.firstName like '" + escapedKeyword + "'");
-            sql.append("or cs.serviceDesc like '" + escapedKeyword + "'");
+            sql.append("d.LastName like ?4");
+            sql.append("or d.FirstName like ?4");
+            sql.append("or specialist.lastName like ?4");
+            sql.append("or specialist.firstName like ?4");
+            sql.append("or cs.serviceDesc like ?4");
             sql.append(") ");
         }
         if (consultationQuery != null) {
@@ -109,21 +109,17 @@ public class ConsultRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> 
 
                 if (startDate != null) {
                     if (StringUtils.equals("appointmentDate", dateType)) {
-                        sql.append("and cr.appointmentDate >= '" + DateFormatUtils.ISO_DATETIME_FORMAT.format(startDate)
-                                + "' ");
+                        sql.append("and cr.appointmentDate >= ?5 ");
                     } else {
-                        sql.append("and cr.referralDate >= '" + DateFormatUtils.ISO_DATETIME_FORMAT.format(startDate)
-                                + "' ");
+                        sql.append("and cr.referralDate >= ?5 ");
                     }
                 }
 
                 if (endDate != null) {
                     if (StringUtils.equals("appointmentDate", dateType)) {
-                        sql.append("and cr.appointmentDate <= '" + DateFormatUtils.ISO_DATETIME_FORMAT.format(endDate)
-                                + "' ");
+                        sql.append("and cr.appointmentDate <= ?6 ");
                     } else {
-                        sql.append("and cr.referralDate <= '" + DateFormatUtils.ISO_DATETIME_FORMAT.format(endDate)
-                                + "' ");
+                        sql.append("and cr.referralDate <= ?6 ");
                     }
                 }
             }
@@ -177,45 +173,41 @@ public class ConsultRequestDaoImpl extends AbstractDaoImpl<ConsultationRequest> 
                         " left outer join d.provider p where d.DemographicNo = cr.demographicId and cs.id = cr.serviceId ");
 
         if (filter.getAppointmentStartDate() != null) {
-            sql.append("and cr.appointmentDate >=  '"
-                    + FastDateFormat.getInstance("yyyy-MM-dd").format(filter.getAppointmentStartDate()) + "' ");
+            sql.append("and cr.appointmentDate >=  ?1 ");
         }
 
         if (filter.getAppointmentEndDate() != null) {
-            sql.append("and cr.appointmentDate <=  '"
-                    + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getAppointmentEndDate()) + " 23:59:59' ");
+            sql.append("and cr.appointmentDate <=  ?2 ");
         }
 
         if (filter.getReferralStartDate() != null) {
-            sql.append("and cr.referralDate >=  '"
-                    + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralStartDate()) + "' ");
+            sql.append("and cr.referralDate >=  ?3 ");
         }
 
         if (filter.getReferralEndDate() != null) {
-            sql.append("and cr.referralDate <=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralEndDate())
-                    + " 23:59:59' ");
+            sql.append("and cr.referralDate <=  ?4 ");
         }
 
         if (filter.getStatus() != null) {
-            sql.append("and cr.status = '" + filter.getStatus() + "' ");
+            sql.append("and cr.status = ?5 ");
         } else {
             sql.append("and cr.status!=4 and cr.status!=5 and cr.status!=7 ");
         }
 
         if (StringUtils.isNotBlank(filter.getTeam())) {
-            sql.append("and cr.sendTo = '" + StringEscapeUtils.escapeSql(filter.getTeam()) + "' ");
+            sql.append("and cr.sendTo = ?6 ");
         }
 
         if (StringUtils.isNotBlank(filter.getUrgency())) {
-            sql.append("and cr.urgency = '" + StringEscapeUtils.escapeSql(filter.getUrgency()) + "' ");
+            sql.append("and cr.urgency = ?7 ");
         }
 
         if (filter.getDemographicNo() != null && filter.getDemographicNo() > 0) {
-            sql.append("and cr.demographicId = " + filter.getDemographicNo() + " ");
+            sql.append("and cr.demographicId = ?8 ");
         }
 
         if (filter.getMrpNo() != null && filter.getMrpNo() > 0) {
-            sql.append("and d.ProviderNo = '" + filter.getMrpNo() + "' ");
+            sql.append("and d.ProviderNo = ?9 ");
         }
 
         String orderBy = "cr.referralDate";
