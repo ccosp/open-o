@@ -111,8 +111,8 @@ public class SupServiceCodeAssocDAO extends AbstractDaoImpl<BillingTrayFee> {
         String primaryCodeId = getBillingServiceValue(primaryCode, SupServiceCodeAssocDAO.VALUE_BY_CODE);
         String secondaryCodeId = getBillingServiceValue(secondaryCode, SupServiceCodeAssocDAO.VALUE_BY_CODE);
 
-        Query query = createQuery("btf", "btf.billingServiceNo = :billingServiceNo");
-        query.setParameter("billingServiceNo", primaryCodeId);
+        Query query = createQuery("btf", "btf.billingServiceNo = ?1");
+        query.setParameter(1, primaryCodeId);
 
         BillingTrayFee btf = null;
         for (BillingTrayFee b : (List<BillingTrayFee>) query.getResultList()) {
@@ -142,17 +142,17 @@ public class SupServiceCodeAssocDAO extends AbstractDaoImpl<BillingTrayFee> {
         Object queryParam = null;
 
         if (type == SupServiceCodeAssocDAO.VALUE_BY_CODE) {
-            queryString = "FROM BillingService bs WHERE bs.serviceCode = :param";
+            queryString = "FROM BillingService bs WHERE bs.serviceCode = ?1";
             queryParam = code;
         } else if (type == SupServiceCodeAssocDAO.VALUE_BY_ID) {
-            queryString = "FROM BillingService bs WHERE bs.billingserviceNo = :param";
+            queryString = "FROM BillingService bs WHERE bs.billingserviceNo = ?1";
             queryParam = ConversionUtils.fromIntString(code);
         } else {
             throw new IllegalArgumentException("Unsupported type" + type);
         }
 
         Query query = entityManager.createQuery(queryString);
-        query.setParameter("param", queryParam);
+        query.setParameter(1, queryParam);
 
         List<BillingService> billingServices = query.getResultList();
         if (billingServices.isEmpty()) return "";

@@ -54,19 +54,19 @@ public class PatientSharingNetworkDao extends AbstractDaoImpl<PatientSharingNetw
     }
 
     public List<PatientSharingNetworkDataObject> findByDemographicId(int demographicId) {
-        String sql = "FROM PatientSharingNetworkDataObject e where e.demographicNo = ?";
+        String sql = "FROM PatientSharingNetworkDataObject e where e.demographicNo = ?1";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, demographicId);
+        query.setParameter(1, demographicId);
 
         return query.getResultList();
     }
 
     public PatientSharingNetworkDataObject findPatientSharingNetworkDataObject(int affinityDomain, int demographicId) {
-        String sql = "FROM PatientSharingNetworkDataObject e where e.affinityDomain = ? and e.demographicNo = ?";
+        String sql = "FROM PatientSharingNetworkDataObject e where e.affinityDomain = ?1 and e.demographicNo = ?2";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, affinityDomain);
-        query.setParameter(1, demographicId);
+        query.setParameter(1, affinityDomain);
+        query.setParameter(2, demographicId);
 
         query.setMaxResults(1);
         PatientSharingNetworkDataObject retVal = getSingleResultOrNull(query);
@@ -74,11 +74,11 @@ public class PatientSharingNetworkDao extends AbstractDaoImpl<PatientSharingNetw
     }
 
     public boolean isSharingEnabled(int affinityDomain, int demographicId) {
-        String sql = "SELECT count(*) FROM PatientSharingNetworkDataObject e where e.affinityDomain = ? and e.demographicNo = ? and e.sharingEnabled = 1";
+        String sql = "SELECT count(*) FROM PatientSharingNetworkDataObject e where e.affinityDomain = ?1 and e.demographicNo = ?2 and e.sharingEnabled = 1";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, affinityDomain);
-        query.setParameter(1, demographicId);
+        query.setParameter(1, affinityDomain);
+        query.setParameter(2, demographicId);
 
         int retVal = ((Long) query.getSingleResult()).intValue();
         return retVal > 0;

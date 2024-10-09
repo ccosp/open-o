@@ -54,20 +54,20 @@ public class EDocMappingDao extends AbstractDaoImpl<EDocMapping> {
     }
 
     public List<EDocMapping> findByAffinityDomainId(int affinityDomain) {
-        String sql = "FROM EDocMapping e where e.affinityDomain = ?";
+        String sql = "FROM EDocMapping e where e.affinityDomain = ?1";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, affinityDomain);
+        query.setParameter(1, affinityDomain);
 
         return query.getResultList();
     }
 
     public EDocMapping findEDocMapping(int affinityDomain, String docType, String source) {
-        String sql = "FROM EDocMapping e where e.affinityDomain = ? and e.docType = ? and e.source = ?";
+        String sql = "FROM EDocMapping e where e.affinityDomain = ?1 and e.docType = ?2 and e.source = ?3";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, affinityDomain);
-        query.setParameter(1, docType);
-        query.setParameter(2, source);
+        query.setParameter(1, affinityDomain);
+        query.setParameter(2, docType);
+        query.setParameter(3, source);
 
         query.setMaxResults(1);
         EDocMapping retVal = getSingleResultOrNull(query);
@@ -75,11 +75,11 @@ public class EDocMappingDao extends AbstractDaoImpl<EDocMapping> {
     }
 
     public EDocMapping findEDocMapping(int affinityDomain, String docType) {
-        String sql = "FROM EDocMapping e where e.affinityDomain = ? and e.docType = ?";
+        String sql = "FROM EDocMapping e where e.affinityDomain = ?1 and e.docType = ?2";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, affinityDomain);
-        query.setParameter(1, docType);
+        query.setParameter(1, affinityDomain);
+        query.setParameter(2, docType);
 
         query.setMaxResults(1);
         EDocMapping retVal = getSingleResultOrNull(query);
