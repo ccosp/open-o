@@ -43,6 +43,7 @@ public class DepartmentDaoImpl extends AbstractDaoImpl<Department> implements De
     @Override
     public List<Department> findAll() {
         Query query = createQuery("x", null);
+        query.setParameter(1, "someValue"); // Example of positional parameter usage
         return query.getResultList();
     }
 }
