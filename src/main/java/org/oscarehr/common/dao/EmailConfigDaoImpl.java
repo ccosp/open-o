@@ -20,16 +20,16 @@ public class EmailConfigDaoImpl extends AbstractDaoImpl<EmailConfig> implements 
     public EmailConfig findActiveEmailConfig(EmailConfig emailConfig) {
         Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.emailType = :emailType AND e.emailProvider = :emailProvider AND e.active = true");
 
-        query.setParameter("senderEmail", emailConfig.getSenderEmail());
-        query.setParameter("emailType", emailConfig.getEmailType());
-        query.setParameter("emailProvider", emailConfig.getEmailProvider());
+        query.setParameter(1, emailConfig.getSenderEmail());
+        query.setParameter(2, emailConfig.getEmailType());
+        query.setParameter(3, emailConfig.getEmailProvider());
 
         return getSingleResultOrNull(query);
     }
 
     public EmailConfig findActiveEmailConfig(String senderEmail) {
         Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.active = true");
-        query.setParameter("senderEmail", senderEmail);
+        query.setParameter(1, senderEmail);
         return getSingleResultOrNull(query);
     }
 
