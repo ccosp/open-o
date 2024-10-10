@@ -141,7 +141,8 @@ public class EdtClientBuilder {
 	 * 
 	 * @return the configuration being used by this client builder
 	 */
-	public EdtClientBuilderConfig getConfig() {
+
+  public EdtClientBuilderConfig getConfig() {
 		return config;
 	}
 
@@ -218,6 +219,7 @@ public class EdtClientBuilder {
 	 * @param bindingProvider the binding provider to configure
 	 * @throws Exception if an error occurs during configuration
 	 */
+
 	protected void configureHeaderList(BindingProvider bindingProvider) throws Exception {
 		SOAPFactory sf = SOAPFactory.newInstance();
 		// initializes custom IDP header
@@ -407,5 +409,4 @@ public class EdtClientBuilder {
 			// allow local self made
 		}
 	}
-
 }
