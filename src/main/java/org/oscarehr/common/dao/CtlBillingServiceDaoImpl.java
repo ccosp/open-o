@@ -76,7 +76,7 @@ public class CtlBillingServiceDaoImpl extends AbstractDaoImpl<CtlBillingService>
 
     public List<CtlBillingService> findByServiceTypeId(String serviceTypeId) {
         Query query = entityManager.createQuery("select b from CtlBillingService b where b.status='A' and b.serviceType like ?");
-        query.setParameter(0, serviceTypeId);
+        query.setParameter(1, serviceTypeId);
 
 
         List<CtlBillingService> results = query.getResultList();
@@ -86,8 +86,8 @@ public class CtlBillingServiceDaoImpl extends AbstractDaoImpl<CtlBillingService>
 
     public List<CtlBillingService> findByServiceGroupAndServiceTypeId(String serviceGroup, String serviceTypeId) {
         Query query = entityManager.createQuery("select b from CtlBillingService b where b.status='A' and b.serviceGroup = ? and b.serviceType like ?");
-        query.setParameter(0, serviceGroup);
-        query.setParameter(1, serviceTypeId);
+        query.setParameter(1, serviceGroup);
+        query.setParameter(2, serviceTypeId);
 
 
         List<CtlBillingService> results = query.getResultList();
@@ -97,7 +97,7 @@ public class CtlBillingServiceDaoImpl extends AbstractDaoImpl<CtlBillingService>
 
     public List<CtlBillingService> findByServiceType(String serviceTypeId) {
         Query query = entityManager.createQuery("select b from CtlBillingService b where b.serviceType like ?");
-        query.setParameter(0, serviceTypeId);
+        query.setParameter(1, serviceTypeId);
 
 
         List<CtlBillingService> results = query.getResultList();
