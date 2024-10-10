@@ -42,7 +42,7 @@ public class InstitutionDaoImpl extends AbstractDaoImpl<Institution> implements 
 
     @SuppressWarnings("unchecked")
     public List<Institution> findAll() {
-        Query query = createQuery("x", "FROM Institution x");
+        Query query = createQuery("x", null);
         return query.getResultList();
     }
 }
