@@ -121,7 +121,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         try {
             //
             if (demographicNo == null) {
-                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like '%" + status + "%' " +
+                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like ?1 " +
                         " and p.labType='DOC' order by d.documentNo DESC";
             } else {
                 return labResults;
@@ -236,8 +236,8 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         String sql = "";
         try {
             if (demographicNo == null || providerNo == null) {
-                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like '%" + status + "%' and p.providerNo = '"
-                        + providerNo + "'" + " and p.labType='DOC' order by d.documentNo DESC";
+                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like ?1 and p.providerNo = ?2 " +
+                        " and p.labType='DOC' order by d.documentNo DESC";
             } else {
                 return labResults;
             }
@@ -346,9 +346,8 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         try {
 
             if (demographicNo == null) {
-                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like '%" + status + "%' and (p.providerNo like '" +
-                        (providerNo.equals("") ? "%" : providerNo) + "'" + " or p.providerNo='" + CommonLabResultData.NOT_ASSIGNED_PROVIDER_NO + "' ) " +
-                        " and p.labType='DOC' order by d.documentNo DESC";
+                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like ?1 and (p.providerNo like ?2 " +
+                        " or p.providerNo=?3 ) " + " and p.labType='DOC' order by d.documentNo DESC";
             } else {
                 return labResults;
             }
