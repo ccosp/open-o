@@ -218,7 +218,7 @@ public class OscarAppointmentDaoImpl extends AbstractDaoImpl<Appointment> implem
 
     @Override
     public List<Appointment> findByDateRange(Date startTime, Date endTime) {
-        String sql = "SELECT a FROM Appointment a WHERE a.appointmentDate >=? and a.appointmentDate < ?";
+        String sql = "SELECT a FROM Appointment a WHERE a.appointmentDate >=?1 and a.appointmentDate < ?2";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter(0, startTime);
