@@ -43,10 +43,12 @@ public class IntegratorControlDaoImpl extends AbstractDaoImpl<IntegratorControl>
     }
 
     public List<IntegratorControl> getAllByFacilityId(Integer facilityId) {
-        String queryStr = "FROM IntegratorControl c WHERE c.facilityId = " + facilityId + " ORDER BY c.control";
+        String queryStr = "FROM IntegratorControl c WHERE c.facilityId = ?1 ORDER BY c.control";
 
         @SuppressWarnings("unchecked")
-        List<IntegratorControl> rs = entityManager.createQuery(queryStr).getResultList();
+        List<IntegratorControl> rs = entityManager.createQuery(queryStr)
+                .setParameter(1, facilityId)
+                .getResultList();
 
         return rs;
     }
