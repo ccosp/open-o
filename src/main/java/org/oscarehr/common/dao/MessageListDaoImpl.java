@@ -60,7 +60,7 @@ public class MessageListDaoImpl extends AbstractDaoImpl<MessageList> implements 
     public List<MessageList> findByProviderNoAndLocationNo(String providerNo, Integer locationNo) {
         Query query = createQuery("ml",
                 "ml.providerNo = :providerNo and ml.status not like 'del' and ml.remoteLocation = :remoteLocation order by ml.message");
-        query.setParameter("providerNo", providerNo);
+        query.setParameter(1, providerNo);
         query.setParameter("remoteLocation", locationNo);
         return query.getResultList();
     }
@@ -107,7 +107,7 @@ public class MessageListDaoImpl extends AbstractDaoImpl<MessageList> implements 
     @Override
     public List<MessageList> findByProviderAndStatus(String providerNo, String status) {
         Query query = createQuery("ml", "ml.providerNo = :providerNo and ml.status = :status");
-        query.setParameter("providerNo", providerNo);
+        query.setParameter(1, providerNo);
         query.setParameter("status", status);
         return query.getResultList();
     }
@@ -122,7 +122,7 @@ public class MessageListDaoImpl extends AbstractDaoImpl<MessageList> implements 
     @Override
     public int findUnreadByProviderAndAttachedCount(String providerNo) {
         Query query = entityManager.createQuery(
-                "select count(l) from MessageList l, MsgDemoMap m where l.providerNo= :providerNo and l.status='new' and l.message=m.messageID");
+                "select count(l) from MessageList l, MsgDemoMap m where l.providerNo= ?1 and l.status='new' and l.message=m.messageID");
 
         query.setParameter("providerNo", providerNo);
         return getCountResult(query).intValue();
@@ -132,17 +132,17 @@ public class MessageListDaoImpl extends AbstractDaoImpl<MessageList> implements 
     @Override
     public int countUnreadByProviderAndFromIntegratedFacility(String providerNo) {
         Query query = entityManager.createQuery(
-                "SELECT count(l) FROM MessageList l, MessageTbl mt WHERE l.message = mt.id AND l.providerNo= :providerNo AND l.status='new' AND mt.type = :type");
+                "SELECT count(l) FROM MessageList l, MessageTbl mt WHERE l.message = mt.id AND l.providerNo= ?1 AND l.status='new' AND mt.type = ?2");
 
-        query.setParameter("providerNo", providerNo);
-        query.setParameter("type", OscarMsgType.INTEGRATOR_TYPE);
+        query.setParameter(1, providerNo);
+        query.setParameter(2, OscarMsgType.INTEGRATOR_TYPE);
         return getCountResult(query).intValue();
     }
 
     @Override
     public int countUnreadByProvider(String providerNo) {
         Query query = entityManager.createQuery(
-                "select count(l) from MessageList l where l.providerNo= :providerNo and l.status='new' and l.sourceFacilityId > 0");
+                "select count(l) from MessageList l where l.providerNo= ?1 and l.status='new' and l.sourceFacilityId > 0");
 
         query.setParameter("providerNo", providerNo);
         return getCountResult(query).intValue();
