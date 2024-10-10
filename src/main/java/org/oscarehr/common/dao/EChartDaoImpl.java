@@ -53,8 +53,8 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
 
     public EChart getLatestChart(int demographicNo) {
 
-        Query q = entityManager.createQuery("from EChart c where c.demographicNo = ? order by c.timestamp desc");
-        q.setParameter(0, demographicNo);
+        Query q = entityManager.createQuery("from EChart c where c.demographicNo = :demographicNo order by c.timestamp desc");
+        q.setParameter("demographicNo", demographicNo);
         @SuppressWarnings("unchecked")
         List<EChart> results = q.getResultList();
         if (results.size() > 0) {
@@ -65,9 +65,9 @@ public class EChartDaoImpl extends AbstractDaoImpl<EChart> implements EChartDao 
 
     public String saveEchart(CaseManagementNote note, CaseManagementCPP cpp, String userName, String lastStr) {
         String demoNo = note.getDemographic_no();
-        String sql = "select e from EChart e where e.demographicNo=? order by e.id";
+        String sql = "select e from EChart e where e.demographicNo=:demographicNo order by e.id";
         Query q = entityManager.createQuery(sql);
-        q.setParameter(0, new Integer(demoNo));
+        q.setParameter("demographicNo", new Integer(demoNo));
         @SuppressWarnings("unchecked")
         List<EChart> list = q.getResultList();
         EChart oldec;
