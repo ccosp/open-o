@@ -45,8 +45,8 @@ public class OscarCommLocationsDaoImpl extends AbstractDaoImpl<OscarCommLocation
 
     @Override
     public List<OscarCommLocations> findByCurrent1(int current1) {
-        Query q = entityManager.createQuery("SELECT x FROM OscarCommLocations x WHERE x.current1=?");
-        q.setParameter(0, current1);
+        Query q = entityManager.createQuery("SELECT x FROM OscarCommLocations x WHERE x.current1=?1");
+        q.setParameter(1, current1);
 
         @SuppressWarnings("unchecked")
         List<OscarCommLocations> results = q.getResultList();
