@@ -56,7 +56,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
     public boolean isSentToValidProvider(String docNo) {//check if document attached to any existing provider
         if (docNo != null) {
             int dn = Integer.parseInt(docNo.trim());
-            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=" + dn;
+            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=?1";
             try {
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
@@ -87,7 +87,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         if (docNo != null && providerNo != null) {
             int dn = Integer.parseInt(docNo.trim());
             providerNo = providerNo.trim();
-            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=" + dn + " and p.providerNo='" + providerNo + "'";
+            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=?1 and p.providerNo=?2";
             try {
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
