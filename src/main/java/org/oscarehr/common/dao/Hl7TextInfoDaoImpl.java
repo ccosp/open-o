@@ -132,8 +132,7 @@ public class Hl7TextInfoDaoImpl extends AbstractDaoImpl<Hl7TextInfo> implements 
     public Hl7TextInfo findLatestVersionByAccessionNumberOrFillerNumber(
             String acc, String fillerNumber) {
 
-        String sqlCommand = "select x from Hl7TextInfo x where x.accessionNumber = ?1 " +
-                "OR x.fillerOrderNum = ?2 order by lab_no DESC";
+        String sqlCommand = "select x from Hl7TextInfo x where x.accessionNumber = ?1 OR x.fillerOrderNum = ?2 order by lab_no DESC";
 
         Query query = entityManager.createQuery(sqlCommand);
         query.setParameter(1, acc);
