@@ -119,6 +119,7 @@ public class ProgramAccessDAOImpl extends AbstractDaoImpl<ProgramAccess> impleme
         }
         String accessTypeIdString = accessTypeId.toString();
         ProgramAccess result = null;
+      
         String q = "from ProgramAccess pa where pa.ProgramId = ?1 and pa.AccessTypeId = ?2";
         TypedQuery<ProgramAccess> query = entityManager.createQuery(q, ProgramAccess.class);
         query.setParameter(1, programId);
