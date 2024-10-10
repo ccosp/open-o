@@ -43,8 +43,8 @@ public class CtlSpecialInstructionsDaoImpl extends AbstractDaoImpl<CtlSpecialIns
 
     @Override
     public List<CtlSpecialInstructions> findAll() {
-        String sql = "select x from CtlSpecialInstructions x";
-        Query query = entityManager.createQuery(sql);
+        String sql = "select x from CtlSpecialInstructions x where x.id = ?1";
+        Query query = entityManager.createQuery(sql).setParameter(1, someParameter);
 
         @SuppressWarnings("unchecked")
         List<CtlSpecialInstructions> results = query.getResultList();
