@@ -29,7 +29,7 @@ package org.oscarehr.common.dao;
 
 import java.util.List;
 
-import org.hibernate.query.Query;
+import javax.persistence.Query;
 
 import org.oscarehr.common.model.CVCMedicationGTIN;
 import org.springframework.stereotype.Repository;
@@ -38,9 +38,5 @@ public interface CVCMedicationGTINDao extends AbstractDao<CVCMedicationGTIN> {
 
     public void removeAll();
 
-    public List<CVCMedicationGTIN> query(String term) {
-        Query query = entityManager.createQuery("SELECT c FROM CVCMedicationGTIN c WHERE c.term = ?1");
-        query.setParameter(1, term);
-        return query.getResultList();
-    }
+    public List<CVCMedicationGTIN> query(String term);
 }
