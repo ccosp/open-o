@@ -27,9 +27,9 @@ public class EReferAttachmentDataDaoImpl extends AbstractDaoImpl<EReferAttachmen
         String sql = "SELECT d FROM EReferAttachmentData d WHERE d.labId = :docId AND d.labType = :labType AND d.eReferAttachment.created > :expiry AND d.eReferAttachment.archived = FALSE";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter("docId", docId);
-        query.setParameter("expiry", expiry);
-        query.setParameter("labType", type);
+        query.setParameter(1, docId);
+        query.setParameter(2, type);
+        query.setParameter(3, expiry);
 
         List<EReferAttachmentData> eReferAttachmentDataList = query.getResultList();
 
