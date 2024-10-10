@@ -304,7 +304,7 @@ public class EFormDataDaoImpl extends AbstractDaoImpl<EFormData> implements EFor
     public List<Integer> findAllFdidByFormId(Integer formId) {
 
         Query query = entityManager
-                .createQuery("select distinct x.id from " + modelClass.getSimpleName() + " x where x.formId = ?1");
+                .createQuery("select distinct x.id from " + modelClass.getSimpleName() + " x where x.formId = ?1 and x.current = 1");
         query.setParameter(1, formId);
 
         @SuppressWarnings("unchecked")
