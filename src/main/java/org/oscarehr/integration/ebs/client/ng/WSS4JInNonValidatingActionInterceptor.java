@@ -21,14 +21,28 @@ import org.apache.wss4j.dom.engine.WSSecurityEngineResult;
  */
 public class WSS4JInNonValidatingActionInterceptor extends WSS4JInInterceptor {
 
+	/**
+	 * Constructs a new instance of the interceptor with default settings.
+	 */
 	public WSS4JInNonValidatingActionInterceptor() {
 		super();
 	}
 
+	/**
+	 * Constructs a new instance of the interceptor, allowing the option to ignore 
+	 * specific validation settings.
+	 * 
+	 * @param ignore if {@code true}, the interceptor will ignore validation
+	 */
 	public WSS4JInNonValidatingActionInterceptor(boolean ignore) {
 		super(ignore);
 	}
 
+	/**
+	 * Constructs a new instance of the interceptor with specified properties.
+	 * 
+	 * @param properties a map of properties used to configure the interceptor
+	 */
 	public WSS4JInNonValidatingActionInterceptor(Map<String, Object> properties) {
 		super(properties);
 	}
