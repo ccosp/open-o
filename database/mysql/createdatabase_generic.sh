@@ -20,10 +20,8 @@ echo "grant all on $DATABASE_NAME.* to $USER@localhost identified by \"$PASSWORD
 
 echo 'updating character set to utf8'
 echo "alter database $DATABASE_NAME DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci" | $mysql_cmd
-echo "loading oscarinit.sql"
-$mysql_cmd < oscarinit.sql
-echo "loading oscarinit_$LOCATION.sql..."
-$mysql_cmd < oscarinit_$LOCATION.sql
+echo "loading oscarinit_2024.sql"
+$mysql_cmd < oscarinit_2024.sql
 echo 'loading oscardata.sql...'
 $mysql_cmd < oscardata.sql
 echo 'loading oscardata_additional.sql...'
@@ -40,19 +38,12 @@ if [ $LOCATION = 'bc' ]; then
 
   echo 'loading bc_pharmacies.sql...'
   $mysql_cmd < bc_pharmacies.sql
-else
-  echo 'loading olisinit.sql...'
-  cd olis
-  $mysql_cmd < olisinit.sql
-  cd ..
 fi
 
 echo "loading icd$ICD.sql..."
 $mysql_cmd < icd$ICD.sql
 
 cd caisi
-echo 'loading initcaisi.sql...'
-$mysql_cmd < initcaisi.sql
 echo 'loading initcaisidata.sql...'
 $mysql_cmd < initcaisidata.sql
 cd ..
