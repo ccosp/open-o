@@ -40,11 +40,11 @@ public class EmailLogDaoImpl extends AbstractDaoImpl<EmailLog> implements EmailL
                 "ORDER BY el.timestamp DESC";
 
         Query query = entityManager.createQuery(hql);
-        query.setParameter(4, dateBegin);
-        query.setParameter(5, dateEnd);
         query.setParameter(1, demographicNo);
         query.setParameter(2, emailStatus);
         query.setParameter(3, senderEmailAddress);
+        query.setParameter(4, dateBegin);
+        query.setParameter(5, dateEnd);
 
         return query.getResultList();
     }
