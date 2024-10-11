@@ -55,41 +55,7 @@ public class ConsultResponseDaoImpl extends AbstractDaoImpl<ConsultationResponse
         logger.debug("sql=" + sql);
 
         Query query = entityManager.createQuery(sql);
-        if (filter.getAppointmentStartDate() != null) {
-            query.setParameter(1, FastDateFormat.getInstance("yyyy-MM-dd").format(filter.getAppointmentStartDate()));
-        }
-        if (filter.getAppointmentEndDate() != null) {
-            query.setParameter(2, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getAppointmentEndDate()) + " 23:59:59");
-        }
-        if (filter.getReferralStartDate() != null) {
-            query.setParameter(3, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralStartDate()));
-        }
-        if (filter.getReferralEndDate() != null) {
-            query.setParameter(4, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralEndDate()) + " 23:59:59");
-        }
-        if (filter.getResponseStartDate() != null) {
-            query.setParameter(5, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseStartDate()));
-        }
-        if (filter.getResponseEndDate() != null) {
-            query.setParameter(6, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseEndDate()) + " 23:59:59");
-        }
-        if (filter.getStatus() != null) {
-            query.setParameter(7, filter.getStatus());
-        }
-        if (StringUtils.isNotBlank(filter.getTeam())) {
-            query.setParameter(8, filter.getTeam());
-        }
-        if (StringUtils.isNotBlank(filter.getUrgency())) {
-            query.setParameter(9, filter.getUrgency());
-        }
-        if (filter.getDemographicNo() != null && filter.getDemographicNo() > 0) {
-            query.setParameter(10, filter.getDemographicNo());
-        }
-        if (filter.getMrpNo() != null && filter.getMrpNo() > 0) {
-            query.setParameter(11, filter.getMrpNo());
-        }
         Long count = this.getCountResult(query);
-
 
         return count.intValue();
     }
@@ -100,39 +66,6 @@ public class ConsultResponseDaoImpl extends AbstractDaoImpl<ConsultationResponse
         logger.debug("sql=" + sql);
 
         Query query = entityManager.createQuery(sql);
-        if (filter.getAppointmentStartDate() != null) {
-            query.setParameter(1, FastDateFormat.getInstance("yyyy-MM-dd").format(filter.getAppointmentStartDate()));
-        }
-        if (filter.getAppointmentEndDate() != null) {
-            query.setParameter(2, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getAppointmentEndDate()) + " 23:59:59");
-        }
-        if (filter.getReferralStartDate() != null) {
-            query.setParameter(3, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralStartDate()));
-        }
-        if (filter.getReferralEndDate() != null) {
-            query.setParameter(4, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralEndDate()) + " 23:59:59");
-        }
-        if (filter.getResponseStartDate() != null) {
-            query.setParameter(5, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseStartDate()));
-        }
-        if (filter.getResponseEndDate() != null) {
-            query.setParameter(6, DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseEndDate()) + " 23:59:59");
-        }
-        if (filter.getStatus() != null) {
-            query.setParameter(7, filter.getStatus());
-        }
-        if (StringUtils.isNotBlank(filter.getTeam())) {
-            query.setParameter(8, filter.getTeam());
-        }
-        if (StringUtils.isNotBlank(filter.getUrgency())) {
-            query.setParameter(9, filter.getUrgency());
-        }
-        if (filter.getDemographicNo() != null && filter.getDemographicNo() > 0) {
-            query.setParameter(10, filter.getDemographicNo());
-        }
-        if (filter.getMrpNo() != null && filter.getMrpNo() > 0) {
-            query.setParameter(11, filter.getMrpNo());
-        }
         query.setFirstResult(filter.getStartIndex());
         query.setMaxResults(filter.getNumToReturn());
         return query.getResultList();
@@ -145,39 +78,39 @@ public class ConsultResponseDaoImpl extends AbstractDaoImpl<ConsultationResponse
                         " where sp.id = cr.referringDocId and d.DemographicNo = cr.demographicNo ");
 
         if (filter.getAppointmentStartDate() != null) {
-            sql.append("and cr.appointmentDate >=  ?1 ");
+            sql.append("and cr.appointmentDate >=  '" + FastDateFormat.getInstance("yyyy-MM-dd").format(filter.getAppointmentStartDate()) + "' ");
         }
         if (filter.getAppointmentEndDate() != null) {
-            sql.append("and cr.appointmentDate <=  ?2 ");
+            sql.append("and cr.appointmentDate <=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getAppointmentEndDate()) + " 23:59:59' ");        
         }
         if (filter.getReferralStartDate() != null) {
-            sql.append("and cr.referralDate >=  ?3 ");
+            sql.append("and cr.referralDate >=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralStartDate()) + "' ");
         }
         if (filter.getReferralEndDate() != null) {
-            sql.append("and cr.referralDate <=  ?4 ");
+            sql.append("and cr.referralDate <=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getReferralEndDate()) + " 23:59:59' ");
         }
         if (filter.getResponseStartDate() != null) {
-            sql.append("and cr.responseDate >=  ?5 ");
+            sql.append("and cr.responseDate >=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseStartDate()) + "' ");
         }
         if (filter.getResponseEndDate() != null) {
-            sql.append("and cr.responseDate <=  ?6 ");
+            sql.append("and cr.responseDate <=  '" + DateFormatUtils.ISO_DATE_FORMAT.format(filter.getResponseEndDate()) + " 23:59:59' ");
         }
         if (filter.getStatus() != null) {
-            sql.append("and cr.status = ?7 ");
+            sql.append("and cr.status = '" + filter.getStatus() + "' ");
         } else {
             sql.append("and cr.status!=4 and cr.status!=5 ");
         }
         if (StringUtils.isNotBlank(filter.getTeam())) {
-            sql.append("and cr.sendTo = ?8 ");
+            sql.append("and cr.sendTo = '" + StringEscapeUtils.escapeSql(filter.getTeam()) + "' ");
         }
         if (StringUtils.isNotBlank(filter.getUrgency())) {
-            sql.append("and cr.urgency = ?9 ");
+            sql.append("and cr.urgency = '" + StringEscapeUtils.escapeSql(filter.getUrgency()) + "' ");
         }
         if (filter.getDemographicNo() != null && filter.getDemographicNo() > 0) {
-            sql.append("and cr.demographicNo = ?10 ");
+            sql.append("and cr.demographicNo = " + filter.getDemographicNo() + " ");
         }
         if (filter.getMrpNo() != null && filter.getMrpNo() > 0) {
-            sql.append("and d.ProviderNo = ?11 ");
+            sql.append("and d.ProviderNo = '" + filter.getMrpNo() + "' ");
         }
 
         String orderBy = "cr.referralDate";
