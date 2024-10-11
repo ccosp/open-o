@@ -29,8 +29,7 @@ public class ClinicNbrDaoImpl extends AbstractDaoImpl<ClinicNbr> implements Clin
 
     @Override
     public ArrayList<ClinicNbr> findAll() {
-        Query query = entityManager.createQuery("select x from " + modelClass.getSimpleName() + " x where nbr_status != ?1 order by nbr_value asc");
-        query.setParameter(1, "D");
+        Query query = entityManager.createQuery("select x from " + modelClass.getSimpleName() + " x where nbr_status != 'D' order by nbr_value asc");
         @SuppressWarnings("unchecked")
         ArrayList<ClinicNbr> results = new ArrayList<ClinicNbr>(query.getResultList());
         return (results);
