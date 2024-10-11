@@ -50,7 +50,7 @@ public class Hsfo2RecommitScheduleDaoImpl extends AbstractDaoImpl<Hsfo2RecommitS
 
     public Hsfo2RecommitSchedule getLastSchedule(boolean statusFlag) {
         String sqlCommand = "select * from hsfo_recommit_schedule  ";
-        if (statusFlag) sqlCommand += "where status=?1 ";
+        if (statusFlag) sqlCommand += "where status='D' ";
         sqlCommand += "order by id desc";
 
         Query query = entityManager.createNativeQuery(sqlCommand, modelClass);
