@@ -24,7 +24,7 @@ public class EReferAttachmentDataDaoImpl extends AbstractDaoImpl<EReferAttachmen
     public EReferAttachmentData getRecentByDocumentId(Integer docId, String type, Date expiry) {
         EReferAttachmentData eReferAttachmentData = null;
 
-        String sql = "SELECT d FROM EReferAttachmentData d WHERE d.labId = :docId AND d.labType = :labType AND d.eReferAttachment.created > :expiry AND d.eReferAttachment.archived = FALSE";
+        String sql = "SELECT d FROM EReferAttachmentData d WHERE d.labId = ?1 AND d.labType = ?2 AND d.eReferAttachment.created > ?3 AND d.eReferAttachment.archived = FALSE";
 
         Query query = entityManager.createQuery(sql);
         query.setParameter(1, docId);
