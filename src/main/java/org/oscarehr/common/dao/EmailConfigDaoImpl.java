@@ -18,7 +18,7 @@ public class EmailConfigDaoImpl extends AbstractDaoImpl<EmailConfig> implements 
 
     @Transactional
     public EmailConfig findActiveEmailConfig(EmailConfig emailConfig) {
-        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.emailType = :emailType AND e.emailType = :emailProvider AND e.active = true");
+        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = ?1 AND e.emailType = ?2 AND e.emailType = ?3 AND e.active = true");
 
         query.setParameter(1, emailConfig.getSenderEmail());
         query.setParameter(2, emailConfig.getEmailType());
@@ -28,7 +28,7 @@ public class EmailConfigDaoImpl extends AbstractDaoImpl<EmailConfig> implements 
     }
 
     public EmailConfig findActiveEmailConfig(String senderEmail) {
-        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = :senderEmail AND e.active = true");
+        Query query = entityManager.createQuery("SELECT e FROM EmailConfig e WHERE e.senderEmail = ?1 AND e.active = true");
         query.setParameter(1, senderEmail);
         return getSingleResultOrNull(query);
     }

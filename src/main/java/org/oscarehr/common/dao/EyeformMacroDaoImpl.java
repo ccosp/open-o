@@ -28,7 +28,7 @@ public class EyeformMacroDaoImpl extends AbstractDaoImpl<EyeformMacro> implement
 
     @SuppressWarnings("unchecked")
     public List<EyeformMacro> getMacros() {
-        Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x order by x.macroName").setParameter(1, modelClass.getName()).setParameter(2, "macroName");
+        Query query = entityManager.createQuery("select x from " + modelClass.getName() + " x order by x.macroName")
         return query.getResultList();
     }
 

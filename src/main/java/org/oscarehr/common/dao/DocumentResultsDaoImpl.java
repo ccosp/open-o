@@ -56,7 +56,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
     public boolean isSentToValidProvider(String docNo) {//check if document attached to any existing provider
         if (docNo != null) {
             int dn = Integer.parseInt(docNo.trim());
-            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=?1";
+            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=" + dn;
             try {
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
@@ -87,7 +87,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         if (docNo != null && providerNo != null) {
             int dn = Integer.parseInt(docNo.trim());
             providerNo = providerNo.trim();
-            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=?1 and p.providerNo=?2";
+            String sql = "select p from ProviderInboxItem p where p.labType='DOC' and p.labNo=" + dn + " and p.providerNo='" + providerNo + "'";
             try {
                 Query query = entityManager.createQuery(sql);
                 @SuppressWarnings("unchecked")
@@ -236,8 +236,7 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         String sql = "";
         try {
             if (demographicNo == null || providerNo == null) {
-                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like ?1 and p.providerNo = ?2 " +
-                        " and p.labType='DOC' order by d.documentNo DESC";
+                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like and p.providerNo = " and p.labType='DOC' order by d.documentNo DESC";
             } else {
                 return labResults;
             }
@@ -346,8 +345,8 @@ public class DocumentResultsDaoImpl extends AbstractDaoImpl<Document> implements
         try {
 
             if (demographicNo == null) {
-                sql = "select d from Document d, ProviderInboxItem p where d.documentNo=p.labNo and p.status like ?1 and (p.providerNo like ?2 " +
-                        " or p.providerNo=?3 ) " + " and p.labType='DOC' order by d.documentNo DESC";
+                (providerNo.equals("") ? "%" : providerNo) + "'" + " or p.providerNo='" + CommonLabResultData.NOT_ASSIGNED_PROVIDER_NO + "' ) " +
+                        " and p.labType='DOC' order by d.documentNo DESC";
             } else {
                 return labResults;
             }
