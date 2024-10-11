@@ -69,7 +69,7 @@ public class AllergyDaoImpl extends AbstractDaoImpl<Allergy> implements AllergyD
         String sql = "select x from " + modelClass.getSimpleName()
                 + " x where x.demographicNo=?1 and x.archived = 0 order by x.description";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(2, demographic_no);
+        query.setParameter(1, demographic_no);
 
         @SuppressWarnings("unchecked")
         List<Allergy> allergies = query.getResultList();
