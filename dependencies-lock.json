@@ -880,14 +880,6 @@
     "optional" : false,
     "integrity" : "sha512:lNj38YqqLOJtVP5phLym3Jo04845Y6tDeDEP8ohfMxCymFJIA7xy8kCadgR/9yySRhHucCA/vTncctInEumHAg=="
   }, {
-    "groupId" : "io.github.weblegacy",
-    "artifactId" : "struts-tiles",
-    "version" : "1.3.11",
-    "scope" : "compile",
-    "type" : "jar",
-    "optional" : false,
-    "integrity" : "sha512:puEPXfKeBNuh5MptzuGJt47rdP18U1HZv0ZjPOUTiRg0+KEWC2Kw7T07jHXcmbAC2eIezycmjW67z61tK3fsXg=="
-  }, {
     "groupId" : "janino",
     "artifactId" : "janino",
     "version" : "2.3.2",
