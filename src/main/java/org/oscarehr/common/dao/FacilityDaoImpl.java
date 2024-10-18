@@ -47,11 +47,11 @@ public class FacilityDaoImpl extends AbstractDaoImpl<Facility> implements Facili
     public List<Facility> findAll(Boolean active) {
         StringBuilder sb = new StringBuilder();
         sb.append("select x from Facility x");
-        if (active != null) sb.append(" where x.disabled=?");
+        if (active != null) sb.append(" where x.disabled=?1");
         sb.append(" order by x.name");
 
         Query query = entityManager.createQuery(sb.toString());
-        if (active != null) query.setParameter(0, !active);
+        if (active != null) query.setParameter(1, !active);
 
         @SuppressWarnings("unchecked")
         List<Facility> results = query.getResultList();
