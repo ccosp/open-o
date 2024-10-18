@@ -16296,517 +16296,520 @@ INSERT INTO
 INSERT INTO
     `ContactSpecialty`(`id`, `specialty`, `description`) VALUES (257, 'Vascular Surgery, General Surgery', 'Vascular Surgery, General Surgery');
 
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '1', 'Adolescent Medicine, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '2', 'Anatomical Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '3', 'Anatomical Pathology, Forensic Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '4', 'Anatomical Pathology, General Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '5', 'Anatomical Pathology, General Pathology, Dermatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '6', 'Anatomical Pathology, Hematological Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '7', 'Anatomical Pathology, Neuropathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '8', 'Anesthesiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '9', 'Anesthesiology, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Anesthesiology, Critical Care Medicine, Palliative Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Anesthesiology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Anesthesiology, Pain Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Cardiac Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Cardiac Surgery, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Cardiac Surgery, Thoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Cardiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Cardiology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Cardiology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Cardiothoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Cardiovascular and Thoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Cardiovascular and Thoracic Surgery, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Child and Adolescent Psychiatry, Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Clinical Immunology and Allergy, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Clinician Investigator Program, Internal Medicine, Critical Care Medicine, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Clinician Investigator Program, Medical Biochemistry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '26', 'Clinician Investigator Program, Pediatrics, Pediatric Hematology/Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '27', 'Clinician Investigator Program, Plastic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '28', 'Clinician Investigator Program, Radiation Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '29', 'Colorectal Surgery, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '30', 'Community Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '31', 'Community Medicine, Public Health and Preventive Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '32', 'Critical Care Medicine, Anesthesiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '33', 'Critical Care Medicine, Cardiac Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '34', 'Critical Care Medicine, Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '35', 'Critical Care Medicine, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '36', 'Critical Care Medicine, Infectious Diseases, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '37', 'Critical Care Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '38', 'Critical Care Medicine, Internal Medicine, Cardiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '39', 'Critical Care Medicine, Internal Medicine, Respirology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '40', 'Critical Care Medicine, Nephrology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '41', 'Critical Care Medicine, Pediatric Emergency Medicine, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '42', 'Critical Care Medicine, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '43', 'Critical Care Medicine, Respirology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '44', 'Dermatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '45', 'Dermatology, Internal Medicine, Rheumatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '46', 'Dermatology, Pediatrics, Clinical Immunology and Allergy');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '47', 'Developmental Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '48', 'Developmental Pediatrics, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '49', 'Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '50', 'Diagnostic Radiology, Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '51', 'Diagnostic Radiology, Neuroradiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '52', 'Diagnostic Radiology, Nuclear Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '53', 'Diagnostic Radiology, Pediatric Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '54', 'Diagnostic Radiology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '55', 'Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '56', 'Emergency Medicine, Anesthesiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '57', 'Emergency Medicine, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '58', 'Emergency Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '59', 'Emergency Medicine, Pediatric Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '60', 'Endocrinology and Metabolism');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '61', 'Endocrinology and Metabolism, Critical Care Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '62', 'Endocrinology and Metabolism, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '63', 'Endocrinology and Metabolism, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '64', 'Family Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '65', 'Forensic Pathology, Anatomical Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '66', 'Forensic Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '67', 'Forensic Psychiatry, Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '68', 'Gastroenterology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '69', 'Gastroenterology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '70', 'General Internal Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '71', 'General Internal Medicine, Internal Medicine, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '72', 'General Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '73', 'General Pathology, Anatomical Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '74', 'General Pathology, Forensic Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '75', 'General Pathology, Hematological Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '76', 'General Pathology, Medical Biochemistry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '77', 'General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '78', 'General Surgery, Cardiac Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '79', 'General Surgery, Cardiothoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '80', 'General Surgery, Cardiovascular and Thoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '81', 'General Surgery, Cardiovascular and Thoracic Surgery, Thoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '82', 'General Surgery, Colorectal Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '83', 'General Surgery, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '84', 'General Surgery, General Surgical Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '85', 'General Surgery, Pediatric Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '86', 'General Surgery, Thoracic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '87', 'General Surgery, Vascular Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '88', 'General Surgical Oncology, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '89', 'Geriatric Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '90', 'Geriatric Psychiatry, Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '91', 'Geriatric Psychiatry, Psychiatry, Forensic Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '92', 'Gynecologic Oncology, Obstetrics and Gynecology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '93', 'Gynecologic Reproductive Endocrinology and Infertility, Obstetrics and Gynecology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '94', 'Hematological Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '95', 'Hematological Pathology, Anatomical Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '96', 'Hematological Pathology, Hematology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '97', 'Hematological Pathology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '98', 'Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '99', 'Hematology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Internal Medicine, Medical Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Medical Oncology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Critical Care Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Internal Medicine, Medical Microbiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Medical Microbiology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Internal Medicine, Cardiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Clinical Immunology and Allergy');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine, Clinical Pharmacology and Toxicology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine, Respirology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Dermatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Endocrinology and Metabolism');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Gastroenterology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, General Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Geriatric Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Hematology, Medical Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Infectious Diseases, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Biochemistry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Genetics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Microbiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Microbiology, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Medical Oncology, Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nephrology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nephrology, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Neurology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nuclear Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Occupational Medicine, Respirology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Ophthalmology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Pain Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Palliative Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Palliative Medicine, Nephrology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Public Health and Preventive Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Radiation Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Respirology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Respirology, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Rheumatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Rheumatology, Clinical Immunology and Allergy');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Interventional Radiology, Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Maternal');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Medical Biochemistry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Medical Biochemistry, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics and Genomics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Microbiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Microbiology, Internal Medicine, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Hematology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Internal Medicine, Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Neonatal');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Critical Care Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Clinician Investigator Program');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Neuropathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurology, Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuropathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuropathology, Anatomical Pathology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuroradiology, Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurosurgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine, Diagnostic Radiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine, Radiation Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Obstetrics and Gynecology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Gynecologic Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Gynecologic Reproductive Endocrinology and Infertility');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Maternal');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Occupational Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Occupational Medicine, Community Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Ophthalmology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Orthopedic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Orthopedic Surgery, Pain Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Otolaryngology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Pain Medicine, Anesthesiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pain Medicine, Physical Medicine and Rehabilitation');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine, Radiation Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Cardiology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Emergency Medicine, Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Emergency Medicine, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Hematology/Oncology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Surgery, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Adolescent Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Cardiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Clinical Immunology and Allergy');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Community Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine, Anesthesiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Dermatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Developmental Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Endocrinology and Metabolism');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Gastroenterology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Infectious Diseases');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Infectious Diseases, Medical Microbiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Genetics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Microbiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Oncology, Hematology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Neonatal');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Nephrology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Neurology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Orthopedic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Otolaryngology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Cardiology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Emergency Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Hematology/Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Respirology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Rheumatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation, Pain Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Plastic Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Child and Adolescent Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Community Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Forensic Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Forensic Psychiatry, Child and Adolescent Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Geriatric Psychiatry');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Neurology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Nuclear Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Psychiatry, Pain Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Public Health and Preventive Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Public Health and Preventive Medicine, Community Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Radiation Oncology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Critical Care Medicine, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology, Clinician Investigator Program, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology, Internal Medicine');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Rheumatology, Pediatrics');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, Cardiac Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, Critical Care Medicine, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, General Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, General Surgery, Cardiac Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Urology');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Vascular Surgery');
-INSERT INTO
-    `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Vascular Surgery, General Surgery');
+--
+-- Table `specialty` is not using in the latest version of the application
+--
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '1', 'Adolescent Medicine, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '2', 'Anatomical Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '3', 'Anatomical Pathology, Forensic Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '4', 'Anatomical Pathology, General Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '5', 'Anatomical Pathology, General Pathology, Dermatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '6', 'Anatomical Pathology, Hematological Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '7', 'Anatomical Pathology, Neuropathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '8', 'Anesthesiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '9', 'Anesthesiology, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Anesthesiology, Critical Care Medicine, Palliative Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Anesthesiology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Anesthesiology, Pain Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Cardiac Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Cardiac Surgery, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Cardiac Surgery, Thoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Cardiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Cardiology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Cardiology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Cardiothoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Cardiovascular and Thoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Cardiovascular and Thoracic Surgery, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Child and Adolescent Psychiatry, Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Clinical Immunology and Allergy, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Clinician Investigator Program, Internal Medicine, Critical Care Medicine, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Clinician Investigator Program, Medical Biochemistry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '26', 'Clinician Investigator Program, Pediatrics, Pediatric Hematology/Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '27', 'Clinician Investigator Program, Plastic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '28', 'Clinician Investigator Program, Radiation Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '29', 'Colorectal Surgery, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '30', 'Community Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '31', 'Community Medicine, Public Health and Preventive Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '32', 'Critical Care Medicine, Anesthesiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '33', 'Critical Care Medicine, Cardiac Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '34', 'Critical Care Medicine, Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '35', 'Critical Care Medicine, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '36', 'Critical Care Medicine, Infectious Diseases, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '37', 'Critical Care Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '38', 'Critical Care Medicine, Internal Medicine, Cardiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '39', 'Critical Care Medicine, Internal Medicine, Respirology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '40', 'Critical Care Medicine, Nephrology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '41', 'Critical Care Medicine, Pediatric Emergency Medicine, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '42', 'Critical Care Medicine, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '43', 'Critical Care Medicine, Respirology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '44', 'Dermatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '45', 'Dermatology, Internal Medicine, Rheumatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '46', 'Dermatology, Pediatrics, Clinical Immunology and Allergy');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '47', 'Developmental Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '48', 'Developmental Pediatrics, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '49', 'Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '50', 'Diagnostic Radiology, Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '51', 'Diagnostic Radiology, Neuroradiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '52', 'Diagnostic Radiology, Nuclear Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '53', 'Diagnostic Radiology, Pediatric Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '54', 'Diagnostic Radiology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '55', 'Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '56', 'Emergency Medicine, Anesthesiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '57', 'Emergency Medicine, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '58', 'Emergency Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '59', 'Emergency Medicine, Pediatric Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '60', 'Endocrinology and Metabolism');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '61', 'Endocrinology and Metabolism, Critical Care Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '62', 'Endocrinology and Metabolism, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '63', 'Endocrinology and Metabolism, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '64', 'Family Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '65', 'Forensic Pathology, Anatomical Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '66', 'Forensic Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '67', 'Forensic Psychiatry, Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '68', 'Gastroenterology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '69', 'Gastroenterology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '70', 'General Internal Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '71', 'General Internal Medicine, Internal Medicine, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '72', 'General Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '73', 'General Pathology, Anatomical Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '74', 'General Pathology, Forensic Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '75', 'General Pathology, Hematological Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '76', 'General Pathology, Medical Biochemistry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '77', 'General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '78', 'General Surgery, Cardiac Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '79', 'General Surgery, Cardiothoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '80', 'General Surgery, Cardiovascular and Thoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '81', 'General Surgery, Cardiovascular and Thoracic Surgery, Thoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '82', 'General Surgery, Colorectal Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '83', 'General Surgery, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '84', 'General Surgery, General Surgical Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '85', 'General Surgery, Pediatric Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '86', 'General Surgery, Thoracic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '87', 'General Surgery, Vascular Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '88', 'General Surgical Oncology, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '89', 'Geriatric Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '90', 'Geriatric Psychiatry, Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '91', 'Geriatric Psychiatry, Psychiatry, Forensic Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '92', 'Gynecologic Oncology, Obstetrics and Gynecology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '93', 'Gynecologic Reproductive Endocrinology and Infertility, Obstetrics and Gynecology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '94', 'Hematological Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '95', 'Hematological Pathology, Anatomical Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '96', 'Hematological Pathology, Hematology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '97', 'Hematological Pathology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '98', 'Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '99', 'Hematology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Internal Medicine, Medical Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Medical Oncology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Hematology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Critical Care Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Internal Medicine, Medical Microbiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Medical Microbiology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Infectious Diseases, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '10', 'Internal Medicine, Cardiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Clinical Immunology and Allergy');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine, Clinical Pharmacology and Toxicology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Critical Care Medicine, Respirology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Dermatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Endocrinology and Metabolism');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, Gastroenterology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '11', 'Internal Medicine, General Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Geriatric Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Hematology, Medical Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Infectious Diseases, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Biochemistry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Genetics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Microbiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Microbiology, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '12', 'Internal Medicine, Medical Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Medical Oncology, Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nephrology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nephrology, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Neurology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Nuclear Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Occupational Medicine, Respirology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Ophthalmology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Pain Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Palliative Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '13', 'Internal Medicine, Palliative Medicine, Nephrology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Public Health and Preventive Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Radiation Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Respirology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Respirology, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Rheumatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Internal Medicine, Rheumatology, Clinical Immunology and Allergy');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Interventional Radiology, Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Maternal');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Medical Biochemistry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '14', 'Medical Biochemistry, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics and Genomics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Genetics, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Microbiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Microbiology, Internal Medicine, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Hematology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Medical Oncology, Internal Medicine, Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '15', 'Neonatal');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Critical Care Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Nephrology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Clinician Investigator Program');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '16', 'Neurology, Neuropathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurology, Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuropathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuropathology, Anatomical Pathology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neuroradiology, Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Neurosurgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine, Diagnostic Radiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Nuclear Medicine, Radiation Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '17', 'Obstetrics and Gynecology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Gynecologic Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Gynecologic Reproductive Endocrinology and Infertility');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Obstetrics and Gynecology, Maternal');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Occupational Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Occupational Medicine, Community Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Ophthalmology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Orthopedic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Orthopedic Surgery, Pain Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Otolaryngology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '18', 'Pain Medicine, Anesthesiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pain Medicine, Physical Medicine and Rehabilitation');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Palliative Medicine, Radiation Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Cardiology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Emergency Medicine, Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Emergency Medicine, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Hematology/Oncology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatric Surgery, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '19', 'Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Adolescent Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Cardiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Clinical Immunology and Allergy');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Community Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine, Anesthesiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Critical Care Medicine, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Dermatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Developmental Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '20', 'Pediatrics, Endocrinology and Metabolism');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Gastroenterology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Infectious Diseases');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Infectious Diseases, Medical Microbiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Genetics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Microbiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Medical Oncology, Hematology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Neonatal');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Nephrology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '21', 'Pediatrics, Neurology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Orthopedic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Otolaryngology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Cardiology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Emergency Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Pediatric Hematology/Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Respirology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Pediatrics, Rheumatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '22', 'Physical Medicine and Rehabilitation, Pain Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Plastic Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Child and Adolescent Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Community Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Forensic Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Forensic Psychiatry, Child and Adolescent Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Geriatric Psychiatry');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Neurology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '23', 'Psychiatry, Nuclear Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Psychiatry, Pain Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Public Health and Preventive Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Public Health and Preventive Medicine, Community Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Radiation Oncology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Critical Care Medicine, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Respirology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology, Clinician Investigator Program, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '24', 'Rheumatology, Internal Medicine');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Rheumatology, Pediatrics');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, Cardiac Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, Critical Care Medicine, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, General Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Thoracic Surgery, General Surgery, Cardiac Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Urology');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Vascular Surgery');
+-- INSERT INTO
+--     `specialty`(`region`, `specialty`, `specialtydesc`) VALUES ('ON', '25', 'Vascular Surgery, General Surgery');
