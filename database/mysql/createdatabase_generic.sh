@@ -21,8 +21,8 @@ echo "grant all on $DATABASE_NAME.* to $USER@localhost identified by \"$PASSWORD
 echo 'updating character set to utf8'
 echo "alter database $DATABASE_NAME DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci" | $mysql_cmd
 
-echo 'loading development.sql...'
-$mysql_cmd < development.sql
+echo 'loading oscarinit.sql...'
+$mysql_cmd < oscarinit.sql
 echo "loading oscarinit_$LOCATION.sql..."
 $mysql_cmd < oscarinit_$LOCATION.sql
 echo 'loading oscardata.sql...'
@@ -64,6 +64,9 @@ echo 'loading measurementMapData.sql...'
 $mysql_cmd < measurementMapData.sql
 echo 'loading expire_oscardoc.sql'
 $mysql_cmd < expire_oscardoc.sql
+
+echo "loading oscarinit_2024.sql"
+$mysql_cmd < oscarinit_2024.sql
 
 echo 'all done!'
 echo 'the default user is oscardoc'

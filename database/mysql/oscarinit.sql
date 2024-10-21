@@ -7824,7 +7824,6 @@ CREATE TABLE IF NOT EXISTS `waitingList` (
 -- Table structure for table `pharmacyInfo`
 --
 CREATE TABLE IF NOT EXISTS pharmacyInfo (
-    `uid` int(10) NOT NULL,
   `recordID` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255),
