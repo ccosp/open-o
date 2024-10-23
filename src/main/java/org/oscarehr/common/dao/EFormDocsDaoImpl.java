@@ -43,11 +43,11 @@ public class EFormDocsDaoImpl extends AbstractDaoImpl<EFormDocs> implements EFor
     }
 
     public List<EFormDocs> findByFdidIdDocNoDocType(Integer fdid, Integer documentNo, String docType) {
-        String sql = "select x from EFormDocs x where x.fdid=? and x.documentNo=? and x.docType=? and x.deleted is NULL";
+        String sql = "select x from EFormDocs x where x.fdid=?1 and x.documentNo=?2 and x.docType=?3 and x.deleted is NULL";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, fdid);
-        query.setParameter(1, documentNo);
-        query.setParameter(2, docType);
+        query.setParameter(1, fdid);
+        query.setParameter(2, documentNo);
+        query.setParameter(3, docType);
 
         List<EFormDocs> results = query.getResultList();
         return results;
@@ -63,9 +63,9 @@ public class EFormDocsDaoImpl extends AbstractDaoImpl<EFormDocs> implements EFor
     }
 
     public List<EFormDocs> findByFdid(Integer fdid) {
-        String sql = "select x from EFormDocs x where x.fdid=? and x.deleted is NULL";
+        String sql = "select x from EFormDocs x where x.fdid=?1 and x.deleted is NULL";
         Query query = entityManager.createQuery(sql);
-        query.setParameter(0, fdid);
+        query.setParameter(1, fdid);
 
         List<EFormDocs> results = query.getResultList();
         return results;
@@ -74,13 +74,13 @@ public class EFormDocsDaoImpl extends AbstractDaoImpl<EFormDocs> implements EFor
     public List<Object[]> findLabs(Integer fdid) {
         String sql = "FROM EFormDocs cd, PatientLabRouting plr " +
                 "WHERE plr.labNo = cd.documentNo " +
-                "AND cd.fdid = :fdid " +
-                "AND cd.docType = :docType " +
+                "AND cd.fdid = ?1" +
+                "AND cd.docType = ?2" +
                 "AND cd.deleted IS NULL " +
                 "ORDER BY cd.documentNo";
         Query q = entityManager.createQuery(sql);
-        q.setParameter("fdid", fdid);
-        q.setParameter("docType", EFormDocs.DOCTYPE_LAB);
+        q.setParameter(1, fdid);
+        q.setParameter(2, EFormDocs.DOCTYPE_LAB);
         return q.getResultList();
     }
 }
