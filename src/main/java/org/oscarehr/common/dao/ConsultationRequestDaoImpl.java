@@ -136,9 +136,9 @@ public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequ
 
 
     public List<ConsultationRequest> getConsultationsByStatus(Integer demographicNo, String status) {
-        Query query = entityManager.createQuery("SELECT c FROM ConsultationRequest c where c.demographicId = ? and c.status = ?");
-        query.setParameter(0, demographicNo);
-        query.setParameter(1, status);
+        Query query = entityManager.createQuery("SELECT c FROM ConsultationRequest c where c.demographicId = ?1 and c.status = ?2");
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, status);
 
 
         List<ConsultationRequest> results = query.getResultList();
@@ -151,50 +151,50 @@ public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequ
 
 
     public List<ConsultationRequest> getReferrals(String providerId, Date cutoffDate) {
-        Query query = createQuery("cr", "cr.referralDate <= :cutoff AND cr.status = '1' and cr.providerNo = :providerNo");
-        query.setParameter("cutoff", cutoffDate);
-        query.setParameter("providerNo", providerId);
+        Query query = createQuery("cr", "cr.referralDate <= ?1 AND cr.status = '1' and cr.providerNo = ?2");
+        query.setParameter(1, cutoffDate);
+        query.setParameter(2, providerId);
         return query.getResultList();
     }
 
     public List<Object[]> findRequests(Date timeLimit, String providerNo) {
         StringBuilder sql = new StringBuilder("SELECT DISTINCT d.LastName, c.demographicId FROM ConsultationRequest c, Demographic d " +
-                "WHERE c.referralDate >= :timeLimit " +
+                "WHERE c.referralDate >= ?1" +
                 "AND c.demographicId = d.DemographicNo");
         if (providerNo != null) {
-            sql.append(" AND d.ProviderNo = :providerNo ");
+            sql.append(" AND d.ProviderNo = ?2");
         }
         sql.append(" ORDER BY d.LastName");
 
         Query query = entityManager.createQuery(sql.toString());
-        query.setParameter("timeLimit", timeLimit);
+        query.setParameter(1, timeLimit);
         if (providerNo != null) {
-            query.setParameter("providerNo", providerNo);
+            query.setParameter(2, providerNo);
         }
         return query.getResultList();
     }
 
     public List<ConsultationRequest> findRequestsByDemoNo(Integer demoId, Date cutoffDate) {
-        Query query = createQuery("cr", "cr.referralDate <= :cutoff AND cr.demographicId = :demoId");
-        query.setParameter("cutoff", cutoffDate);
-        query.setParameter("demoId", demoId);
+        Query query = createQuery("cr", "cr.referralDate <= ?1 AND cr.demographicId = ?2");
+        query.setParameter(1, cutoffDate);
+        query.setParameter(2, demoId);
         return query.getResultList();
     }
 
     public List<ConsultationRequest> findByDemographicAndService(Integer demographicNo, String serviceName) {
-        String sql = "SELECT cr FROM ConsultationRequest cr, ConsultationServices cs WHERE cr.serviceId = cs.serviceId and cr.demographicId = :demo and cs.serviceDesc = :serviceName";
+        String sql = "SELECT cr FROM ConsultationRequest cr, ConsultationServices cs WHERE cr.serviceId = cs.serviceId and cr.demographicId = ?1 and cs.serviceDesc = ?2";
         Query query = entityManager.createQuery(sql);
-        query.setParameter("demo", demographicNo);
-        query.setParameter("serviceName", serviceName);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, serviceName);
 
         return query.getResultList();
     }
 
     public List<ConsultationRequest> findByDemographicAndServices(Integer demographicNo, List<String> serviceNameList) {
-        String sql = "SELECT cr FROM ConsultationRequest cr, ConsultationServices cs WHERE cr.serviceId = cs.serviceId and cr.demographicId = :demo and cs.serviceDesc IN (:serviceName)";
+        String sql = "SELECT cr FROM ConsultationRequest cr, ConsultationServices cs WHERE cr.serviceId = cs.serviceId and cr.demographicId = ?1 and cs.serviceDesc IN (?2)";
         Query query = entityManager.createQuery(sql);
-        query.setParameter("demo", demographicNo);
-        query.setParameter("serviceName", serviceNameList);
+        query.setParameter(1, demographicNo);
+        query.setParameter(2, serviceNameList);
 
         return query.getResultList();
     }
@@ -202,7 +202,7 @@ public class ConsultationRequestDaoImpl extends AbstractDaoImpl<ConsultationRequ
     @NativeSql("consultationRequests")
     public List<Integer> findNewConsultationsSinceDemoKey(String keyName) {
 
-        String sql = "select distinct dr.demographicNo from consultationRequests dr,demographic d,demographicExt e where dr.demographicNo = d.demographic_no and d.demographic_no = e.demographic_no and e.key_val=? and dr.lastUpdateDate > e.value";
+        String sql = "select distinct dr.demographicNo from consultationRequests dr,demographic d,demographicExt e where dr.demographicNo = d.demographic_no and d.demographic_no = e.demographic_no and e.key_val=?1 and dr.lastUpdateDate > e.value";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter(1, keyName);
         return query.getResultList();
