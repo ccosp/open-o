@@ -71,6 +71,10 @@ for arg in "$@"; do
       # Run the build and deploy process, passing in whether or not to run tests.
       build_and_deploy "$run_tests"
       ;;
+    lock)
+      echo "Updating dependency lock file..." 
+      mvn se.vandmo:dependency-lock-maven-plugin:lock
+      ;;
     *)
       # If an unknown argument is passed, display usage instructions and exit.
       echo "Usage: $0 [clean|install [--run-tests]]"
