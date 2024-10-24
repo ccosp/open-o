@@ -192,10 +192,11 @@
     </tr>
     <tr height="18px">
         <td align="left" class="message">
-            <logic:messagesPresent message="true">
-                <html:messages id="message" message="true" bundle="pmm"><c:out escapeXml="false" value="${message}"/>
-                </html:messages>
-            </logic:messagesPresent>
+            <c:if test="${not empty messages}">
+                <c:forEach var="message" items="${messages}">
+                    <c:out escapeXml="false" value="${message}"/>
+                </c:forEach>
+            </c:if>
         </td>
     </tr>
     <tr>
@@ -305,8 +306,8 @@
                             <c:out value="${client.sexDesc}"/>
                         </display:column>
                         <display:column sortable="true" title="Active">
-                            <logic:equal value="0" property="activeCount" name="client">No</logic:equal>
-                            <logic:notEqual value="0" property="activeCount" name="client">Yes</logic:notEqual>
+                            <c:if test="${client.activeCount == 0}">No</c:if>
+                            <c:if test="${client.activeCount != 0}">Yes</c:if>
                         </display:column>
                     </display:table></div>
             </td>

@@ -623,15 +623,15 @@
                     <div id="admissionsTable" dojoType="TitlePane" label="Program Admissions"
                          labelNodeClass="intakeSectionLabel"
                          containerNodeClass="intakeSectionContainer">
-                        <logic:messagesPresent>
+                        <c:if test="${not empty requestScope['org.apache.struts.action.ERROR']}">
                             <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#C0C0C0">
-                                <html:messages id="error" bundle="pmm">
+                                <c:forEach var="error" items="${requestScope['org.apache.struts.action.ERROR']}">
                                     <tr>
                                         <td class="error"><c:out value="${error}"/></td>
                                     </tr>
-                                </html:messages>
+                                </c:forEach>
                             </table>
-                        </logic:messagesPresent>
+                        </c:if>
                         <table class="intakeTable">
                             <tr>
                                 <c:if test="${not empty sessionScope.genericIntakeEditForm.bedPrograms}">
@@ -788,13 +788,13 @@
                             </tr>
                         </html:messages>
                     </logic:messagesPresent>
-                    <logic:messagesPresent message="true">
-                        <html:messages id="message" message="true" bundle="pmm">
+                    <c:if test="${not empty requestScope['org.apache.struts.action.MESSAGE']}">
+                        <c:forEach var="message" items="${requestScope['org.apache.struts.action.MESSAGE']}">
                             <tr>
                                 <td class="message"><c:out value="${message}"/></td>
                             </tr>
-                        </html:messages>
-                    </logic:messagesPresent>
+                        </c:forEach>
+                    </c:if>
                     <tr>
                         <td>
                             <caisi:isModuleLoad moduleName="TORONTO_RFQ" reverse="true">

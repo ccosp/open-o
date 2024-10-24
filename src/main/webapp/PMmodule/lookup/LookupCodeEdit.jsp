@@ -20,6 +20,8 @@
         <Quatro Group Software Systems inc.>  <OSCAR Team>
 
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="/taglibs.jsp" %>
 <script type="text/javascript">
     function submitForm() {
@@ -69,10 +71,10 @@
         </tr>
         <tr>
             <td align="left" class="message">
-                <logic:messagesPresent message="true">
-                    <html:messages id="message" message="true" bundle="pmm">
+                <c:if test="${not empty message}">
+                    <c:forEach var="message" items="${message}">
                         <c:out escapeXml="false" value="${message}"/></br>
-                    </html:messages>
+                    </c:forEach>
                 </logic:messagesPresent></td>
         </tr>
         <tr>
@@ -82,21 +84,20 @@
                     height: 100%; width: 100%; overflow: auto;" id="scrollBar">
                     <table width="100%">
 
-                        <logic:iterate id="field" name="lookupCodeEditForm" property="codeFields" indexId="fIndex"
-                                       type="com.quatro.model.FieldDefValue">
+                        <c:forEach var="field" items="${lookupCodeEditForm.codeFields}" varStatus="fIndex">
                             <tr>
                                 <td width="30%"><bean:write name="field" property="fieldDesc"/></td>
                                 <td>
-                                    <logic:equal name="field" property="fieldType" value="S">
-                                        <logic:equal name="field" property="editable" value="false">
+                                    <c:if test="${field.fieldType == 'S'}">
+                                        <c:if test="${field.editable == 'false'}">
                                             <bean:write name="field" property="val"/>
-                                            <logic:notEmpty name="field" property="valDesc">
+                                            <c:if test="${not empty field.valDesc}">
                                                 - <bean:write name="field" property="valDesc"/>
                                             </logic:notEmpty>
                                             <html:hidden name="field" property="val" indexed="true"/>
-                                        </logic:equal>
-                                        <logic:equal name="field" property="editable" value="true">
-                                            <logic:empty name="field" property="lookupTable">
+                                        </c:if>
+                                        <c:if test="${field.editable == 'true'}">
+                                            <c:if test="${empty field.lookupTable}">
                                                 <html:text name="field" property="val" indexed="true"
                                                            style="{width:100%}"
                                                            maxlength="<%=field.getFieldLengthStr()%>"/>
@@ -149,7 +150,7 @@
                                     </logic:equal>
                                 </td>
                             </tr>
-                        </logic:iterate>
+                        </c:forEach>
                     </table>
                 </div>
             </td>

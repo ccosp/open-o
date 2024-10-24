@@ -42,7 +42,7 @@
 <%@ page import="java.util.*,oscar.oscarReport.data.*" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <link rel="stylesheet" type="text/css"
       href="../oscarEncounter/encounterStyles.css">
 <html:html lang="en">

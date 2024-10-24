@@ -154,14 +154,14 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
         Status: <b>Logged in
         as <%=myOscarLoggedInInfo.getLoggedInPerson().getFirstName() + ' ' + myOscarLoggedInInfo.getLoggedInPerson().getLastName()%>
     </b> (<%=myOscarLoggedInInfo.getLoggedInPerson().getUserName()%>)<br/>
-        <logic:notPresent name="forwardToOnSuccess">
+        <c:if test="${empty forwardToOnSuccess}">
             <center>Closing Window... <a href="javascript:;" onclick="closeWindow()">close</a></center>
             <%-- if no errors and logged in, close window--%>
             <%if (!errors) {%>
             <script type="text/javascript" language="JavaScript">startCloseWindowTimeout()</script>
             <%}%>
-        </logic:notPresent>
-        <logic:present name="forwardToOnSuccess">
+        </c:if>
+        <c:if test="${not empty forwardToOnSuccess}">
             <center>Redirecting ... <a href="javascript:;"
                                        onclick="redirect('<bean:write name="forwardToOnSuccess"/>');">redirect now</a>
             </center>
@@ -174,7 +174,7 @@ on Libraries node in Projects view can be used to add the JSTL 1.1 library.
                 startRedirectTimeout('<%=request.getAttribute("forwardToOnSuccess")%>');
             </script>
             <%}%>
-        </logic:present>
+        </c:if>
 
     </div>
     <%

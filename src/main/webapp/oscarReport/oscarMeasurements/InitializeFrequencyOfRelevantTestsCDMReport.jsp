@@ -24,9 +24,10 @@
 
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarReport.oscarMeasurements.pageUtil.*" %>
 <%@ page import="java.util.*, java.sql.*, java.text.*, java.net.*" %>
 <%
@@ -155,7 +156,7 @@
                                             <logic:iterate id="msg" name="messages">
                                                 <bean:write name="msg"/>
                                                 <br>
-                                            </logic:iterate>
+                                            </c:forEach>
                                         </logic:present>
                                     </tr>
                                     <tr>
@@ -184,8 +185,7 @@
                                         <th align="left" class="subTitles" width="120"><bean:message
                                                 key="oscarReport.CDMReport.msgEndDate"/></th>
                                     </tr>
-                                    <logic:iterate id="measurementType" name="measurementTypes"
-                                                   property="measurementTypeVector" indexId="ctr">
+                                    <c:forEach var="measurementType" items="${measurementTypes.measurementTypeVector}" varStatus="ctr">
                                     <tr>
                                         <td width="2" class="fieldBox" bgcolor="#ddddff"><input
                                                 type="checkbox" name="frequencyCheckbox" value="<%=ctr%>"/></td>

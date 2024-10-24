@@ -22,6 +22,7 @@
     Toronto, Ontario, Canada
 
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/taglibs.jsp" %>
 <%@ include file="/common/messages.jsp" %>
 <%@page import="oscar.OscarProperties" %>
@@ -203,12 +204,16 @@
                 <c:out value="${client.chartNo}"/>
             </display:column>
             <display:column sortable="true" title="Admitted to Bed Program">
-                <logic:equal value="0" property="activeCount" name="client">No</logic:equal>
-                <logic:notEqual value="0" property="activeCount" name="client">Yes</logic:notEqual>
+                <c:choose>
+                    <c:when test="${client.activeCount == 0}">No</c:when>
+                    <c:otherwise>Yes</c:otherwise>
+                </c:choose>
             </display:column>
             <display:column sortable="true" title="H&S Alert">
-                <logic:equal value="0" property="hsAlertCount" name="client">No</logic:equal>
-                <logic:notEqual value="0" property="hsAlertCount" name="client">Yes</logic:notEqual>
+                <c:choose>
+                    <c:when test="${client.hsAlertCount == 0}">No</c:when>
+                    <c:otherwise>Yes</c:otherwise>
+                </c:choose>
             </display:column>
 
             <security:oscarSec roleName="<%=roleName$%>" objectName="_merge"
