@@ -44,8 +44,8 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
     }
 
     public List<CtlBillingServicePremium> findByServiceCode(String serviceCode) {
-        Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.serviceCode=?");
-        q.setParameter(0, serviceCode);
+        Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.serviceCode=?1");
+        q.setParameter(1, serviceCode);
 
 
         List<CtlBillingServicePremium> results = q.getResultList();
@@ -54,8 +54,8 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
     }
 
     public List<CtlBillingServicePremium> findByStatus(String status) {
-        Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.status=?");
-        q.setParameter(0, status);
+        Query q = entityManager.createQuery("select x from CtlBillingServicePremium x where x.status=?1");
+        q.setParameter(1, status);
 
 
         List<CtlBillingServicePremium> results = q.getResultList();
@@ -64,8 +64,8 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
     }
 
     public List<Object[]> search_ctlpremium(String status) {
-        Query q = entityManager.createQuery("select b.serviceCode, c.description from CtlBillingServicePremium b, BillingService c where b.serviceCode=c.serviceCode and b.status=?");
-        q.setParameter(0, status);
+        Query q = entityManager.createQuery("select b.serviceCode, c.description from CtlBillingServicePremium b, BillingService c where b.serviceCode=c.serviceCode and b.status=?1");
+        q.setParameter(1, status);
 
         List<Object[]> results = q.getResultList();
 
@@ -73,8 +73,8 @@ public class CtlBillingServicePremiumDaoImpl extends AbstractDaoImpl<CtlBillingS
     }
 
     public List<CtlBillingServicePremium> findByServceCodes(List<String> serviceCodes) {
-        Query query = createQuery("p", "p.serviceCode in (:serviceCodes)");
-        query.setParameter("serviceCodes", serviceCodes);
+        Query query = createQuery("p", "p.serviceCode in (?1)");
+        query.setParameter(1, serviceCodes);
         return query.getResultList();
     }
 }

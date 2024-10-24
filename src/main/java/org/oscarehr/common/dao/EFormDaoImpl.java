@@ -45,9 +45,9 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
 
     @Override
     public EForm findByName(String name) {
-        Query query = entityManager.createQuery("SELECT e from EForm e where e.formName = ? and e.current=?");
-        query.setParameter(0, name);
-        query.setParameter(1, true);
+        Query query = entityManager.createQuery("SELECT e from EForm e where e.formName = ?1 and e.current=?2");
+        query.setParameter(1, name);
+        query.setParameter(2, true);
 
         @SuppressWarnings("unchecked")
         List<EForm> results = query.getResultList();
@@ -62,9 +62,9 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
             return new ArrayList<EForm>();
         }
 
-        Query query = entityManager.createQuery("SELECT e from EForm e where e.formName like ? and e.current=?");
-        query.setParameter(0, "%" + name + "%");
-        query.setParameter(1, true);
+        Query query = entityManager.createQuery("SELECT e from EForm e where e.formName like ?1 and e.current=?2");
+        query.setParameter(1, "%" + name + "%");
+        query.setParameter(2, true);
 
         @SuppressWarnings("unchecked")
         List<EForm> results = query.getResultList();
@@ -166,11 +166,11 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<EForm> findByStatus(boolean status, EFormSortOrder sortOrder) {
-        StringBuilder buf = new StringBuilder("FROM " + modelClass.getSimpleName() + " ef WHERE ef.current = :current");
+        StringBuilder buf = new StringBuilder("FROM " + modelClass.getSimpleName() + " ef WHERE ef.current = ?1");
         buf.append(getSortOrderClause(sortOrder));
 
         Query query = entityManager.createQuery(buf.toString());
-        query.setParameter("current", status);
+        query.setParameter(1, status);
 
         return query.getResultList();
     }
@@ -202,9 +202,8 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
      */
     @Override
     public Integer findMaxIdForActiveForm(String formName) {
-        Query query = entityManager.createQuery("SELECT MAX(ef.id) FROM " + modelClass.getSimpleName()
-                + " ef WHERE ef.formName = :formName AND ef.current = TRUE");
-        query.setParameter("formName", formName);
+        Query query = entityManager.createQuery("SELECT MAX(ef.id) FROM " + modelClass.getSimpleName() + " ef WHERE ef.formName = ?1 AND ef.current = TRUE");
+        query.setParameter(1, formName);
         return (Integer) query.getSingleResult();
     }
 
@@ -219,10 +218,9 @@ public class EFormDaoImpl extends AbstractDaoImpl<EForm> implements EFormDao {
     @Override
     public Long countFormsOtherThanSpecified(String formName, Integer id) {
         // TODO test me
-        Query query = entityManager.createQuery("SELECT COUNT(ef) FROM " + modelClass.getSimpleName()
-                + " ef WHERE ef.current = TRUE AND ef.formName = :formName AND ef.id != :id");
-        query.setParameter("formName", formName);
-        query.setParameter("id", id);
+        Query query = entityManager.createQuery("SELECT COUNT(ef) FROM " + modelClass.getSimpleName() + " ef WHERE ef.current = TRUE AND ef.formName = ?1 AND ef.id != ?2");
+        query.setParameter(1, formName);
+        query.setParameter(2, id);
         return (Long) query.getSingleResult();
     }
 

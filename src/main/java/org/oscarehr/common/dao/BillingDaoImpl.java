@@ -49,9 +49,9 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Billing> findActive(int billingNo) {
-        Query q = entityManager.createQuery("select x from Billing x where x.id=? and x.status <> ?");
-        q.setParameter(0, billingNo);
-        q.setParameter(1, "D");
+        Query q = entityManager.createQuery("select x from Billing x where x.id=?1 and x.status <> ?2");
+        q.setParameter(1, billingNo);
+        q.setParameter(2, "D");
 
 
         List<Billing> results = q.getResultList();
@@ -61,8 +61,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Billing> findByBillingType(String type) {
-        Query q = entityManager.createQuery("select x from Billing x where x.billingtype=?");
-        q.setParameter(0, type);
+        Query q = entityManager.createQuery("select x from Billing x where x.billingtype=?1");
+        q.setParameter(1, type);
 
 
         List<Billing> results = q.getResultList();
@@ -72,8 +72,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Billing> findByAppointmentNo(int apptNo) {
-        Query q = entityManager.createQuery("select x from Billing x where x.appointmentNo=?");
-        q.setParameter(0, apptNo);
+        Query q = entityManager.createQuery("select x from Billing x where x.appointmentNo=?1");
+        q.setParameter(1, apptNo);
 
 
         List<Billing> results = q.getResultList();
@@ -86,8 +86,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
         if (list.size() == 0) {
             return new ArrayList<Billing>();
         }
-        Query query = entityManager.createQuery("SELECT b FROM  Billing b  where b.id in (:billingNumbers)");
-        query.setParameter("billingNumbers", ConversionUtils.toIntList(list));
+        Query query = entityManager.createQuery("SELECT b FROM  Billing b  where b.id in (?1)");
+        query.setParameter(1, ConversionUtils.toIntList(list));
 
 
         List<Billing> results = query.getResultList();
@@ -170,8 +170,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Object[]> findBillings(Integer billing_no) {
-        Query query = entityManager.createQuery("FROM " + Billingmaster.class.getSimpleName() + " b, Billing bi where bi.id = b.billingNo and b.billingNo = :bn");
-        query.setParameter("bn", billing_no);
+        Query query = entityManager.createQuery("FROM " + Billingmaster.class.getSimpleName() + " b, Billing bi where bi.id = b.billingNo and b.billingNo = ?1");
+        query.setParameter(1, billing_no);
         return query.getResultList();
     }
 
@@ -336,49 +336,51 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     public List<Object[]> findBillingsByStatus(String statusType) {
         Query query = entityManager.createQuery("FROM Billing b, Billingmaster bm " +
                 "WHERE b.id = bm.billingNo " +
-                "AND bm.billingstatus = :st");
-        query.setParameter("st", statusType);
+                "AND bm.billingstatus = ?1");
+        query.setParameter(1, statusType);
         return query.getResultList();
     }
 
     @Override
     public List<Object[]> findOutstandingBills(Integer demographicNo, String billingType, List<String> statuses) {
+        int counter = 1;
         String q = "FROM Billingmaster bm, Billing b " +
                 "WHERE bm.billingNo = b.id " +
-                "AND b.demographicNo = :dNo " +
-                (statuses.isEmpty() ? "" : "AND bm.billingstatus NOT IN ( :statuses ) ") +
-                "AND b.billingtype = :bType";
-        Query query = entityManager.createQuery(q);
-        if (!statuses.isEmpty()) {
-            query.setParameter("statuses", statuses);
-        }
-        query.setParameter("dNo", demographicNo);
-        query.setParameter("bType", billingType);
-        return query.getResultList();
+                "AND b.demographicNo = ?" + counter++ +
+                (statuses.isEmpty() ? "" : "AND bm.billingstatus NOT IN ( ? ) " + counter++) +
+                "AND b.billingtype = ?" + counter++;
 
+        counter = 1;
+        Query query = entityManager.createQuery(q);
+        query.setParameter(counter++, demographicNo);
+        if (!statuses.isEmpty()) {
+            query.setParameter(counter++, statuses);
+        }
+        query.setParameter(counter++, billingType);
+        return query.getResultList();
     }
 
     @Override
     public List<Object[]> findByBillingMasterNo(Integer billingmasterNo) {
         Query query = entityManager.createQuery("FROM Billingmaster b, Billing b1 " +
                 "WHERE b1.id = b.billingNo " +
-                "AND b.billingmasterNo = :no");
-        query.setParameter("no", billingmasterNo);
+                "AND b.billingmasterNo = ?1");
+        query.setParameter(1, billingmasterNo);
         return query.getResultList();
     }
 
     @Override
     public List<Object[]> findBillingsByManyThings(Integer billing, Date billingDate, String ohipNo, String serviceCode) {
         Query q = entityManager.createQuery("FROM Billing b, BillingDetail bd " +
-                "WHERE b.id = :billing " +
-                "AND b.billingDate = :billingDate " +
-                "AND b.providerOhipNo = :ohipNo " +
+                "WHERE b.id = ?1 " +
+                "AND b.billingDate = ?2 " +
+                "AND b.providerOhipNo = ?3 " +
                 "AND bd.billingNo = b.id " +
-                "AND bd.serviceCode = :serviceCode");
-        q.setParameter("billing", billing);
-        q.setParameter("billingDate", billingDate);
-        q.setParameter("ohipNo", ohipNo);
-        q.setParameter("serviceCode", serviceCode);
+                "AND bd.serviceCode = ?4");
+        q.setParameter(1, billing);
+        q.setParameter(2, billingDate);
+        q.setParameter(3, ohipNo);
+        q.setParameter(4, serviceCode);
         return q.getResultList();
     }
 
@@ -386,17 +388,17 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     public Integer countBillings(String diagCode, String creator, Date sdate, Date edate) {
         String sql = "SELECT DISTINCT b.id FROM Billing b, BillingDetail bd " +
                 "WHERE b.id = bd.billingNo " +
-                "AND bd.diagnosticCode = :diagCode " +
-                "AND b.creator = :creator " +
-                "AND b.billingDate >= :sdate " +
-                "AND b.billingDate <= :edate " +
+                "AND bd.diagnosticCode = ?1 " +
+                "AND b.creator = ?2 " +
+                "AND b.billingDate >= ?3 " +
+                "AND b.billingDate <= ?4 " +
                 "AND b.status != 'D' " +
                 "AND bd.status!='D'";
         Query query = entityManager.createQuery(sql);
-        query.setParameter("diagCode", diagCode);
-        query.setParameter("creator", creator);
-        query.setParameter("sdate", sdate);
-        query.setParameter("edate", edate);
+        query.setParameter(1, diagCode);
+        query.setParameter(2, creator);
+        query.setParameter(3, sdate);
+        query.setParameter(4, edate);
 
 
         List<Integer> ids = query.getResultList();
@@ -408,14 +410,14 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
         String sql = "SELECT b.visitType, COUNT(b) FROM Billing b "
                 + "WHERE b.status <> 'D' "
                 + "AND b.appointmentNo <> '0' "
-                + "AND b.creator = :providerNo "
-                + "AND b.billingDate >= :dateBegin "
-                + "AND b.billingDate <= :dateEnd "
+                + "AND b.creator = ?1 "
+                + "AND b.billingDate >= ?2 "
+                + "AND b.billingDate <= ?3 "
                 + "GROUP BY b.visitType";
         Query q = entityManager.createQuery(sql);
-        q.setParameter("providerNo", providerNo);
-        q.setParameter("dateBegin", dateBegin);
-        q.setParameter("dateEnd", dateEnd);
+        q.setParameter(1, providerNo);
+        q.setParameter(2, dateBegin);
+        q.setParameter(3, dateEnd);
         return q.getResultList();
     }
 
@@ -424,23 +426,23 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
         String sql = "SELECT b.visitType, COUNT(b) FROM Billing b "
                 + "WHERE b.status <> 'D' "
                 + "AND b.appointmentNo <> '0' "
-                + "AND b.apptProviderNo = :providerNo "
-                + "AND b.billingDate >= :dateBegin "
-                + "AND b.billingDate <= :dateEnd "
+                + "AND b.apptProviderNo = ?1"
+                + "AND b.billingDate >= ?2"
+                + "AND b.billingDate <= ?3"
                 + "GROUP BY b.visitType";
         Query q = entityManager.createQuery(sql);
-        q.setParameter("providerNo", providerNo);
-        q.setParameter("dateBegin", dateBegin);
-        q.setParameter("dateEnd", dateEnd);
+        q.setParameter(1, providerNo);
+        q.setParameter(2, dateBegin);
+        q.setParameter(3, dateEnd);
         return q.getResultList();
     }
 
     @Override
     public Integer search_billing_no_by_appt(int demographicNo, int appointmentNo) {
-        Query q = entityManager.createQuery("select x from Billing x where x.demographicNo=? and x.appointmentNo = ? and x.status <> ? order by x.updateDate desc, x.updateTime desc");
-        q.setParameter(0, demographicNo);
-        q.setParameter(1, appointmentNo);
-        q.setParameter(2, "D");
+        Query q = entityManager.createQuery("select x from Billing x where x.demographicNo=?1 and x.appointmentNo = ?2 and x.status <> ?3 order by x.updateDate desc, x.updateTime desc");
+        q.setParameter(1, demographicNo);
+        q.setParameter(2, appointmentNo);
+        q.setParameter(3, "D");
 
 
         List<Billing> results = q.getResultList();
@@ -453,8 +455,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public Integer search_billing_no(int demographicNo) {
-        Query q = entityManager.createQuery("select x from Billing x where x.demographicNo=? order by x.updateDate desc, x.updateTime desc");
-        q.setParameter(0, demographicNo);
+        Query q = entityManager.createQuery("select x from Billing x where x.demographicNo=?1 order by x.updateDate desc, x.updateTime desc");
+        q.setParameter(1, demographicNo);
 
 
         List<Billing> results = q.getResultList();
@@ -469,8 +471,8 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     public List<Object[]> search_bill_generic(int billingNo) {
         Query query = entityManager.createQuery("select distinct d.LastName, d.FirstName, p.LastName, p.FirstName, b.id, b.billingDate, b.billingTime, b.status, b.appointmentNo, b.hin"
                 + " from Billing b, Provider p, Appointment a, Demographic d "
-                + "where p.ProviderNo=a.providerNo and d.DemographicNo= b.demographicNo and b.appointmentNo=a.id and b.status <> 'D' and b.id=?");
-        query.setParameter(0, billingNo);
+                + "where p.ProviderNo=a.providerNo and d.DemographicNo= b.demographicNo and b.appointmentNo=a.id and b.status <> 'D' and b.id=?1");
+        query.setParameter(1, billingNo);
 
 
         List<Object[]> results = query.getResultList();
@@ -480,17 +482,17 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
 
     @Override
     public List<Billing> findByProviderStatusForTeleplanFileWriter(String hin) {
-        Query query = createQuery("bs", "bs.providerOhipNo = :hin and (bs.status = 'O' or bs.status = 'W') and bs.billingtype != 'Pri'");
-        query.setParameter("hin", hin);
+        Query query = createQuery("bs", "bs.providerOhipNo = ?1 and (bs.status = 'O' or bs.status = 'W') and bs.billingtype != 'Pri'");
+        query.setParameter(1, hin);
         return query.getResultList();
     }
 
     @Override
     public List<Billing> search_bill_history_daterange(String providerNo, Date startBillingDate, Date endBillingDate) {
-        Query q = entityManager.createQuery("select b from Billing b where b.providerNo like ? and b.billingDate >=? and b.billingDate<=? and b.status<>'D' and b.status<>'S' and b.status<>'B' and b.demographicNo <> 0 order by b.billingDate desc, b.billingTime desc");
-        q.setParameter(0, providerNo);
-        q.setParameter(1, startBillingDate);
-        q.setParameter(2, endBillingDate);
+        Query q = entityManager.createQuery("select b from Billing b where b.providerNo like ?1 and b.billingDate >=?2 and b.billingDate<=?3 and b.status<>'D' and b.status<>'S' and b.status<>'B' and b.demographicNo <> 0 order by b.billingDate desc, b.billingTime desc");
+        q.setParameter(1, providerNo);
+        q.setParameter(2, startBillingDate);
+        q.setParameter(3, endBillingDate);
 
         @SuppressWarnings("unchecked")
         List<Billing> results = q.getResultList();
@@ -503,12 +505,12 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     public List<Object[]> search_billob(String providerNo, Date startDate, Date endDate) {
         String[] serviceCodes = {"P006A", "P011A", "P009A", "P020A", "P022A", "P028A", "P023A", "P007A", "P008B", "P018B", "E502A", "C989A", "E409A", "E410A", "E411A", "H001A"};
         Query q = entityManager.createQuery("select distinct b.id,b.total,b.status,b.billingDate, b.demographicName from Billing b, BillingDetail bd "
-                + "where bd.billingNo=b.id and b.status<>'D' and bd.serviceCode in (:serviceCodes) and b.providerNo like :providerNo " +
-                "and b.billingDate>=:startDate and b.billingDate<=:endDate");
-        q.setParameter("serviceCodes", Arrays.asList(serviceCodes));
-        q.setParameter("providerNo", providerNo);
-        q.setParameter("startDate", startDate);
-        q.setParameter("endDate", endDate);
+                + "where bd.billingNo=b.id and b.status<>'D' and bd.serviceCode in (?1) and b.providerNo like ?2" +
+                "and b.billingDate>=?3 and b.billingDate<=?4");
+        q.setParameter(1, Arrays.asList(serviceCodes));
+        q.setParameter(2, providerNo);
+        q.setParameter(3, startDate);
+        q.setParameter(4, endDate);
         return q.getResultList();
     }
 
@@ -516,11 +518,11 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     @SuppressWarnings("unchecked")
     public List<Object[]> search_billflu(String creator, Date startDate, Date endDate) {
         Query q = entityManager.createQuery("select distinct b.content, b.id,b.total,b.status,b.billingDate, b.demographicName From Billing b, BillingDetail bd " +
-                "where bd.billingNo=b.id and b.status<>'D' and( bd.serviceCode='G590A' or bd.serviceCode='G591A') and b.creator like :providerNo " +
-                "and b.billingDate>=:startDate and b.billingDate<=:endDate order by b.demographicName");
-        q.setParameter("providerNo", creator);
-        q.setParameter("startDate", startDate);
-        q.setParameter("endDate", endDate);
+                "where bd.billingNo=b.id and b.status<>'D' and( bd.serviceCode='G590A' or bd.serviceCode='G591A') and b.creator like ?1" +
+                "and b.billingDate>=?2 and b.billingDate<=?3 order by b.demographicName");
+        q.setParameter(1, creator);
+        q.setParameter(2, startDate);
+        q.setParameter(3, endDate);
 
         return q.getResultList();
     }
@@ -528,10 +530,10 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     @Override
     @SuppressWarnings("unchecked")
     public List<Billing> search_unsettled_history_daterange(String providerNo, Date startDate, Date endDate) {
-        Query q = entityManager.createQuery("select b from Billing b where b.providerNo=:providerNo and b.billingDate >=:startDate and b.billingDate<=:endDate and (b.status='B') and b.demographicNo <> 0 order by b.billingDate desc, b.billingTime desc");
-        q.setParameter("providerNo", providerNo);
-        q.setParameter("startDate", startDate);
-        q.setParameter("endDate", endDate);
+        Query q = entityManager.createQuery("select b from Billing b where b.providerNo=?1 and b.billingDate >=?2 and b.billingDate<=?3 and (b.status='B') and b.demographicNo <> 0 order by b.billingDate desc, b.billingTime desc");
+        q.setParameter(1, providerNo);
+        q.setParameter(2, startDate);
+        q.setParameter(3, endDate);
 
         return q.getResultList();
     }
@@ -539,12 +541,12 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
     @Override
     public List<Billing> findActiveBillingsByDemoNo(Integer demoNo, int limit) {
         String sql = "FROM Billing b " +
-                "WHERE b.demographicNo = :demoNo " +
+                "WHERE b.demographicNo = ?1" +
                 "AND b.status <> 'D' " +
                 "ORDER BY b.billingDate DESC, b.id DESC";
 
         Query query = entityManager.createQuery(sql);
-        query.setParameter("demoNo", demoNo);
+        query.setParameter(1, demoNo);
         if (limit > 0) {
             query.setMaxResults(limit);
         }
@@ -557,13 +559,13 @@ public class BillingDaoImpl extends AbstractDaoImpl<Billing> implements BillingD
                 "WHERE bd.billingNo = b.id " +
                 "AND bd.status <> 'D' " +
                 "AND b.status <> 'D' " +
-                "AND bd.serviceCode IN (:serviceCodes) " +
-                "AND b.billingDate <= :date " +
-                "AND b.demographicNo = :demoNo";
+                "AND bd.serviceCode IN (?1) " +
+                "AND b.billingDate <= ?2" +
+                "AND b.demographicNo = ?3";
         Query query = entityManager.createQuery(sql);
-        query.setParameter("demoNo", demoNo);
-        query.setParameter("date", date);
-        query.setParameter("serviceCodes", serviceCodes);
+        query.setParameter(1, serviceCodes);
+        query.setParameter(2, date);
+        query.setParameter(3, demoNo);
         return query.getResultList();
 
     }
