@@ -24,9 +24,10 @@
 
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="oscar.oscarReport.oscarMeasurements.pageUtil.*" %>
 <%@ page import="java.util.*, java.sql.*, java.text.*, java.net.*" %>
 <%
@@ -151,7 +152,7 @@
                                             <logic:iterate id="msg" name="messages">
                                                 <bean:write name="msg"/>
                                                 <br>
-                                            </logic:iterate>
+                                            </c:forEach>
                                         </logic:present>
                                     </tr>
                                     <tr>
@@ -178,8 +179,7 @@
                                         <th align="left" class="subTitles" width="120"><bean:message
                                                 key="oscarReport.CDMReport.msgEndDate"/></th>
                                     </tr>
-                                    <logic:iterate id="measurementType" name="measurementTypes"
-                                                   property="measurementTypeVector" indexId="ctr">
+                                    <c:forEach var="measurementType" items="${measurementTypes.measurementTypeVector}" varStatus="ctr">
                                     <tr>
                                         <td width="2" class="fieldBox" bgcolor="#ddddff"><input
                                                 type="checkbox" name="abnormalCheckbox" value="<%=ctr%>"/></td>
@@ -214,17 +214,16 @@
                                         <td width="200" class="fieldBox" bgcolor="#ddddff">
                                             <table>
                                                 <%int j = 0;%>
-                                                <logic:iterate id="mInstrc" name='<%="mInstrcs" + ctr%>'
-                                                               property="measuringInstrcVector" indexId="index">
+                                                <c:forEach var="mInstrc" items="${mInstrcs[ctr].measuringInstrcVector}" varStatus="index">
                                                     <tr>
                                                         <td><input type="checkbox"
-                                                                   name='<%="value(mInstrcsCheckboxC"+ctr+index+")"%>'
+                                                                   name='<%="value(mInstrcsCheckboxC"+ctr+index.index+")"%>'
                                                                    checked="checked"
-                                                                   value='<bean:write name="mInstrc" property="measuringInstrc" />'/><bean:write
-                                                                name="mInstrc" property="measuringInstrc"/></td>
+                                                                   value='<c:out value="${mInstrc.measuringInstrc}" />'/><c:out
+                                                                value="${mInstrc.measuringInstrc}" /></td>
                                                     </tr>
                                                     <%j++;%>
-                                                </logic:iterate>
+                                                </c:forEach>
                                             </table>
                                         </td>
                                         <input type="hidden"

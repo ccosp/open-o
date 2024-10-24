@@ -380,13 +380,6 @@
             <version>${struts.version}</version>
         </dependency>
 
-        <!-- Struts Tiles Library -->
-        <dependency>
-            <groupId>io.github.weblegacy</groupId>
-            <artifactId>struts-tiles</artifactId>
-            <version>${struts.version}</version>
-        </dependency>
-
         <!-- Struts Extras Library -->
         <dependency>
             <groupId>io.github.weblegacy</groupId>
@@ -434,11 +427,6 @@
                     <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>taglibs</groupId>
@@ -1412,6 +1400,11 @@
         <!--    <version>2.3.0</version>-->
         <!--    <type>pom</type>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
     </dependencies>
 
     <build>

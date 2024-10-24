@@ -23,6 +23,7 @@
 
 --%>
 <%@page import="org.oscarehr.util.LoggedInInfo" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/taglibs.jsp" %>
 
 <%@ include file="/common/messages.jsp" %>
@@ -120,22 +121,22 @@
             if (request.getAttribute("program") != null) {
         %>
 
-        <logic:equal name="program" property="facilityId"
-                     value="<%=((Facility)facility).getId().toString()%>">
-            <display:column sortable="true" sortProperty="name"
-                            title="Program Name">
-                <a
-                        href="<html:rewrite action="/PMmodule/ProgramManagerView"/>?id=<c:out value="${program.id}"/>"><c:out
-                        value="${program.name}"/></a>
-            </display:column>
-        </logic:equal>
-        <logic:notEqual name="program" property="facilityId"
-                        value="<%=((Facility)facility).getId().toString()%>">
-            <display:column sortable="true" sortProperty="name"
-                            title="Program Name">
-                <c:out value="${program.name}"/>
-            </display:column>
-        </logic:notEqual>
+        <c:choose>
+            <c:when test="${program.facilityId eq facility.id}">
+                <display:column sortable="true" sortProperty="name"
+                                title="Program Name">
+                    <a
+                            href="<html:rewrite action="/PMmodule/ProgramManagerView"/>?id=<c:out value="${program.id}"/>"><c:out
+                            value="${program.name}"/></a>
+                </display:column>
+            </c:when>
+            <c:otherwise>
+                <display:column sortable="true" sortProperty="name"
+                                title="Program Name">
+                    <c:out value="${program.name}"/>
+                </display:column>
+            </c:otherwise>
+        </c:choose>
 
         <display:column property="type" sortable="true" title="Program Type"/>
         <display:column property="queueSize" sortable="true"

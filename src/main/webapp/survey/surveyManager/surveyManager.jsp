@@ -35,20 +35,20 @@
 <%@ include file="/survey/taglibs.jsp" %>
 <link rel="stylesheet" type="text/css" media="all" href="../share/css/extractedFromPages.css"/>
 <table width="100%">
-    <logic:messagesPresent message="true">
-        <html:messages id="message" message="true" bundle="survey">
+    <c:if test="${not empty messages}">
+        <c:forEach var="message" items="${messages}">
             <tr>
                 <td colspan="3" class="message"><c:out value="${message}"/></td>
             </tr>
-        </html:messages>
-    </logic:messagesPresent>
-    <logic:messagesPresent>
-        <html:messages id="error" bundle="survey">
+        </c:forEach>
+    </c:if>
+    <c:if test="${not empty errors}">
+        <c:forEach var="error" items="${errors}">
             <tr>
                 <td colspan="3" class="error"><c:out value="${error}"/></td>
             </tr>
-        </html:messages>
-    </logic:messagesPresent>
+        </c:forEach>
+    </c:if>
 </table>
 <br/>
 <display:table cellspacing="2" cellpadding="3" id="entry" name="surveys"

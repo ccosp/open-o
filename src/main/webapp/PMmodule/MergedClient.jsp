@@ -192,10 +192,11 @@
     </tr>
     <tr height="18px">
         <td align="left" class="message">
-            <logic:messagesPresent message="true">
-                <html:messages id="message" message="true" bundle="pmm"><c:out escapeXml="false" value="${message}"/>
-                </html:messages>
-            </logic:messagesPresent>
+            <c:if test="${not empty messages}">
+                <c:forEach var="message" items="${messages}">
+                    <c:out escapeXml="false" value="${message}"/>
+                </c:forEach>
+            </c:if>
         </td>
     </tr>
     <tr>
@@ -204,21 +205,21 @@
                 <div class="axial">
                     <table border="0" cellspacing="2" cellpadding="3">
                         <tr>
-                            <th><bean-el:message key="ClientSearch.clientNo" bundle="pmm"/></th>
+                            <th><bean:message key="ClientSearch.clientNo" bundle="pmm"/></th>
                             <td><html:text property="criteria.demographicNo" size="15"/></td>
                         </tr>
                         <tr>
-                            <th><bean-el:message key="ClientSearch.firstName" bundle="pmm"/></th>
+                            <th><bean:message key="ClientSearch.firstName" bundle="pmm"/></th>
                             <td><html:text property="criteria.firstName" size="15"/></td>
                         </tr>
                         <tr>
-                            <th><bean-el:message key="ClientSearch.lastName" bundle="pmm"/>
+                            <th><bean:message key="ClientSearch.lastName" bundle="pmm"/>
                             </th>
                             <td><html:text property="criteria.lastName" size="15"/></td>
                         </tr>
 
                         <tr>
-                            <th width="20%" align="right"><bean-el:message key="ClientSearch.dateOfBirth" bundle="pmm"/>
+                            <th width="20%" align="right"><bean:message key="ClientSearch.dateOfBirth" bundle="pmm"/>
                                 <br>
                                 (yyyy/mm/dd)
                             </th>
@@ -228,7 +229,7 @@
                             </th>
                         </tr>
                         <tr>
-                            <th><bean-el:message key="ClientSearch.active" bundle="pmm"/></th>
+                            <th><bean:message key="ClientSearch.active" bundle="pmm"/></th>
                             <td><html:select property="criteria.active">
                                 <html:option value="">Any</html:option>
                                 <html:option value="1">Yes</html:option>
@@ -236,15 +237,15 @@
                             </html:select></td>
                         </tr>
                         <tr>
-                            <th><bean-el:message key="ClientSearch.gender" bundle="pmm"/></th>
-                            <td><html-el:select property="criteria.gender">
-                                <html-el:option value="">Any</html-el:option>
+                            <th><bean:message key="ClientSearch.gender" bundle="pmm"/></th>
+                            <td><select name="criteria.gender">
+                                <option value="">Any</option>
                                 <c:forEach var="gen" items="${genders}">
-                                    <html-el:option value="${gen.code}">
+                                    <option value="${gen.code}">
                                         <c:out value="${gen.description}"/>
-                                    </html-el:option>
+                                    </option>
                                 </c:forEach>
-                            </html-el:select></td>
+                            </select></td>
                         </tr>
 
                     </table>
@@ -305,8 +306,8 @@
                             <c:out value="${client.sexDesc}"/>
                         </display:column>
                         <display:column sortable="true" title="Active">
-                            <logic:equal value="0" property="activeCount" name="client">No</logic:equal>
-                            <logic:notEqual value="0" property="activeCount" name="client">Yes</logic:notEqual>
+                            <c:if test="${client.activeCount == 0}">No</c:if>
+                            <c:if test="${client.activeCount != 0}">Yes</c:if>
                         </display:column>
                     </display:table></div>
             </td>

@@ -184,20 +184,20 @@
         </tr>
 
         <!-- error messages -->
-        <logic:messagesPresent message="true">
-            <html:messages id="message" message="true" bundle="survey">
+        <c:if test="${not empty messages}">
+            <c:forEach var="message" items="${messages}">
                 <tr>
                     <td colspan="3" class="message"><c:out value="${message}"/></td>
                 </tr>
-            </html:messages>
-        </logic:messagesPresent>
-        <logic:messagesPresent>
-            <html:messages id="error" bundle="survey">
+            </c:forEach>
+        </c:if>
+        <c:if test="${not empty errors}">
+            <c:forEach var="error" items="${errors}">
                 <tr>
                     <td colspan="3" class="error"><c:out value="${error}"/></td>
                 </tr>
-            </html:messages>
-        </logic:messagesPresent>
+            </c:forEach>
+        </c:if>
 
         <tr>
             <td>
@@ -393,14 +393,14 @@
 
                                         </tr>
                                         <tr>
-                                            <td colspan="3"><html-el:select
-                                                    property="web.questionType"
+                                            <td colspan="3"><select
+                                                    name="web.questionType"
                                                     onchange="addQuestionType('${section.id}', this.options[this.selectedIndex].value);"
                                                     styleClass="formElement">
                                                 <html:option value="">Add New Question:</html:option>
                                                 <html:options collection="QuestionTypes" property="value"
                                                               labelProperty="label"/>
-                                            </html-el:select></td>
+                                            </select></td>
                                         </tr>
                                         <!--  loop through questions at this level -->
                                         <c:forEach var="question" items="${section.questionArray}">

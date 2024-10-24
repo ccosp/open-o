@@ -46,7 +46,6 @@
 <%@ page import="org.apache.commons.collections.iterators.*" %>
 <%@ page import="oscar.util.UtilDateUtilities,java.util.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://struts.apache.org/tags-html-el" prefix="html-el" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="request"/>
 <%
     Demographic demographic = null;
@@ -290,7 +289,7 @@
                                                             }
                                                         } else {
                                                         %>
-                                                        <html-el:text readonly="readonly" name="to" property="to"
+                                                        <input type="text" readonly="readonly" name="to" property="to"
                                                                       size="30" value="${toName}"/>
                                                         <%
                                                             }
@@ -329,7 +328,7 @@
                                                         <%
                                                         } else {
                                                         %>
-                                                        <html-el:text name="subject" property="subject" size="67"
+                                                        <input type="text" name="subject" property="subject" size="67"
                                                                       value="${subject}"/>
                                                         <%
                                                             }
@@ -422,8 +421,8 @@
                                             <%
                                             } else {
                                             %>
-                                            <html-el:hidden property="demographicId" value="${toId}"/>
-                                            <html-el:hidden property="method" value="sendPatient"/>
+                                            <input type="hidden" name="demographicId" value="${toId}"/>
+                                            <input type="hidden" name="method" value="sendPatient"/>
                                             <%
                                                 }
                                             %>
