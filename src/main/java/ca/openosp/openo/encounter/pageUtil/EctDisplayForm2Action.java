@@ -41,6 +41,7 @@ import ca.openosp.openo.lab.LabRequestReportLink;
 import ca.openosp.openo.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -263,33 +264,40 @@ public class EctDisplayForm2Action extends EctDisplayAction {
     }
 
     /**
-     * Answers whether the patient in this encounter already has a record of one form.
+     * Answers whether a patient already has a record of one form.
      *
      * <p>The Add Form menu asks before it opens a blank form, so a misclick can be turned into
      * opening the record the patient already has. Only forms kept up to date across visits are
      * looked up; a snapshot form, such as the Annual, always answers false because a new record of
-     * it is expected. The patient comes from the encounter session, not from the request.</p>
+     * it is expected.</p>
      *
-     * <p>Writes JSON holding exists, and when true the lastEdited stamp of the most recent record
-     * and the url that opens it.</p>
+     * <p>The patient is the demographicNo parameter, sent by the chart the click happened in. The
+     * session's encounter bean is not used: it holds whichever chart loaded last, so with two
+     * charts open in two tabs it can name the other patient. The privilege check is made against
+     * the same parameter, so a caller cannot ask about a patient they may not read.</p>
+     *
+     * <p>Writes JSON holding exists, and when true the lastEdited stamp of the most recent record,
+     * the url that opens it, and the windowName the Forms box opens that record in, so the warning
+     * reuses the box's window instead of opening the record a second time.</p>
      *
      * @return String null, the answer is written straight to the response
      * @throws IOException if the response cannot be written
      */
     public String checkExisting() throws IOException {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
-        EctSessionBean bean = (EctSessionBean) request.getSession().getAttribute("EctSessionBean");
+        String demographicNo = request.getParameter("demographicNo");
 
-        if (bean == null) {
-            throw new SecurityException("no encounter in session");
+        if (demographicNo == null || !demographicNo.matches("\\d+")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "demographicNo required");
+            return null;
         }
-        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", "r", bean.demographicNo)) {
+        if (!securityInfoManager.hasPrivilege(loggedInInfo, "_form", "r", demographicNo)) {
             throw new SecurityException("missing required sec object (_form)");
         }
 
-        String appointmentNo = bean.appointmentNo;
-        if (appointmentNo == null && request.getSession().getAttribute("cur_appointment_no") != null) {
-            appointmentNo = (String) request.getSession().getAttribute("cur_appointment_no");
+        String appointmentNo = request.getParameter("appointmentNo");
+        if (appointmentNo != null && !appointmentNo.matches("\\d+")) {
+            appointmentNo = null;
         }
 
         ObjectNode answer = JSON.createObjectNode();
@@ -305,19 +313,23 @@ public class EctDisplayForm2Action extends EctDisplayAction {
             // same lookup, record, date and link as the Forms section in getInfo, so the
             // warning describes the entry shown there and the button opens what clicking it opens
             EctFormData.PatientForm[] pforms =
-                    EctFormData.getPatientFormsFromLocalAndRemote(loggedInInfo, bean.demographicNo, table);
+                    EctFormData.getPatientFormsFromLocalAndRemote(loggedInInfo, demographicNo, table);
             if (pforms.length == 0) {
                 continue;
             }
 
             EctFormData.PatientForm latest = pforms[0];
-            answer.put("exists", true);
             // getEdited() formats the date without a null check
-            answer.put("lastEdited", latest.edited != null ? latest.getEdited() : latest.getCreated());
+            String lastEdited = latest.edited != null ? latest.getEdited() : latest.getCreated();
+            answer.put("exists", true);
+            answer.put("lastEdited", lastEdited);
+            // same name getInfo gives the box's link: form name, patient and edited stamp
+            answer.put("windowName",
+                    Math.abs((encounterForm.getFormName() + demographicNo + lastEdited).hashCode()) + "started");
             answer.put("url", request.getContextPath()
                     + "/form/forwardshortcutname.do?formname="
                     + URLEncoder.encode(encounterForm.getFormName(), StandardCharsets.UTF_8)
-                    + "&demographic_no=" + bean.demographicNo
+                    + "&demographic_no=" + demographicNo
                     + (latest.getRemoteFacilityId() != null ? "&remoteFacilityId=" + latest.getRemoteFacilityId() : "")
                     + (appointmentNo != null ? "&appointmentNo=" + appointmentNo : "")
                     + "&formId=latest");

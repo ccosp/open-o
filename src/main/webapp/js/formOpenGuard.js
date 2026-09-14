@@ -2,11 +2,12 @@
  * Warns before the Add Form menu starts a blank form the patient already has one of, so a misclick
  * does not leave a completed form hidden behind an empty one.
  *
- * Clicking an entry asks formExists.do whether the patient has that form, by the name on the entry.
- * The server only says yes for forms kept up to date across visits, such as the Rourke or an
- * antenatal record; a snapshot form such as the Annual opens blank without asking. When the answer
- * is yes, the warning offers to open the existing record instead. Everything else, including the
- * check failing, opens the blank form as before.
+ * Clicking an entry asks formExists.do whether the patient has that form, by the name on the entry
+ * and the patient of this chart. The server only says yes for forms kept up to date across visits,
+ * such as the Rourke or an antenatal record; a snapshot form such as the Annual opens blank without
+ * asking. When the answer is yes, the warning offers to open the existing record instead, in the
+ * same window the Forms box opens it in. Everything else, including the check failing, opens the
+ * blank form as before.
  */
 (function () {
     "use strict";
@@ -14,7 +15,7 @@
     /** Entries of the forms box Add Form menu, and nothing in the other navigation boxes. */
     const MENU_ENTRY = "#forms .menu a";
     const CHECK_PATH = "/oscarEncounter/formExists.do";
-    const POPUP_NAME = "openoGuardExisting";
+    const FORMS_BOX_PATH = "/oscarEncounter/displayForms.do";
     const POPUP_HEIGHT = 700;
     const POPUP_WIDTH = 960;
     const DIALOG_WIDTH = 460;
@@ -44,15 +45,32 @@
     };
 
     /**
-     * Opens the patient's latest record of the form.
+     * Has the Forms box reload once the popup closes, the way the box's own links do. The
+     * encounter page polls its open windows and reloads the box registered under the window's
+     * name, so the entry shows the new date after a save.
      *
-     * @param {string} url address of the existing record
+     * @param {string} windowName name of the window the record opens in
      */
-    const openExistingForm = (url) => {
+    const reloadFormsBoxOnClose = (windowName) => {
+        if (typeof reloadWindows !== "object" || typeof Colour !== "object") {
+            return;
+        }
+        const boxUrl = `${contextPath}${FORMS_BOX_PATH}?hC=${Colour.forms}`;
+        reloadWindows[windowName] = `${boxUrl}&reloadURL=${boxUrl}&numToDisplay=6&cmd=forms`;
+        reloadWindows[windowName + "div"] = "forms";
+    };
+
+    /**
+     * Opens the patient's latest record of the form, in the window the Forms box uses for it.
+     *
+     * @param {{url: string, windowName: string}} existing the record the patient already has
+     */
+    const openExistingForm = (existing) => {
         if (typeof popupPage === "function") {
-            popupPage(POPUP_HEIGHT, POPUP_WIDTH, POPUP_NAME, url);
+            reloadFormsBoxOnClose(existing.windowName);
+            popupPage(POPUP_HEIGHT, POPUP_WIDTH, existing.windowName, existing.url);
         } else {
-            window.open(url, POPUP_NAME);
+            window.open(existing.url, existing.windowName);
         }
     };
 
@@ -99,7 +117,7 @@
      * Asks whether to open the record the patient already has, or start a blank form anyway.
      *
      * @param {HTMLAnchorElement} entry the menu entry that was clicked
-     * @param {{lastEdited: string, url: string}} existing the record the patient already has
+     * @param {{lastEdited: string, url: string, windowName: string}} existing the record the patient already has
      */
     const warn = (entry, existing) => {
         const when = readableDate(existing.lastEdited);
@@ -124,7 +142,7 @@
             buttons: {
                 "Open the existing version": () => {
                     dialog.dialog("close");
-                    openExistingForm(existing.url);
+                    openExistingForm(existing);
                 },
                 "Create a new blank version": () => {
                     dialog.dialog("close");
@@ -138,13 +156,20 @@
     };
 
     /**
-     * Asks the server whether the patient already has the clicked form.
+     * Asks the server whether this chart's patient already has the clicked form. The patient and
+     * appointment are the chart's own, from the globals the encounter page sets, not the session's,
+     * which may belong to a chart open in another tab.
      *
      * @param {HTMLAnchorElement} entry the menu entry that was clicked
      */
     const check = (entry) => {
+        const query = {formName: entry.textContent.trim(), demographicNo: window.demographicNo};
+        if (window.appointmentNo > 0) {
+            query.appointmentNo = window.appointmentNo;
+        }
+
         pending.add(entry);
-        jQuery.getJSON(`${contextPath}${CHECK_PATH}`, {formName: entry.textContent.trim()}).done((existing) => {
+        jQuery.getJSON(`${contextPath}${CHECK_PATH}`, query).done((existing) => {
             if (existing && existing.exists) {
                 warn(entry, existing);
             } else {
