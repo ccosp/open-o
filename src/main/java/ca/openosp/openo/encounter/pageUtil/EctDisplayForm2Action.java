@@ -287,7 +287,8 @@ public class EctDisplayForm2Action extends EctDisplayAction {
         LoggedInInfo loggedInInfo = LoggedInInfo.getLoggedInInfoFromSession(request);
         String demographicNo = request.getParameter("demographicNo");
 
-        if (demographicNo == null || !demographicNo.matches("\\d+")) {
+        // up to nine digits fits the int the form lookup parses it into
+        if (demographicNo == null || !demographicNo.matches("\\d{1,9}")) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "demographicNo required");
             return null;
         }
